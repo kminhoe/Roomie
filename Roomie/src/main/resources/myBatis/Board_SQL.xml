@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="board">
+
+<insert id="boardregister" parameterType="hashmap">
+	<![CDATA[
+		INSERT INTO BOARD(BO_IDX, BO_MEM, BO_MEDIA, BO_DATE, BO_HASH, BO_CONT)
+		VALUES(
+		BOARD_SEQ.NEXTVAL,
+		#{BO_MEM},
+		#{BO_MEDIA},
+		#{SYSDATE},
+		#{BO_HASH},
+		#{BO_CONT})
+	]]>
+</insert>
+
+	
+	
+	
+</mapper>
