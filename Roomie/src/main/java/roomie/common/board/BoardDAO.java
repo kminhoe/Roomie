@@ -18,4 +18,4 @@ public class BoardDAO {
 		sqlSessionTemplate.insert("board.boardregister", map);
 	}
 
-}
+} 

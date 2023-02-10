@@ -18,6 +18,4 @@ public class BoardServiceImpl implements BoardService{
 		boardDAO.register(map);
 	}
 	
-	
-
 }
