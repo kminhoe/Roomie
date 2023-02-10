@@ -16,6 +16,6 @@ public class BoardDAO {
 	public void register(Map<String, Object> map) throws Exception{
 		
 		sqlSessionTemplate.insert("board.boardregister", map);
-	}
+	} 
 
 } 

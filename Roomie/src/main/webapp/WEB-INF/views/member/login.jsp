@@ -1,19 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!doctype html>
-<html lang="utf-8">
+<!DOCTYPE html>
+<html>
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- style css -->
-  <link rel="stylesheet" type="text/css" href="../css/login_style.css">
-  <!-- 로딩 화면 css -->
-  <link rel="stylesheet" href="../css/fakeLoader.min.css">
-  <!-- 타이틀 -->
-  <title>ROOMIE</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- style css -->
+<link rel="stylesheet" type="text/css" href="./resources/css/login_style.css">
+<!-- 로딩 화면 css -->
+<link rel="stylesheet" href="./resources/css/fakeLoader.min.css">
+<!-- 타이틀 -->
+<title>ROOMIE LOGIN</title>
 </head>
-<!-- 바디 시작 -->
 <body class="flex-center">
   <!-- 로딩 화면 -->
   <div class="fakeLoader"></div>
@@ -21,7 +19,7 @@
   <div class="login-container">
     <!-- ROOMIE 로고 이미지 -->
     <div class="flex-center logo-wrapper">
-      <img class="navbar-brand" style="height: 100px; margin-top: 30px; object-fit: contain;" src="../image/Roomie4.png">
+      <img class="navbar-brand" style="height: 100px; margin-top: 30px; object-fit: contain;" src="./resources/image/Roomie4.png">
     </div>
     <!-- login submit start -->
     <form class="input-wrapper form" action="../views/index.html">
@@ -41,10 +39,10 @@
     <!-- login submit end -->
 
     <div class="hr-sect" style="color: #5b5b5b;">또는</div>
- 
+
     <!-- 카카오톡 로그인 시작 -->
     <div class="login-wrapper flex-center">
-      <img style="width: 20px; height: 20px; object-fit: contain; text-align: center;" src="../image/kakao_icon_02.png">
+      <img style="width: 20px; height: 20px; object-fit: contain; text-align: center;" src="./resources/image/kakao_icon_02.png">
       <a style="margin-left: 10px; color: #f9e000;">KakaoTalk으로 로그인</a>
     </div>
     <!-- 비밀번호 찾기 -->
@@ -56,7 +54,7 @@
     <div class="signup-container flex-center">
       <a style="margin-left: 10px; font-size: 14px;">계정이 없으신가요?</a>
       <a style="margin-left: 10px; font-size: 14px; color: #0095f6; cursor:pointer"
-          onclick="href='../views/emailsignup.html'">가입하기</a>
+          onclick="href='./emailsignup.ya'">가입하기</a>
     </div>
   </div>
   <!-- 로그인 컨테이너 끝 -->
@@ -79,11 +77,11 @@
     •	digits : 숫자 형식을 가지도록 지정
     •	equalTo : 엘리먼트와 다른 엘리먼트의 일치 여부
   -->
-  <script src="../js/jquery-3.2.1.min.js"></script>
-  <script src="../js/jquery.validate.min.js"></script>
+  <script src="./resources/js/jquery-3.2.1.min.js"></script>
+  <script src="./resources/js/jquery.validate.min.js"></script>
   <script>
     $(function(){
-      var html = '<div style="position: relative; z-index: 1; margin-left: -30px; margin-top: 5px;"><img style="object-fit: contain; style="position: relative;" src="../image/icon_23.png"><div>';
+      var html = '<div style="position: relative; z-index: 1; margin-left: -30px; margin-top: 5px;"><img style="object-fit: contain; style="position: relative;" src="./resources/image/icon_23.png"><div>';
       
         $(".form").validate({
         //규칙
@@ -117,7 +115,7 @@
   </script>
   <!-- 로딩 화면 플러그인 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="../js/fakeLoader.min.js"></script>
+  <script src="./resources/js/fakeLoader.min.js"></script>
   <script>
     $(document).ready(function(){
       $.fakeLoader ({

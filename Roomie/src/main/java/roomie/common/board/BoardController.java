@@ -34,7 +34,7 @@ public class BoardController {
 	public ModelAndView boardList()throws Exception{
 		ModelAndView mv = new ModelAndView("board/boardList");
 		
-		return mv;
+		return mv; 
 	}
 
 }
