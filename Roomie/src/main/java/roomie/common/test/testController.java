@@ -53,15 +53,15 @@ public class testController {
 
 		String path = request.getSession().getServletContext().getRealPath("resources/img/");
 		
-		System.out.println("경로 주소1 : " + path);
+		System.out.println("寃쎈줈 二쇱냼1 : " + path);
 		
 
 		if (!profUploadFile.isEmpty()) {
-			String logoFileName = profUploadFile.getOriginalFilename(); // 저장할 로고 이미지 파일명
+			String logoFileName = profUploadFile.getOriginalFilename(); // ���옣�븷 濡쒓퀬 �씠誘몄� �뙆�씪紐�
 
-			profUploadFile.transferTo(new File(path + logoFileName)); // 업로드한 파일 저장
+			profUploadFile.transferTo(new File(path + logoFileName)); // �뾽濡쒕뱶�븳 �뙆�씪 ���옣
 			
-			System.out.println(">> 로고 이미지 업로드 파일 : " + logoFileName);
+			System.out.println(">> 수정할게요 : " + logoFileName);
 		}
 		
 
