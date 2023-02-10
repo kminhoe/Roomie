@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>roomie.common</groupId>
 	<artifactId>controller</artifactId>
-	<name>ex03</name>
-	<packaging>Roomie</packaging>
+	<name>Roomie</name>
+	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.8</java-version>
