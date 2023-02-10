@@ -1,0 +1,130 @@
+html {
+  padding-top: 50px;
+  min-height: calc(100% - 120px);
+}
+body {
+  background-color: rgba(var(--b3f, 250, 250, 250), 1);
+  height: 100%;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signup-container {
+  background-color: white;
+  width: 380px;
+  height: 705px;
+  border: 1px solid lightgray;
+}
+.birthday-container {
+  background-color: white;
+  width: 380px;
+  height: 477px;
+  border: 1px solid lightgray;
+}
+.emailconfirmation-container {
+  background-color: white;
+  width: 380px;
+  height: 385px;
+  border: 1px solid lightgray;
+}
+.emailcheck-container {
+  background-color: white;
+  width: 380px;
+  height: 495px;
+  border: 1px solid lightgray;
+}
+.passwordreset-container {
+  background-color: white;
+  width: 380px;
+  height: 445px;
+  border: 1px solid lightgray;
+}
+.logo-text {
+  font-family: "Lobster", cursive;
+  font-size: 55px;
+  margin-top: 50px;
+}
+.login-container {
+  margin-top: 55px;
+  background-color: white;
+  width: 380px;
+  height: 70px;
+  border: 1px solid lightgray;
+}
+
+.input-wrapper {
+  margin-top: 60px;
+}
+.signup-wrapper {
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 5px;
+}
+.signup-input {
+  font-size: 14px;
+  width: 330px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.035);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.birthday-input {
+  font-size: 14px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.035);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.signup-button {
+  width: 100%;
+  font-size: 15px;
+  color: white;
+  font-weight: bold;
+  background-color: #98bcd5;
+  border: none;
+  border-radius: 5px;
+  padding: 9px;
+}
+.kakao-button {
+  font-size: 15px;
+  color: #371c1d;
+  font-weight: bold;
+  background-color: #f9e000;
+  border: none;
+  border-radius: 5px;
+  padding: 9px;
+}
+.button-wrapper {
+  border: none;
+  margin: 15px 40px;
+}
+.findpass {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #00376b;
+}
+
+.hr-sect {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  color: lightgray;
+  font-size: 12px;
+  margin: 8px 20px;
+}
+.hr-sect::before,
+.hr-sect::after {
+  content: "";
+  flex-grow: 1;
+  background: lightgray;
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
+  margin: 30px 20px;
+}
