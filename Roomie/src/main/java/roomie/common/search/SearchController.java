@@ -18,6 +18,7 @@ public class SearchController {
 		return mv;
 	}
 	
+	
 	@RequestMapping(value = "searchResult.ya")
 	public ModelAndView searchResult(@RequestParam HashMap<String, Object> param) throws Exception{
 		
