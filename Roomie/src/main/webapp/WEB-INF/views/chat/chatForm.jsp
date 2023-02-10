@@ -17,6 +17,7 @@
 
 <style>
 
+
 @media (max-width: 1100px) {
 	body{
 	height: 100vh;

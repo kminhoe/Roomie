@@ -19,6 +19,7 @@
   <title>ROOMIE</title>
   
   <style>
+  
     /*
 
 All grid code is placed in a 'supports' rule (feature query) at the bottom of the CSS (Line 310). 
