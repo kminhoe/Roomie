@@ -59,7 +59,7 @@ public class testController {
 		if (!profUploadFile.isEmpty()) {
 			String logoFileName = profUploadFile.getOriginalFilename(); // ���옣�븷 濡쒓퀬 �씠誘몄� �뙆�씪紐�
 
-			profUploadFile.transferTo(new File(path + logoFileName)); // �뾽濡쒕뱶�븳 �뙆�씪 ���옣
+			profUploadFile.transferTo(new File(path + logoFileName)); //ujinhihihih
 			
 			System.out.println(">> 수정할게요 : " + logoFileName);
 		}
