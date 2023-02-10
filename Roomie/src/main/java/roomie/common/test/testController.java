@@ -53,7 +53,7 @@ public class testController {
 
 		String path = request.getSession().getServletContext().getRealPath("resources/img/");
 		
-		System.out.println("寃쎈줈 二쇱냼1 : " + path);
+		System.out.println("수정 : " + path);
 		
 
 		if (!profUploadFile.isEmpty()) {
