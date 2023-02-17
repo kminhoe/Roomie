@@ -8,9 +8,10 @@
 <!-- style css -->
 <link rel="stylesheet" type="text/css" href="./resources/css/login_style.css">
 <!-- 로딩 화면 css -->
-<link rel="stylesheet" href="./resources/css/fakeLoader.min.css">
+<!-- <link rel="stylesheet" href="./resources/css/fakeLoader.min.css"> -->
 <!-- 타이틀 -->
 <title>ROOMIE LOGIN</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="flex-center">
   <!-- 로딩 화면 -->
@@ -22,14 +23,14 @@
       <img class="navbar-brand" style="height: 100px; margin-top: 30px; object-fit: contain;" src="./resources/image/Roomie4.png">
     </div>
     <!-- login submit start -->
-    <form class="input-wrapper form" action="../views/index.html">
+    <form class="input-wrapper form" method="post" action="/roomie/loginSuccess.ya">
       <!-- 사용자 이름 또는 이메일 -->
       <div class="login-wrapper flex-center">
-        <input class="login-input" type="text" id="email" name="email" placeholder="이메일"/>
+        <input class="login-input" type="text" id="MEM_ID" name="MEM_ID" placeholder="이메일"/>
       </div>
       <!-- 비밀번호 -->
       <div class="login-wrapper flex-center">
-        <input class="login-input" type="password" id="password" name="password" placeholder="비밀번호" />
+        <input class="login-input" type="password" id="MEM_PWD" name="MEM_PWD" placeholder="비밀번호" />
       </div>
       <!-- 로그인 버튼 -->
       <div class="flex-center button-wrapper">
@@ -43,18 +44,18 @@
     <!-- 카카오톡 로그인 시작 -->
     <div class="login-wrapper flex-center">
       <img style="width: 20px; height: 20px; object-fit: contain; text-align: center;" src="./resources/image/kakao_icon_02.png">
-      <a style="margin-left: 10px; color: #f9e000;">KakaoTalk으로 로그인</a>
+      <a style="margin-left: 10px; color: #f9e000; cursor:pointer;" href="javascript:kakaoLogin();">KakaoTalk으로 로그인</a>
     </div>
     <!-- 비밀번호 찾기 -->
     <div class="flex-center findpass">
       <a style="color: #0095f6; cursor:pointer"
-      onclick="href='./emailcheck.html'">비밀번호를 잊으셨나요?</a>
+      onclick="href='./login.ya'">비밀번호를 잊으셨나요?</a>
     </div>
     <!-- 회원가입 -->
     <div class="signup-container flex-center">
       <a style="margin-left: 10px; font-size: 14px;">계정이 없으신가요?</a>
       <a style="margin-left: 10px; font-size: 14px; color: #0095f6; cursor:pointer"
-          onclick="href='./emailsignup.ya'">가입하기</a>
+          onclick="href='./emailSignup.ya'">가입하기</a>
     </div>
   </div>
   <!-- 로그인 컨테이너 끝 -->
@@ -86,22 +87,22 @@
         $(".form").validate({
         //규칙
         rules:{
-          email : {
+          MEM_ID : {
             required : true, // 필수 입력 여부
             email : true // 이메일 형식
           },
-          password : {
+          MEM_PWD : {
             required : true, // 필수 입력 여부
             minlength : 8	// 최소 입력 글자수
           }
         },
           //메시지
         messages : {
-          email : {
+          MEM_ID : {
             required : html, // "이메일은 필수 입력입니다."
             email : html // "이메일 형식을 지켜주세요."
           },
-          password: {
+          MEM_PWD: {
             required : html, // 비밀번호는 필수 입력입니다.
             minlength : html // 최소 8글자 이상 입력해주세요.
           },
@@ -113,8 +114,52 @@
       });
     });
   </script>
+  
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script>
+  //카카오로그인
+  function kakaoLogin() {
+
+    $.ajax({
+        url: '/roomie/login/getKakaoAuthUrl.ya',
+        type: 'get',
+        async: false,
+        dataType: 'text',
+        success: function (res) {
+            location.href = res;
+        }
+    });
+
+  }
+
+  $(document).ready(function() {
+
+	  var login = '${login}';
+
+	  if (login == "false") {
+		  alert("이메일 또는 비밀번호가 맞지 않습니다.");
+	  }
+	  
+	  if (login == "del") {
+		  alert("본 계정은 탈퇴처리 되어 접속하실 수 없습니다.");
+	  }
+	  
+	  if (login == "lock") {
+		  alert("본 계정은 활동 정지된 상태입니다.\n관리자에게 문의해주세요.");
+	  }
+	  
+      var kakaoInfo = '${kakaoInfo}';
+
+      if (kakaoInfo != "") {
+          var data = JSON.parse(kakaoInfo);
+          /* alert("id : " + data['id']); */
+      }
+  });  
+
+  </script>
+  
   <!-- 로딩 화면 플러그인 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="./resources/js/fakeLoader.min.js"></script>
   <script>
     $(document).ready(function(){
@@ -124,6 +169,6 @@
         spinner : "spinner5"
       });
     });
-  </script>
+  </script> -->
 </body>
 </html>

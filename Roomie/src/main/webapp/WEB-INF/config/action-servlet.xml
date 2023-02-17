@@ -15,15 +15,20 @@
 	</context:component-scan>
 	
     
+	<mvc:annotation-driven>
+	     <mvc:message-converters>
+	            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+	            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+	   </mvc:message-converters>
+	</mvc:annotation-driven>
+    
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
     <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />   
      
-    
     <bean
     	class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1" 
     	p:viewClass="org.springframework.web.servlet.view.JstlView" 
     	p:prefix="/WEB-INF/views/" p:suffix=".jsp">
    	</bean>
-   	
    	
 </beans>

@@ -19,7 +19,7 @@
       <img class="navbar-brand" style="height: 100px; margin-top: 30px; object-fit: contain;" src="./resources/image/Roomie.png">
     </div>
     <!-- 카카오톡 로그인 시작 -->
-    <div class="signup-wrapper flex-center kakao-button" style="margin-top: 50px;">
+    <div class="signup-wrapper flex-center kakao-button" style="margin-top: 50px; cursor:pointer;" onclick="kakaoLogin()">
       <img style="width: 20px; height: 20px; object-fit: contain; text-align: center;" src="./resources/image/kakao_icon_02.png">
       <a style="margin-left: 10px;">KakaoTalk으로 로그인</a>
     </div>
@@ -28,7 +28,7 @@
     <form class="form" method="post" action="/roomie/birthday.ya">
       <!-- 이메일 -->
       <div class="signup-wrapper flex-center">
-        <input class="signup-input" type="text" id="MEM_ID" name="MEM_ID" placeholder="이메일"/>
+        <input class="signup-input" type="text" id="MEM_ID" name="MEM_ID"  placeholder="이메일"/>
       </div>
       <!-- 비밀번호 -->
       <div class="signup-wrapper flex-center">
@@ -45,6 +45,10 @@
       <!-- 이름 -->
       <div class="signup-wrapper flex-center">
         <input class="signup-input" type="text" id="MEM_NAME" name="MEM_NAME" placeholder="이름" />
+      </div>
+      <!-- 가입유형 -->
+      <div class="signup-wrapper flex-center">
+        <input class="signup-input" type="hidden" name="status" value="email" />
       </div>
       <!-- MBTI 이름 -->
       <div class="signup-wrapper flex-center">
@@ -84,7 +88,7 @@
     <div class="login-container flex-center">
       <a style="margin-left: 10px; font-size: 14px;">계정이 있으신가요?</a>
       <a style="margin-left: 10px; font-size: 14px; color: #0095f6; cursor:pointer;"
-          onclick="href='../views/login.html'">로그인</a>
+          onclick="href='./login.ya'">로그인</a>
     </div>
   </div>
   <!-- 회원가입 컨테이너 끝 -->
@@ -109,16 +113,20 @@
   -->
   <script src="./resources/js/jquery-3.2.1.min.js"></script>
   <script src="./resources/js/jquery.validate.min.js"></script>
+  
   <script>
     $(function(){
-      var html = '<div style="position: relative; z-index: 1; margin-left: -30px; margin-top: 5px;"><img style="object-fit: contain; style="position: relative;" src="./resources/image/icon_23.png"><div>';
-      
+    	
+    	var html = '<div style="position: relative; z-index: 1; margin-left: -30px; margin-top: 5px;"><img style="object-fit: contain; style="position: relative;" src="./resources/image/icon_23.png"><div>';
+
+    	// 유효성 검사
         $(".form").validate({
         //규칙
         rules:{
         	MEM_ID: {
             required : true, // 필수 입력 여부
-            email : true // 이메일 형식
+            email : true, // 이메일 형식
+            remote : "selectMemberId.ya"
           },
           MEM_PWD: {
             required : true, // 필수 입력 여부
@@ -131,7 +139,8 @@
           },
           MEM_USER: {
             required : true, // 사용자 이름은 필수 입력 여부
-            minlength : 4 // 최소 입력 글자수
+            minlength : 4, // 최소 입력 글자수
+            remote : "selectMemberUser.ya"
           },
           MEM_NAME: {
             required : true, // 이름은 필수 입력 여부
@@ -142,7 +151,8 @@
         messages: {
           MEM_ID: {
             required : html, // "이메일은 필수 입력입니다."
-            email : html // "이메일 형식을 지켜주세요."
+            email : html, // "이메일 형식을 지켜주세요."
+            remote : html
           },
           MEM_PWD: {
             required : html, // 비밀번호는 필수 입력입니다.
@@ -155,7 +165,8 @@
           },
           MEM_USER: {
             required : html, // 사용자 이름은 필수 입력입니다.
-            minlength : html // 최소 4글자 이상 입력해주세요.
+            minlength : html, // 최소 4글자 이상 입력해주세요.
+            remote : html
           },
           MEM_NAME: {
             required : html, // 이름은 필수 입력입니다.
@@ -168,6 +179,35 @@
         validClass :'vaild' 
       });
     });
+  </script>
+  
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script>
+  //카카오로그인
+  function kakaoLogin() {
+
+    $.ajax({
+        url: '/roomie/login/getKakaoAuthUrl.ya',
+        type: 'get',
+        async: false,
+        dataType: 'text',
+        success: function (res) {
+            location.href = res;
+        }
+    });
+
+  }
+
+  $(document).ready(function() {
+      var kakaoInfo = '${kakaoInfo}';
+
+      if(kakaoInfo != ""){
+          var data = JSON.parse(kakaoInfo);
+
+          alert("id : " + data['id']);
+      }
+  });  
+
   </script>
 </body>
 </html>
