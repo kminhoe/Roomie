@@ -31,7 +31,7 @@ public class MemberServiceImpl implements MemberService {
 		// javax.mail.internet.MimeMessage
 		MimeMessage message = javaMailSender.createMimeMessage();
 		System.out.println("message의 값 : " + message);
-
+ 
 		try {
 			// org.springframework.mail.javamail.MimeMessageHelper
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");

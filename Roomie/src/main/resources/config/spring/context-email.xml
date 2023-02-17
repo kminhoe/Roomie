@@ -6,8 +6,8 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="실제 이메일을 보낼 이메일 계정" />
-		<property name="password" value="이메일 계정의 실제 비밀번호" />
+		<property name="username" value="ezenroomie@gmail.com" />
+		<property name="password" value="rkpqjakpxxiloxnc" />
 
 
 		<!-- email 요청시는 SMTP -->
@@ -20,6 +20,4 @@
 			</props>
 		</property>
 	</bean>
-
-
 </beans>

@@ -17,7 +17,7 @@
   <!-- 로딩 화면 -->
   <div class="fakeLoader"></div>
   <!-- 로그인 컨테이너 시작 -->
-  <div class="login-container">
+  <div class="login-container"> 
     <!-- ROOMIE 로고 이미지 -->
     <div class="flex-center logo-wrapper">
       <img class="navbar-brand" style="height: 100px; margin-top: 30px; object-fit: contain;" src="./resources/image/Roomie4.png">

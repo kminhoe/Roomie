@@ -12,7 +12,7 @@
 <!-- 타이틀 -->
 <title>가입하기 • ROOMIE</title>
 </head>
-<body class="flex-center">  
+<body class="flex-center">   
   <!-- 회원가입 컨테이너 시작 -->
   <div class="birthday-container">
     <!-- Birthday 로고 이미지 -->

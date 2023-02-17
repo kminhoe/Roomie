@@ -419,5 +419,5 @@ public class MemberController {
 
         return userInfo;
     }
-	
+	 
 }

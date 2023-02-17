@@ -12,7 +12,7 @@
   <title>가입하기 • ROOMIE</title>
 <body class="flex-center">  
   <!-- 회원가입 컨테이너 시작 -->
-  <div class="emailconfirmation-container">
+  <div class="emailconfirmation-container"> 
     <!-- 이메일 로고 이미지 -->
     <div class="flex-center logo-wrapper">
       <img class="navbar-brand" style="margin-top: 30px; object-fit: contain;" src="./resources/image/email_confirmation.png">

@@ -13,7 +13,7 @@ body {
 }
 .signup-container {
   background-color: white;
-  width: 380px;
+  width: 380px; 
   height: 705px;
   border: 1px solid lightgray;
 }

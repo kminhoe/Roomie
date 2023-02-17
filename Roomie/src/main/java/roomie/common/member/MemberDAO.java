@@ -21,7 +21,7 @@ public class MemberDAO {
 	// 카카오 회원가입
 	public void insertKakaoMember(Map<String, Object> map) throws Exception {
 		sqlSessionTemplate.insert("member.insertKakaoMember", map);
-	}
+	} 
 	
 	// 로그인, 아이디 중복체크
 	public Map<String, Object> selectMemberId(Map<String, Object> map) throws Exception {

@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface MemberService {
 
-	/** 메일 전송
+	/** 메일 전송 
      *  @param subject 제목
      *  @param text 내용
      *  @param from 보내는 메일 주소

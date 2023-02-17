@@ -42,7 +42,7 @@
 			)
 		]]>
 	</insert>
-	
+	 
 	<!-- 로그인, 아이디 중복체크 -->
 	<select id="selectMemberId" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[

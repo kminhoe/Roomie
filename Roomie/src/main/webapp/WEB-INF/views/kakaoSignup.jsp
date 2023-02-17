@@ -12,7 +12,7 @@
 <title>가입하기 • ROOMIE</title>
 </head>
 <body class="flex-center">  
-  <!-- 회원가입 컨테이너 시작 -->
+  <!-- 회원가입 컨테이너 시작 --> 
   <div class="signup-container" style="height: 562px;">
     <!-- ROOMIE 로고 이미지 -->
     <div class="flex-center logo-wrapper">
