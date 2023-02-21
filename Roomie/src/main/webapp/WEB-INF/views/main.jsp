@@ -131,10 +131,10 @@
         <!-- 왼쪽 버튼 -->
         <div class="story_prev" style="top:50px; cursor:pointer; position: relative; z-index: 1;"><img src="./resources/image/icon_29.png"></div>
         <ul class="story_list">
-          <li class="sub_story">
+          <li class="sub_story" style="background-image: url('./resources/image/rainbow.png'">
             <div class="text">
               <a onclick="href='#'"><img src="./resources/image/profile_01.jpg" alt="프로필"></a>
-              <span style="font-size: 12px; margin-left: 3px;">yeongjun</span>
+              <span style="font-size: 12px; margin-left: 3px;);">yeongjun</span>
             </div>
           </li>
           <li>

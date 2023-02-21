@@ -87,7 +87,7 @@ public class MemberController {
 				}
 				
 				// 세션 등록
-				session.setAttribute("MEM_ID", memberMap.get("MEM_PWD"));
+				session.setAttribute("MEM_ID", memberMap.get("MEM_ID"));
 				mv.setViewName("redirect:/main.ya");
 			// 입력한 비밀번호가 일치하지 않는 경우
 			} else {
