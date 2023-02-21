@@ -13,7 +13,7 @@ body {
 }
 .signup-container {
   background-color: white;
-  width: 380px;
+  width: 380px; 
   height: 705px;
   border: 1px solid lightgray;
 }
@@ -96,6 +96,15 @@ body {
   color: #371c1d;
   font-weight: bold;
   background-color: #f9e000;
+  border: none;
+  border-radius: 5px;
+  padding: 9px;
+}
+.email-button {
+  font-size: 15px;
+  color: white;
+  font-weight: bold;
+  background-color: #98bcd5;
   border: none;
   border-radius: 5px;
   padding: 9px;
