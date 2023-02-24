@@ -13,9 +13,16 @@ public class BoardDAO {
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	public void register(Map<String, Object> map) throws Exception{
+	public int register(Map<String, Object> map) throws Exception{
+		System.out.println("DAO:" + map);
 		
-		sqlSessionTemplate.insert("board.boardregister", map);
+		
+		return sqlSessionTemplate.insert("board.boardregister", map);
+	}
+	
+	public void hashinsert(Map<String, Object> map) throws Exception{
+		
+		sqlSessionTemplate.insert("board.hashinsert", map);
 	}
 
 } 

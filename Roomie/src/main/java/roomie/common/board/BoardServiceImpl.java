@@ -13,9 +13,18 @@ public class BoardServiceImpl implements BoardService{
 	private BoardDAO boardDAO;
 
 	@Override
-	public void registerBoard(Map<String, Object> map) throws Exception {
+	public int registerBoard(Map<String, Object> map) throws Exception {
+		System.out.println("service:" + map);
 		
-		boardDAO.register(map);
+		int result = boardDAO.register(map);
+		
+		return result;
+	}
+
+	@Override
+	public void inserthasg(Map<String, Object> map) throws Exception {
+		
+		boardDAO.hashinsert(map);		
 	}
 	
 }
