@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="user">
+	
+	<select id="userProfile" parameterType="hashmap" resultType="hashmap">
+		select * from member where mem_idx = #{mem_idx}
+	</select>
+	
+	<update id="userModify" parameterType="hashmap">
+		update member set
+			mem_id = #{MEM_ID},
+			mem_name = #{MEM_NAME},
+			mem_cont = #{MEM_CONT},
+			mem_mbti = #{MEM_MBTI}
+		where mem_idx = #{MEM_IDX}
+	</update>
+	
+	<update id="uploadUserImage" parameterType="hashmap">
+		update member set
+			mem_media = #{MEM_MEDIA}
+		where mem_idx = #{MEM_IDX}
+	
+	</update>
+	
+	<select id="userFollowing" parameterType="hashmap" resultType="hashmap">
+		select * from friend
+	</select>
+	
+	<select id="userBoard" parameterType="hashmap" resultType="hashmap">
+		select bo_mem, count(*) posts from (select * from board where bo_mem = '1') group by bo_mem
+	</select>
+	
+	<update id="userMusic" parameterType="hashmap">
+		update member set
+			mem_music = #{MEM_MUSIC}
+		where mem_idx = #{MEM_IDX}
+	</update>
+
+	
+	
+	
+</mapper>
