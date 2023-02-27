@@ -11,6 +11,62 @@
 <!-- <link rel="stylesheet" href="./resources/css/fakeLoader.min.css"> -->
 <!-- 타이틀 -->
 <title>ROOMIE LOGIN</title>
+
+<!-- 모달 디자인 -->
+<style>
+
+ .modal_lock {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+    }
+
+    .modal_window_lock {
+        background: white;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        position: relative;
+        padding: 10px;
+    }
+    
+     .modal_lock_email {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+    }
+
+    .modal_window_lock_email {
+        background: white;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        position: relative;
+        padding: 10px;
+    }
+    
+</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="flex-center">
@@ -49,7 +105,7 @@
     <!-- 비밀번호 찾기 -->
     <div class="flex-center findpass">
       <a style="color: #0095f6; cursor:pointer"
-      onclick="href='./login.ya'">비밀번호를 잊으셨나요?</a>
+      onclick="href='/roomie/passwordcheck.ya'">비밀번호를 잊으셨나요?</a>
     </div>
     <!-- 회원가입 -->
     <div class="signup-container flex-center">
@@ -58,6 +114,43 @@
           onclick="href='./emailSignup.ya'">가입하기</a>
     </div>
   </div>
+  
+    <!-- 잠금 모달 -->
+  <div class="modal_lock" >
+        <div class="modal_window_lock" style="width: 330px; height: 440px; text-align: center;" >
+            <h2>회원님의 계정이 일시적으로 잠겼습니다</h2>
+<p style="fone-size: 12px;">회원님의 Roomie 계정에서 의심스러운 활동을 감지했으며 보안을 위해 계정을 일시적으로 잠갔습니다.</p>
+<p style="fone-size: 12px;">Roomie와 비슷하게 만들어진 웹사이트에서 비밀번호를 입력하여 계정이 해킹되었을 수 있습니다. 이러한 공격을 피싱이라고 합니다.</p>
+<p style="fone-size: 12px;">앞으로 몇 단계에 걸쳐 회원님의 계정 보안을 위해 신원을 확인한 후 계정 로그인 권한을 복원해드리겠습니다.</p>
+<br>
+
+<button style="width: 270px; border-radius: 8px; height: 40px; background-color: #0095ff; border: none; color: #FFFFFF;"
+onclick="lock()">계속</button>
+        </div>
+    </div>
+    
+    <!-- 잠금 모달 2번째 -->
+    <div class="modal_lock_email" >
+        <div class="modal_window_lock_email" style="width: 330px; height: 440px; text-align: center;" >
+            <div style="text-align: left;" onclick="back()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+              </svg></div>
+            <h2>이 계정이 회원님의 계정인지 확인해주세요</h2>
+            <br><br>
+<p>본인 확인을 위한 보안 코드를 보내드립니다.</p>
+<!-- 해당 회원의 이메일 불러오기-->
+<input type="hidden" id="mem_id" name="mem_id" value="${mem_id}"/>
+<p>이메일: ${mem_id}</p>
+
+<br><br><br><br>
+<button
+onclick="send()"
+ style="width: 270px; border-radius: 8px; height: 40px; background-color: #0095ff; border: none; color: #FFFFFF;">
+보안코드 보내기</button>
+        </div>
+    </div>
+  
   <!-- 로그인 컨테이너 끝 -->
   <!-- 
     validation 플러그인 (jquery-3.2.1.min.js, jquery.validate.min.js)
@@ -145,7 +238,12 @@
 	  }
 	  
 	  if (login == "lock") {
-		  alert("본 계정은 활동 정지된 상태입니다.\n관리자에게 문의해주세요.");
+		  
+		  //잠금 모달창 나오게 변경
+		  $(".modal_lock").css({
+			  "display": "flex"
+			  });
+		  
 	  }
 	  
       var kakaoInfo = '${kakaoInfo}';
@@ -158,6 +256,65 @@
 
   </script>
   
+  <script>
+  
+  function lock(){
+	  $(".modal_lock").css({
+		  "display": "none"
+		  });
+	  
+	  $(".modal_lock_email").css({
+		  "display": "flex"
+		  });
+	  
+	  
+  }
+  
+  function back(){
+	  $(".modal_lock").css({
+		  "display": "flex"
+		  });
+	  
+	  $(".modal_lock_email").css({
+		  "display": "none"
+		  });
+  }
+  
+  
+  function send(){
+	  
+	  var email = {"mail" : $("input[name='mem_id']").val()};
+	    
+	    
+	    $.ajax({
+	        url : "/roomie/emailcheck.ya" 
+	        ,data :email
+	        ,success: function(map){
+	        	  
+	        	let arr = new Array();
+	        	var key = "";
+	        	var mail = "";
+	        	$.each(map, function(i, value){
+	        		
+	        		arr.push(value);
+	        		});
+              
+             if(arr[0] == "NO"){
+          	   alert("등록된 이메일이 없습니다. 다시 한번 확인해 주세요.");
+             } else {
+	        	location.href = '/roomie/emailconfirm.ya?key='+arr[0]+'&email='+arr[1];
+             }
+	        		
+	        },error : function(req,status,err){
+	        	alert("실패");
+	            console.log(req);
+	        }
+	    });//ajax
+	  
+  }
+  
+  
+  </script>
   <!-- 로딩 화면 플러그인 -->
 <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="./resources/js/fakeLoader.min.js"></script>

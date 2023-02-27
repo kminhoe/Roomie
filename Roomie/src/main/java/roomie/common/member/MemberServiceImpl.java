@@ -68,4 +68,19 @@ public class MemberServiceImpl implements MemberService {
 	public Map<String, Object> selectMemberUser(Map<String, Object> map) throws Exception {
 		return memberDAO.selectMemberUser(map);
 	}
+	
+	 //이메일 확인
+		@Override
+		public Map<String, Object> emailcheck(String mail) throws Exception {
+			// TODO Auto-generated method stub
+			return memberDAO.emailcheck(mail);
+		}
+
+
+	    //비밀번호 재설정
+		@Override
+		public void passwordreset(Map<String, Object> map) throws Exception {
+			
+			memberDAO.passwordreset(map);
+		}
 }

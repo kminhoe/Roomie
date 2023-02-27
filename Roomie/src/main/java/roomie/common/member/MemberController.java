@@ -82,6 +82,7 @@ public class MemberController {
 				if (memberMap.get("MEM_LOCK").equals("Y")) {
 					System.out.println("상태 : 계정 잠금");
 					dir.addFlashAttribute("login", "lock");
+					dir.addFlashAttribute("mem_id", memberMap.get("MEM_ID"));
 					mv.setViewName("redirect:/login.ya");
 					return mv;
 				}
@@ -419,5 +420,48 @@ public class MemberController {
 
         return userInfo;
     }
+    
+ // 로그인 잠금
+ 	@RequestMapping(value = "/passwordcheck.ya")
+ 	public ModelAndView passwordEmail(@RequestParam Map<String, Object> map) throws Exception {
+ 		ModelAndView mv = new ModelAndView("member/passwordcheck");
+ 		
+
+ 		return mv;
+ 	}
+ 	
+ 	@RequestMapping(value = "/emailconfirm.ya")
+ 	public ModelAndView emailcheck(@RequestParam Map<String, Object> map) throws Exception {
+ 		ModelAndView mv = new ModelAndView("member/emailconfirm");
+ 		
+ 		System.out.println("받아지는지 확인 : " + map);
+ 		
+ 		mv.addObject("key", map.get("key"));
+
+ 		return mv;
+ 	}
+ 	
+ 	@RequestMapping(value = "/passwordreset.ya")
+ 	public ModelAndView passwordreset(@RequestParam(required = false) Map<String, Object> map) throws Exception {
+ 		ModelAndView mv = new ModelAndView("member/passwordreset");
+ 		
+ 		 Map<String, Object> reset = new  HashMap<String, Object>();
+ 		
+ 		if(map.get("password") != null ) {
+
+         reset.put("mem_id", map.get("email"));
+         reset.put("mem_pwd", map.get("password"));
+         
+         System.out.println("reset map 확인 : " + reset);
+ 		
+ 		memberService.passwordreset(reset);
+ 		}
+ 		else if(map.get("password") == null) {
+ 			System.out.println("비밀번호 입력 X");
+ 		}
+
+
+ 		return mv;
+ 	}
 	 
 }

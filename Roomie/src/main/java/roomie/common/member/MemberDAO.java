@@ -32,4 +32,16 @@ public class MemberDAO {
 	public Map<String, Object> selectMemberUser(Map<String, Object> map) throws Exception {
 		return sqlSessionTemplate.selectOne("member.selectMemberUser", map);
 	}
+	
+	//이메일 확인
+    public Map<String, Object> emailcheck(String mail) throws Exception{
+		
+		return sqlSessionTemplate.selectOne("member.emailcheck",mail);
+		} 
+ 
+ //비밀번호 재설정
+ public int passwordreset(Map<String, Object> map) throws Exception{
+		
+		return sqlSessionTemplate.update("member.passwordreset", map);
+		} 
 }

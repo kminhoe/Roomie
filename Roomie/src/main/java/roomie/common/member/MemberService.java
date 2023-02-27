@@ -14,4 +14,11 @@ public interface MemberService {
     public void insertKakaoMember(Map<String, Object> map) throws Exception; // 카카오 회원가입
     public Map<String, Object> selectMemberId(Map<String, Object> map) throws Exception; // 로그인, 아이디 중복체크
     public Map<String, Object> selectMemberUser(Map<String, Object> map) throws Exception; // 사용자 이름 중복체크
+
+  //이메일 확인
+  	public Map<String, Object> emailcheck(String mail) throws Exception;
+  	//비밀번호 재설정
+  	public void passwordreset(Map<String, Object> map) throws Exception;
+
 }
+
