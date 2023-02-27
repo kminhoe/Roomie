@@ -21,7 +21,63 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
     position: relative;
     padding: 10px;
+}
 
+@media screen and (max-width: 1100px) {
+    .modal_window {
+        width: 330px !important;
+    }
+
+    .image_upload img {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    .image_upload {
+        width: 310px !important;
+        text-align: center !important;
+    }
+
+    .upload {
+        width: 310px !important;
+    }
+
+    .upload_next {
+        left:256px !important;
+    }
+    .upload_list {
+	width: 310px !important;
+    height: 548px;
+    transition: left 0.5s ease-out;
+    
+}
+
+    .upload_list img {
+        width: 310px !important;
+        height: 556px;
+    }
+    .upload_list video{
+    	width: 310px !important;
+    }
+    .sub_upload{
+    	width: 310px !important;
+    	height: auto;
+    	align-items: center;
+    	flex-direction: column;
+    	background-color: #FFFFFF;
+    	margin: auto;
+    }
+    .modal_image_upload{
+    	width: 310px !important;
+    	height: auto;
+    	
+    }
+    
+}
+.uploadedfile{
+	width: 780px;
+	height: auto;
+	margin: auto;
 }
 
 .modal_title{
