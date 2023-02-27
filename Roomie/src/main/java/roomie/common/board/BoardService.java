@@ -4,6 +4,8 @@ import java.util.Map;
 
 public interface BoardService {
 	
-	public void registerBoard(Map<String, Object> map) throws Exception;
+	public int registerBoard(Map<String, Object> map) throws Exception;
+	
+	public void inserthasg(Map<String, Object> map) throws Exception;
  
 } 

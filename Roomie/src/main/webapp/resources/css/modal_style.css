@@ -45,10 +45,39 @@
     .upload_next {
         left:256px !important;
     }
+    .upload_list {
+	width: 310px !important;
+    height: 548px;
+    transition: left 0.5s ease-out;
+    
+}
 
     .upload_list img {
         width: 310px !important;
+        height: 556px;
     }
+    .upload_list video{
+    	width: 310px !important;
+    }
+    .sub_upload{
+    	width: 310px !important;
+    	height: auto;
+    	align-items: center;
+    	flex-direction: column;
+    	background-color: #FFFFFF;
+    	margin: auto;
+    }
+    .modal_image_upload{
+    	width: 310px !important;
+    	height: auto;
+    	
+    }
+    
+}
+.uploadedfile{
+	width: 780px;
+	height: auto;
+	margin: auto;
 }
 
 .modal_title{
@@ -78,17 +107,25 @@
 
 .upload {
     width: 780px;
-    height: 556px;
+    height: 548px;
     position: relative;
     overflow: hidden; 
-    background-color: transparent;
+
 }
 
 .upload_list {
+	
+    height: 548px;
     transition: left 0.5s ease-out;
+    
 }
 
 .sub_upload {
+	width: 780px;
+	height: 548px;
+	margin: auto;
     align-items: center;
     flex-direction: column;
+    background-color: #FFFFFF;
+    
 }
