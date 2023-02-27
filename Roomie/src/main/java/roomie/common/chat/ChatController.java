@@ -1,3 +1,4 @@
+
 package roomie.common.chat;
 
 import java.util.ArrayList;

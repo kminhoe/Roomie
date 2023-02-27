@@ -16,7 +16,7 @@ public class SearchController {
 		ModelAndView mv = new ModelAndView("/search/searchForm");
 		
 		return mv;
-	}
+	} 
 	
 	
 	@RequestMapping(value = "searchResult.ya")

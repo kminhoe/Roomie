@@ -282,7 +282,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
-	}
+	} 
 
 	.search_gallery_item {
 		width: 32%;
