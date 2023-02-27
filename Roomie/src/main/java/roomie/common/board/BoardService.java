@@ -8,4 +8,4 @@ public interface BoardService {
 	
 	public void inserthasg(Map<String, Object> map) throws Exception;
  
-}
+} 

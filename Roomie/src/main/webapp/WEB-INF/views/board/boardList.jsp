@@ -774,13 +774,13 @@
     const modal_add_feed_content = document.getElementById("modal_add_feed_content");
     const buttonAddFeed = document.getElementById("add_feed");
 
-    // 모달 글쓰기 이미지 업로드 띄우기
+    // ëª¨ë¬ ê¸ì°ê¸° ì´ë¯¸ì§ ìë¡ë ëì°ê¸°
     buttonAddFeed.addEventListener("click", e => {
       modal_add_feed.style.display = "flex";
       document.body.style.overflowY = "hidden";
     });
 
-    // 모달 글쓰기 이미지 업로드 닫기
+    // ëª¨ë¬ ê¸ì°ê¸° ì´ë¯¸ì§ ìë¡ë ë«ê¸°
     const buttonCloseModal_add_feed = document.getElementById("close_modal_add_feed");
     buttonCloseModal_add_feed.addEventListener("click", e => {
       modal_add_feed.style.display = "none";
@@ -790,7 +790,7 @@
       $('#input_content').val('');
 
     });
-    // 모달 글쓰기 닫기
+    // ëª¨ë¬ ê¸ì°ê¸° ë«ê¸°
     const buttonCloseModal_add_feed_content = document.getElementById("close_modal_add_feed_content");
     buttonCloseModal_add_feed_content.addEventListener("click", e => {
       modal_add_feed_content.style.display = "none";
@@ -800,7 +800,7 @@
       $('#input_content').val('');
     });
 
-    // 업로드 jquery
+    // ìë¡ë jquery
     $('.modal_image_upload')
         .on("dragover", dragOver)
         .on("dragleave", dragOver)
@@ -869,7 +869,7 @@
             document.getElementById('upload_next').click();
             console.log(window.URL.createObjectURL(data.files[i]));
           } else {
-            // 파일 타입이 동영상 일 경우
+            // íì¼ íìì´ ëìì ì¼ ê²½ì°
             var html = "";
             html += '<li class="sub_upload"><video controls width="780px" height="556px" style="background:#e2e2e2;" src="' + window.URL.createObjectURL(data.files[i]) + '"></li>';
             $('.upload_list').append(html)
@@ -883,7 +883,7 @@
           
           
         } else {
-          // 파일을 업로드하지 못했습니다. 
+          // íì¼ì ìë¡ëíì§ ëª»íìµëë¤. 
           $('.modal_image_upload').css({
             'background-color' : '#transparent'
           });
@@ -1178,7 +1178,7 @@
     const story_slideWidth = 485; //한개의 슬라이드 넓이
     const story_slideMargin = 0; //슬라이드간의 margin 값
 
-    //전체 슬라이드 컨테이너 넓이 설정
+    //ì ì²´ ì¬ë¼ì´ë ì»¨íì´ë ëì´ ì¤ì 
     story_list.style.width = (story_slideWidth + story_slideMargin) * story_slideCount + 'px';
 
     function story_moveSlide(num) {
@@ -1187,17 +1187,17 @@
     }
 
     story_prev.addEventListener('click', function () {
-      /*첫 번째 슬라이드로 표시 됐을때는 
-      이전 버튼 눌러도 아무런 반응 없게 하기 위해 
-      currentIdx !==0일때만 moveSlide 함수 불러옴 */
+      /*ì²« ë²ì§¸ ì¬ë¼ì´ëë¡ íì ëìëë 
+      ì´ì  ë²í¼ ëë¬ë ìë¬´ë° ë°ì ìê² íê¸° ìí´ 
+      currentIdx !==0ì¼ëë§ moveSlide í¨ì ë¶ë¬ì´ */
       if (story_currentIdx !== 0) story_moveSlide(story_currentIdx - 1);
     });
 
     story_next.addEventListener('click', function () {
-      /* 마지막 슬라이드로 표시 됐을때는 
-      다음 버튼 눌러도 아무런 반응 없게 하기 위해
-      currentIdx !==slideCount - 1 일때만 
-      moveSlide 함수 불러옴 */
+      /* ë§ì§ë§ ì¬ë¼ì´ëë¡ íì ëìëë 
+      ë¤ì ë²í¼ ëë¬ë ìë¬´ë° ë°ì ìê² íê¸° ìí´
+      currentIdx !==slideCount - 1 ì¼ëë§ 
+      moveSlide í¨ì ë¶ë¬ì´ */
       if (story_currentIdx !== story_slideCount - 1) {
         story_moveSlide(story_currentIdx + 1);
       }
@@ -1449,14 +1449,14 @@ function removeAllChildNods(el) {
     var upload_slideWidth = 795; //한개의 슬라이드 넓이
     const upload_slideMargin = 0; //슬라이드간의 margin 값
   
-    // 창크기 변화 감지
+    // ì°½í¬ê¸° ë³í ê°ì§
     $( window ).resize(function() {
       var windowWidth = $(window).width();
       if(windowWidth > 1100) {
-        // 창 가로 크기가 1100보다 클 경우 
+        // ì°½ ê°ë¡ í¬ê¸°ê° 1100ë³´ë¤ í´ ê²½ì° 
         upload_slideWidth = 795;
       } else {
-        // 창 가로 크기가 1100보다 작을 경우
+        // ì°½ ê°ë¡ í¬ê¸°ê° 1100ë³´ë¤ ìì ê²½ì°
         upload_slideWidth = 325;
       }
       upload_moveSlide(upload_currentIdx);
@@ -1464,14 +1464,14 @@ function removeAllChildNods(el) {
 
     var windowWidth = $(window).width();
     if(windowWidth > 1100) {
-      // 창 가로 크기가 1100보다 클 경우 
+      // ì°½ ê°ë¡ í¬ê¸°ê° 1100ë³´ë¤ í´ ê²½ì° 
       upload_slideWidth = 795;
     } else {
-      // 창 가로 크기가 1100보다 작을 경우
+      // ì°½ ê°ë¡ í¬ê¸°ê° 1100ë³´ë¤ ìì ê²½ì°
       upload_slideWidth = 325;
     }
 
-    //전체 슬라이드 컨테이너 넓이 설정
+    //ì ì²´ ì¬ë¼ì´ë ì»¨íì´ë ëì´ ì¤ì 
     upload_list.style.width = (upload_slideWidth + upload_slideMargin) * upload_slideCount + 'px';
 
     function upload_moveSlide(num) {
@@ -1480,23 +1480,23 @@ function removeAllChildNods(el) {
     }
 
     upload_prev.addEventListener('click', function () {
-      /*첫 번째 슬라이드로 표시 됐을때는 
-      이전 버튼 눌러도 아무런 반응 없게 하기 위해 
-      upload_currentIdx !==0일때만 upload_moveSlide 함수 불러옴 */
+      /*ì²« ë²ì§¸ ì¬ë¼ì´ëë¡ íì ëìëë 
+      ì´ì  ë²í¼ ëë¬ë ìë¬´ë° ë°ì ìê² íê¸° ìí´ 
+      upload_currentIdx !==0ì¼ëë§ upload_moveSlide í¨ì ë¶ë¬ì´ */
       if (upload_currentIdx !== 0) upload_moveSlide(upload_currentIdx - 1);
     });
 
     upload_next.addEventListener('click', function () {
-      /* 마지막 슬라이드로 표시 됐을때는 
-      다음 버튼 눌러도 아무런 반응 없게 하기 위해
-      currentIdx !==slideCount - 1 일때만 
-      moveSlide 함수 불러옴 */
+      /* ë§ì§ë§ ì¬ë¼ì´ëë¡ íì ëìëë 
+      ë¤ì ë²í¼ ëë¬ë ìë¬´ë° ë°ì ìê² íê¸° ìí´
+      currentIdx !==slideCount - 1 ì¼ëë§ 
+      moveSlide í¨ì ë¶ë¬ì´ */
       if (upload_currentIdx !== upload_slideCount - 1) {
         upload_moveSlide(upload_currentIdx + 1);
       }
     });
 
-    // 글쓰기 다음 페이지
+    // ê¸ì°ê¸° ë¤ì íì´ì§
     function modal_add_feed_Next() {
       $('#modal_add_feed_content').css({
         display : 'flex'
@@ -1507,7 +1507,7 @@ function removeAllChildNods(el) {
       })
     }
 
-    // 이전 페이지
+    // ì´ì  íì´ì§
     function modal_add_feed_Prev() {
       $('#modal_add_feed_content').css({
         display: 'none'

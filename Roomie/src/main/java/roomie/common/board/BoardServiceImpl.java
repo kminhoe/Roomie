@@ -27,4 +27,4 @@ public class BoardServiceImpl implements BoardService{
 		boardDAO.hashinsert(map);		
 	}
 	
-}
+} 
