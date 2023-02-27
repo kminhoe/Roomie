@@ -11,7 +11,8 @@ body {
  
 .left_body {
     background-color: #FAFAFA;
-    margin-right: 100px;
+/*     margin-right: 100px; */
+	margin: auto;
     width: 500px;
     height: 100%;
     display: flex;
@@ -43,7 +44,6 @@ body {
     flex-direction: column;
     width: 66px;
     height: 66px;
-    background-image: url("../image/rainbow.png");
     background-size: contain;
 }
 
