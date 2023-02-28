@@ -4,7 +4,6 @@ body {
 
 .main_body {
     display: flex;
-    justify-content: center;
     padding-top: 50px;
     background-color: #FAFAFA;
     min-height: calc(100% - 120px);
@@ -18,6 +17,59 @@ body {
     display: flex;
     
     flex-direction: column;
+}
+
+.story {
+    left: 15px;
+    width: 485px;
+    height: 117px;
+    position: relative;
+    overflow: hidden; 
+}
+
+.story_list {
+    transition: left 0.5s ease-out;
+}
+
+.sub_story img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: white;
+}
+.sub_story {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 66px;
+    height: 66px;
+    background-image: url("../image/rainbow.png");
+    background-size: contain;
+}
+
+
+ul {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    left: 0px;
+    padding: 0px;
+
+}
+
+ul li {
+    display: flex;
+    flex-direction: row;
+    margin-right: 15px;
+}
+
+.text {
+    position: relative;
+    left: 0px;
+    top: 12px;
+    text-align: center;
+    position: relative;
 }
 
 @media (max-width: 1100px) {
@@ -121,7 +173,7 @@ body {
 .profile_img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
 }
 
 .name_content{
@@ -147,11 +199,54 @@ body {
     overflow: hidden;
 }
 
+.inputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    padding: 0 12px 0 12px;
+    margin: 0px;
+    border-top: 1px solid #efefef;
+  }
+  .inputBox{
+    background-color: #FAFAFA;
+    font:14px;
+    color: black;
+    outline: none;
+    width:420px;
+    height: 50px;
+    border: solid 0px;
+  }
+  .buttonBox{
+    background-color: #FAFAFA;
+    color:#C0E0FD;
+    outline: none;
+    border: solid 0px;
+  }
+  
+  .type_comment {
+    display: flex;
+    justify-content: flex-start;
+    width: 530px;
+    font-size: 14px;
+    color: #8e8e8e;
+  }
+
+  .summit {
+    font-size: 14px;
+    color: #bee1fd;
+  }
+
 .link_txt {
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     text-decoration: none;
+}
+
+.more_details {
+    position: relative;
+    right: -300px;
 }
 
 .recommend_box {
@@ -180,4 +275,15 @@ body {
     .menu_img {
         display: none;
     }
+}
+
+.button {
+    width: 100%;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    background-color: #98bcd5;
+    border: none;
+    border-radius: 5px;
+    padding: 9px;
 }

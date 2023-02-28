@@ -86,11 +86,13 @@
     justify-content: space-between;
     font-weight: bold;
     font-size: 20px;
-    margin: auto;
 }
 
 .modal_title_side{
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 0 0 40px;
 }
 
 .modal_image_upload{
@@ -103,22 +105,19 @@
     background-color: transparent;
 }
 
-.modal_image{
-    outline: 2px dashed black ;
-    outline-offset:-10px;
-    text-align: center;
-    transition: all .15s ease-in-out;
-    width:80px;
-    height: 80px;
-    border-radius: 50%;
-    margin: auto;
+.upload {
+    width: 780px;
+    height: 548px;
+    position: relative;
+    overflow: hidden; 
+
 }
 
-.modal_contents{
-    text-align: left;
-    position:relative;
-    margin: auto;
-    width: 70%;
+.upload_list {
+   
+    height: 548px;
+    transition: left 0.5s ease-out;
+    
 }
 
 .login-input {
