@@ -28,7 +28,11 @@ public class UserDAO {
 		sqlSessionTemplate.update("user.uploadUserImage", map);
 	}
 	
-	public Map<String,Object> userFollowing(Map<String,Object>map) throws Exception{
+	public Map<String,Object> userFollower(Map<String,Object>map) throws Exception{
+		return sqlSessionTemplate.selectOne("user.userFollower", map);
+	}
+	
+	public Map<String,Object> userFollowing(Map<String,Object>map)throws Exception{
 		return sqlSessionTemplate.selectOne("user.userFollowing", map);
 	}
 	
@@ -38,6 +42,14 @@ public class UserDAO {
 	
 	public void modifyMusic(Map<String,Object> map)throws Exception {
 		sqlSessionTemplate.update("user.userMusic", map);
+	}
+	
+	public List<Map<String,Object>> followerList(Map<String,Object>map)throws Exception{
+		return sqlSessionTemplate.selectList("user.userFollowerList", map);
+	}
+	
+	public List<Map<String,Object>> followingList(Map<String,Object>map)throws Exception{
+		return sqlSessionTemplate.selectList("user.userFollowingList", map);
 	}
 	
 

@@ -25,8 +25,12 @@
 	
 	</update>
 	
+	<select id="userFollower" parameterType="hashmap" resultType="hashmap">
+		select count(*) as CNT from friend where fri_mem = #{FRI_MEM}
+	</select>
+	
 	<select id="userFollowing" parameterType="hashmap" resultType="hashmap">
-		select * from friend
+		select count(*) as CNT from friend where following = #{FOLLOWING}
 	</select>
 	
 	<select id="userBoard" parameterType="hashmap" resultType="hashmap">
@@ -38,7 +42,14 @@
 			mem_music = #{MEM_MUSIC}
 		where mem_idx = #{MEM_IDX}
 	</update>
+	
+	<select id="userFollowerList" parameterType="hashmap" resultType="hashmap">
+		select m.mem_idx, m.mem_id, m.mem_name from member m inner join friend f on m.mem_idx = f.following where f.fri_mem = #{FRI_MEM}
+	</select>
 
+	<select id="userFollowingList" parameterType="hashmap" resultType="hashmap">
+		select m.mem_idx, m.mem_id, m.mem_name from member m inner join friend f on m.mem_idx = f.fri_mem where f.following = #{FOLLOWING}
+	</select>
 	
 	
 	

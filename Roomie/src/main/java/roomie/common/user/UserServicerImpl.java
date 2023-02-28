@@ -1,5 +1,6 @@
 package roomie.common.user;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -34,8 +35,12 @@ public class UserServicerImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> userFollowing(Map<String, Object> map) throws Exception {
+	public Map<String, Object> userFollower(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
+		return userDAO.userFollower(map);
+	}
+	
+	public Map<String,Object> userFollowing(Map<String,Object>map)throws Exception{
 		return userDAO.userFollowing(map);
 	}
 
@@ -50,6 +55,18 @@ public class UserServicerImpl implements UserService {
 		// TODO Auto-generated method stub
 		userDAO.modifyMusic(map);
 		
+	}
+
+	@Override
+	public List<Map<String, Object>> userFollowerList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return userDAO.followerList(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> userFollowingList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return userDAO.followingList(map);
 	}
 	
 	
