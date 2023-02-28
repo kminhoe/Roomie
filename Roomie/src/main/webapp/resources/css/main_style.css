@@ -8,13 +8,14 @@ body {
     background-color: #FAFAFA;
     min-height: calc(100% - 120px);
 }
- 
+
 .left_body {
     background-color: #FAFAFA;
-    margin-right: 100px;
+    margin: auto;
     width: 500px;
     height: 100%;
     display: flex;
+    
     flex-direction: column;
 }
 
