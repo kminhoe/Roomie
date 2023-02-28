@@ -40,7 +40,7 @@ public class SearchController {
 		mv.addObject("mem", mem);
 		
 		return mv;
-	} 
+	}
 	
 
 
