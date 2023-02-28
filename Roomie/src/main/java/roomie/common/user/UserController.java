@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -33,10 +34,28 @@ public class UserController {
 	@RequestMapping(value="userProfile.ya", method=RequestMethod.GET)
 	public ModelAndView userProfile(@RequestParam Map<String, Object> map) throws Exception {
 		ModelAndView mv = new ModelAndView("/profile/profile");
+		
+		//member profile
 		Map<String,Object> mapper = (HashMap<String,Object>)userService.userProfile(map);
 		mv.addObject("user", mapper);
-		Map<String,Object> follow = userService.userFollowing(map);
-		mv.addObject("follow", follow);
+		
+		//followers
+		Map<String,Object> follower = new HashMap<String,Object>();
+		follower.put("FRI_MEM", map.get("mem_idx"));
+		Map<String,Object> followerresult = userService.userFollower(follower);
+		List<Map<String,Object>> followerList = userService.userFollowerList(follower);
+		mv.addObject("follow", followerresult);
+		mv.addObject("followerList", followerList);
+		
+		//following
+		Map<String,Object> following = new HashMap<String,Object>();
+		following.put("FOLLOWING", map.get("mem_idx"));
+		Map<String,Object> followingResult = userService.userFollowing(following);
+		List<Map<String,Object>> followingList = userService.userFollowingList(following);
+		mv.addObject("following", followingResult);
+		mv.addObject("followingList", followingList);
+		
+		//board
 		Map<String,Object> board = userService.userBoard(map);
 		mv.addObject("board", board);
 		return mv;
