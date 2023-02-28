@@ -16,7 +16,7 @@
 	<![CDATA[
 		SELECT * FROM MEMBER
 	]]>
-</select> 
+</select>
 
 
 <insert id="insertKeyword" parameterType="hashmap">

@@ -11,4 +11,4 @@ public interface SearchService {
 	
 	public void insertKeyword(Map<String, Object> map) throws Exception;
 
-} 
+}

@@ -27,4 +27,4 @@ public class SearchDAO extends AbstractDAO {
 		 insert("search.insertKeyword", map);
 	}
 
-} 
+}
