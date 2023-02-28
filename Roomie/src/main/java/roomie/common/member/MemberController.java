@@ -40,14 +40,22 @@ public class MemberController {
 
 	// 메인 페이지
 	@RequestMapping(value = "/main.ya")
-	public void main() throws Exception {}
+	public ModelAndView main() throws Exception {
+		ModelAndView mv = new ModelAndView("/member/main");
+		
+		return mv;
+	}
 	
 	// 로그인 페이지
 	@RequestMapping(value = "/login.ya")
-	public void login() throws Exception {}
+	public ModelAndView login() throws Exception {
+		ModelAndView mv = new ModelAndView("/member/login");
+		
+		return mv;
+	}
 	
 	// 로그인 페이지 > 이메일 로그인
-	@RequestMapping(value = "/loginSuccess")
+	@RequestMapping(value = "/loginSuccess.ya")
 	public ModelAndView loginSuccess(@RequestParam Map<String, Object> map, HttpSession session, RedirectAttributes dir) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
@@ -82,7 +90,6 @@ public class MemberController {
 				if (memberMap.get("MEM_LOCK").equals("Y")) {
 					System.out.println("상태 : 계정 잠금");
 					dir.addFlashAttribute("login", "lock");
-					dir.addFlashAttribute("mem_id", memberMap.get("MEM_ID"));
 					mv.setViewName("redirect:/login.ya");
 					return mv;
 				}
@@ -102,12 +109,16 @@ public class MemberController {
 	
 	// 이메일 > 회원가입 페이지
 	@RequestMapping(value = "/emailSignup.ya", method= {RequestMethod.GET})
-	public void emailSignup() throws Exception {}
+	public ModelAndView emailSignup() throws Exception {
+		ModelAndView mv = new ModelAndView("/member/emailSignup");
+		
+		return mv;
+	}
 	
 	// 카카오 > 회원가입 페이지
 	@RequestMapping(value = "/kakaoSignup.ya", method= {RequestMethod.GET})
 	public ModelAndView kakaoSignup(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("/member/kakaoSignup");
 		
 		String kakaoId = (String)session.getAttribute("kakaoId");
 
@@ -149,7 +160,7 @@ public class MemberController {
 	@RequestMapping(value = "/birthday.ya", method= {RequestMethod.POST})
 	public ModelAndView birthday (@RequestParam Map<String, Object> map) throws Exception {
 		
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("/member/birthday");
 		
 		mv.addAllObjects(map);
 
@@ -160,7 +171,7 @@ public class MemberController {
 	@RequestMapping(value = "/emailConfirmation.ya", method= {RequestMethod.POST})
 	public ModelAndView emailConfirmation (@RequestParam Map<String, Object> map) throws Exception {
 		
-		ModelAndView mv = new ModelAndView();
+		ModelAndView mv = new ModelAndView("/member/emailConfirmation");
 		
 		System.out.println("Map : " + map);
 		mv.addAllObjects(map);
@@ -231,7 +242,7 @@ public class MemberController {
 	// 이메일 회원가입 성공
 	@RequestMapping(value = "/emailSignupSuccess.ya", method = RequestMethod.POST)
 	public ModelAndView emailSignupSuccess(@RequestParam Map<String, Object> map) throws Exception {
-		ModelAndView mv = new ModelAndView("/login");
+		ModelAndView mv = new ModelAndView("/member/login");
 
 		System.out.println(map);
 		
@@ -243,7 +254,7 @@ public class MemberController {
 	// 카카오 회원가입 성공
 	@RequestMapping(value = "/kakaoSignupSuccess.ya", method = RequestMethod.POST)
 	public ModelAndView kakaoSignupSuccess(@RequestParam Map<String, Object> map) throws Exception {
-		ModelAndView mv = new ModelAndView("/login");
+		ModelAndView mv = new ModelAndView("/member/login");
 
 		System.out.println(map);
 		
@@ -421,7 +432,7 @@ public class MemberController {
         return userInfo;
     }
     
- // 로그인 잠금
+	// 로그인 잠금
  	@RequestMapping(value = "/passwordcheck.ya")
  	public ModelAndView passwordEmail(@RequestParam Map<String, Object> map) throws Exception {
  		ModelAndView mv = new ModelAndView("member/passwordcheck");
@@ -463,5 +474,5 @@ public class MemberController {
 
  		return mv;
  	}
-	 
+ 
 }
