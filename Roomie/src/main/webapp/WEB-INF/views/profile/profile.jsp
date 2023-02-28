@@ -523,22 +523,22 @@ img.track {
 					</span> ±Û</li>
 					<li id="followers"><span class="profile-stat-count">
 						<c:choose>
-						<c:when test="${empty follow.FOLLOWER}">
+						<c:when test="${empty follow.CNT}">
 							0
 						</c:when>
 						<c:otherwise>
-							${follow.FOLLOWER}
+							${follow.CNT}
 						</c:otherwise>
 						</c:choose>
 						</span>
 						ÆÈ·¯¿ö</li>
 					<li id="following"><span class="profile-stat-count">
 						<c:choose>
-						<c:when test="${empty follow.FOLLOWING}">
+						<c:when test="${empty following.CNT}">
 							0
 						</c:when>
 						<c:otherwise>
-							${follow.FOLLOWING}
+							${following.CNT}
 						</c:otherwise>
 						</c:choose>
 					</span>
@@ -606,7 +606,13 @@ img.track {
     
     <script src='spotifyController.js' type='text/javascript'></script>
 -->
-    <iframe style="border-radius:12px; height:30%;" src="https://open.spotify.com/embed/track/${user.MEM_MUSIC}" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+	<c:choose>
+	<c:when test="${empty user.MEM_MUSIC}"></c:when>
+	<c:otherwise>
+    	<iframe style="border-radius:12px; height:30%;" src="https://open.spotify.com/embed/track/${user.MEM_MUSIC}" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+	</c:otherwise>
+	</c:choose>
 	<div class="container">
 		<c:forEach items="${board.BO_MEDIA}" var="post">
 		<div class="gallery">
@@ -757,6 +763,7 @@ Full-page view:
 			</div>
 			<br>
 			<hr>
+			<c:forEach var="fo" items="${followerList}">
 			<div class="modal_contents">
 				<li>
 					<div class="media">
@@ -767,7 +774,7 @@ Full-page view:
 						</div>
 						<div class="media-body">
 							<div style="padding-top: 3%; padding-left: 5%;">
-								<h3 href="javascript:void(0)">Ronnie Ellis</h3>
+								<h3 href="javascript:void(0)">${fo.MEM_NAME}</h3>
 							</div>
 							<div style="padding-left: 50%;" class="pull-right">
 								<button type="button"
@@ -775,13 +782,13 @@ Full-page view:
 									<i class="icon md-check" aria-hidden="true"></i>Following
 								</button>
 							</div>
-							<h5 style="padding-bottom: 3%; padding-left: 5%;">@kingronnie24</h5>
+							<h5 style="padding-bottom: 3%; padding-left: 5%;">@${fo.MEM_ID}</h5>
 						</div>
 					</div>
 				</li>
 				<hr>
 			</div>
-
+			</c:forEach>
 		</div>
 	</div>
 
@@ -806,6 +813,7 @@ Full-page view:
 			</div>
 			<br> <br>
 			<hr>
+			<c:forEach var="fo" items="${followingList}">
 			<div class="modal_contents">
 				<li>
 					<div class="media">
@@ -816,7 +824,7 @@ Full-page view:
 						</div>
 						<div class="media-body">
 							<div style="padding-top: 3%; padding-left: 5%;">
-								<h3 href="javascript:void(0)">Ronnie Ellis</h3>
+								<h3 href="javascript:void(0)">${fo.MEM_NAME}</h3>
 							</div>
 							<div style="padding-left: 50%;" class="pull-right">
 								<button type="button"
@@ -824,13 +832,13 @@ Full-page view:
 									<i class="icon md-check" aria-hidden="true"></i>Following
 								</button>
 							</div>
-							<h5 style="padding-bottom: 3%; padding-left: 5%;">@kingronnie24</h5>
+							<h5 style="padding-bottom: 3%; padding-left: 5%;">@${fo.MEM_ID}</h5>
 						</div>
 					</div>
 				</li>
 				<hr>
 			</div>
-
+			</c:forEach>
 		</div>
 	</div>
 	
@@ -1116,7 +1124,7 @@ function setImageFromFile(input, expression) {
 		    dataType: 'json',
 		    crossDomain: true,
 		    headers: {
-		        "Authorization": `Bearer BQBoPRVwdqDWANT_6uGY7bZcziuyhx8Z6C3kP9SO84js_lCtyL5dix7ZH5AsisNy7lzjMledy3-IFf30v3rm2Woo7CWJNS5lChCQIx8TYzTELsl99Kndyg5_u0Lu0UUweYNVFBl8_7kU4Vt1xaoOP007VBl6-vzTLaLVQb3t0EnqylgD7VhW1kJaiTWONMi-NTLJ`
+		        "Authorization": `Bearer BQAblH_dxYUXylW4Zm7HvVSooNXrcTk8BqrQAjNdIr8lGKV1acb7A-zvAb_eHFdePEuS6ChHERghprjLI-VRoMTTc1VsAj7V67eWlO5jU5QdHy-vgWhVBrhG5BtczLmNRYTL4MK70B8Qtd5moa_Izdh1mRlTf41G59jOWd7PPmWPGV9spsElZPEbPvSNHWUlnHa2`
 		      },
 
 		    success: function(data)
