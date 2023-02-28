@@ -17,7 +17,7 @@ public class SearchServiceImpl implements SearchService {
 	public List<Map<String, Object>> hashList(String idx) throws Exception {
 		// TODO Auto-generated method stub
 		return searchDAO.hashList(idx);
-	}
+	} 
 
 	@Override
 	public List<Map<String, Object>> memberList(String idx) throws Exception {

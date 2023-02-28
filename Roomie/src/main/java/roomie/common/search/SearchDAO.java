@@ -25,6 +25,6 @@ public class SearchDAO extends AbstractDAO {
 	
 	public void insertKeyword(Map<String, Object> map) throws Exception {
 		 insert("search.insertKeyword", map);
-	}
+	} 
 
 }
