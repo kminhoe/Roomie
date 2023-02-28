@@ -14,6 +14,15 @@
   <!-- 내비게이션 바 구글 아이콘 이미지 -->
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
         rel="stylesheet">
+        
+
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+const $j = jQuery.noConflict();
+</script>
+<script src="./resources/js/jquery-ui.js"></script>
 
   <!-- 타이틀 -->
   <title>ROOMIE</title>
@@ -41,13 +50,13 @@ font-size: 10px;
 box-sizing: border-box;
 }
 
-body {
+/* body {
 font-family: "Open Sans", Arial, sans-serif;
 min-height: 100vh;
 background-color: #fafafa;
 color: #262626;
 padding-bottom: 3rem;
-}
+} */
 
 .visually-hidden {
 position: absolute !important;
@@ -336,28 +345,53 @@ Remove or comment-out the code block below to see how the browser will fall-back
 	/* 모달 관련 */
 	
 	.test_modal {
-		width: 500px;
+
+width: 500px;
 		height: 650px;
-		position: absolute;
-		left: 50%;
-		top: 75px;
-		display: none;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background-color: #fff;
-		border-radius: 10px;
-		border: 1px solid rgba(255, 255, 255, 0.18);
-		/* X축의 가운데를 기준으로 */
+background: white;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        position: relative;
+        padding: 10px;
+        top: 75px;
+        overflow-x: hidden;
+		/* width: 500px;
+		height: 650px;
+		background: white;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        position: relative;
+        padding: 10px;
+        top: 75px;
+        /* X축의 가운데를 기준으로 
 		transform: translate(-50%);
 		padding: 10px;
 		z-index: 1;
+ 
+		left: 50% */
+		
 	}
 	
 	.test_modal2 {
-		width: 500px;
+	
+	width: 500px;
 		height: 650px;
-		position: absolute;
+background: white;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        position: relative;
+        padding: 10px;
+        top: 75px;
+        overflow-x: hidden;
+		/* width: 500px;
+		height: 650px;
+		position: relative;
 		left: 50%;
 		top: 75px;
 		display: none;
@@ -367,15 +401,67 @@ Remove or comment-out the code block below to see how the browser will fall-back
 		background-color: #fff;
 		border-radius: 10px;
 		border: 1px solid rgba(255, 255, 255, 0.18);
-		/* X축의 가운데를 기준으로 */
+		/* X축의 가운데를 기준으로 
 		transform: translate(-50%);
 		padding: 10px;
 		z-index: 2;
+		overflow-x: hidden;  */
 	}
 	 
 }
 
+
+.keywords{
+
+
+width: 450px;
+height: 600px;
+bottom: 50px;
+overflow-x: hidden; 
+background-color:yellow;
+}
+
+.result:hover {
+
+overflow-x: scroll; 
+
+}
+
+.close1{
+
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow-x: hidden;
+        
+}
+
+.close2{
+
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        
+        overflow-x: hidden;
+        
+}
+
 </style>
+
 	</head>
 	
 <body>
@@ -522,100 +608,369 @@ Remove or comment-out the code block below to see how the browser will fall-back
 	</div>
 	<!-- 모달 start -->
 	<!-- 모달창 꼬리표 -->
+	<div id="close1" class="close1">
 	<div class="test_modal" id="modal1">
-		<div style="position: absolute; height: 20px; width: 20px; background-color: #fff; transform: rotate(45deg); top: -10px; z-index: 0;"></div>
+		<div style="position: relative; height: 20px; width: 20px; background-color: #fff; transform: rotate(45deg); top: -20px; z-index: 0; margin: auto;"></div>
 		<div>
 			최근 검색 내역 없음.
 		</div>
 	</div>
+	</div>
+	
+	<div id="close2" class="close2">
 	<div class="test_modal2" id="modal2">
 		<!-- 모달창 꼬리표 -->
-		<div style="position: absolute; height: 20px; width: 20px; background-color: #fff; transform: rotate(45deg); top: -10px; z-index: 0;"></div>
+		<div style="position: relative; height: 20px; width: 20px; background-color: #fff; transform: rotate(45deg); top: -20px; z-index: 0; margin: auto;"></div>
 		<!-- 검색 분류태그 start -->
 		<div class="result_menu" style="display: flex; flex-direction: row; position:fixed; width: 95%; height: 50px; border-bottom: 1px solid #DBDBDB; top:0; z-index: 1; background-color: #fff; justify-content: center; align-items: center;">
-			<button class="result_tag" id="tag_id" style="display: flex; height: 100%; width: 100px; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;">
+			<button class="result_tag" name="result_tag" id="tag_id" style="display: flex; height: 100%; width: 100px; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;">
 				계정
 			</button>
-			<button class="result_tag" id="tag_tag" style="display: flex; height: 100%; width: 100px; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;">
+			<button class="result_tag" name="result_tag" id="tag_tag" style="display: flex; height: 100%; width: 100px; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;">
 				태그
 			</button>
-			<button class="result_tag" id="tag_place" style="display: flex; height: 100%; width: 100px; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;">
+			<button class="result_tag" name="result_tag" id="tag_place" style="display: flex; height: 100%; width: 100px; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;">
 				장소
 			</button>
 		</div>
 		<!-- 검색 분류태그 end -->
 		<!-- 검색 결과 start-->
-		<c:if test="">
+		<%-- <c:if test="">
 			<div style="display:none; width:100%; height:calc(100% - 100px); background-color: yellow;">
+			
 			</div>
 		</c:if>
 		<c:if test="">
 			<div style="display:none; width:100%; height:calc(100% - 100px); background-color: green;">
+			
 			</div>
 		</c:if>
 		<c:if test="">
 			<div style="display:none; width:100%; height:calc(100% - 100px); background-color: blue;">
+			
 			</div>
-		</c:if>
+		</c:if> --%>
+		<div class="keywords" id="keywords" style="width: 450px; top: 55px; position: absolute;">
 		<!-- 검색 결과 start-->
+		<c:forEach var="hash" items="${hash}">
+		<input type="hidden" id="keyword" value="${hash.HASH_KEYWORD}"/>
+		</c:forEach>
 		
+		<c:forEach var="mem" items="${mem}">
+		<input type="hidden" id="member" value="${mem.MEM_NAME}"/>
+		</c:forEach>
+		</div>
+
+		
+	
+	</div>
 	</div>
 	<!-- 모달 end -->
 
-	<!-- jquery -->
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
+
 
 <script>
 
-$(window).load(function(){
-	alert("1");
+$j(document).ready(function(){
+	
+     var modal = document.getElementById("close");
+	
+	var search = document.getElementById("searchBox");
 	  
-	//1.버튼 클릭 시 다른 버튼 비활성
+	 //1.버튼 클릭 시 다른 버튼 비활성
 	//ClassName이 result_tag인 모든 객체를 가져온다.(태그 메튜 버튼)
-	$('.result_tag').each(function(index){
+ $j('.result_tag').each(function(index){
 		//개발자도구(F12)로 확인해보면 menu-index가 부여되어있는것을 확인할 수 있다.
-		$(this).attr('menu-index', index);
+		$j(this).attr('menu-index', index);
 	}).click(function(){
 		//클릭한 버튼의 menu-index값을 index 변수에 할당한다.
-		var index = $(this).attr('menu-index');
+		var index = $j(this).attr('menu-index');
 		//클릭한 버튼에 result_tag_clicked 클래스 추가.
-		$('.result_tag[menu-index=' + index + ']').addClass('result_tag_clicked');
+		$j('.result_tag[menu-index=' + index + ']').addClass('result_tag_clicked');
 		//나머지 버튼에는 result_tag_clicked 클래스 삭제.
-		$('.result_tag[menu-index!=' + index + ']').removeClass('result_tag_clicked');
+		$j('.result_tag[menu-index!=' + index + ']').removeClass('result_tag_clicked');
+		
+
 	});
 	
-	//2.시작 시 "계정"태그를 자동 클릭.
-	$('#tag_id').click();
+    //hash 배열 선언
+	var inputSource = document.querySelectorAll("#keyword");
+	var arr = new Array;
+
+    for(var i=0; i < inputSource.length; i++){
+    	arr.push(inputSource[i].value);
+    }
+
+    //member 배열 선언
+    var member = document.querySelectorAll("#member");
+	var mem = new Array;
+
+    for(var i=0; i < member.length; i++){
+    	arr.push(member[i].value);
+    }
+
+    
+    
+    var keyword = document.getElementById("keywords");
+    var mr = document.getElementById("tag_id");
+    var hr = document.getElementById("tag_tag"); 
+    
+    
+    
+    search.addEventListener('keyup', function(e) {
+    	
+    	$j("#close1").css('display', 'none');
+    	$j("#close2").css('display', 'flex');
+    	
+    	  var value = e.target.value;
+    	  var hashList = arr.filter(function(item) {
+    	    return item.indexOf(value) > -1;
+    	  }); 
+    	  
+    	var list = $j("#keywords");
+    	var html = '';
+    	
+    	
+    	
+    	hashList.forEach(function(item) {
+    		 
+    		if(item.charAt(0) == "#" || item.charAt(0) === "#" ){
+
+    			
+    		  html += '<div  class="hash_result" name="result" style=" height: 60px; position: relative;  value="' + item + '">' +
+    		  '<img src="resources/image/hash.png" style="height: 50px;  border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+    		  "<div style='float: right; left: 13%; top: 18%; position: absolute;'>" +
+    		  "<input type='hidden' id='hash_tag' value='" + item + "'>" +
+    		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + item + '</div>' + "\n" +
+    		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;'>" + "게시물 수" + '</div>' + '</div>' + '</div>';
+	 
+    		  $j('#tag_tag').click();
+    		  
+    		} else if (item.charAt(0) != "#" && item.length > 1){
+
+    			
+    			html += '<div class="mem_result" name="result" style=" height: 60px; position: relative; value="' + item + '">' +
+    		  '<img src="resources/image/test.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+    		  "<div style='float: right; left: 13%; top: 10%; position: absolute;'>" +
+    		  "<input type='hidden' id='hash_tag' value='" + item + "'>" +
+    		  "<div id = 'test' style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + item + '</div>' + "\n" +
+    		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;  color: #8e8e8e;'>" + "게시물 수" + '</div>' + '</div>' + '</div>';
+    		  
+    			$j('#tag_id').click();
+    			
+    		}
+    	  
+    	  });
+    	
+
+    	  keyword.innerHTML = html;
+    	  
+    	   console.log(search.value);
+    	  
+    	  if(search.value.charAt(0) != "#") {
+    		  $j('#tag_id').click();
+    		  $j('.mem_result').css('display', 'block');
+    		  $j('.hash_result').css('display', 'none');
+    		  
+    	  } else {
+    		  $j('#tag_tag').click();
+    		  $j('.mem_result').css('display', 'none');
+    		  $j('.hash_result').css('display', 'block');
+    		  
+    	  }
+    	  
+    	  
+    	  //document.body.appendChild(html);
+    	   $j("div[name=result]").hover(function(){
+		  $j(this).css("background-color","#f5f5f5");
+		
+	       }, function(){
+		  
+		  $j(this).css("background-color","#ffffff");
+		  });
+    	  
+    	  
+    	   
+    	   
+    	   //===================================
+    		   
+ 
+    	  /* 
+    	   if($j('#tag_id').click() == true){
+    		  
+    		  //alert("id");
+    		  $j('.mem_result').css('display', 'block');
+    		  $j('.hash_result').css('display', 'none');
+
+    		// 클래스 이름이 'a'인 div들을 선택합니다.
+  		    const divs = document.querySelectorAll('.mem_result');
+
+  		    // 각 div를 클릭했을 때 처리할 함수입니다.
+  		    function handleClick(event) {
+  		      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
+  		      const input = event.currentTarget.querySelector('input');
+  		      // input의 값(value)을 가져와서 출력합니다.
+  		      console.log(input.value);
+  		    }
+
+  		    // 각 div에 클릭 이벤트를 등록합니다.
+  		    divs.forEach(div => {
+  		      div.addEventListener('click', handleClick);
+  		    });
+    		  
+    		  
+    	  }  
+    	  
+    	   else if ($j('#tag_tag').click() == true){
+    		  
+    		  //alert("hash");
+    		  
+    		  $j('.mem_result').css('display', 'none');
+    	      $j('.hash_result').css('display', 'block');
+    	      
+    	   // 클래스 이름이 'a'인 div들을 선택합니다.
+  		    const divs = document.querySelectorAll('.hash_result');
+
+  		    // 각 div를 클릭했을 때 처리할 함수입니다.
+  		    function handleClick(event) {
+  		      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
+  		      const input = event.currentTarget.querySelector('input');
+  		      // input의 값(value)을 가져와서 출력합니다.
+  		      console.log(input.value);
+  		    }
+
+  		    // 각 div에 클릭 이벤트를 등록합니다.
+  		    divs.forEach(div => {
+  		      div.addEventListener('click', handleClick);
+  		    }); 
+    	      
+
+    	  }   */
+    	   
+    	   
+    		
+    	 
+
+    });
+    
+    
+	
 	
 	//3.검색창 클릭했을 때 모달창 띄우기.
-	$(function(){
-		$("#searchBox").on("focus",
+   <!---->
+	$j("#searchBox").on("focus",
 			function(){
-				$("#modal1").css('display', 'flex');
+		
+				$j("#close1").css('display', 'flex');
+				
+				
+				
+				
 			});
 	
-		});
+	
+	
+	<!---->
+	
+
+	
+	<!--type에 따라 보여지는 결과창 달라짐(시작)-->
+	//let mem3 = $j("div[name=result]").find("input");
+	
+	//var mem3 = document.querySelector(".mem_result");
+	
+/*  var tag_mem = document.getElementById("tag_id");
+	var tag_hash = document.getElementById("tag_tag");
+    var tag_place = document.getElementById("tag_place");
+	
+    
+    
+    
+    tag_mem.addEventListener('click', function() {
+		  
+    	alert("tlfgoddhgks");
+	
+	$j('.mem_result').css('display', 'block');
+    $j('.hash_result').css('display', 'none');
+    
+    
+    // 클래스 이름이 'a'인 div들을 선택합니다.
+    const divs = document.querySelectorAll('.mem_result');
+
+    // 각 div를 클릭했을 때 처리할 함수입니다.
+    function handleClick(event) {
+      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
+      const input = event.currentTarget.querySelector('input');
+      // input의 값(value)을 가져와서 출력합니다.
+      console.log(input.value);
+    }
+
+    // 각 div에 클릭 이벤트를 등록합니다.
+    divs.forEach(div => {
+      div.addEventListener('click', handleClick);
+    });
+ 
+
+
+
+
+
+    
+    });
+    
+    tag_hash.addEventListener('click', function() {
+		  
+    	
+    	$j('.mem_result').css('display', 'none');
+	    $j('.hash_result').css('display', 'block');
+	      
+
+	 // 클래스 이름이 'a'인 div들을 선택합니다.
+	    const divs = document.querySelectorAll('.hash_result');
+
+	    // 각 div를 클릭했을 때 처리할 함수입니다.
+	    function handleClick(event) {
+	      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
+	      const input = event.currentTarget.querySelector('input');
+	      // input의 값(value)을 가져와서 출력합니다.
+	      console.log(input.value);
+	    }
+
+	    // 각 div에 클릭 이벤트를 등록합니다.
+	    divs.forEach(div => {
+	      div.addEventListener('click', handleClick);
+	    });
+	    
+	    
+		
+	});
+    
+    tag_place.addEventListener('click', function() {
+		  
+    	
+    	
+	});  
+     */
+    
+	<!--type에 따라 보여지는 결과창 달라짐(끝)-->
+	
+	
+	<!--검색 후 controller 단에 검색어 넘기기(시작)-->
+	
+	
+
+	
+	
+   
+ 
+	
+	
+	<!--검색 후 controller 단에 검색어 넘기기(끝)-->
+	
 	
 	//4.바깥화면을 누르면 모달창 사라짐
-	var body = document.querySelector("body");
-	body.addEventListener('mousedown', clickBodyEvent);
 
-	function clickBodyEvent(event) {
-		
-		var target = event.target;
-		//클릭해도 모달창이 꺼지지 않게 할 영역들을 class이름으로 target 지정.
-		if(target != event.currentTarget.querySelector(".test_modal")
-				&& target != event.currentTarget.querySelector(".test_modal2")
-					&& target != event.currentTarget.querySelector(".form-control")
-							//태그버튼들은 id값으로 식별.(class이름으로 target을 지정하면 알수없는 문제가 발생)
-							&& target != event.currentTarget.querySelector("#tag_id")
-								&& target != event.currentTarget.querySelector("#tag_tag")
-									&& target != event.currentTarget.querySelector("#tag_place")){
-			
-			$("#modal2").css('display', 'none');
-			$("#modal1").css('display', 'none');
-		}
-	}
+
 	
 	
 	//5.검색창 선택 후 입력 시 modal2 활성
@@ -624,14 +979,147 @@ $(window).load(function(){
 	search.onkeyup = doAction;
 	
 	function doAction(e){
-		$("#modal2").css('display', 'flex');
-		$("#modal1").css('display', 'none');
+		$j("#modal2").css('display', 'flex');
+		$j("#modal1").css('display', 'none');
 	}
 		
 });
 
 </script>	
+
+<script type="text/javascript">
+
+
+
+$j(document).on("click", function(e){
+	 if($j("#close1").is(e.target)){
+	 $j("#close1").css({display:"none"});
+	 }
+	 
+	 if($j("#close2").is(e.target)){
+		 $j("#close2").css({display:"none"});
+		 }
+	 });
+
+
+</script>
 	
+	
+	<script>
+	
+	var tag_mem = document.getElementById("tag_id");
+	var tag_hash = document.getElementById("tag_tag");
+    var tag_place = document.getElementById("tag_place");
+	
+    
+    
+    
+    tag_mem.addEventListener('click', function() {
+		  
+    	//alert("tlfgoddhgks");
+	
+	$j('.mem_result').css('display', 'block');
+    $j('.hash_result').css('display', 'none');
+    
+    
+    // 클래스 이름이 'a'인 div들을 선택합니다.
+    const divs = document.querySelectorAll('.mem_result');
+
+    // 각 div를 클릭했을 때 처리할 함수입니다.
+    function handleClick(event) {
+      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
+      const input = event.currentTarget.querySelector('input');
+      // input의 값(value)을 가져와서 출력합니다.
+      console.log(input.value);
+      
+      var data = input.value;
+      
+      
+      $j.ajax({
+	        url : "/roomie/searchResult.ya" 
+	        ,data : { keyword: data }
+	        ,success: function(data){	        	
+	        		alert("보내기 성공");
+	
+	        },error : function(request,error,data){
+	        	alert("실패");
+	            console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+	        }
+	    });//ajax
+      
+    }
+
+    // 각 div에 클릭 이벤트를 등록합니다.
+    divs.forEach(div => {
+      div.addEventListener('click', handleClick);
+    });
+ 
+
+
+
+
+
+    
+    });
+    
+    tag_hash.addEventListener('click', function() {
+		  
+    	
+    	$j('.mem_result').css('display', 'none');
+	    $j('.hash_result').css('display', 'block');
+	      
+
+	 // 클래스 이름이 'a'인 div들을 선택합니다.
+	    const divs = document.querySelectorAll('.hash_result');
+
+	    // 각 div를 클릭했을 때 처리할 함수입니다.
+	    function handleClick(event) {
+	      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
+	      const input = event.currentTarget.querySelector('input');
+	      // input의 값(value)을 가져와서 출력합니다.
+	      console.log(input.value);
+	    }
+
+	    // 각 div에 클릭 이벤트를 등록합니다.
+	    divs.forEach(div => {
+	      div.addEventListener('click', handleClick);
+	    });
+	    
+	    
+		
+	});
+    
+    tag_place.addEventListener('click', function() {
+		  
+    	
+    	
+	});  
+    
+	</script>
+	
+	
+	<script>
+
+	
+function send(){
+		
+		$j.ajax({
+	        url : "/roomie/searchResult.ya" 
+	        ,data : data
+	        ,success: function(data){	        	
+	        		alert("보내기 성공");
+	
+	        },error : function(req,status,err){
+	        	alert("실패");
+	            console.log(req);
+	        }
+	    });//ajax
+		
+		
+}
+	
+	
+	</script>
 	
 </body>
 </html>
