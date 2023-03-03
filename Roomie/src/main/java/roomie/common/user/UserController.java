@@ -32,8 +32,13 @@ public class UserController {
 	
 	
 	@RequestMapping(value="userProfile.ya", method=RequestMethod.GET)
-	public ModelAndView userProfile(@RequestParam Map<String, Object> map) throws Exception {
+	public ModelAndView userProfile(@RequestParam Map<String, Object> map, HttpServletRequest req) throws Exception {
 		ModelAndView mv = new ModelAndView("/profile/profile");
+		HttpSession session = req.getSession();
+		mv.addObject("session", session.getAttribute("MEM_ID"));
+		map.put("BO_MEM", map.get("mem_idx"));
+		System.out.println(map);
+		System.out.println("session: " + session.getAttribute("MEM_ID"));
 		
 		//member profile
 		Map<String,Object> mapper = (HashMap<String,Object>)userService.userProfile(map);
@@ -41,24 +46,32 @@ public class UserController {
 		
 		//followers
 		Map<String,Object> follower = new HashMap<String,Object>();
-		follower.put("FRI_MEM", map.get("mem_idx"));
+		follower.put("FRI_MEM", mapper.get("MEM_ID"));
 		Map<String,Object> followerresult = userService.userFollower(follower);
 		List<Map<String,Object>> followerList = userService.userFollowerList(follower);
+		System.out.println("follower: " +follower);
 		mv.addObject("follow", followerresult);
 		mv.addObject("followerList", followerList);
 		
 		//following
 		Map<String,Object> following = new HashMap<String,Object>();
-		following.put("FOLLOWING", map.get("mem_idx"));
+		following.put("FOLLOWING", mapper.get("MEM_ID"));
 		Map<String,Object> followingResult = userService.userFollowing(following);
 		List<Map<String,Object>> followingList = userService.userFollowingList(following);
 		mv.addObject("following", followingResult);
 		mv.addObject("followingList", followingList);
 		
-		//board
+		//boardCount
 		Map<String,Object> board = userService.userBoard(map);
+		board.put("BO_MEM", map.get("mem_idx"));
 		mv.addObject("board", board);
+		List<Map<String,Object>> boardList = userService.userBoardList(board);
+		System.out.println(board);
+		mv.addObject("boardList", boardList);
 		return mv;
+		
+		
+		
 	}
 	
 	@RequestMapping("userModify.ya")
@@ -148,6 +161,44 @@ public class UserController {
 		
 		userService.userModifyMusic(modifier);
 		
+		return mv;
+	}
+	
+	@RequestMapping(value="/userFollow.ya")
+	public ModelAndView userFollow(@RequestParam Map<String,Object>map, HttpServletRequest req)throws Exception{
+		ModelAndView mv = new ModelAndView("/profile/profile");
+		HttpSession session = req.getSession();
+		map.put("FRI_MEM", session);
+		
+		Map<String,Object> mapper = new HashMap<String,Object>();
+		mapper.put("FRI_MEM", session.getAttribute("MEM_ID"));
+		mapper.put("FOLLOWING", map.get("FOLLOWING"));
+		mapper.put("ISFOLLOW", "F");
+		System.out.println("follow" + mapper);
+		userService.follow(mapper);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/userUnFollow.ya")
+	public ModelAndView userUnFollow(@RequestParam Map<String,Object>map, HttpServletRequest req)throws Exception{
+		ModelAndView mv = new ModelAndView("/profile/profile");
+		HttpSession session = req.getSession();
+		map.put("FRI_MEM", session);
+		
+		Map<String,Object> mapper = new HashMap<String,Object>();
+		
+		mapper.put("FRI_MEM", session.getAttribute("MEM_ID"));
+		mapper.put("FOLLOWING", map.get("FOLLOWING"));
+		mapper.put("ISFOLLOW", "U");
+		System.out.println("unfollow: " + mapper);
+		userService.unFollow(mapper);
+		return mv;
+	}
+	
+	@RequestMapping(value="/userFollowing.ya")
+	public ModelAndView userFollowing(@RequestParam Map<String,Object>map)throws Exception{
+		ModelAndView mv = new ModelAndView("/profile/profile");
 		return mv;
 	}
 	

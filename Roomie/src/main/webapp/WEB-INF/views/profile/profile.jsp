@@ -430,9 +430,73 @@ img.track {
   color: white;
   cursor: pointer;
 }
+/* modal post */
+.optionline {
+   margin-top: 300px;
+   width: 100%;
+}
+
+._ab3p {
+   display: flex;
+   justify-content: flex-start;
+   margin-bottom: 16px;
+}
+
+._ad6_ {
+   padding-left: 32px;
+   padding-right: 32px;
+   text-align: right;
+   box-sizing: border-box;
+   color: rgb(var(- -ig-primary-text));
+   flex: 0 0 194px;
+   font-size: 16px;
+   font-weight: 600;
+   line-height: 18px;
+   margin-top: 6px;
+}
+
+._ab3q {
+   font-size: 16px;
+   font-weight: 600;
+   vertical-align: baseline;
+}
+
+._ab3t {
+   align-items: stretch;
+   border: 0;
+   box-sizing: border-box;
+   color: rgb(var(- -ig-primary-text));
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+   flex-shrink: 0;
+   font: inherit;
+   font-size: 16px;
+   justify-content: flex-start;
+   margin: 0;
+   padding: 0;
+   position: relative;
+   vertical-align: baseline;
+}
+
+._acyg {
+   align-items: stretch;
+   border: 0;
+   display: flex;
+   flex-direction: column;
+   font: inherit;
+   font-size: 100%;
+   margin: 0;
+   margin-bottom: 16px;
+   margin-top: 32px;
+   padding: 0;
+   vertical-align: baseline;
+}
+
 </style>
 </head>
 <body>
+
 	<!-- 상단 내비게이션 바 시작 -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light"
 		style="z-index: 10000; width: 100%; position: fixed; top: 0px;">
@@ -472,9 +536,8 @@ img.track {
 
 
 	<div class="container">
-
 		<div class="profile">
-
+			
 			<div class="profile-image">
 				<c:choose>
 					<c:when test="${user.MEM_MEDIA == null }">
@@ -489,12 +552,30 @@ img.track {
 			</div>
 
 			<div class="profile-user-settings">
-
-				<h1 class="profile-user-name">@${user.MEM_ID}</h1>
-
+			
+				<h1 class="profile-user-name">@${user.MEM_USER}</h1>
+				<input type="hidden" id="elwey" value="${user.MEM_ID}" >
+				<c:choose>
+				<c:when test="${user.MEM_ID != session}">
+					<c:choose>
+					<c:when test="${follow.FRI_MEM == user.MEM_ID || empty follow}">
+					<button class="btn profile-edit-btn btn btn-primary"
+					id="follow_profile">FOLLOW</button>
+					</c:when>
+					<c:when test="${empty following.FRI_MEM == user.MEM_ID}">
+					<button class="btn profile-edit-btn btn btn-primary"
+					id="unfollow_profile">FOLLOWING</button>
+					</c:when>
+					<c:otherwise>
+					
+					</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
 				<button class="btn profile-edit-btn btn btn-primary"
 					id="edit_profile">프로필 수정하기</button>
-
+				</c:otherwise>
+				</c:choose>
 				<button class="btn profile-edit-btn">송금하기</button>
 
 				&nbsp;&nbsp;&nbsp;&nbsp;<a><img
@@ -512,6 +593,7 @@ img.track {
 
 				<ul>
 					<li><span class="profile-stat-count">
+					<input type="hidden" name="BO_MEM" value="${user.MEM_IDX}">
 					<c:choose>
 						<c:when test="${empty board.POSTS}">
 							0
@@ -531,7 +613,7 @@ img.track {
 						</c:otherwise>
 						</c:choose>
 						</span>
-						팔러워</li>
+						팔룸워</li>
 					<li id="following"><span class="profile-stat-count">
 						<c:choose>
 						<c:when test="${empty following.CNT}">
@@ -542,7 +624,7 @@ img.track {
 						</c:otherwise>
 						</c:choose>
 					</span>
-						팔러잉</li>
+						팔룸잉</li>
 				</ul>
 
 			</div>
@@ -614,17 +696,17 @@ img.track {
 	</c:otherwise>
 	</c:choose>
 	<div class="container">
-		<c:forEach items="${board.BO_MEDIA}" var="post">
+		<c:forEach items="${boardList}" var="post">
 		<div class="gallery">
 
-			<div align="center" class="gallery-item" tabindex="0">
+			<div id="post" align="center" class="gallery-item" tabindex="0">
 				<c:choose>
-				<c:when test="${empty post.BO_MEDIA}">
+				<c:when test="${post.BO_MEDIA}">
 					
 				</c:when>
 				<c:otherwise>
-				<img
-					src="${board.BO_MEDIA}"
+				<img 
+					src="resources/image/11111.png"
 					class="gallery-image" alt="">
 				
 				<div class="gallery-item-info">
@@ -678,6 +760,7 @@ Full-page view:
 		<div class="modal_window"
 			style="width: 80vw; height: calc(var(- -vh, 1vh)* 84); overflow: hidden; overflow-y: auto;">
 			<input type="hidden" value="${user.MEM_IDX}" id="idx" name="MEM_IDX">
+			<input type="hidden" value="${user.MEM_ID}" id="idx" name="MEM_ID">
 			<div class="modal_title">
 				<div class="modal_title_side">
 					<span style="cursor: grab;" id="close_modal"
@@ -768,13 +851,13 @@ Full-page view:
 				<li>
 					<div class="media">
 						<div>
-							<a href="javascript:void(0)"> <img style="padding-top: 3%;"
-								class="modal_image" src="" alt=""> <i></i>
+							<a href="javascript:void(0)"> <img style="padding-top: 3%; border-radius: 50%; width:75px; height:75px;"
+								 src="${fo.MEM_MEDIA}" alt=""> <i></i>
 							</a>
 						</div>
 						<div class="media-body">
 							<div style="padding-top: 3%; padding-left: 5%;">
-								<h3 href="javascript:void(0)">${fo.MEM_NAME}</h3>
+								<h3 href="javascript:void(0)"><a  style="text-decoration: none; color:black;" href="userProfile.ya?mem_idx=${fo.MEM_IDX}">${fo.MEM_NAME}</a></h3>
 							</div>
 							<div style="padding-left: 50%;" class="pull-right">
 								<button type="button"
@@ -782,7 +865,7 @@ Full-page view:
 									<i class="icon md-check" aria-hidden="true"></i>Following
 								</button>
 							</div>
-							<h5 style="padding-bottom: 3%; padding-left: 5%;">@${fo.MEM_ID}</h5>
+							<h5 style="padding-bottom: 3%; padding-left: 5%;"><a  style="text-decoration: none; color:black;" href="userProfile.ya?mem_idx=${fo.MEM_IDX}">@${fo.MEM_ID}</a></h5>
 						</div>
 					</div>
 				</li>
@@ -818,13 +901,13 @@ Full-page view:
 				<li>
 					<div class="media">
 						<div>
-							<a href="javascript:void(0)"> <img style="padding-top: 3%;"
-								class="modal_image" src="" alt=""> <i></i>
+							<a href="javascript:void(0)"> <img style="padding-top: 3%; border-radius: 50%; width:75px; height:75px;"
+							 src="${fo.MEM_MEDIA}" alt=""> <i></i>
 							</a>
 						</div>
 						<div class="media-body">
 							<div style="padding-top: 3%; padding-left: 5%;">
-								<h3 href="javascript:void(0)">${fo.MEM_NAME}</h3>
+								<h3 href="javascript:void(0)"><a style="text-decoration: none; color:black;" href="userProfile.ya?mem_idx=${fo.MEM_IDX}">${fo.MEM_NAME}</a></h3>
 							</div>
 							<div style="padding-left: 50%;" class="pull-right">
 								<button type="button"
@@ -832,7 +915,7 @@ Full-page view:
 									<i class="icon md-check" aria-hidden="true"></i>Following
 								</button>
 							</div>
-							<h5 style="padding-bottom: 3%; padding-left: 5%;">@${fo.MEM_ID}</h5>
+							<h5 style="padding-bottom: 3%; padding-left: 5%;"><a style="text-decoration: none; color:black;" href="userProfile.ya?mem_idx=${fo.MEM_IDX}">@${fo.MEM_ID}</a></h5>
 						</div>
 					</div>
 				</li>
@@ -875,6 +958,55 @@ Full-page view:
 
 		</div>
 	</div>
+	
+	<div id="modal_post" class="modal_overlay">
+			<div style="width: 80vw; height: calc(var(- -vh, 1vh)* 84); overflow: hidden; overflow-y: auto;">
+			<div class="contents">
+			<div class="border feed_box">
+        <div class="feed_name">
+          <div class="profile_box">
+            <img class="profile_img" src="${user.MEM_MEDIA }">
+          </div>
+          <span class="feed_name_txt"> ${user.MEM_NAME } </span>
+        </div>
+        <img class="feed_img" src="resources/image/11111.png">
+  
+        <div class="feed_icon">
+          <div>
+            <!-- 좋아요 버튼 -->
+            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_01.png">
+            <!-- 댓글 버튼 -->
+            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_03.png">
+            <!-- 공유 버튼 -->
+            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_04.png">
+          </div>
+          <div>
+            <!-- 게시글 저장 버튼 -->
+            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_05.png">
+          </div>
+        </div>
+        <div class="feed_like">
+          <!-- 좋아요 표시 -->
+          <p class="feed_txt"> <b>좋아요 10개</b></p>
+        </div>
+        <div class="feed_content">
+          <!-- 이름, 게시글 내용 -->
+          <p class="feed_txt"> <b> ${user.MEM_NAME} </b> 코로나라서 해외여행을 못가니 최근 제주도 가는사람이 늘고있습니다~ 제주도도 조심해야되는건 마찬가지~!</p>
+        </div>
+        <!-- 댓글 목록 -->
+        <div class="feed_reply">
+          <span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ</span>
+          <span class="feed_txt"> <b> junseok </b> 제주도  ㄱ ㄱ </span>
+        </div>
+      </div>
+			
+	</div>
+	</div>
+				
+			</div>
+
+		</div>
+	</div>
 
 	<!-- ajax modify -->
 	<script
@@ -911,6 +1043,60 @@ $(document).on('click', '#submit_modal', function(e){
 })
 
 
+</script>
+
+<script>
+$(document).on('click', '#follow_profile', function(e){
+	e.preventDefault();
+	   var id = document.getElementById("id");
+	   var fri_mem = document.getElementById("elwey");
+	   console.log(idx.value);
+	   var param = {
+		   "FOLLOWING" : id.value, 
+	       "FRI_MEM" : fri_mem.value
+	         }
+	   console.log(param);
+	$.ajax({
+		url: "/roomie/userFollow.ya",
+		data: param,
+		type: "POST",
+		success: function(res){
+			alert("입력 완료");
+			location.reload();
+		},
+		error: function(jqXHR, status, err){
+			alert("로그인 해주세요");
+			location.href='login.ya';
+		}
+	})
+})
+</script>
+
+<script>
+$(document).on('click', '#unfollow_profile', function(e){
+	e.preventDefault();
+	   var id = document.getElementById("id");
+	   var fri_mem = document.getElementById("elwey");
+	   console.log(idx.value);
+	   var param = {
+		   "FOLLOWING" : id.value, 
+	       "FRI_MEM" : fri_mem.value
+	         }
+	   console.log(param);
+	$.ajax({
+		url: "/roomie/userUnFollow.ya",
+		data: param,
+		type: "POST",
+		success: function(res){
+			alert("입력 완료");
+			location.reload();
+		},
+		error: function(jqXHR, status, err){
+			alert("로그인 해주세요");
+			location.href='login.ya';
+		}
+	})
+})
 </script>
 
 <script>
@@ -958,6 +1144,10 @@ $("#submit_modal").click(function(){
         modal.style.display = "flex";
         document.body.style.overflowY = "hidden"; // 스크롤 없애기
     });
+    
+    </script>
+    
+    <script>
 
     // 모달 닫기 코드
     const buttonCloseModal = document.getElementById("close_modal");
@@ -1027,9 +1217,17 @@ $("#submit_modal").click(function(){
         document.body.style.overflowY = "visible";
     });
 
-    const submitModal4 = document.getElementById("submit_modal4");
-    submitModal4.addEventListener("click", function(){
-        modal4.style.display = "none";
+    const modal5 = document.getElementById("modal_post");
+    const buttonAddFeed5 = document.getElementById("post");
+    buttonAddFeed5.addEventListener("click", function() {
+        modal5.style.top = window.pageYOffset + 'px';
+        modal5.style.display = "flex";
+        document.body.style.overflowY = "hidden";
+
+    });
+    const buttonCloseModal5 = document.getElementById("close_modal5");
+    buttonCloseModal5.addEventListener("click", function() {
+        modal5.style.display = "none";
         document.body.style.overflowY = "visible";
     });
   
@@ -1124,7 +1322,7 @@ function setImageFromFile(input, expression) {
 		    dataType: 'json',
 		    crossDomain: true,
 		    headers: {
-		        "Authorization": `Bearer BQAblH_dxYUXylW4Zm7HvVSooNXrcTk8BqrQAjNdIr8lGKV1acb7A-zvAb_eHFdePEuS6ChHERghprjLI-VRoMTTc1VsAj7V67eWlO5jU5QdHy-vgWhVBrhG5BtczLmNRYTL4MK70B8Qtd5moa_Izdh1mRlTf41G59jOWd7PPmWPGV9spsElZPEbPvSNHWUlnHa2`
+		        "Authorization": `Bearer BQB0zakeiag-yPpJGrvQdL2uxCs2xEz3o0yBA_hbs0C81kSpKtA34q5mxWZ4AJsWuc2-j1SGNR4uDn-q1TiT2s93pcYepY_6_UP3wHeAhXF-Iee4rqZas2l6XSnolhAtcl0l5x3QlP7v6z7xiV_ggxC1-4TaMmEEF_Pwj7wZnstwkR75z7ftB5zv9ZFKWpotb7M7`
 		      },
 
 		    success: function(data)
