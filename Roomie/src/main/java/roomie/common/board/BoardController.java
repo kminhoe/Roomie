@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class BoardController {
 	
 	@PostMapping(value="/register.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Map<String, Object>>> insertBoard(MultipartFile[] uploadFile) throws Exception{
+	public ResponseEntity<List<Map<String, Object>>> insertBoard(MultipartFile[] uploadFile, HttpSession session) throws Exception{
 //		 ModelAndView mv = new ModelAndView("redirect:/boardList.ya"); 
 		
 		
@@ -53,10 +54,13 @@ public class BoardController {
 		System.out.println("이거니?"+uploadFile);
 		
 		
-		String uploadFolder ="C:\\upload";
-		String uploadFolderPath = getFolder();
+		String uploadFolder = session.getServletContext().getRealPath("/");
+		
+		System.out.println("경로 : " + uploadFolder);
+		
+		//String uploadFolderPath = getFolder();
 		//다운로드받을 폴더 생성
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		File uploadPath = new File(uploadFolder);
 		log.info("upload path : " + uploadPath);
 		
 		if(uploadPath.exists() == false) {
@@ -98,7 +102,7 @@ public class BoardController {
 				multipartFile.transferTo(saveFile);
 				
 //				map.put("BO_UUID", uuid.toString());
-				map.put("BO_UPLOADPATH", uploadFolderPath);
+				//map.put("BO_UPLOADPATH", uploadFolderPath);
 				//check type
 				
 				if(Files.probeContentType(saveFile.toPath()).startsWith("image")) {
@@ -230,6 +234,29 @@ public class BoardController {
 	@RequestMapping(value="/boardList.ya")
 	public ModelAndView boardList()throws Exception{
 		ModelAndView mv = new ModelAndView("board/boardList");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("LIKEB_MEM", 2);
+
+		List<Map<String, Object>> like = boardService.likeCheck(map);
+		
+		System.out.println(like);
+		
+		mv.addObject("LIKEB", like);
+		
+		Map<String, Object> fri = new HashMap<>();
+		
+		
+		int id = 1;
+		
+		fri.put("FRI_MEM", id);
+		
+		List<Map<String, Object>> board = boardService.selectBoard(fri);
+		
+		System.out.println(board);
+		
+		mv.addObject("boardList", board);
 		
 		return mv; 
 	}
