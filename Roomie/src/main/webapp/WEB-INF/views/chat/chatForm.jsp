@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
         rel="stylesheet">
 
-<style> 
+<style>
 
 @media (max-width: 1100px) {
 	body{
@@ -140,6 +140,8 @@
 	align-items: center;
 	padding: 10px 15px;
 	border-radius: 25px;
+	max-width: 380px;
+	word-break:break-all;
 }
 
 .chat_profileImg{
@@ -186,6 +188,8 @@
 	 align-items: center;
 	 padding: 10px 15px;
 	 border-radius: 25px;
+	 max-width: 380px;
+	 word-break:break-all;
 }
 
 .chat_otherId{
@@ -209,7 +213,7 @@
 	flex-direction: column;
 	width: 66px;
 	height: 66px;
-	background-image: url("../image/rainbow.png");
+	background-image: url("resources/image/rainbow.png");
 	background-size: contain;
 }
 
@@ -534,12 +538,55 @@ ul li {
 
 <!-- jquery -->
 <script src="resources/js/jquery.min.js"></script>
-<script src="resources/js/jquery-3.0.0.min.js"></script>
+<script src="resources/js/jquery-3.2.1.min.js"></script>
 <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
 
-<script> /* window 시작 시 */
-$(window).load(function (){
-	alert("4");
+<script type="text/javascript"> /* window 시작 시 */
+/* @@@@@@@@@@@@@@@@@@@@@ 웹소켓 관련 @@@@@@@@@@@@@@@@@@@@@ */
+var webSocket = new WebSocket("ws://localhost:8090/roomie/roomieChat");
+var echoText = document.getElementById("echoText");
+var message = document.getElementById("message");
+webSocket.onopen = function(message){ wsOpen(message);};
+webSocket.onmessage = function(message){ 
+	
+	var wsMsg = "";
+	
+	wsMsg += 		'<div class="chat_otherMsgBox">';
+	wsMsg += 			'<div class="chat_otherMsg">';
+	wsMsg += 				message.data
+	wsMsg += 			'</div>';
+	wsMsg += 		'</div>';
+	
+	$("#chatContent").append(wsMsg);
+	chatScroll.scrollTop = chatScroll.scrollHeight; /* 스크롤 가장 아래로 */
+	
+};
+
+function wsOpen(message){
+	webSocket.send('1#' + "<%=session.getAttribute("MEM_ID")%>" + '#1');
+	}
+
+/* @@@@@@@@@@@@@@@@@@@@@ 웹소켓 관련 @@@@@@@@@@@@@@@@@@@@@ */
+$(window).on('load',function (){
+	/* @@@@@@@@@@@@@@@@@@@@@ 웹소켓 관련 @@@@@@@@@@@@@@@@@@@@@ */
+	
+	webSocket.onclose = function(message){ wsClose(message);};
+	webSocket.onerror = function(message){ wsError(message);};
+	
+	/* 웹소켓 연결 종료 시 메시지 */
+	function wsClose(message){
+		console.log("disconnect", message);
+	}
+	/* 에러 시 메시지 */
+	function wsError(message){
+		console.log("error", message);
+	}
+	/* 웹소켓 연결 종료 */
+	function wsCloseConnection(){
+		webSocket.close();
+	}
+	
+	/* @@@@@@@@@@@@@@@@@@@@@ 웹소켓 관련 @@@@@@@@@@@@@@@@@@@@@ */
 	
 	var MEM_ID = '<%=(String)session.getAttribute("MEM_ID")%>' 
 	
@@ -613,12 +660,13 @@ function chatRoomList(result){
 </script>
 
 <script> /* showChatList() 채팅리스트를 불러오는 함수 */
+//채팅 출력 시 스크롤을 가장 아래로 위치시키기위한 객체
+var chatScroll = document.getElementById("chatContent");
 function showChatList(result){
 	
 	var htmls = "";
 	var MEM_ID = '<%=(String)session.getAttribute("MEM_ID")%>'
-	//채팅 출력 시 스크롤을 가장 아래로 위치시키기위한 객체
-	var chatScroll = document.getElementById("chatContent");
+	
 	
 	htmls += '<div class="chat_date">';
 	htmls +=	'(마지막으로 메시지를 주고받은 날짜표시) 매일 정각마다 추가. (추가)';
@@ -726,6 +774,30 @@ $(addMessage).on('click', '#chat_send', function(){
 	var CHAT_OTHERID = $('#CHAT_OTHERID').val();
 	var CHAT_CONTENT = $('#CHAT_CONTENT').val();
 	var chatContent = document.getElementById('CHAT_CONTENT');//입력한 내용을 삭제할 input text의 id값으로 객체 생성.
+	var paramData = {
+			"CHAT_MYID" : CHAT_MYID
+			, "CHAT_OTHERID" : CHAT_OTHERID
+			, "CHAT_CONTENT" : CHAT_CONTENT
+		};
+
+		/* 웹소켓 관련 */
+		webSocket.send("2#" + CHAT_OTHERID + "#" + CHAT_CONTENT); //chatServer의 onMessage로 OTHERID와 CONTENT를 보낸다. 
+		
+		$.ajax({
+			  url : "addMessage.ya"
+			, type : 'POST'
+			, data : paramData
+			, dataType : 'json'
+			, success: function(result){
+				
+				showChatList(result);
+
+			}
+			, error: function(error){
+				alert("실패");
+				console.log("에러 : " + error);
+			}
+		});
 	
 	//입력한 메시지가 없을 경우 보내지 않음.
 	if(chatContent.value == ""){
@@ -736,45 +808,6 @@ $(addMessage).on('click', '#chat_send', function(){
 	
 	chatContent.focus();//채팅 입력 시 채팅 입력창으로 포커스.
 	
-	var paramData = {
-		"CHAT_MYID" : CHAT_MYID
-		, "CHAT_OTHERID" : CHAT_OTHERID
-		, "CHAT_CONTENT" : CHAT_CONTENT
-	};
-
-	$.ajax({
-		  url : "addMessage.ya"
-		, type : 'POST'
-		, data : paramData
-		, dataType : 'json'
-		, success: function(result){
-			
-			showChatList(result);
-			
-			/* chatRoomList 불러오기 */
-			$.ajax({
-				  url : "chatRoomList.ya"
-				, type : 'POST'
-				, data : {"MEM_ID" : MEM_ID}
-				, dataType : 'json'
-				, success: function(result){
-					
-					chatRoomList(result);
-
-				}
-				, error: function(error){
-					alert("실패");
-					console.log("에러 : " + error);
-				}
-			});
-			/* chatRoomList 불러오기 */
-
-		}
-		, error: function(error){
-			alert("실패");
-			console.log("에러 : " + error);
-		}
-	});
 });
 </script>
 
