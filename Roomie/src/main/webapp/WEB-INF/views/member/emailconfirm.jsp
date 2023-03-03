@@ -95,7 +95,7 @@ function resend(){
     alert("인증코드를 재 전송했습니다. \n이메일을 다시 확인해주세요.")
 	
     $.ajax({
-        url : "/roomie/emailcheck.ya" 
+        url : "/roomie/emailCheck.ya" 
         ,data :email
         ,success: function(map){
         	  
