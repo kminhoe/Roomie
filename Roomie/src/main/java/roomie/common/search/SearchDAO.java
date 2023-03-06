@@ -26,5 +26,14 @@ public class SearchDAO extends AbstractDAO {
 	public void insertKeyword(Map<String, Object> map) throws Exception {
 		 insert("search.insertKeyword", map);
 	} 
+	
+	public List<Map<String, Object>> searchList(int id) throws Exception {
+		return (List<Map<String, Object>>) selectList("search.searchList", id);
+	}
+	
+	
+	public void searchDelete(Map<String, Object> map) throws Exception {
+		 delete("search.searchDelete", map);
+	} 
 
 }

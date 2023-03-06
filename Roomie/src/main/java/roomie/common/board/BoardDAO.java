@@ -28,11 +28,6 @@ public class BoardDAO extends AbstractDAO {
 		sqlSessionTemplate.insert("board.hashinsert", map);
 	}
 	
-public void likeinsert(Map<String, Object> map) throws Exception{
-		
-		sqlSessionTemplate.insert("board.likeinsert", map);
-	}
-
 
 public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Exception {
 	return (List<Map<String, Object>>) selectList("board.likeCheck", map);
@@ -41,6 +36,12 @@ public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Excep
 public List<Map<String, Object>> selectBoard(Map<String, Object> map) throws Exception {
 	return (List<Map<String, Object>>) selectList("board.selectBoard", map);
 }
+
+//본인 확인
+public Map<String, Object> memCheck(Map<String, Object> map) throws Exception{
+	
+	return sqlSessionTemplate.selectOne("board.memCheck",map);
+	}
 
 
 } 

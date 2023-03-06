@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
+import roomie.common.like.LikeService;
 
 @Controller
 @Log4j
@@ -38,6 +39,9 @@ public class BoardController {
 	
 	@Resource
 	private BoardService boardService;
+	
+	@Resource
+	private LikeService likeService;
 	
 	@PostMapping(value="/register.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
@@ -139,15 +143,16 @@ public class BoardController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	private String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
-		Date date = new Date();
-		
-		String str = sdf.format(date);
-		
-		return str.replace("-", File.separator);
-	}
+	/*
+	 * private String getFolder() { SimpleDateFormat sdf = new
+	 * SimpleDateFormat("yyyy-MM-dd");
+	 * 
+	 * Date date = new Date();
+	 * 
+	 * String str = sdf.format(date);
+	 * 
+	 * return str.replace("-", File.separator); }
+	 */
 	
 	@GetMapping("/display.ya")
 	@ResponseBody
@@ -173,10 +178,12 @@ public class BoardController {
 	
 	@PostMapping(value="/boardInsert.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<String> insertboard(MultipartHttpServletRequest request, @RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
+	public void insertboard(HttpSession session, MultipartHttpServletRequest request, @RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
 		Map<String, Object> hm = new HashMap<>();
 		System.out.println("받았니? : " + request);
 		System.out.println("받았니? : " + map);
+		
+		map.put("BO_MEM", session.getAttribute("MEM_IDX"));
 		
 		boardService.registerBoard(map);
 		
@@ -237,9 +244,12 @@ public class BoardController {
 
 	
 	@RequestMapping(value="/boardList.ya")
-	public ModelAndView boardList()throws Exception{
+	public ModelAndView boardList(HttpSession session)throws Exception{
 		ModelAndView mv = new ModelAndView("board/boardList");
 		
+		System.out.println("세션 확인 : " + session.getAttribute("MEM_IDX"));
+		
+		//좋아요 확인
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("LIKEB_MEM", 2);
@@ -250,20 +260,53 @@ public class BoardController {
 		
 		mv.addObject("LIKEB", like);
 		
+		//like board 배열에 담기
+		List<Integer> list1 = new ArrayList<Integer>();
+				
+		for(int i=0; i < like.size(); i++) {
+			
+			list1.add(i, Integer.parseInt(String.valueOf(like.get(i).get("LIKEB_BOARD"))));
+			
+		}
+		
+		System.out.println(list1);
+		
+		int idx = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
+		
+		//게시물 리스트
+		
 		Map<String, Object> fri = new HashMap<>();
 		
-		
-		int id = 1;
-		
-		fri.put("FRI_MEM", id);
+		fri.put("MEM_IDX", idx);
 		
 		List<Map<String, Object>> board = boardService.selectBoard(fri);
 		
 		System.out.println(board);
 		
+		
 		mv.addObject("boardList", board);
+		
+
+		//본인 확인
+		//int idx = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
+		
+		Map<String, Object> mem = new HashMap<>();
+		
+		mem.put("MEM_IDX", idx);
+		
+		Map<String, Object> member = boardService.memCheck(mem);
+		
+		mv.addObject("MEMBER", member);
+		
+		//좋아요 카운트
+		
+
+		
+		
 		
 		return mv; 
 	}
+	
+	
 
 }

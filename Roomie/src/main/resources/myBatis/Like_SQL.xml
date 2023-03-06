@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="like">
+	
+<insert id="likeBinsert" parameterType="hashmap">
+
+<![CDATA[
+		INSERT INTO BO_LIKE(LIKEB_IDX, LIKEB_MEM, LIKEB_BOARD)
+		VALUES(
+		BO_LIKE_SEQ.NEXTVAL,
+		#{LIKEB_MEM},
+		#{LIKEB_BOARD})
+	]]>
+
+</insert>
+
+<insert id="likeBdelete" parameterType="hashmap">
+
+<![CDATA[
+		DELETE FROM BO_LIKE
+           WHERE LIKEB_MEM = #{LIKEB_MEM} AND LIKEB_BOARD = #{LIKEB_BOARD}
+	]]>
+
+</insert>
+
+<select id="likeBcount" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM BO_LIKE WHERE LIKEB_BOARD = #{LIKEB_BOARD}
+	]]>
+</select>
+
+	
+</mapper>

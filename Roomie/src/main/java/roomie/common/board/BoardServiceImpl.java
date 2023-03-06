@@ -28,12 +28,7 @@ public class BoardServiceImpl implements BoardService{
 		boardDAO.hashinsert(map);		
 	}
 
-	@Override
-	public void likeinsert(Map<String, Object> map) throws Exception {
-		
-		boardDAO.likeinsert(map);
-		
-	}
+
 
 	@Override
 	public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Exception {
@@ -45,6 +40,12 @@ public class BoardServiceImpl implements BoardService{
 	public List<Map<String, Object>> selectBoard(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return boardDAO.selectBoard(map);
+	}
+
+	@Override
+	public Map<String, Object> memCheck(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.memCheck(map);
 	}
 	
 	

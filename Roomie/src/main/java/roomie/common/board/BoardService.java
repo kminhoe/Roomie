@@ -9,10 +9,11 @@ public interface BoardService {
 	
 	public void inserthasg(Map<String, Object> map) throws Exception;
 	
-	public void likeinsert(Map<String, Object> map) throws Exception;
 	
 	public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Exception;
 	
 	public List<Map<String, Object>> selectBoard(Map<String, Object> map) throws Exception;
+	
+	public Map<String, Object> memCheck(Map<String, Object> map) throws Exception; // 본인 확인
 	
 } 
