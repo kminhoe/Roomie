@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 @Repository("userDAO")
 public class UserDAO {
@@ -52,5 +51,16 @@ public class UserDAO {
 		return sqlSessionTemplate.selectList("user.userFollowingList", map);
 	}
 	
+	public void follow(Map<String,Object> map) throws Exception {
+		sqlSessionTemplate.insert("user.follow", map);
+	}
+	
+	public void unFollow(Map<String,Object>map) throws Exception {
+		sqlSessionTemplate.delete("user.unFollow", map);
+	}
+	
+	public List<Map<String,Object>> userBoardList(Map<String,Object>map) throws Exception{
+		return sqlSessionTemplate.selectList("user.userBoardList", map);
+	}
 
 }

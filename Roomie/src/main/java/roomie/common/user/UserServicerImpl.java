@@ -68,6 +68,26 @@ public class UserServicerImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userDAO.followingList(map);
 	}
+
+	@Override
+	public void follow(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		userDAO.follow(map);
+	}
+
+	@Override
+	public void unFollow(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		userDAO.unFollow(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> userBoardList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return userDAO.userBoardList(map);
+	}
+	
+	
 	
 	
 
