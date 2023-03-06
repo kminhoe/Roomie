@@ -358,10 +358,10 @@
 								</div>
 								<br />
 								<div>
-									<textarea id="input_place"
+									<input type="text" id="input_place"
 										class="feed_content_textarea form-control col-sm-5"
-										style="height: 30px; width: 100%;" rows="1"
-										placeholder="위치 공유" onclick="place_add_bnt();"></textarea>
+										style="height: 30px; width: 100% ; min-height: calc(1.5em + 0.75rem + 2px)"
+										placeholder="위치 공유" onclick="place_add_bnt();">
 								</div>
 								<br />
 								<div style="height: 100%;">
@@ -774,13 +774,13 @@
     const modal_add_feed_content = document.getElementById("modal_add_feed_content");
     const buttonAddFeed = document.getElementById("add_feed");
 
-    // ëª¨ë¬ ê¸ì°ê¸° ì´ë¯¸ì§ ìë¡ë ëì°ê¸°
+    // 모달 글쓰기 이미지 업로드 띄우기
     buttonAddFeed.addEventListener("click", e => {
       modal_add_feed.style.display = "flex";
       document.body.style.overflowY = "hidden";
     });
 
-    // ëª¨ë¬ ê¸ì°ê¸° ì´ë¯¸ì§ ìë¡ë ë«ê¸°
+    // 모달 글쓰기 이미지 업로드 닫기
     const buttonCloseModal_add_feed = document.getElementById("close_modal_add_feed");
     buttonCloseModal_add_feed.addEventListener("click", e => {
       modal_add_feed.style.display = "none";
@@ -790,7 +790,7 @@
       $('#input_content').val('');
 
     });
-    // ëª¨ë¬ ê¸ì°ê¸° ë«ê¸°
+    // 모달 글쓰기 닫기
     const buttonCloseModal_add_feed_content = document.getElementById("close_modal_add_feed_content");
     buttonCloseModal_add_feed_content.addEventListener("click", e => {
       modal_add_feed_content.style.display = "none";
@@ -800,7 +800,7 @@
       $('#input_content').val('');
     });
 
-    // ìë¡ë jquery
+    // 업로드 jquery
     $('.modal_image_upload')
         .on("dragover", dragOver)
         .on("dragleave", dragOver)
@@ -869,7 +869,7 @@
             document.getElementById('upload_next').click();
             console.log(window.URL.createObjectURL(data.files[i]));
           } else {
-            // íì¼ íìì´ ëìì ì¼ ê²½ì°
+            // 파일 타입이 동영상 일 경우
             var html = "";
             html += '<li class="sub_upload"><video controls width="780px" height="556px" style="background:#e2e2e2;" src="' + window.URL.createObjectURL(data.files[i]) + '"></li>';
             $('.upload_list').append(html)
@@ -883,7 +883,7 @@
           
           
         } else {
-          // íì¼ì ìë¡ëíì§ ëª»íìµëë¤. 
+          // 파일을 업로드하지 못했습니다. 
           $('.modal_image_upload').css({
             'background-color' : '#transparent'
           });
@@ -1082,7 +1082,7 @@
     		            'background-color' : 'transparent'});
         			var fileImageCallPath = encodeURIComponent( obj.BO_UPLOADPATH +obj.BO_UUID+ "_"+obj.BO_MEDIA);
         			/* input hidden value obj.BO_UUID */
-        			str += '<li class="sub_upload"><img class="uploadedfile" style=" background:#e2e2e2;" src="' + window.URL.createObjectURL(file.files[i]) + '"></li>';
+        			str += '<li class="sub_upload"><img class="uploadedfile" style="width:780px; height:556px; background:#e2e2e2;" src="' + window.URL.createObjectURL(file.files[i]) + '"></li>';
         			
         			
         		}else if(obj.BO_MEDIATYPE == 'video'){
@@ -1091,7 +1091,7 @@
         	            "background-size": "100% 100%",
         	            'background-color' : 'transparent'});
         			var fileMediaCallPath = encodeURIComponent( obj.BO_UPLOADPATH +obj.BO_UUID+ "_"+obj.BO_MEDIA);
-        			str += '<li class="sub_upload"><video controls class="uploadedfile" style="background:#e2e2e2;" src="' + window.URL.createObjectURL(file.files[i]) + '"></li>';
+        			str += '<li class="sub_upload"><video controls width="780px" height="556px" class="uploadedfile" style="background:#e2e2e2;" src="' + window.URL.createObjectURL(file.files[i]) + '"></li>';
         	        
         		}else{
         			alert("타입확인해바 새꺄!");
@@ -1109,6 +1109,24 @@
     
      
     $("#boardupload").on("click", function(e){
+    	if($("#input_content").val() == "" || $("#input_content").val()== null){
+      		 alert("게시글을 작성해주세요");
+      		 return false;
+      	 }
+     var str = $("#input_hash").val();
+     
+     var checkhash = str.indexOf('#');
+     
+     console.log("str: " + str.length);
+     
+     if(str.length > 0){
+    	 if(checkhash < 0){
+    	 alert("# 태그를 붙여주세요");
+    	 return false;
+     	}
+     }else if(str.length < 0){
+    	 return true;
+     }
    	 
   	 
    	 var BO_MEM = $("#input_user_id").text();
@@ -1118,6 +1136,10 @@
    	 //let files = $("input[name=uploadFile]")[0].files;
    	 //var file = $("#input_fileimage").val();
    	 var file = $("#qwer").val();
+   	 
+   	 
+   	 
+   	 
    	 
    	 console.log("file이름들: "+ file);
    	 
@@ -1149,9 +1171,14 @@
 			contentType: false,
 			data: formData,
 			type: 'POST',
-			dataType:'json',
-			success: function(result){
+			dataType:'text',
+			success: function(status){
 				
+				alert("성공");
+				/* $('#modal_add_feed_content').css({
+            		display: 'none'	
+            	}); */
+				location.reload();
 			}
    		 
    	 });
@@ -1178,7 +1205,7 @@
     const story_slideWidth = 485; //한개의 슬라이드 넓이
     const story_slideMargin = 0; //슬라이드간의 margin 값
 
-    //ì ì²´ ì¬ë¼ì´ë ì»¨íì´ë ëì´ ì¤ì 
+    //전체 슬라이드 컨테이너 넓이 설정
     story_list.style.width = (story_slideWidth + story_slideMargin) * story_slideCount + 'px';
 
     function story_moveSlide(num) {
@@ -1187,17 +1214,17 @@
     }
 
     story_prev.addEventListener('click', function () {
-      /*ì²« ë²ì§¸ ì¬ë¼ì´ëë¡ íì ëìëë 
-      ì´ì  ë²í¼ ëë¬ë ìë¬´ë° ë°ì ìê² íê¸° ìí´ 
-      currentIdx !==0ì¼ëë§ moveSlide í¨ì ë¶ë¬ì´ */
+      /*첫 번째 슬라이드로 표시 됐을때는 
+      이전 버튼 눌러도 아무런 반응 없게 하기 위해 
+      currentIdx !==0일때만 moveSlide 함수 불러옴 */
       if (story_currentIdx !== 0) story_moveSlide(story_currentIdx - 1);
     });
 
     story_next.addEventListener('click', function () {
-      /* ë§ì§ë§ ì¬ë¼ì´ëë¡ íì ëìëë 
-      ë¤ì ë²í¼ ëë¬ë ìë¬´ë° ë°ì ìê² íê¸° ìí´
-      currentIdx !==slideCount - 1 ì¼ëë§ 
-      moveSlide í¨ì ë¶ë¬ì´ */
+      /* 마지막 슬라이드로 표시 됐을때는 
+      다음 버튼 눌러도 아무런 반응 없게 하기 위해
+      currentIdx !==slideCount - 1 일때만 
+      moveSlide 함수 불러옴 */
       if (story_currentIdx !== story_slideCount - 1) {
         story_moveSlide(story_currentIdx + 1);
       }
@@ -1313,7 +1340,33 @@ function displayPlaces(places) {
             itemEl.onmouseout =  function () {
                 infowindow.close();
             };
+            kakao.maps.event.addListener(marker, 'click', function(){
+            	alert("값전달하자!!"+ title);
+            	
+            	document.getElementById('input_place').value = title;
+            	$('#modal_place_add').css({
+            		display : 'none'
+            	});
+            	map.relayout();
+            	$('#modal_add_feed_content').css({
+            		display: 'flex'	
+            	});
+            });
+            itemEl.onclick = function () {
+            	alert("값전달해볼까?"+ title);
+            	document.getElementById('input_place').value = title;
+      
+            	$('#modal_place_add').css({
+            		display : 'none'
+            	});
+            	map.relayout();
+            	$('#modal_add_feed_content').css({
+            		display: 'flex'	
+            	});
+            };
+            
         })(marker, places[i].place_name);
+        
 
         fragment.appendChild(itemEl);
     }
@@ -1449,14 +1502,14 @@ function removeAllChildNods(el) {
     var upload_slideWidth = 795; //한개의 슬라이드 넓이
     const upload_slideMargin = 0; //슬라이드간의 margin 값
   
-    // ì°½í¬ê¸° ë³í ê°ì§
+    // 창크기 변화 감지
     $( window ).resize(function() {
       var windowWidth = $(window).width();
       if(windowWidth > 1100) {
-        // ì°½ ê°ë¡ í¬ê¸°ê° 1100ë³´ë¤ í´ ê²½ì° 
+        // 창 가로 크기가 1100보다 클 경우 
         upload_slideWidth = 795;
       } else {
-        // ì°½ ê°ë¡ í¬ê¸°ê° 1100ë³´ë¤ ìì ê²½ì°
+        // 창 가로 크기가 1100보다 작을 경우
         upload_slideWidth = 325;
       }
       upload_moveSlide(upload_currentIdx);
@@ -1464,14 +1517,14 @@ function removeAllChildNods(el) {
 
     var windowWidth = $(window).width();
     if(windowWidth > 1100) {
-      // ì°½ ê°ë¡ í¬ê¸°ê° 1100ë³´ë¤ í´ ê²½ì° 
+      // 창 가로 크기가 1100보다 클 경우 
       upload_slideWidth = 795;
     } else {
-      // ì°½ ê°ë¡ í¬ê¸°ê° 1100ë³´ë¤ ìì ê²½ì°
+      // 창 가로 크기가 1100보다 작을 경우
       upload_slideWidth = 325;
     }
 
-    //ì ì²´ ì¬ë¼ì´ë ì»¨íì´ë ëì´ ì¤ì 
+    //전체 슬라이드 컨테이너 넓이 설정
     upload_list.style.width = (upload_slideWidth + upload_slideMargin) * upload_slideCount + 'px';
 
     function upload_moveSlide(num) {
@@ -1480,23 +1533,23 @@ function removeAllChildNods(el) {
     }
 
     upload_prev.addEventListener('click', function () {
-      /*ì²« ë²ì§¸ ì¬ë¼ì´ëë¡ íì ëìëë 
-      ì´ì  ë²í¼ ëë¬ë ìë¬´ë° ë°ì ìê² íê¸° ìí´ 
-      upload_currentIdx !==0ì¼ëë§ upload_moveSlide í¨ì ë¶ë¬ì´ */
+      /*첫 번째 슬라이드로 표시 됐을때는 
+      이전 버튼 눌러도 아무런 반응 없게 하기 위해 
+      upload_currentIdx !==0일때만 upload_moveSlide 함수 불러옴 */
       if (upload_currentIdx !== 0) upload_moveSlide(upload_currentIdx - 1);
     });
 
     upload_next.addEventListener('click', function () {
-      /* ë§ì§ë§ ì¬ë¼ì´ëë¡ íì ëìëë 
-      ë¤ì ë²í¼ ëë¬ë ìë¬´ë° ë°ì ìê² íê¸° ìí´
-      currentIdx !==slideCount - 1 ì¼ëë§ 
-      moveSlide í¨ì ë¶ë¬ì´ */
+      /* 마지막 슬라이드로 표시 됐을때는 
+      다음 버튼 눌러도 아무런 반응 없게 하기 위해
+      currentIdx !==slideCount - 1 일때만 
+      moveSlide 함수 불러옴 */
       if (upload_currentIdx !== upload_slideCount - 1) {
         upload_moveSlide(upload_currentIdx + 1);
       }
     });
 
-    // ê¸ì°ê¸° ë¤ì íì´ì§
+    // 글쓰기 다음 페이지
     function modal_add_feed_Next() {
       $('#modal_add_feed_content').css({
         display : 'flex'
@@ -1507,7 +1560,7 @@ function removeAllChildNods(el) {
       })
     }
 
-    // ì´ì  íì´ì§
+    // 이전 페이지
     function modal_add_feed_Prev() {
       $('#modal_add_feed_content').css({
         display: 'none'

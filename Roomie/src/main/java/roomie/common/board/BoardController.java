@@ -169,36 +169,41 @@ public class BoardController {
 	
 	@PostMapping(value="/boardInsert.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public void insertboard(MultipartHttpServletRequest request, @RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
+	public ResponseEntity<String> insertboard(MultipartHttpServletRequest request, @RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
 		Map<String, Object> hm = new HashMap<>();
 		System.out.println("받았니? : " + request);
 		System.out.println("받았니? : " + map);
 		
 		boardService.registerBoard(map);
 		
-		
-		System.out.println("이건 먼데?" + map.get("BO_IDX"));
+		if(map.get("BO_IDX") != null) {
+			System.out.println("이건 먼데?" + map.get("BO_IDX"));
 		
 //		Integer idx = Integer.parseInt(String.valueOf(map.get("BO_IDX")));
 		
-		hm.put("HASH_BOARD", map.get("BO_IDX"));
+			hm.put("HASH_BOARD", map.get("BO_IDX"));
 		
-		String hash = (String)map.get("BO_HASH");		
+			String hash = (String)map.get("BO_HASH");		
 		
-		System.out.println("확인 # 안나눔 : " + hash);
+			System.out.println("확인 # 안나눔 : " + hash);
 		
-		StringTokenizer shop = new StringTokenizer(hash, "#");
-		
-		while(shop.hasMoreTokens()) {
-			hm.put("HASH_KEYWORD", "#"+shop.nextToken());
+			StringTokenizer shop = new StringTokenizer(hash, "#");
+			if(shop.hasMoreTokens()) {
+				while(shop.hasMoreTokens()) {
+					hm.put("HASH_KEYWORD", "#"+shop.nextToken());
 			
-			boardService.inserthasg(hm);
-			System.out.println(hm);
+					boardService.inserthasg(hm);
+					System.out.println(hm);
+				}
+			}
 			
 			
 	
+		}else {
+			System.out.println(map.get("BO_IDX"));
 		}
 		
+		return new ResponseEntity<String>("redirect:/roomie/boardList.ya", HttpStatus.OK);
 		
 		
 	
@@ -231,7 +236,7 @@ public class BoardController {
 	public ModelAndView boardList()throws Exception{
 		ModelAndView mv = new ModelAndView("board/boardList");
 		
-		return mv; 
+		return mv;
 	}
 
 }
