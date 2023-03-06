@@ -131,10 +131,10 @@
         <!-- 왼쪽 버튼 -->
         <div class="story_prev" style="top:50px; cursor:pointer; position: relative; z-index: 1;"><img src="./resources/image/icon_29.png"></div>
         <ul class="story_list">
-          <li class="sub_story" style="background-image: url('./resources/image/rainbow.png'">
+          <li class="sub_story">
             <div class="text">
               <a onclick="href='#'"><img src="./resources/image/profile_01.jpg" alt="프로필"></a>
-              <span style="font-size: 12px; margin-left: 3px;);">yeongjun</span>
+              <span style="font-size: 12px; margin-left: 3px;">yeongjun</span>
             </div>
           </li>
           <li>
@@ -191,6 +191,9 @@
       </div>
       <!-- 스토리 끝 -->
       <!-- 게시글 시작 -->
+      <c:forEach></c:forEach>
+      
+      
       <div class="border feed_box">
         <div class="feed_name">
           <div class="profile_box">
@@ -240,45 +243,9 @@
         </div>
       </div>
       <!-- 게시글 끝 -->
-      <!-- 두번째 게시글 시작 -->
-      <div class="border feed_box">
-        <div class="feed_name">
-          <div class="profile_box">
-            <img class="profile_img" src="./resources/image/profile_06.jpg">
-          </div>
-          <span class="feed_name_txt"> daemyeong </span>
-        </div>
-        <img class="feed_img" src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800">
-  
-        <div class="feed_icon">
-          <div>
-            <!-- 좋아요 버튼 -->
-            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_01.png">
-            <!-- 댓글 버튼 -->
-            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_03.png">
-            <!-- 공유 버튼 -->
-            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_04.png">
-          </div>
-          <div>
-            <!-- 게시글 저장 버튼 -->
-            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_05.png">
-          </div>
-        </div>
-        <div class="feed_like">
-          <!-- 좋아요 표시 -->
-          <p class="feed_txt"> <b>좋아요 10개</b></p>
-        </div>
-        <div class="feed_content">
-          <!-- 이름, 게시글 내용 -->
-          <p class="feed_txt"> <b> daemyeong </b> 코로나라서 해외여행을 못가니 최근 제주도 가는사람이 늘고있습니다~ 제주도도 조심해야되는건 마찬가지~!</p>
-        </div>
-        <!-- 댓글 목록 -->
-        <div class="feed_reply">
-          <span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ</span>
-          <span class="feed_txt"> <b> junseok </b> 제주도  ㄱ ㄱ </span>
-        </div>
-      </div>
-      <!-- 두번째 게시글 끝 -->
+
+
+
     <!-- 왼쪽 바디 영역 끝 -->
     <!-- 오른쪽 바디 영역 시작 -->
     <div class="right_body">

@@ -67,4 +67,22 @@
 		]]>
 	</select>
 	
+	<select id="memberLock" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM MEMBER WHERE MEM_ID = #{MEM_ID} AND MEM_PWD = #{MEM_PWD}
+	]]>
+</select>
+
+<select id="emailcheck" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM MEMBER WHERE MEM_ID = #{MEM_ID}
+	]]>
+</select>
+
+<update id="passwordreset" parameterType="hashmap">
+	<![CDATA[
+		update member set mem_pwd = #{mem_pwd}, mem_lock = 'N' where mem_id = #{mem_id}
+	]]>
+</update>
+	
 </mapper>
