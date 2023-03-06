@@ -1,4 +1,3 @@
-
 package roomie.common.chat;
 
 import java.util.ArrayList;
@@ -9,6 +8,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import javax.websocket.OnOpen;
+import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
