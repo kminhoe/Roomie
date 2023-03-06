@@ -11,4 +11,8 @@ public interface SearchService {
 	
 	public void insertKeyword(Map<String, Object> map) throws Exception;
 
+	public List<Map<String, Object>> searchList(int id) throws Exception;
+	
+	public void searchDelete(Map<String, Object> map) throws Exception;
+	
 } 

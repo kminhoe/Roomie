@@ -30,6 +30,18 @@ public class SearchServiceImpl implements SearchService {
 		// TODO Auto-generated method stub
 		searchDAO.insertKeyword(map);
 	}
+
+	@Override
+	public List<Map<String, Object>> searchList(int id) throws Exception {
+		// TODO Auto-generated method stub
+		return searchDAO.searchList(id);
+	}
+
+	@Override
+	public void searchDelete(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		searchDAO.searchDelete(map);
+	}
 	
 	
 	

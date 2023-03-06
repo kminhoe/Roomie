@@ -1,5 +1,6 @@
 package roomie.common.board;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -26,5 +27,27 @@ public class BoardServiceImpl implements BoardService{
 		
 		boardDAO.hashinsert(map);		
 	}
+
+
+
+	@Override
+	public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.likeCheck(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectBoard(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.selectBoard(map);
+	}
+
+	@Override
+	public Map<String, Object> memCheck(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.memCheck(map);
+	}
+	
+	
 	
 } 
