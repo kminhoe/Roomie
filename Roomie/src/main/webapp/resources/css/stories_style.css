@@ -1,0 +1,149 @@
+:root {
+    --background-color: #1b1d20;
+    --slide-width: 450px;
+    --slide-height: 50%;
+    --slide-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.4);
+    --slide-thumb-time: 2s;
+    --slide-thumb-height: 3px;
+    --slide-thumb-default-color: rgba(0, 0, 0, 0.4);
+    --slide-thumb-active-color: rgba(255, 255, 255, 0.9);
+}
+
+
+@media screen and (max-width: 1100px) {
+	:root {
+    	--slide-width: 450px;
+	}
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: 800px;
+    object-fit: cover;
+}
+
+.slide {
+    box-shadow: var(--slide-width);
+    display: grid;
+    margin: 20px auto; 
+    max-width: var(--slide-width);
+
+}
+
+.slide-items {
+    border-radius: 5px;
+    grid-area: 1/1;
+    overflow: hidden;
+    position: relative;
+}
+
+.slide-items>* {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+}
+
+.slide-items .active {
+    opacity: 1;
+    pointer-events: initial;
+    position: relative;
+}
+
+.slide-nav {
+    display: grid;
+    grid-area: 1/1;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    z-index: 1;
+}
+
+.slide-thumbs {
+    display: flex;
+    grid-column: 1 / 3;
+}
+
+.slide-thumb-item {
+    background-color: var(--slide-thumb-default-color);
+    border-radius: 3px;
+    display: block;
+    flex: 1;
+    height: var(--slide-thumb-height);
+    margin: 5px;
+    overflow: hidden;
+}
+
+.slide-thumb-item.active::after {
+    animation: thumb var(--slide-thumb-time) forwards linear;
+    background-color: var(--slide-thumb-active-color);
+    border-radius: 3px;
+    content: '';
+    display: block;
+    height: inherit;
+    transform: translateX(-100%);
+}
+
+.slide-next,
+.slide-prev {
+    opacity: 0;
+    -webkit-appearance:none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@keyframes thumb {
+    to {
+        transform: initial;
+    }
+}
+
+.feed_name{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    left: 20px;
+    top: 95px;
+    position: relative;
+    z-index: 2;
+    margin: 20px auto;
+    max-width: var(--slide-width);
+}
+
+.feed_name_txt{
+    font-size: 14px;
+    padding: 0px 10px;
+    font-weight: bold;
+    position: relative;
+    color: white;
+}
+
+.name_content{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile_box {
+    width: 40px;
+    height: 40px;
+    border-radius: 70%;
+    overflow: hidden;
+}
+.profile_img {
+    width: 100%;
+    height: 100%;
+}
+
+.slide-text {
+	background: transparent;
+	color: white; position: relative;
+	z-index: 2; top: -50px;
+	padding: 10px 10px;
+	border-radius: 20px;
+	border: 1px solid white;
+	width: 90%;
+	margin: auto;
+}
