@@ -526,7 +526,7 @@ ul li {
 			<!-- 친구 리스트 end -->
 	</div>
 </div>
-	<!-- 모달 end -->
+<!-- 모달 end -->
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
@@ -563,14 +563,13 @@ webSocket.onmessage = function(message){
 };
 
 function wsOpen(message){
-	webSocket.send('1#' + "<%=session.getAttribute("MEM_ID")%>" + '#1');
+	webSocket.send('1#' + <%=session.getAttribute("MEM_ID")%> + '#1');
 	}
 
 /* @@@@@@@@@@@@@@@@@@@@@ 웹소켓 관련 @@@@@@@@@@@@@@@@@@@@@ */
 $(window).on('load',function (){
 	/* @@@@@@@@@@@@@@@@@@@@@ 웹소켓 관련 @@@@@@@@@@@@@@@@@@@@@ */
 	
-	webSocket.onclose = function(message){ wsClose(message);};
 	webSocket.onerror = function(message){ wsError(message);};
 	
 	/* 웹소켓 연결 종료 시 메시지 */
@@ -938,6 +937,14 @@ $(addChatRoom).click(function(e){
         story_moveSlide(story_currentIdx + 1);
       }
     });
+  </script>
+  
+  <script>
+  window.addEventListener('beforeunload', function(event) {
+	  
+	  webSocket.send('3#' + <%=session.getAttribute("MEM_ID")%> + '#1');
+	  
+  });
   </script>
 
 
