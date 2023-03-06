@@ -20,7 +20,7 @@
   <div class="feed_name">
 	<div class="profile_box">
 	  <img class="profile_img"
-	       src="./resources/image/profile_05.jpg">
+	       src="./resources/image/${STORIES[0].MEM_MEDIA}">
 	</div>
 	<div class="name_content">
 	  <!-- 사용자 이름 -->
@@ -41,7 +41,7 @@
 			        <video id="videos" muted style="display: block; max-width: 100%;">
 			            <source src="./resources/image/${S.STORY_IMAGE}" type="video/mp4">
 			        </video>
-				</c:when>
+				</c:when> 
 				<c:otherwise>
 					<img src="./resources/image/${S.STORY_IMAGE}" alt="${S.STORY_IDX}">
 				</c:otherwise>
@@ -54,48 +54,39 @@
     <nav class="slide-nav">
         <div class="slide-thumbs"></div>
         <button class="slide-prev">Previous</button>
-        <button class="slide-next">Next</button>
+        <button class="slide-next" id="slide-next">Next</button>
     </nav>
   </div>
-  
   <!-- 스토리 슬라이드 끝 -->
-
-  <script src="./resources/js/stories.js"></script>
+  
+  <script>
+  	function story_check(index) {
+  		var stories_length = '${fn:length(STORIES)}'
+  		
+  		console.log(index);
+  		
+  		var paramData = {
+  				"SC_MEM" : '15',
+  				"STORY_IDX" : ${STORIES[1].STORY_IDX}
+  			};
+  		
+		$.ajax({
+			url: "/roomie/storiesCheck.ya"
+			, data : paramData 
+			, type : 'POST'
+			, dataType : 'json'
+			, success: function(status){
+	          	console.log(status);
+			}
+			, error: function(error){
+				console.log("에러 : " + error);
+			}
+		});
+  	}
+  </script> 
+  
+  <script type="text/javascript" src="./resources/js/stories.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  
-  <script>
-/* 	 $(document).ready(function(){
-		 readStories();
-	 }) */
-  </script>
-  
-  <script>
-/* 	 function readStories() {
-			var paramData = {"MEM_ID": "k_2668536757"};
-			var htmls = '';
-			
-			htmls += '<img src="./resources/image/cat1.png" alt="Cat 1">';
-			htmls += '<img src="./resources/image/cat2.png" alt="Cat 2">';
-			htmls += '<img src="./resources/image/cat3.png" alt="Cat 3">';
-			htmls += '<img src="./resources/image/cat4.png" alt="Cat 4">';
 
-			$.ajax({
-				url: "/roomie/selectStories.ya"
-				, data : paramData 
-				, type : 'POST'
-				, dataType : 'json'
-				, success: function(status){
-	                console.log(status);
-	                
-	                
-	                $('.slide-items').replaceWith(htmls);
-	                
-				}
-				, error: function(error){
-					console.log("에러 : " + error);
-				}
-			});
-		}  */
-  </script>
 </body>
 </html>

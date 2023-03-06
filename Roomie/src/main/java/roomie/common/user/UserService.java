@@ -23,5 +23,11 @@ public interface UserService {
 	
 	List<Map<String,Object>> userFollowingList(Map<String,Object>map)throws Exception;
 	
+	public void follow(Map<String,Object> map) throws Exception;
+	
+	public void unFollow(Map<String,Object>map) throws Exception;
+	
+	List<Map<String,Object>> userBoardList(Map<String,Object> map) throws Exception;
+	
 
 }

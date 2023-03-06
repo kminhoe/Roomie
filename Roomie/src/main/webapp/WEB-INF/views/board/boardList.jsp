@@ -303,95 +303,53 @@
                      <!-- 업로드 공간 -->
                      <div class="upload">
                         <ul class="upload_list">
+            <!-- 스토리 버튼 -->
+            <img class="menu_img" id="add_stories"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_17.png"> &nbsp;&nbsp;
+            <div class="modal_overlay" id="modal_add_stories" style="position: fixed;">
+           		<div class="modal_window_stories" id="modal_window_stories" style="width: 800px; height: 600px;">
 
-								</ul>
-							</div>
-						</div>
-						<div class="image_upload"
-							style="width: 800px; margin-top: 150px; display: inline-block; text-align: center;">
-							<div>
-								<img style="width: 150px; height: 150px;"
-									src="resources/image/icon_31.png">
-							</div>
-							<div style="margin-top: 30px; font-size: 20px;">
-								<a>사진과 동영상을 여기에 끌어다 놓으세요</a>
-							</div>
-							<div style="margin-top: 10px; font-size: 14px; color: #8e8e8e;">
-								<a>최대 업로드 파일 크기 : 10MB</a>
-							</div>
-						</div>
-						<!-- 이미지 왼쪽 버튼 -->
-						<img class="upload_prev" id="upload_prev"
-							style="cursor: pointer; left: 0px; top: -136px; position: relative; z-index: 1;"
-							src="resources/image/icon_35.png">
-						<!-- 이미지 오른쪽 버튼 -->
-						<img class="upload_next" id="upload_next"
-							style="cursor: pointer; left: 726px; top: -136px; position: relative; z-index: 1;"
-							src="resources/image/icon_36.png">
-					</div>
-				</div>
-				<!-- 모달 게시글 이미지 업로드 끝 -->
-				<!-- 모달 게시글 글쓰기 시작 -->
-				<div class="modal modal_overlay" id="modal_add_feed_content"
-					style="position: fixed;">
-					<div class="modal_window" style="width: 800px; height: 600px;">
-						<div class="modal_title">
-							<div class="modal_title_side">
-								<!-- 이전 버튼 -->
-								<div style="margin-top: -10px; margin-right: 15px;">
-									<img style="cursor: pointer;" onclick="modal_add_feed_Prev();"
-										src="resources/image/icon_39.png">
-								</div>
-							</div>
-							<!-- 모달 타이틀 -->
-							<div style="font-size: 16px;">새 게시물</div>
-							<div class="modal_title_side">
-								<!-- 모달 닫기 버튼 -->
-								<div style="margin-top: -8px; margin-left: 20px;">
-									<img id="close_modal_add_feed_content" style="cursor: pointer;"
-										src="resources/image/icon_40.png">
-								</div>
-							</div>
-						</div>
-						<div class="modal_image_content" style="height: 100%;">
-							<div id="input_image" class="modal_image_upload_content"></div>
-							<div class="modal_content_write">
-								<div class="feed_name">
-									<div class="profile_box">
-										<img id="input_profile_image" class="profile_img"
-											src="resources/image/profile_05.jpg">
-									</div>
-									<span id="input_user_id" class="feed_name_txt"> jshong_</span>
-								</div>
-								<br />
-								<div>
-									<textarea id="input_hash"
-										class="feed_content_textarea form-control col-sm-5"
-										style="height: 30px; width: 100%;" rows="1" placeholder="해시태그"></textarea>
-								</div>
-								<br />
-								<div>
-									<input type="text" id="input_place"
-										class="feed_content_textarea form-control col-sm-5"
-										style="height: 30px; width: 100% ; min-height: calc(1.5em + 0.75rem + 2px)"
-										placeholder="위치 공유" onclick="place_add_bnt();">
-								</div>
-								<br />
-								<div style="height: 100%;">
-									<textarea id="input_content"
-										class="feed_content_textarea form-control col-sm-5"
-										style="height: 100%;" rows="10" placeholder="설명을 입력하세요..."></textarea>
-								</div>
-								<br /> <br />
-								<div style="width: 100%; text-align: center">
-									<button class="button" id="boardupload" style="cursor: pointer">글쓰기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- 모달 게시글 글쓰기 끝 -->
-				<!-- 위치 추가 모달 시작 -->
+           		</div>
+           </div>
+            <!-- 게시글 업로드 버튼 -->
+            <img class="menu_img" id="add_feed"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_08.png"> &nbsp;&nbsp;
+            <!-- 모달 게시글 이미지 업로드 시작 -->
+            <div class="modal_overlay" id="modal_add_feed"
+               style="position: fixed;">
+               <div class="modal_window" id="modal_window"
+                  style="width: 800px; height: 600px;">
+                  <div class="modal_title">
+                     <div class="modal_title_side">
+                        <!-- 이미지 추가 버튼 -->
+                        <div style="margin-top: -10px;">
+                           <img class="uploadpage" id="target_img"
+                              style="cursor: pointer;" src="resources/image/icon_34.png">
+                        </div>
+                     </div>
+                     <input type="file" class="real_upload" id="file"
+                        name="uploadFile" style="display: none;" multiple>
+                     <!-- 모달 타이틀 -->
+                     <div style="font-size: 16px;">새 게시물</div>
+                     <div class="modal_title_side">
+                        <!-- 다음 페이지(글작성) 버튼 -->
+                        <div style="margin-top: -8px; margin-right: 15px;">
+                           <img style="cursor: pointer;" onclick="modal_add_feed_Next();"
+                              src="resources/image/icon_38.png">
+                        </div>
+                        <!-- 모달 닫기 버튼 -->
+                        <div style="margin-top: -8px;">
+                           <img id="close_modal_add_feed" style="cursor: pointer;"
+                              src="resources/image/icon_40.png">
+                        </div>
+                     </div>
+                  </div>
+                  <div class="modal_image_upload" style="position: fixed;">
+                     <!-- 업로드 공간 -->
+                     <div class="upload">
+                        <ul class="upload_list"> 
 
             <div>
                <div class="modal modal_overlay" id="modal_place_add"
@@ -805,8 +763,21 @@
       <script src="https://code.jquery.com/jquery-3.3.1.min.js"
          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
          crossorigin="anonymous"></script>
+         
+ <script>
+ 	// 스토리 추가 모달
+ 	const modal_add_stories = document.getElementById("modal_add_stories");
+    const buttonAddStories = document.getElementById("add_stories");
+    
+    buttonAddStories.addEventListener("click", e => {
+        modal_add_stories.style.display = "flex";
+        document.body.style.overflowY = "hidden";
+      });
+ </script>        
+         
+         
       <!-- 모달 스크립트 -->
-      <script>
+  <script>
  
      const realUpload = document.querySelector('.real_upload');
      const upload = document.querySelector('.uploadpage');
@@ -1036,113 +1007,116 @@
     }
      $(document).ready(function(){
     	 
-    	 var arr = new Array;
-    	 var arr2 = new Array;
-    	 
-    	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|txt)$");
-    	var maxSize = 10485760;
-    	
-    	function checkExtension(fileName, fileSize){
-    		if(fileSize >= maxSize){
-    			alert("파일 사이즈 초과");
-    			return false;
-    		}
-    		if(regex.test(fileName)){
-    			alert("해당 파일은 업로드 할수 없습니다.");
-    			return false;
-    		}
-    		return true;
-    	}
-    	var cloneObj = $(".real_upload").clone();
-    	
-    	$("input[type='file']").change(function(e){
-    		var formData = new FormData();
-    		var inputFile = $("input[name='uploadFile']");
-    		var files = inputFile[0].files;
-    		
-    		    		
-    		console.log(files);
-    		
-    		for(var i=0; i<files.length; i++){
-    			
-    			if(!checkExtension(files[i].type, files[i].size)){
-    				return false;
-    			} 
-    			formData.append("uploadFile", files[i]);
-    		}
-    		
-    		$.ajax({
-    			url: '/roomie/register.ya',
-    			processData: false,
-    			contentType: false,
-    			data: formData,
-    			type: 'POST',
-    			dataType:'json',
-    			success: function(result){
-    				
-    				var str =""
-    				console.log(result);
-    				
-    				showUploadedFile(result);
-    				
-    				arr = result;
-    				
-    				arr.forEach(function(object, index){
-    					console.log("ajax 확인 : " + object.BO_MEDIA);
-    					arr2.push(object.BO_MEDIA);
-    				});
-    				
-    				console.log(arr2);
-    				
-    				var x = document.createElement("INPUT");
-    				x.setAttribute("type", "hidden");
-    				x.setAttribute("value", arr2);
-    				x.setAttribute("id", "qwer");
-    				
-    				document.body.appendChild(x);
-    				
-    				//str += "<input type='hidden' value='arr2' id=input_fileimage>"
-    				
-    				
-    				
-    				$(".real_upload").html(cloneObj.html());
-    			}
-    		});
-    		
-    	});
-    	function showUploadedFile(uploadResultArr){
-        	var str = "";
-        	
-        	$(uploadResultArr).each(function(i, obj){
-        		
-        		
-        		
-        		if(obj.BO_MEDIATYPE == 'image'){
-        			/* str += "<li>" + obj.BO_MEDIATYPE + "</li>";  */
-        			$('.modal_image_upload').css({
-    		            "outline": "none",
-    		            "background-size": "100% 100%",
-    		            'background-color' : 'transparent'});
-        			var fileImageCallPath = encodeURIComponent( obj.BO_UPLOADPATH +obj.BO_UUID+ "_"+obj.BO_MEDIA);
-        			/* input hidden value obj.BO_UUID */
-        			str += '<li class="sub_upload"><img class="uploadedfile" style="width:780px; height:556px; background:#e2e2e2;" src="' + window.URL.createObjectURL(file.files[i]) + '"></li>';
-        			
-        			
-        		}else if(obj.BO_MEDIATYPE == 'video'){
-        			$('.modal_image_upload').css({
-        	            "outline": "none",
-        	            "background-size": "100% 100%",
-        	            'background-color' : 'transparent'});
-        			var fileMediaCallPath = encodeURIComponent( obj.BO_UPLOADPATH +obj.BO_UUID+ "_"+obj.BO_MEDIA);
-        			str += '<li class="sub_upload"><video controls width="780px" height="556px" class="uploadedfile" style="background:#e2e2e2;" src="' + window.URL.createObjectURL(file.files[i]) + '"></li>';
-        	        
-        		}else{
-        			alert("타입확인해바 새꺄!");
-        		}
-        		
-        	});
-        	$('.upload_list').append(str);
-    		document.getElementById('upload_next').click();
+    	// 스토리 리스트 불러오기
+       readStories();
+        
+        var arr = new Array;
+        var arr2 = new Array;
+        
+       var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|txt)$");
+       var maxSize = 10485760;
+       
+       function checkExtension(fileName, fileSize){
+          if(fileSize >= maxSize){
+             alert("파일 사이즈 초과");
+             return false;
+          }
+          if(regex.test(fileName)){
+             alert("해당 파일은 업로드 할수 없습니다.");
+             return false;
+          }
+          return true;
+       }
+       var cloneObj = $(".real_upload").clone();
+       
+       $("input[type='file']").change(function(e){
+          var formData = new FormData();
+          var inputFile = $("input[name='uploadFile']");
+          var files = inputFile[0].files;
+          
+                    
+          console.log(files);
+          
+          for(var i=0; i<files.length; i++){
+             
+             if(!checkExtension(files[i].type, files[i].size)){
+                return false;
+             } 
+             formData.append("uploadFile", files[i]);
+          }
+          
+          $.ajax({
+             url: '/roomie/register.ya',
+             processData: false,
+             contentType: false,
+             data: formData,
+             type: 'POST',
+             dataType:'json',
+             success: function(result){
+                
+                var str =""
+                console.log(result);
+                
+                showUploadedFile(result);
+                
+                arr = result;
+                
+                arr.forEach(function(object, index){
+                   console.log("ajax 확인 : " + object.BO_MEDIA);
+                   arr2.push(object.BO_MEDIA);
+                });
+                
+                console.log(arr2);
+                
+                var x = document.createElement("INPUT");
+                x.setAttribute("type", "hidden");
+                x.setAttribute("value", arr2);
+                x.setAttribute("id", "qwer");
+                
+                document.body.appendChild(x);
+                
+                //str += "<input type='hidden' value='arr2' id=input_fileimage>"
+                
+                
+                
+                $(".real_upload").html(cloneObj.html());
+             }
+          });
+          
+       });
+       function showUploadedFile(uploadResultArr){
+           var str = "";
+           
+           $(uploadResultArr).each(function(i, obj){
+              
+              
+              
+              if(obj.BO_MEDIATYPE == 'image'){
+                 /* str += "<li>" + obj.BO_MEDIATYPE + "</li>";  */
+                 $('.modal_image_upload').css({
+                      "outline": "none",
+                      "background-size": "100% 100%",
+                      'background-color' : 'transparent'});
+                 var fileImageCallPath = encodeURIComponent( obj.BO_UPLOADPATH +obj.BO_UUID+ "_"+obj.BO_MEDIA);
+                 /* input hidden value obj.BO_UUID */
+                 str += '<li class="sub_upload"><img class="uploadedfile" style="width:780px; height:556px; background:#e2e2e2;" src="' + window.URL.createObjectURL(file.files[i]) + '"></li>';
+                 
+                 
+              }else if(obj.BO_MEDIATYPE == 'video'){
+                 $('.modal_image_upload').css({
+                       "outline": "none",
+                       "background-size": "100% 100%",
+                       'background-color' : 'transparent'});
+                 var fileMediaCallPath = encodeURIComponent( obj.BO_UPLOADPATH +obj.BO_UUID+ "_"+obj.BO_MEDIA);
+                 str += '<li class="sub_upload"><video controls width="780px" height="556px" class="uploadedfile" style="background:#e2e2e2;" src="' + window.URL.createObjectURL(file.files[i]) + '"></li>';
+                   
+              }else{
+                 alert("타입확인해바 새꺄!");
+              }
+              
+           });
+           $('.upload_list').append(str);
+          document.getElementById('upload_next').click();
         }
     
        
@@ -1152,10 +1126,10 @@
     
      
     $("#boardupload").on("click", function(e){
-    	if($("#input_content").val() == "" || $("#input_content").val()== null){
-      		 alert("게시글을 작성해주세요");
-      		 return false;
-      	 }
+       if($("#input_content").val() == "" || $("#input_content").val()== null){
+             alert("게시글을 작성해주세요");
+             return false;
+          }
      var str = $("#input_hash").val();
      
      var checkhash = str.indexOf('#');
@@ -1163,71 +1137,67 @@
      console.log("str: " + str.length);
      
      if(str.length > 0){
-    	 if(checkhash < 0){
-    	 alert("# 태그를 붙여주세요");
-    	 return false;
-     	}
+        if(checkhash < 0){
+        alert("# 태그를 붙여주세요");
+        return false;
+        }
      }else if(str.length < 0){
-    	 return true;
+        return true;
      }
-   	 
-  	 
-   	 var BO_MEM = $("#input_user_id").text();
-   	 var BO_HASH = $("#input_hash").val();
-   	 var BO_PLACE = $("#input_place").val();
-   	 var BO_CONT = $("#input_content").val();
-   	 //let files = $("input[name=uploadFile]")[0].files;
-   	 //var file = $("#input_fileimage").val();
-   	 var file = $("#qwer").val();
-   	 
-   	 
-   	 
-   	 
-   	 
-   	 console.log("file이름들: "+ file);
-   	 
-   	 console.log(BO_MEM);
-   	 console.log(BO_HASH);
-   	 console.log(BO_PLACE);
-   	 console.log(BO_CONT);
-   	 //console.log(file);
-   	 
-   	 
-   	 var formData = new FormData();  
-   	 
-   	 //formdata.append("BO_UUID", BO_uuid);
-   	 formData.append("BO_MEM", BO_MEM);
-   	 formData.append("BO_HASH", BO_HASH);
-   	 formData.append("BO_PLACE", BO_PLACE);
-   	 formData.append("BO_CONT", BO_CONT);
-   	 formData.append("BO_MEDIA", file)
-   	 /* Array.from(files).map(e => formData.append("BO_IMAGE", e));
-	 formData.append("BO_IMAGE", files); 
-   	 for(let i = 0; i< files.length; i++){
-   		formData.append("BO_IMAGE", files[i]);
-   	 } */
-   	 
-   	 
-   	 $.ajax({
-   		 url: '/roomie/boardInsert.ya',
-			processData: false,
-			contentType: false,
-			data: formData,
-			type: 'POST',
-			dataType:'text',
-			success: function(status){
-				
-				alert("성공");
-				/* $('#modal_add_feed_content').css({
-            		display: 'none'	
-            	}); */
-				location.reload();
-			}
-   		 
-   	 });
-   	 
-   	 
-   	 
+       
+      
+       var BO_MEM = $("#input_user_id").text();
+       var BO_HASH = $("#input_hash").val();
+       var BO_PLACE = $("#input_place").val();
+       var BO_CONT = $("#input_content").val();
+       //let files = $("input[name=uploadFile]")[0].files;
+       //var file = $("#input_fileimage").val();
+       var file = $("#qwer").val();
+
+       console.log("file이름들: "+ file);
+       
+       console.log(BO_MEM);
+       console.log(BO_HASH);
+       console.log(BO_PLACE);
+       console.log(BO_CONT);
+       //console.log(file);
+       
+       
+       var formData = new FormData();  
+       
+       //formdata.append("BO_UUID", BO_uuid);
+       formData.append("BO_MEM", BO_MEM);
+       formData.append("BO_HASH", BO_HASH);
+       formData.append("BO_PLACE", BO_PLACE);
+       formData.append("BO_CONT", BO_CONT);
+       formData.append("BO_MEDIA", file)
+       /* Array.from(files).map(e => formData.append("BO_IMAGE", e));
+    formData.append("BO_IMAGE", files); 
+       for(let i = 0; i< files.length; i++){
+         formData.append("BO_IMAGE", files[i]);
+       } */
+       
+       
+       $.ajax({
+          url: '/roomie/boardInsert.ya',
+         processData: false,
+         contentType: false,
+         data: formData,
+         type: 'POST',
+         dataType:'text',
+         success: function(status){
+            
+            alert("성공");
+            /* $('#modal_add_feed_content').css({
+                  display: 'none'   
+               }); */
+            location.reload();
+         }
+          
+       });
+       
+       
+       
     });
     
   </script>
@@ -1384,28 +1354,28 @@ function displayPlaces(places) {
                 infowindow.close();
             };
             kakao.maps.event.addListener(marker, 'click', function(){
-            	alert("값전달하자!!"+ title);
-            	
-            	document.getElementById('input_place').value = title;
-            	$('#modal_place_add').css({
-            		display : 'none'
-            	});
-            	map.relayout();
-            	$('#modal_add_feed_content').css({
-            		display: 'flex'	
-            	});
+               alert("값전달하자!!"+ title);
+               
+               document.getElementById('input_place').value = title;
+               $('#modal_place_add').css({
+                  display : 'none'
+               });
+               map.relayout();
+               $('#modal_add_feed_content').css({
+                  display: 'flex'   
+               });
             });
             itemEl.onclick = function () {
-            	alert("값전달해볼까?"+ title);
-            	document.getElementById('input_place').value = title;
+               alert("값전달해볼까?"+ title);
+               document.getElementById('input_place').value = title;
       
-            	$('#modal_place_add').css({
-            		display : 'none'
-            	});
-            	map.relayout();
-            	$('#modal_add_feed_content').css({
-            		display: 'flex'	
-            	});
+               $('#modal_place_add').css({
+                  display : 'none'
+               });
+               map.relayout();
+               $('#modal_add_feed_content').css({
+                  display: 'flex'   
+               });
             };
             
         })(marker, places[i].place_name);
@@ -1535,7 +1505,7 @@ function removeAllChildNods(el) {
 }
 </script>
 
-      <script>
+<script>
     const upload_list = document.querySelector('.upload_list'); //전체 슬라이드 컨테이너
     const upload_slideImg = document.querySelectorAll('.upload_list li'); //모든 슬라이드들
     let upload_currentIdx = 0; //현재 슬라이드 index
@@ -1723,5 +1693,82 @@ function removeAllChildNods(el) {
   </script> 
   
 
+  <script>
+
+    var page = 0;
+    var length = 0;
+  
+	function readStories() {
+		var paramData = {"FRI_MEM": 15};
+		var htmls = '';
+
+		$.ajax({
+			url: "/roomie/storiesList.ya"
+			, data : paramData 
+			, type : 'POST'
+			, dataType : 'json'
+			, success: function(status){
+	          
+	          for (i=0; i<status.length; i++) {
+	      		htmls += '<li class="sub_story" style="background-image: url(';
+	    		htmls += "'./resources/image/rainbow.png'";
+	    		htmls += '">';
+	    		htmls += '<div class="text">';
+	    		htmls += '<a onclick="href=' + "'/roomie/stories.ya?STORY_MEM=" + status[i].STORY_MEM + "'" + '">';
+	    		htmls += '<img src="./resources/image/' + status[i].MEM_MEDIA + '"alt="프로필"></a>'
+	    		htmls += '<span style="font-size: 12px; margin-left: 3px;);">' + status[i].MEM_USER + '</span>';
+	    		htmls += '</div>';
+	    		htmls += '</li>';
+	          }
+	          
+	          length = status.length;
+	          
+	          // visibility:hidden
+	          if (status.length <= 5) {
+	        	  $('.story_next').css("visibility", "hidden");
+	          }
+	          
+	          
+	          $('.story_list').html(htmls);
+	          
+			}
+			, error: function(error){
+				console.log("에러 : " + error);
+			}
+		});
+	}
+  </script>
+  <script>
+
+  	// 왼쪽 버튼
+  	function prev_action() {
+  		page--; // 페이지 번호 -1
+		
+  		// 왼쪽 버튼 비활성화
+  		if (page < 1) {
+  			$('.story_prev').css("visibility", "hidden");
+  		}
+  		
+  		// 오른쪽 버튼 활성화
+  		if (Math.floor(length / 6) > page) {
+  			$('.story_next').css("visibility", "visible");
+  		}
+  	}
+  	
+  	// 오른쪽 버튼
+  	function next_action() {
+  		page++; // 페이지 번호 +1
+  		
+  		// 왼쪽 버튼 활성화
+  		if (page > 0) {
+  			$('.story_prev').css("visibility", "visible");
+  		}
+
+  		// 오른쪽 버튼 비활성화
+  		if (Math.floor(length / 6) <= page) {
+  			$('.story_next').css("visibility", "hidden");
+  		}
+  	}
+  </script>
 </body>
 </html>
