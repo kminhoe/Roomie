@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="user">
+	
+	<select id="userProfile" parameterType="hashmap" resultType="hashmap">
+		select * from member where mem_idx = #{mem_idx}
+	</select>
+	
+	<update id="userModify" parameterType="hashmap">
+		update member set
+			mem_id = #{MEM_ID},
+			mem_name = #{MEM_NAME},
+			mem_cont = #{MEM_CONT},
+			mem_mbti = #{MEM_MBTI}
+		where mem_idx = #{MEM_IDX}
+	</update>
+	
+	<update id="uploadUserImage" parameterType="hashmap">
+		update member set
+			mem_media = #{MEM_MEDIA}
+		where mem_idx = #{MEM_IDX}
+	
+	</update>
+	
+	<select id="userFollower" parameterType="hashmap" resultType="hashmap">
+		select count(*) over (PARTITION BY fri_idx) as CNT, fri_mem, following
+		from friend where fri_mem = #{FRI_MEM}
+	</select>
+	
+	<select id="userFollowing" parameterType="hashmap" resultType="hashmap">
+		select count(*) over (PARTITION BY fri_idx) as CNT, fri_mem, following
+		from friend where following = #{FOLLOWING}
+	</select>
+	
+	<select id="userBoard" parameterType="hashmap" resultType="hashmap">
+		select count(*) as posts from board where bo_mem = #{BO_MEM}
+	</select>
+	
+	<select	id="userBoardList" parameterType="hashmap" resultType="hashmap">
+		select * from board where bo_mem = #{BO_MEM}
+	</select>
+	
+	<update id="userMusic" parameterType="hashmap">
+		update member set
+			mem_music = #{MEM_MUSIC}
+		where mem_idx = #{MEM_IDX}
+	</update>
+	
+	<select id="userFollowerList" parameterType="hashmap" resultType="hashmap">
+		select distinct m.mem_idx, f.isfollow, m.mem_id, m.mem_name, m.mem_media from member m inner join friend f on m.mem_id = f.following where f.fri_mem = #{FRI_MEM}
+	</select>
+
+	<select id="userFollowingList" parameterType="hashmap" resultType="hashmap">
+		select distinct m.mem_idx, f.isfollow, m.mem_id, m.mem_name, m.mem_media from member m inner join friend f on m.mem_id = f.fri_mem where f.following = #{FOLLOWING}
+	</select>
+	
+	<insert id="follow" parameterType="hashmap">
+		insert into friend (fri_idx, fri_mem, following) values (fri_seq.nextval, #{FRI_MEM}, #{FOLLOWING})
+	</insert>
+	
+	<delete id="unFollow" parameterType="hashmap">
+		delete from friend where fri_mem = #{FRI_MEM} and FOLLOWING = #{FOLLOWING}
+	</delete>
+	
+	
+</mapper>
