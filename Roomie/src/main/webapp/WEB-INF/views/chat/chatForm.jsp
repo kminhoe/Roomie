@@ -42,7 +42,7 @@
 	}
 	
 	.chat_box{
-		height: cacl(100% - 90px);
+		height: calc(100% - 90px) !important;
 		background-color: transparent !important;
 		border: none !important;
 		width: 100vw !important;
@@ -349,7 +349,7 @@ ul li {
 	<!-- 상단 내비게이션 바 시작 -->
 	<div style="display: flex; justify-content: center;">
 		<div style="display: flex; flex-wrap: inherit; align-items: center; justify-content: space-between; width: 935px;">
-			<img class="navbar-brand" style="height: 40px; object-fit: contain;" src="resources/image/roomie_logo_1.png">
+			<img class="navbar-brand" style="height: 40px; object-fit: contain;" src="resources/image/roomie_logo_1.png" onClick="location.href='boardList.ya'">
 		</div>
 		<div class="chat_add" id="addChatRoom" style="align-items: center; padding-right: 10px;">
 			<img style="height: 24px; cursor: pointer;" src="resources/image/add_friend.png">
@@ -435,9 +435,9 @@ ul li {
 		<div class="chat_list" style="background-color: #fff; height: 100%; width: 350px; border-right: 1px solid #DBDBDB;">
 			<!-- 상단 메뉴1 start -->
 			<div style="background-color: #fff; height: 60px; width: 100%; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #DBDBDB;">
-				<!-- 로그인한 회원 아이디 -->
+				<!-- 로그인한 회원 이름 -->
 				<div style="margin: 50px; font-weight: 600; cursor: pointer;">
-					<%=session.getAttribute("MEM_ID") %>
+					<%=session.getAttribute("MEM_NAME") %>
 				</div>
 				<div id="addChatRoom" style="justify-content: flex-end;">
 					<img style="height: 24px; cursor: pointer;" src="resources/image/add_friend.png">
@@ -462,8 +462,8 @@ ul li {
 						<div>
 							<img style="margin-right: 20px; border-radius: 50%; height: 30px; cursor: pointer;" src="resources/image/profile_05.jpg">
 						</div>
-						<div class="chat_otherId" id="chatOtherId">
-							<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@ 채팅대상의 아이디가 입력되는 구간 @@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+						<div class="chat_otherName" id="chatOtherName">
+							<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@ 채팅대상의 이름 입력되는 구간 @@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 						</div>
 					</div>
 					<div style="justify-content: flex-end;">
@@ -563,8 +563,11 @@ webSocket.onmessage = function(message){
 };
 
 function wsOpen(message){
-	webSocket.send('1#' + <%=session.getAttribute("MEM_ID")%> + '#1');
+	if("<%=session.getAttribute("MEM_ID")%>" != null){
+		webSocket.send('1#' + "<%=session.getAttribute("MEM_ID")%>" + '#1');
+		}
 	}
+	
 
 /* @@@@@@@@@@@@@@@@@@@@@ 웹소켓 관련 @@@@@@@@@@@@@@@@@@@@@ */
 $(window).on('load',function (){
@@ -622,7 +625,7 @@ function chatRoomList(result){
 			for(var key in map){ /* map에 존재하는 key */
 				if(key == "CHAT_OTHERID"){
 				console.log("chatRoom: " + result[i]);
-				htmls += '<div class="chat_profile" data-id="' + result[i]["CHAT_OTHERID"] + '" data-index="chatRoom' + i + '">';
+				htmls += '<div class="chat_profile" data-id="' + result[i]["CHAT_OTHERID"] +'" data-name="' + result[i]["CHAT_OTHERNAME"] + '" data-index="chatRoom' + i + '">';
 				htmls += '<!-- 채팅상대 profile img -->';
 				htmls += 	'<div>';
 				htmls += 		'<img class="chat_profileImg" src="resources/image/profile_05.jpg">';
@@ -745,10 +748,9 @@ function showFriendList(result){
 	/* 글 작성 아이콘 클릭 시, 색이 변한 대상들의 id를 대상으로 글쓰기가 가능하도록 창을 띄움, 모달창 꺼짐  */
 	var writeNewMsg = document.querySelectorAll("#writeNewMsg");
 	$(writeNewMsg).click(function(e){
-		alert("새글 작성");
 		var selectedFriend = document.querySelector(".chat_friend_clicked");
 		var sendTarget = ""; /* 프로필 클릭 시 채팅입력 대상을 변경하기 위한 변수 */
-		alert(selectedFriend.id);
+		
 		/* className이  "chat_friend_clicked"인 객체의 아이디값을 전송. */
 		sendTarget += '<input type="hidden" id="CHAT_OTHERID" name="CHAT_OTHERID" value="';
 		sendTarget +=	selectedFriend.id;
@@ -756,7 +758,7 @@ function showFriendList(result){
 		
 		$("#chatTarget").html(sendTarget);/* 채팅입력 form에서 채팅상대를 나타내는 CHAT_OTHERID를 클릭한 친구로 변경 */
 		
-		$("#chatOtherId").html(selectedFriend.id);/* 채팅영역의 프로필에 id표시 */
+		$("#chatOtherName").html(selectedFriend.id);/* 채팅영역의 프로필에 id표시 */
 		
 		$("#modal_overlay").css('display', 'none'); /* 모달창 끄기 */
 		
@@ -779,6 +781,11 @@ $(addMessage).on('click', '#chat_send', function(){
 			, "CHAT_CONTENT" : CHAT_CONTENT
 		};
 
+	if(chatContent.value == ""){
+		chatContent.focus();//채팅 입력 시 채팅 입력창으로 포커스.
+		return;
+	}else{
+	
 		/* 웹소켓 관련 */
 		webSocket.send("2#" + CHAT_OTHERID + "#" + CHAT_CONTENT); //chatServer의 onMessage로 OTHERID와 CONTENT를 보낸다. 
 		
@@ -790,20 +797,33 @@ $(addMessage).on('click', '#chat_send', function(){
 			, success: function(result){
 				
 				showChatList(result);
+				
+				$.ajax({
+					  url : "chatRoomList.ya"
+					, type : 'POST'
+					, data : {"MEM_ID" : MEM_ID}
+					, dataType : 'json'
+					, success: function(result){
+						
+						chatRoomList(result);
 
+					}
+					, error: function(error){
+						alert("실패");
+						console.log("에러 : " + error);
+					}
+				});
+				
 			}
 			, error: function(error){
 				alert("실패");
 				console.log("에러 : " + error);
 			}
 		});
-	
-	//입력한 메시지가 없을 경우 보내지 않음.
-	if(chatContent.value == ""){
-		return;
+		
+		chatContent.value = "";//해당 객체의 내용을 삭제.
+			
 	}
-	
-	chatContent.value = "";//해당 객체의 내용을 삭제.
 	
 	chatContent.focus();//채팅 입력 시 채팅 입력창으로 포커스.
 	
@@ -816,15 +836,16 @@ $(document).on("click", ".chat_profile, .sub_story",function(e){
 	e.preventDefault();
 	
 	var clickId = e.currentTarget.dataset.id;
+	var clickName = e.currentTarget.dataset.name;
 	var sendTarget = ""; /* 프로필 클릭 시 채팅입력 대상을 변경하기 위한 변수 */
 	
-	sendTarget += '<input type="hidden" id="CHAT_OTHERID" name="CHAT_OTHERID" value="';
-	sendTarget +=	clickId;
+	sendTarget += '<input type="hidden" id="CHAT_OTHERNAME" name="CHAT_OTHERNAME" value="';
+	sendTarget +=	clickName;
 	sendTarget += '"/>';
 	/* 채팅입력 form에 채팅상대인 CHAT_OTHERID를 클릭 한 대상으로 지정 */
 	$("#chatTarget").html(sendTarget);
 	
-	$("#chatOtherId").html(clickId);/* 채팅영역의 프로필에 id표시 */
+	$("#chatOtherName").html(clickName);/* 채팅영역의 프로필에 name표시 */
 
 	$.ajax({
 		  url : "chatRoom.ya"
@@ -941,9 +962,7 @@ $(addChatRoom).click(function(e){
   
   <script>
   window.addEventListener('beforeunload', function(event) {
-	  
-	  webSocket.send('3#' + <%=session.getAttribute("MEM_ID")%> + '#1');
-	  
+	  	webSocket.send('3#' + "<%=session.getAttribute("MEM_ID")%>" + '#1');
   });
   </script>
 
