@@ -46,7 +46,7 @@
         left:256px !important;
     }
     .upload_list {
-	width: 310px !important;
+   width: 310px !important;
     height: 548px;
     transition: left 0.5s ease-out;
     
@@ -57,27 +57,27 @@
         height: 556px;
     }
     .upload_list video{
-    	width: 310px !important;
+       width: 310px !important;
     }
     .sub_upload{
-    	width: 310px !important;
-    	height: auto;
-    	align-items: center;
-    	flex-direction: column;
-    	background-color: #FFFFFF;
-    	margin: auto;
+       width: 310px !important;
+       height: auto;
+       align-items: center;
+       flex-direction: column;
+       background-color: #FFFFFF;
+       margin: auto;
     }
     .modal_image_upload{
-    	width: 310px !important;
-    	height: auto;
-    	
+       width: 310px !important;
+       height: auto;
+       
     }
     
 }
 .uploadedfile{
-	width: 780px;
-	height: auto;
-	margin: auto;
+   width: 780px;
+   height: auto;
+   margin: auto;
 }
 
 .modal_title{
@@ -86,40 +86,38 @@
     justify-content: space-between;
     font-weight: bold;
     font-size: 20px;
-    margin: auto;
 }
 
 .modal_title_side{
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 0 0 40px;
 }
 
 .modal_image_upload{
-    outline: 2px dashed black ;
-    outline-offset:-10px;
-    text-align: center;
-    transition: all .15s ease-in-out;
-    width:80px;
-    height: 80px;
-    border-radius: 50%;
-    margin: auto;
+    /* outline: 2px dashed black ; */
+    text-align: center; 
+    /* transition: all .15s ease-in-out;
+    border-top: 1px solid #e2e2e2; */
+    width:780px;
+    height: 548px;
+    background-color: transparent;
 }
 
-.modal_image{
-    outline: 2px dashed black ;
-    outline-offset:-10px;
-    text-align: center;
-    transition: all .15s ease-in-out;
-    width:80px;
-    height: 80px;
-    border-radius: 50%;
-    margin: auto;
+.upload {
+    width: 780px;
+    height: 548px;
+    position: relative;
+    overflow: hidden; 
+
 }
 
-.modal_contents{
-    text-align: left;
-    position:relative;
-    margin: auto;
-    width: 70%;
+.upload_list {
+   
+    height: 548px;
+    transition: left 0.5s ease-out;
+    
 }
 
 .login-input {
@@ -132,3 +130,19 @@
     padding-left: 0px;
   }
 
+.upload_list {
+   
+    height: 548px;
+    transition: left 0.5s ease-out;
+    
+}
+
+.sub_upload {
+   width: 780px;
+   height: 548px;
+   margin: auto;
+    align-items: center;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    
+}
