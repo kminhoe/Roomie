@@ -30,19 +30,6 @@
 	]]>
 
 </insert>
-
-<select id="searchList" parameterType="int" resultType="hashmap">
-	<![CDATA[
-		SELECT * FROM SEARCH WHERE SEARCH_MEM = #{SEARCH_MEM}
-	]]>
-</select> 
-
-<delete id="searchDelete" parameterType="hashmap">
-
-DELETE FROM SEARCH
-           WHERE SEARCH_KEYWORD = #{SEARCH_KEYWORD} AND SEARCH_MEM = #{SEARCH_MEM}
-
-</delete>
 		
 	
 </mapper>

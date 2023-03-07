@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!doctype html>
-<html lang="utf-8">
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -611,8 +613,67 @@ overflow-x: scroll;
 	<div id="close1" class="close1">
 	<div class="test_modal" id="modal1">
 		<div style="position: relative; height: 20px; width: 20px; background-color: #fff; transform: rotate(45deg); top: -20px; z-index: 0; margin: auto;"></div>
-		<div>
-			최근 검색 내역 없음.
+		<div id="searchlist">
+		
+		<c:forEach var="keyword" items="${keyword}">
+		<input type="hidden" id="searchList" value="${keyword.SEARCH_KEYWORD}">
+		</c:forEach>
+		
+		<c:choose>
+		<c:when test="${not empty keyword}">
+		<div style="text-align: left; font-weight: bold; font-size: 20px; ">&nbsp;&nbsp;검색목록</div>
+		</br>
+		
+		<c:forEach var="searchL" items="${keyword}">
+		
+		<c:choose>
+		<%-- <c:set var = "str" value = "${searchL.SEARCH_KEYWORD}"/> --%>
+		<c:when test="${fn:contains(searchL.SEARCH_KEYWORD, '#')}" >
+		
+		<div  class="hash_result" name="result" style=" height: 60px; position: relative;  value="${searchL.SEARCH_KEYWORD}">
+		<img src="resources/image/hash.png" style="height: 50px;  border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">
+		<div style='float: right; left: 13%; top: 18%; position: absolute;'>
+		<input type='hidden' id='hash_tag' value='${searchL.SEARCH_KEYWORD}'>
+		<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>${searchL.SEARCH_KEYWORD} </div>
+		<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;'>게시물 수</div>
+		<div><img src="resources/image/x.png"  id="x" style="height: 10px;  border-radius: 50%; position: absolute; top: 40%; width: 10px; right:4%"></div>
+		</div></div>
+		
+		</c:when>
+		
+		<c:otherwise>
+		
+		<div class="mem_result" name="result" style=" height: 60px; position: relative; value="${searchL.SEARCH_KEYWORD}">
+   		<img src="resources/image/test.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">
+   		<div style='float: right; left: 13%; top: 10%; position: absolute;'>
+   		<input type='hidden' id='hash_tag' value='${searchL.SEARCH_KEYWORD}'>
+   		<div id = 'test' style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>${searchL.SEARCH_KEYWORD}</div>
+   		<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;  color: #8e8e8e;'>게시물 수</div>
+   		<img src="resources/image/x.png" id="x" style="height: 10px;  border-radius: 50%; position: absolute; top: 40%; width: 10px; right:4%">
+   		</div></div>
+		
+		</c:otherwise>
+		</c:choose>
+		
+
+		
+		<input type="hidden" id="searchList" value="${searchL.SEARCH_KEYWORD}"/>
+		</c:forEach> 
+
+		
+		
+		<div id="searchdiv"> </div>
+		</c:when>
+		
+		<c:otherwise>
+		
+		최근 검색 내역 없음.
+		
+		</c:otherwise>
+		</c:choose>
+		
+			
+			
 		</div>
 	</div>
 	</div>
@@ -667,13 +728,94 @@ overflow-x: scroll;
 	</div>
 	<!-- 모달 end -->
 
+<script>
 
+
+
+
+ function deleteKeyword(){
+		 
+	 
+	 var x = document.querySelectorAll("#x");
+  	 var data = document.querySelectorAll("#hash_tag");
+ 	 
+  	for(let q=0; q < x.length ; q++){
+  		 
+  		 x[q].addEventListener('click', function(){
+  			 
+  			 console.log("클릭 후에 한번 더 클릭");
+  			 
+  			 var val = data[q].value;
+  			 
+  			$j.ajax({
+	 	        url : "/roomie/searchDelete.ya" 
+	 	        ,data : { keyword: val }
+	 	        ,success: function(slist){	      
+	 	        	
+	 	        	var cont = "";
+
+	 	        	//$j("#modal1").load(window.location.href + " #modal1");
+	 	        	for(let ads=0; ads < slist.length ; ads++){
+	 	        		
+	 	        		console.log(slist[ads].SEARCH_KEYWORD);
+	 	        		
+	 	        		if(slist[ads].SEARCH_KEYWORD.charAt(0) == "#" ){
+	 	        			cont += '<div  class="hash_result" name="result" style=" height: 60px; position: relative;  value="' + slist[ads].SEARCH_KEYWORD + '">' +
+	 	         		  '<img src="resources/image/hash.png" style="height: 50px;  border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+	 	         		  "<div style='float: right; left: 13%; top: 18%; position: absolute;'>" +
+	 	         		  "<input type='hidden' id='hash_tag' value='" + slist[ads].SEARCH_KEYWORD + "'>" +
+	 	         		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + slist[ads].SEARCH_KEYWORD + '</div>' + "\n" +
+	 	         		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;'>" + "게시물 수" + '</div>' +
+	 	         		   '<div>' + '<img src="resources/image/x.png"  id="x" style="height: 10px;  border-radius: 50%; position: absolute; top: 40%; width: 10px; right:4%" onclick="deleteKeyword()">' + '</div>' +
+	 	         		  '</div>' + '</div>';
+	 	      		 } else {
+	 	      			 
+	 	      			cont += '<div class="mem_result" name="result" style=" height: 60px; position: relative; value="' + slist[ads].SEARCH_KEYWORD + '">' +
+	 	         		  '<img src="resources/image/test.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+	 	         		  "<div style='float: right; left: 13%; top: 10%; position: absolute;'>" +
+	 	         		  "<input type='hidden' id='hash_tag' value='" + slist[ads].SEARCH_KEYWORD + "'>" +
+	 	         		  "<div id = 'test' style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + slist[ads].SEARCH_KEYWORD + '</div>' + "\n" +
+	 	         		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;  color: #8e8e8e;'>" + "게시물 수" + '</div>' +
+	 	         		  '<img src="resources/image/x.png" id="x" style="height: 10px;  border-radius: 50%; position: absolute; top: 40%; width: 10px; right:4%" onclick="deleteKeyword()">' + 
+	 	         		  '</div>' + '</div>';
+	 	      		 }
+	 	      		 
+	 	      		 searchdiv.innerHTML = cont;
+	 	      		 
+	 	      	//document.body.appendChild(html);
+	 	       	   $j("div[name=result]").hover(function(){
+	 	     		  $j(this).css("background-color","#f5f5f5");
+	 	     		
+	 	     	       }, function(){
+	 	     		  
+	 	     		  $j(this).css("background-color","#ffffff");
+	 	     		  });
+	 	        		
+	 	        	}//for
+	 	        	
+	 	        	
+	 	        	
+	 	
+	 	        },error : function(request,error,data){
+	 	        	alert("실패");
+	 	            console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+	 	        }
+	 	    });//ajax
+  			 
+  		 }); //click
+  		 
+  	 } //for
+  	 
+  	 }  
+</script>
 
 <script>
 
 $j(document).ready(function(){
 	
      var modal = document.getElementById("close");
+     
+    var md = document.getElementById("modal1");
 	
 	var search = document.getElementById("searchBox");
 	  
@@ -690,8 +832,188 @@ $j(document).ready(function(){
 		//나머지 버튼에는 result_tag_clicked 클래스 삭제.
 		$j('.result_tag[menu-index!=' + index + ']').removeClass('result_tag_clicked');
 		
-
 	});
+	 
+ /*  //최근검색목록
+	 var searchList = document.querySelectorAll("#searchList");
+	 
+	 var searchdiv = document.getElementById("searchdiv");
+	 
+	 var search_arr = new Array;
+	 
+	 var str = '';
+	 
+	 console.log("이거출력 : " + searchList.length);
+	 
+	 for(var le=0; le < searchList.length; le++){		 
+		 search_arr.push(searchList[le].value);		 
+	 }
+	 
+	 //중복제거
+	 const set = new Set(search_arr);
+	 
+	 console.log(set);
+	 
+	 const uniqueArr = Array.from(set);
+
+		
+	 
+	 for(var len=0; len < uniqueArr.length ; len++){
+		 
+		 if(uniqueArr[len].charAt(0) == "#" ){
+			 str += '<div  class="hash_result" name="result" style=" height: 60px; position: relative;  value="' + uniqueArr[len] + '">' +
+   		  '<img src="resources/image/hash.png" style="height: 50px;  border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+   		  "<div style='float: right; left: 13%; top: 18%; position: absolute;'>" +
+   		  "<input type='hidden' id='hash_tag' value='" + uniqueArr[len] + "'>" +
+   		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + uniqueArr[len] + '</div>' + "\n" +
+   		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;'>" + "게시물 수" + '</div>' +
+   		   '<div>' + '<img src="resources/image/x.png"  id="x" style="height: 10px;  border-radius: 50%; position: absolute; top: 40%; width: 10px; right:4%" >' + '</div>' +
+   		  '</div>' + '</div>';
+		 } else {
+			 
+			 str += '<div class="mem_result" name="result" style=" height: 60px; position: relative; value="' + uniqueArr[len] + '">' +
+   		  '<img src="resources/image/test.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+   		  "<div style='float: right; left: 13%; top: 10%; position: absolute;'>" +
+   		  "<input type='hidden' id='hash_tag' value='" + uniqueArr[len] + "'>" +
+   		  "<div id = 'test' style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + uniqueArr[len] + '</div>' + "\n" +
+   		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;  color: #8e8e8e;'>" + "게시물 수" + '</div>' +
+   		  '<img src="resources/image/x.png" id="x" style="height: 10px;  border-radius: 50%; position: absolute; top: 40%; width: 10px; right:4%">' + 
+   		  '</div>' + '</div>';
+		 }
+		 
+		 searchdiv.innerHTML = str;
+		 
+		//document.body.appendChild(html);
+  	   $j("div[name=result]").hover(function(){
+		  $j(this).css("background-color","#f5f5f5");
+		
+	       }, function(){
+		  
+		  $j(this).css("background-color","#ffffff");
+		  });
+  	   
+  	  
+ 
+	 } */
+	 
+	 
+	 //최근검색목록 삭제
+	     var x = document.querySelectorAll("#x");
+	  	 var data = document.querySelectorAll("#hash_tag");
+	  	 
+	
+	  	 
+	  	 for(let y=0; y < x.length ; y++){
+	  		 
+	  		 x[y].addEventListener('click', function(){
+	  			 
+	  			 var val = data[y].value;
+	  			 
+	  			$j.ajax({
+		 	        url : "/roomie/searchDelete.ya" 
+		 	        ,data : { keyword: val }
+		 	        ,success: function(slist){	
+		 	        	
+		 	        	alert("sdfsdfsf");
+		 	        	
+		 	        	
+		 	     /*   var cont = "";
+
+		 	        	//$j("#modal1").load(window.location.href + " #modal1");
+		 	        	for(let ad=0; ad < slist.length ; ad++){
+		 	        		
+		 	        		console.log(slist[ad].SEARCH_KEYWORD);
+		 	        		
+		 	        		if(slist[ad].SEARCH_KEYWORD.charAt(0) == "#" ){
+		 	        			cont += '<div  class="hash_result" name="result" style=" height: 60px; position: relative;  value="' + slist[ad].SEARCH_KEYWORD + '">' +
+		 	         		  '<img src="resources/image/hash.png" style="height: 50px;  border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+		 	         		  "<div style='float: right; left: 13%; top: 18%; position: absolute;'>" +
+		 	         		  "<input type='hidden' id='hash_tag' value='" + slist[ad].SEARCH_KEYWORD + "'>" +
+		 	         		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + slist[ad].SEARCH_KEYWORD + '</div>' + "\n" +
+		 	         		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;'>" + "게시물 수" + '</div>' +
+		 	         		   '<div>' + '<img src="resources/image/x.png"  id="x" style="height: 10px;  border-radius: 50%; position: absolute; top: 40%; width: 10px; right:4%" onclick="deleteKeyword()">' + '</div>' +
+		 	         		  '</div>' + '</div>';
+		 	      		 } else {
+		 	      			
+		 	      			cont += '<div class="mem_result" name="result" style=" height: 60px; position: relative; value="' + slist[ad].SEARCH_KEYWORD + '">' +
+		 	         		  '<img src="resources/image/test.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+		 	         		  "<div style='float: right; left: 13%; top: 10%; position: absolute;'>" +
+		 	         		  "<input type='hidden' id='hash_tag' value='" + slist[ad].SEARCH_KEYWORD + "'>" +
+		 	         		  "<div id = 'test' style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + slist[ad].SEARCH_KEYWORD + '</div>' + "\n" +
+		 	         		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;  color: #8e8e8e;'>" + "게시물 수" + '</div>' +
+		 	         		  '<img src="resources/image/x.png" id="x" style="height: 10px;  border-radius: 50%; position: absolute; top: 40%; width: 10px; right:4%">' + 
+		 	         		  '</div>' + '</div>';
+		 	      		 }
+		 	      		 
+		 	      		 searchdiv.innerHTML = cont;
+		 	      		 
+		 	      	//document.body.appendChild(html);
+		 	       	   $j("div[name=result]").hover(function(){
+		 	     		  $j(this).css("background-color","#f5f5f5");
+		 	     		
+		 	     	       }, function(){
+		 	     		  
+		 	     		  $j(this).css("background-color","#ffffff");
+		 	     		  });
+		 	        		
+		 	       	   
+		 	       	$('#modal1').load(location.href + ' #modal1');
+		 	       	
+		 	        	}//for   */
+		 	        	       	
+		 	        	
+		 	        	$('#modal1').load(location.href + ' #modal1');
+		 	        	
+		 	        },error : function(request,error,data){
+		 	        	alert("실패");
+		 	            console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+		 	        }
+		 	    });//ajax
+	  			 
+	  		 }); //click
+	  		 
+	  	 } //for
+	  	 
+	
+	  	 
+	  	 //똑같은 함수
+	  	 
+	  	
+	    
+	  /* // 클래스 이름이 'a'인 div들을 선택합니다.
+	     //const divs = document.querySelectorAll('.mem_result');
+
+	     // 각 div를 클릭했을 때 처리할 함수입니다.
+	     function deleteSearch(event) {
+	       // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
+	       const input = event.currentTarget.querySelector('input');
+	       // input의 값(value)을 가져와서 출력합니다.
+	       console.log(input.value);
+	       
+	       var data = input.value;
+	       
+	       
+	       $j.ajax({
+	 	        url : "/roomie/searchDelete.ya" 
+	 	        ,data : { keyword: data }
+	 	        ,success: function(data){	        	
+	 	        		alert("보내기 성공");
+	 	
+	 	        },error : function(request,error,data){
+	 	        	alert("실패");
+	 	            console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+	 	        }
+	 	    });//ajax
+	 	    
+
+	    
+	     } */
+
+	     /* // 각 div에 클릭 이벤트를 등록합니다.
+	     x.forEach(but => {
+	       but.addEventListener('click', deleteSearch);
+	     }); */
+	
 	
     //hash 배열 선언
 	var inputSource = document.querySelectorAll("#keyword");
@@ -742,7 +1064,8 @@ $j(document).ready(function(){
     		  "<div style='float: right; left: 13%; top: 18%; position: absolute;'>" +
     		  "<input type='hidden' id='hash_tag' value='" + item + "'>" +
     		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + item + '</div>' + "\n" +
-    		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;'>" + "게시물 수" + '</div>' + '</div>' + '</div>';
+    		  "<div style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px;  text-align: left; padding: 0 0 0 10px;'>" + "게시물 수" + '</div>' +
+    		  '</div>' + '</div>';
 	 
     		  $j('#tag_tag').click();
     		  
@@ -788,68 +1111,6 @@ $j(document).ready(function(){
 		  
 		  $j(this).css("background-color","#ffffff");
 		  });
-    	  
-    	  
-    	   
-    	   
-    	   //===================================
-    		   
- 
-    	  /* 
-    	   if($j('#tag_id').click() == true){
-    		  
-    		  //alert("id");
-    		  $j('.mem_result').css('display', 'block');
-    		  $j('.hash_result').css('display', 'none');
-
-    		// 클래스 이름이 'a'인 div들을 선택합니다.
-  		    const divs = document.querySelectorAll('.mem_result');
-
-  		    // 각 div를 클릭했을 때 처리할 함수입니다.
-  		    function handleClick(event) {
-  		      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
-  		      const input = event.currentTarget.querySelector('input');
-  		      // input의 값(value)을 가져와서 출력합니다.
-  		      console.log(input.value);
-  		    }
-
-  		    // 각 div에 클릭 이벤트를 등록합니다.
-  		    divs.forEach(div => {
-  		      div.addEventListener('click', handleClick);
-  		    });
-    		  
-    		  
-    	  }  
-    	  
-    	   else if ($j('#tag_tag').click() == true){
-    		  
-    		  //alert("hash");
-    		  
-    		  $j('.mem_result').css('display', 'none');
-    	      $j('.hash_result').css('display', 'block');
-    	      
-    	   // 클래스 이름이 'a'인 div들을 선택합니다.
-  		    const divs = document.querySelectorAll('.hash_result');
-
-  		    // 각 div를 클릭했을 때 처리할 함수입니다.
-  		    function handleClick(event) {
-  		      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
-  		      const input = event.currentTarget.querySelector('input');
-  		      // input의 값(value)을 가져와서 출력합니다.
-  		      console.log(input.value);
-  		    }
-
-  		    // 각 div에 클릭 이벤트를 등록합니다.
-  		    divs.forEach(div => {
-  		      div.addEventListener('click', handleClick);
-  		    }); 
-    	      
-
-    	  }   */
-    	   
-    	   
-    		
-    	 
 
     });
     
@@ -862,10 +1123,7 @@ $j(document).ready(function(){
 			function(){
 		
 				$j("#close1").css('display', 'flex');
-				
-				
-				
-				
+
 			});
 	
 	
@@ -875,82 +1133,7 @@ $j(document).ready(function(){
 
 	
 	<!--type에 따라 보여지는 결과창 달라짐(시작)-->
-	//let mem3 = $j("div[name=result]").find("input");
-	
-	//var mem3 = document.querySelector(".mem_result");
-	
-/*  var tag_mem = document.getElementById("tag_id");
-	var tag_hash = document.getElementById("tag_tag");
-    var tag_place = document.getElementById("tag_place");
-	
-    
-    
-    
-    tag_mem.addEventListener('click', function() {
-		  
-    	alert("tlfgoddhgks");
-	
-	$j('.mem_result').css('display', 'block');
-    $j('.hash_result').css('display', 'none');
-    
-    
-    // 클래스 이름이 'a'인 div들을 선택합니다.
-    const divs = document.querySelectorAll('.mem_result');
 
-    // 각 div를 클릭했을 때 처리할 함수입니다.
-    function handleClick(event) {
-      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
-      const input = event.currentTarget.querySelector('input');
-      // input의 값(value)을 가져와서 출력합니다.
-      console.log(input.value);
-    }
-
-    // 각 div에 클릭 이벤트를 등록합니다.
-    divs.forEach(div => {
-      div.addEventListener('click', handleClick);
-    });
- 
-
-
-
-
-
-    
-    });
-    
-    tag_hash.addEventListener('click', function() {
-		  
-    	
-    	$j('.mem_result').css('display', 'none');
-	    $j('.hash_result').css('display', 'block');
-	      
-
-	 // 클래스 이름이 'a'인 div들을 선택합니다.
-	    const divs = document.querySelectorAll('.hash_result');
-
-	    // 각 div를 클릭했을 때 처리할 함수입니다.
-	    function handleClick(event) {
-	      // 이벤트가 발생한 div 안에 있는 input을 선택합니다.
-	      const input = event.currentTarget.querySelector('input');
-	      // input의 값(value)을 가져와서 출력합니다.
-	      console.log(input.value);
-	    }
-
-	    // 각 div에 클릭 이벤트를 등록합니다.
-	    divs.forEach(div => {
-	      div.addEventListener('click', handleClick);
-	    });
-	    
-	    
-		
-	});
-    
-    tag_place.addEventListener('click', function() {
-		  
-    	
-    	
-	});  
-     */
     
 	<!--type에 따라 보여지는 결과창 달라짐(끝)-->
 	
@@ -975,15 +1158,15 @@ $j(document).ready(function(){
 	
 	//5.검색창 선택 후 입력 시 modal2 활성
 	//검색창 id로 객체 생성
-	var search = document.querySelector("#searchBox");
+/* 	var search = document.querySelector("#searchBox");
 	search.onkeyup = doAction;
 	
 	function doAction(e){
 		$j("#modal2").css('display', 'flex');
 		$j("#modal1").css('display', 'none');
-	}
+	} */
 		
-});
+}); 
 
 </script>	
 
@@ -1046,7 +1229,12 @@ $j(document).on("click", function(e){
 	            console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
 	        }
 	    });//ajax
-      
+	    
+	    
+	    //모달창 꺼지기
+      $j("#close1").css({display:"none"});
+      $j("#close2").css({display:"none"});
+   
     }
 
     // 각 div에 클릭 이벤트를 등록합니다.
@@ -1056,7 +1244,13 @@ $j(document).on("click", function(e){
  
 
 
+    $j("#searchBox").on("focus",
+			function(){
+		
+				$j("#close1").css('display', 'flex');
+				
 
+			});
 
 
     
@@ -1078,6 +1272,28 @@ $j(document).on("click", function(e){
 	      const input = event.currentTarget.querySelector('input');
 	      // input의 값(value)을 가져와서 출력합니다.
 	      console.log(input.value);
+	      
+	      var data = input.value;
+	      
+	      
+	      $j.ajax({
+		        url : "/roomie/searchResult.ya" 
+		        ,data : { keyword: data }
+		        ,success: function(data){	        	
+		        		alert("보내기 성공");
+		
+		        },error : function(request,error,data){
+		        	alert("실패");
+		            console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+		        }
+		    });//ajax
+		    
+		    
+		    //모달창 꺼지기
+	      $j("#close1").css({display:"none"});
+	      $j("#close2").css({display:"none"});
+ 
+	      
 	    }
 
 	    // 각 div에 클릭 이벤트를 등록합니다.
@@ -1085,6 +1301,16 @@ $j(document).on("click", function(e){
 	      div.addEventListener('click', handleClick);
 	    });
 	    
+	    
+	    
+	      $j("#searchBox").on("focus",
+		  			function(){
+		  		
+		  				$j("#close1").css('display', 'flex');
+		  				
+		  				
+
+		  			});
 	    
 		
 	});
@@ -1097,29 +1323,7 @@ $j(document).on("click", function(e){
     
 	</script>
 	
-	
-	<script>
 
-	
-function send(){
-		
-		$j.ajax({
-	        url : "/roomie/searchResult.ya" 
-	        ,data : data
-	        ,success: function(data){	        	
-	        		alert("보내기 성공");
-	
-	        },error : function(req,status,err){
-	        	alert("실패");
-	            console.log(req);
-	        }
-	    });//ajax
-		
-		
-}
-	
-	
-	</script>
 	
 </body>
 </html>
