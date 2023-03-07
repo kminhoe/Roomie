@@ -16,6 +16,8 @@ public class OptionDAO {
 	
 	public Map<String, Object> checkpassword(int idx) throws Exception{
 		
+		System.out.println("DAO : "+idx);
+		
 		return sqlSessionTemplate.selectOne("option.checkpassword", idx);
 	}
 	
