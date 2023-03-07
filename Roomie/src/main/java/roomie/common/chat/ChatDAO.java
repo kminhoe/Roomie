@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository("chatDAO")
 public class ChatDAO {
 
+	
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
 	

@@ -35,13 +35,16 @@ public class MemberDAO {
 	
 	//이메일 확인
     public Map<String, Object> emailcheck(String mail) throws Exception{
-		
 		return sqlSessionTemplate.selectOne("member.emailcheck",mail);
-		} 
+	} 
  
- //비밀번호 재설정
- public int passwordreset(Map<String, Object> map) throws Exception{
-		
+    //비밀번호 재설정
+    public int passwordreset(Map<String, Object> map) throws Exception{
 		return sqlSessionTemplate.update("member.passwordreset", map);
-		} 
+	}
+    
+    // 사용자 이름 조회
+    public String selectMemberName(String name) throws Exception{
+    	return sqlSessionTemplate.selectOne("member.selectMemberName", name);
+    }
 }

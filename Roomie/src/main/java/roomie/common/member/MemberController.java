@@ -95,8 +95,9 @@ public class MemberController {
 				}
 				
 				// 세션 등록
-				session.setAttribute("MEM_ID", memberMap.get("MEM_ID"));
 				session.setAttribute("MEM_IDX", memberMap.get("MEM_IDX"));
+				session.setAttribute("MEM_ID", memberMap.get("MEM_ID"));
+				session.setAttribute("MEM_NAME", memberMap.get("MEM_NAME"));
 				mv.setViewName("redirect:/boardList.ya");
 			// 입력한 비밀번호가 일치하지 않는 경우
 			} else {
