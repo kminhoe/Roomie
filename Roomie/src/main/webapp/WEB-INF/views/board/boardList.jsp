@@ -1543,7 +1543,7 @@ function removeAllChildNods(el) {
     function upload_moveSlide(num) {
       upload_list.style.left = -num * upload_slideWidth + 'px';
       upload_currentIdx = num;
-    }
+    
 
     upload_prev.addEventListener('click', function () {
       /*첫 번째 슬라이드로 표시 됐을때는 
@@ -1560,7 +1560,9 @@ function removeAllChildNods(el) {
       if (upload_currentIdx !== upload_slideCount - 1) {
         upload_moveSlide(upload_currentIdx + 1);
       }
+    
     });
+    }
 
     // 글쓰기 다음 페이지
     function modal_add_feed_Next() {

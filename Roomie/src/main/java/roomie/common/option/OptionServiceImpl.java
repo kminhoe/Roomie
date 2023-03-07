@@ -16,6 +16,7 @@ public class OptionServiceImpl implements OptionService{
 	@Override
 	public Map<String, Object> checkpass(int idx) throws Exception {
 		
+		System.out.println("Service : "+ idx);
 		
 		return optionDAO.checkpassword(idx);
 	}
