@@ -3,6 +3,7 @@ package roomie.common.search;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -43,19 +44,29 @@ public class SearchController {
 
 		
 		//like board 배열에 담기
-		List<String> list1 = new ArrayList<String>();
+		String[] list1 = new String[keyword.size()];
 						
 		for(int i=0; i < keyword.size(); i++) {
 					
-		list1.add(i, (String) keyword.get(i).get("SEARCH_KEYWORD"));
+		
+		list1[i] =  (String) keyword.get(i).get("SEARCH_KEYWORD");
 					
 		}
 				
 		System.out.println("배열확인 : " + list1);
 		
+		// 배열을 LinkedHashSet으로 변환합니다.
+		LinkedHashSet<String> linkedHashSet = new LinkedHashSet<>( Arrays.asList(list1) );
+
+		// LinkedHashSet을 배열로 변환홥니다.
+		String[] strArrayWithoutDuplicates = 
+		  linkedHashSet.toArray(new String[] {});
+
+		System.out.println( Arrays.toString(strArrayWithoutDuplicates) );
+		
 		
 		System.out.println(keyword);
-		mv.addObject("keyword", keyword);
+		mv.addObject("keyword", strArrayWithoutDuplicates);
 		
 		return mv;
 	}
@@ -85,7 +96,7 @@ public class SearchController {
 	
 	@RequestMapping(value = "searchDelete.ya")
 	@ResponseBody
-	public List<Map<String, Object>> searchDelete(@RequestParam Map<String, Object> data) throws Exception{
+	public String searchDelete(@RequestParam Map<String, Object> data) throws Exception{
 		
 		//ModelAndView mv = new ModelAndView("/search/searchForm");
 		
@@ -110,7 +121,7 @@ public class SearchController {
 		
 		//mv.addObject("slist", list);
 		
-		return slist;
+		return "search/searchForm";
 	}
 	
 
