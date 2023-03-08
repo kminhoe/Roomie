@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <head>
@@ -219,6 +220,7 @@
 <link rel="stylesheet" type="text/css"
    href="resources/css/modal_style.css">
 
+
 <!-- 타이틀 -->
 <title>ROOMIE</title>
 </head>
@@ -276,6 +278,7 @@
 					<c:otherwise>
 						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain""
 							src="${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
+							
 					</c:otherwise>
 				</c:choose>
            
@@ -407,99 +410,7 @@
             </div>
             <!-- 모달 게시글 글쓰기 끝 -->
 
-            <!-- 모달 게시글 글쓰기 시작 -->
-
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="image_upload"
-                     style="width: 800px; margin-top: 150px; display: inline-block; text-align: center;">
-                     <div>
-                        <img style="width: 150px; height: 150px;"
-                           src="resources/image/icon_31.png">
-                     </div>
-                     <div style="margin-top: 30px; font-size: 20px;">
-                        <a>사진과 동영상을 여기에 끌어다 놓으세요</a>
-                     </div>
-                     <div style="margin-top: 10px; font-size: 14px; color: #8e8e8e;">
-                        <a>최대 업로드 파일 크기 : 10MB</a>
-                     </div>
-                  </div>
-                  
-                  <c:if test=""></c:if>
-                  <!-- 이미지 왼쪽 버튼 -->
-                  <img class="upload_prev" id="upload_prev"
-                     style="cursor: pointer; left: 0px; top: -136px; position: relative; z-index: 1;"
-                     src="resources/image/icon_35.png">
-                  <!-- 이미지 오른쪽 버튼 -->
-                  
-                  <img class="upload_next" id="upload_next"
-                     style="cursor: pointer; left: 726px; top: -136px; position: relative; z-index: 1;"
-                     src="resources/image/icon_36.png">
-               </div>
-            </div>
-            <!-- 모달 게시글 이미지 업로드 끝 -->
-            <!-- 모달 게시글 글쓰기 시작 -->
-            <div class="modal modal_overlay" id="modal_add_feed_content"
-               style="position: fixed;">
-               <div class="modal_window" style="width: 800px; height: 600px;">
-                  <div class="modal_title">
-                     <div class="modal_title_side">
-                        <!-- 이전 버튼 -->
-                        <div style="margin-top: -10px; margin-right: 15px;">
-                           <img style="cursor: pointer;" onclick="modal_add_feed_Prev();"
-                              src="resources/image/icon_39.png">
-                        </div>
-                     </div>
-                     <!-- 모달 타이틀 -->
-                     <div style="font-size: 16px;">새 게시물</div>
-                     <div class="modal_title_side">
-                        <!-- 모달 닫기 버튼 -->
-                        <div style="margin-top: -8px; margin-left: 20px;">
-                           <img id="close_modal_add_feed_content" style="cursor: pointer;"
-                              src="resources/image/icon_40.png">
-                        </div>
-                     </div>
-                  </div>
-                  <div class="modal_image_content" style="height: 100%;">
-                     <div id="input_image" class="modal_image_upload_content"></div>
-                     <div class="modal_content_write">
-                        <div class="feed_name">
-                           <div class="profile_box">
-                              <img id="input_profile_image" class="profile_img"
-                                 src="resources/image/profile_05.jpg">
-                           </div>
-                           <span id="input_user_id" class="feed_name_txt"> jshong_</span>
-                        </div>
-                        <br />
-                        <div>
-                           <textarea id="input_hash"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 30px; width: 100%;" rows="1" placeholder="해시태그"></textarea>
-                        </div>
-                        <br />
-                        <div>
-                           <input type="text" id="input_place"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 30px; width: 100% ; min-height: calc(1.5em + 0.75rem + 2px)"
-                              placeholder="위치 공유" onclick="place_add_bnt();">
-                        </div>
-                        <br />
-                        <div style="height: 100%;">
-                           <textarea id="input_content"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 100%;" rows="10" placeholder="설명을 입력하세요..."></textarea>
-                        </div>
-                        <br /> <br />
-                        <div style="width: 100%; text-align: center">
-                           <button class="button" id="boardupload" style="cursor: pointer">글쓰기</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!-- 모달 게시글 글쓰기 끝 -->
-            <!-- 위치 추가 모달 시작 -->
+           <!-- 모달 게시글 글쓰기 시작 -->
 
             <div>
                <div class="modal modal_overlay" id="modal_place_add"
@@ -555,6 +466,7 @@
    <div class="main_body">
       <!-- 왼쪽 바디 영역 시작 -->
       <div class="left_body">
+      
          <!-- 스토리 시작 -->
          <div class="story">
             <!-- 왼쪽 버튼 -->
@@ -587,26 +499,79 @@
             </div>
          </div>
          <!-- 스토리 끝 -->
+         
          <!-- 게시글 시작 -->
+         
+         <c:forEach var="boardList" items="${boardList}" varStatus="status">
+         
+         
          <div class="border feed_box">
             <div class="feed_name">
                <div class="profile_box">
-                  <img class="profile_img" src="resources/image/profile_06.jpg">
+               
+               <c:choose>
+					<c:when test="${empty boardList.MEM_MEDIA}">
+						<img class="profile_img" src="resources/image/icon_p.jpg" > 
+					</c:when>
+					<c:otherwise>
+						<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+					</c:otherwise>
+				</c:choose>
+               
+                 
                </div>
-               <span class="feed_name_txt"> daemyeong </span>
+               <span class="feed_name_txt"> ${boardList.MEM_NAME} </span>
                <!-- 더보기 버튼 -->
                <img class="more_details" src="resources/image/icon_28.png"
                   alt="더보기">
             </div>
-            <img class="feed_img"
-               src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800">
+            
+            <img class="feed_img" style="height: 478px;"
+               src="/roomie/${boardList.BO_MEDIA }">
 
             <div class="feed_icon">
                <div>
-                  <!-- 좋아요 버튼 -->
-                  <img class="material-icons-outlined"
+                 
+                 <!-- 좋아요 -->
+                 <div id="likeBut${status.index}" class="likeBut" style="display: inline-block;">
+                 
+                <input type="hidden" id="idx" value="${MEMBER.MEM_IDX}">
+                <input type="hidden" id="board_idx" value="${boardList.BO_IDX}">
+                
+                 <c:if test="${not empty LIKEB}">
+                 
+              
+		          <c:set var="liked" value="false" />
+
+                 <c:forEach var="like" items="${LIKEB}">
+                     <c:if test="${boardList.BO_IDX == like.LIKEB_BOARD}">
+                     <c:set var="liked" value="true" />
+                     </c:if>
+                 </c:forEach>
+
+                <c:if test="${liked == true}">
+                
+
+                <img class="material-icons-outlined" id="like_y" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/heart_yes (2).png" >
+                
+                </c:if>
+
+                <c:if test="${liked == false}">
+
+                <img class="material-icons-outlined" id="like_n" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_01.png" >
+                </c:if>
+
+                 </c:if>
+                 
+                 <c:if test="${empty LIKEB}">
+  
+                 <img class="material-icons-outlined" id="like_n"
                      style="width: 20px; height: 20px; object-fit: contain"
                      src="resources/image/icon_01.png">
+                 
+                 </c:if>
+                 </div>
+                 
                   <!-- 댓글 버튼 -->
                   <img class="material-icons-outlined"
                      style="width: 20px; height: 20px; object-fit: contain"
@@ -624,16 +589,29 @@
                </div>
             </div>
             <div class="feed_like">
+            <div class="likec" id="feed_like${status.index}" style="padding: 0px;">
                <!-- 좋아요 표시 -->
                <p class="feed_txt">
-                  <b>좋아요 10개</b>
+
+               <c:choose>
+               <c:when test="${boardList.COUNT == null}">
+               <b>좋아요 0개</b>
+               <input type="hidden" value="${boardList.COUNT}">
+               </c:when>
+               
+               <c:otherwise>
+               <b>좋아요 ${boardList.COUNT}개</b>
+               <input type="hidden" value="${boardList.COUNT}">
+               </c:otherwise>
+               </c:choose>
+               
+
                </p>
-            </div>
+            </div></div>
             <div class="feed_content">
                <!-- 이름, 게시글 내용 -->
                <p class="feed_txt">
-                  <b> daemyeong </b> 코로나라서 해외여행을 못가니 최근 제주도 가는사람이 늘고있습니다~ 제주도도
-                  조심해야되는건 마찬가지~!
+                  <b> ${boardList.MEM_NAME} </b> ${boardList.BO_CONT}
                </p>
             </div>
             <!-- 댓글 목록 -->
@@ -652,61 +630,10 @@
                </span>
             </div>
          </div>
+         
+         </c:forEach>
          <!-- 게시글 끝 -->
-         <!-- 두번째 게시글 시작 -->
-         <div class="border feed_box">
-            <div class="feed_name">
-               <div class="profile_box">
-                  <img class="profile_img" src="resources/image/profile_06.jpg">
-               </div>
-               <span class="feed_name_txt"> daemyeong </span>
-            </div>
-            <img class="feed_img"
-               src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800">
-
-            <div class="feed_icon">
-               <div>
-                  <!-- 좋아요 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_01.png">
-                  <!-- 댓글 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_03.png">
-                  <!-- 공유 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_04.png">
-               </div>
-               <div>
-                  <!-- 게시글 저장 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_05.png">
-               </div>
-            </div>
-            <div class="feed_like">
-               <!-- 좋아요 표시 -->
-               <p class="feed_txt">
-                  <b>좋아요 10개</b>
-               </p>
-            </div>
-            <div class="feed_content">
-               <!-- 이름, 게시글 내용 -->
-               <p class="feed_txt">
-                  <b> daemyeong </b> 코로나라서 해외여행을 못가니 최근 제주도 가는사람이 늘고있습니다~ 제주도도
-                  조심해야되는건 마찬가지~!
-               </p>
-            </div>
-            <!-- 댓글 목록 -->
-            <div class="feed_reply">
-               <span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ
-               </span> <span class="feed_txt"> <b> junseok </b> 제주도 ㄱ ㄱ
-               </span>
-            </div>
-         </div>
-         <!-- 두번째 게시글 끝 -->
+        
          <!-- 왼쪽 바디 영역 끝 -->
          <!-- 오른쪽 바디 영역 시작 -->
          <div class="right_body">
@@ -839,8 +766,20 @@
             <img style="width: 25px; height: 25px; object-fit: contain"
                onclick="document.getElementById('add_feed').click();"
                src="resources/image/icon_08.png"> &nbsp;&nbsp;
+               <!-- 프로필 이동 버튼 -->
+            <c:choose>
+					<c:when test="${empty MEMBER.MEM_MEDIA}">
+						<img style="width: 25px; height: 25px; object-fit: contain""
+							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
+					</c:when>
+					<c:otherwise>
+						<img style="width: 25px; height: 25px; object-fit: contain""
+							src="${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
+					</c:otherwise>
+				</c:choose>
          </div>
       </footer>
+
 
       <!-- jquery -->
       <script
@@ -1720,8 +1659,7 @@ function removeAllChildNods(el) {
   
   </script> 
   
-
-<!--   <script>
+   <script>
 
     var page = 0;
     var length = 0;
