@@ -20,7 +20,7 @@ w<%@ page language="java" contentType="text/html; charset=UTF-8"
   <div class="feed_name">
 	<div class="profile_box">
 	  <img class="profile_img"
-	       src="./resources/image/${STORIES[0].MEM_MEDIA}">
+	       src="./resources/files/profile/${STORIES[0].MEM_MEDIA}">
 	</div>
 	<div class="name_content">
 	  <!-- 사용자 이름 -->
@@ -39,11 +39,11 @@ w<%@ page language="java" contentType="text/html; charset=UTF-8"
 			<c:choose>
 				<c:when test="${fn:substring(STORY_IMAGE, length -4, length) == '.mp4'}">
 			        <video id="videos" muted style="display: block; max-width: 100%;">
-			            <source src="./resources/image/${S.STORY_IMAGE}" type="video/mp4">
+			            <source src="./resources/files/stories/${S.STORY_IMAGE}" type="video/mp4">
 			        </video>
 				</c:when> 
 				<c:otherwise>
-					<img src="./resources/image/${S.STORY_IMAGE}" alt="${S.STORY_IDX}">
+					<img src="./resources/files/stories/${S.STORY_IMAGE}" alt="${S.STORY_IDX}">
 				</c:otherwise>
 			</c:choose>
         </c:forEach>
@@ -71,7 +71,7 @@ w<%@ page language="java" contentType="text/html; charset=UTF-8"
 	 			arr.push(${item.STORY_IDX})
 	 		</c:forEach>
 	
-			// console.log("인덱스 : " + arr[index]);
+			console.log("인덱스 : " + arr[index]);
 			
 	   		var paramData = {
 	  				"SC_MEM" : '15',
@@ -95,6 +95,25 @@ w<%@ page language="java" contentType="text/html; charset=UTF-8"
 		}
   	}
   </script> 
+  <script>
+  
+  	// 스토리 이미지 or 동영상 확장자 확인
+  	function ext(index) {
+		var arr = new Array();
+		
+  		try {
+	 		<c:forEach items = "${STORIES}" var = "item">
+ 				arr.push('${item.STORY_IMAGE}')
+ 			</c:forEach>
+		
+ 			str = arr[index];
+ 				
+	 		return str.slice(-4);
+		} catch(e) {
+			console.log("오류 : " + e)
+		}
+  	}
+  </script>
   
   <script type="text/javascript" src="./resources/js/stories.js"></script>
 
