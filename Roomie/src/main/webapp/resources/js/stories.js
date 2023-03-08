@@ -16,6 +16,8 @@ class SlideStories {
         this.thumbItems.forEach((item) => item.classList.remove('active'))
         this.thumbItems[index].classList.add('active')
 
+		story_check(index);
+
         if (index != 4) {
             this.autoSlide(2000)
             document.documentElement.style.setProperty("--slide-thumb-time", "2s");
@@ -24,7 +26,6 @@ class SlideStories {
             document.documentElement.style.setProperty("--slide-thumb-time", "6s");
             videos.play();
         }
-        story_check(index);
     }
 
     next() {
