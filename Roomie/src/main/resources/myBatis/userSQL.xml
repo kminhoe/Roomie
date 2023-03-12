@@ -26,12 +26,12 @@
 	</update>
 	
 	<select id="userFollower" parameterType="hashmap" resultType="hashmap">
-		select count(*) over (PARTITION BY fri_idx) as CNT, fri_mem, following
+		select count(*) over (PARTITION BY fri_idx) as CNT, fri_idx, fri_mem, following
 		from friend where fri_mem = #{FRI_MEM}
 	</select>
 	
 	<select id="userFollowing" parameterType="hashmap" resultType="hashmap">
-		select count(*) over (PARTITION BY fri_idx) as CNT, fri_mem, following
+		select count(*) over (PARTITION BY fri_idx) as CNT, fri_idx, fri_mem, following
 		from friend where following = #{FOLLOWING}
 	</select>
 	

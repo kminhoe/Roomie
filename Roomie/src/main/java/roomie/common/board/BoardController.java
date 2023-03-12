@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class BoardController {
 	
 	@PostMapping(value="/register.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<Map<String, Object>>> insertBoard(MultipartFile[] uploadFile) throws Exception{
+	public ResponseEntity<List<Map<String, Object>>> insertBoard(MultipartFile[] uploadFile, HttpSession session) throws Exception{
 //		 ModelAndView mv = new ModelAndView("redirect:/boardList.ya"); 
 		
 		
@@ -54,9 +55,9 @@ public class BoardController {
 		
 		
 		String uploadFolder ="C:\\upload";
-		String uploadFolderPath = getFolder();
+		String uploadFolderPath = session.getServletContext().getRealPath("/");
 		//다운로드받을 폴더 생성
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		File uploadPath = new File(uploadFolderPath);
 		log.info("upload path : " + uploadPath);
 		
 		if(uploadPath.exists() == false) {
@@ -174,8 +175,9 @@ public class BoardController {
 		System.out.println("받았니? : " + request);
 		System.out.println("받았니? : " + map);
 		
-		boardService.registerBoard(map);
 		
+		boardService.registerBoard(map);
+		System.out.println(map);
 		if(map.get("BO_IDX") != null) {
 			System.out.println("이건 먼데?" + map.get("BO_IDX"));
 		

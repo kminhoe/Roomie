@@ -6,35 +6,39 @@
 <mapper namespace="board">
 
 <insert id="boardregister" parameterType="hashmap">
-	<![CDATA[
-		INSERT INTO BOARD(BO_IDX, BO_MEDIA, BO_DATE, BO_HASH, BO_PLACE, BO_CONT)
-		VALUES(
-		BOARD_SEQ.NEXTVAL,
-		#{BO_MEDIA},
-		SYSDATE,
-		#{BO_HASH},
-		#{BO_PLACE},
-		#{BO_CONT}
-		)
-	]]>
-	<selectKey resultType="int" keyProperty="BO_IDX" order="AFTER">
-		SELECT BO_IDX FROM BOARD
-		WHERE BO_HASH = #{BO_HASH}
-	</selectKey>
-</insert>
+      <selectKey resultType="int" keyProperty="BO_IDX"
+         order="BEFORE">
+         SELECT BOARD_SEQ.NEXTVAL FROM DUAL
+      </selectKey>
 
-<insert id="hashinsert" parameterType="hashmap">
-	<![CDATA[
-		INSERT INTO SEARCH(HASH_IDX, HASH_BOARD, HASH_KEYWORD)
-		VALUES(
-		SEARCH_SEQ.NEXTVAL,
-		#{HASH_BOARD},
-		#{HASH_KEYWORD}
-		)
-	]]>
-</insert>
+      <!-- 이게 된다고? -->
+   <![CDATA[
+      INSERT INTO BOARD(BO_IDX, BO_MEDIA, BO_DATE, BO_HASH, BO_PLACE, BO_CONT, BO_MEM)
+      VALUES(
+      #{BO_IDX},
+      #{BO_MEDIA},
+      SYSDATE,
+      #{BO_HASH},
+      #{BO_PLACE},
+      #{BO_CONT},
+      #{BO_MEM}
+      )
+   ]]>
 
-	
-	
+
+
+
+   </insert>
+
+   <insert id="hashinsert" parameterType="hashmap">
+   <![CDATA[
+      INSERT INTO HASH(HASH_IDX, HASH_BOARD, HASH_KEYWORD)
+      VALUES(
+      HASH_SEQ.NEXTVAL,
+      #{HASH_BOARD},
+      #{HASH_KEYWORD}
+      )
+   ]]>
+   </insert>
 	
 </mapper>
