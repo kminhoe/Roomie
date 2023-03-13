@@ -411,7 +411,7 @@
                         <div class="modal_title_side">
                            <!-- 모달 닫기 버튼 -->
                            <div style="margin-top: -8px; margin-left: 20px;">
-                              <img id="close_modal_add_feed_content"
+                              <img id="close_modal_add_feed_place"
                                  style="cursor: pointer;" src="resources/image/icon_40.png">
                            </div>
                         </div>
@@ -764,6 +764,7 @@
 
     const modal_add_feed = document.getElementById("modal_add_feed");
     const modal_add_feed_content = document.getElementById("modal_add_feed_content");
+    const modal_add_feed_place = document.getElementById("modal_place_add");
     const buttonAddFeed = document.getElementById("add_feed");
 
     // 모달 글쓰기 이미지 업로드 띄우기
@@ -786,6 +787,15 @@
     const buttonCloseModal_add_feed_content = document.getElementById("close_modal_add_feed_content");
     buttonCloseModal_add_feed_content.addEventListener("click", e => {
       modal_add_feed_content.style.display = "none";
+      document.body.style.overflowY = "visible";
+      upload_moveSlide(0);
+      $('.upload_list').html('');
+      $('#input_content').val('');
+    });
+    // 위치 모달 닫기
+    const buttonCloseModal_add_feed_place = document.getElementById("close_modal_add_feed_place");
+    buttonCloseModal_add_feed_place.addEventListener("click", e => {
+    	modal_place_add.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
       $('.upload_list').html('');

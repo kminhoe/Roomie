@@ -1,13 +1,10 @@
 package roomie.common.option;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,24 +27,27 @@ public class OptionController {
 	
 	@PostMapping(value = "/checkpass.ya")
 	@ResponseBody
-	public ResponseEntity<String> passwordCheck(@RequestParam Map<String, Object> map) throws Exception{
+	public int passwordCheck(@RequestParam Map<String, Object> request) throws Exception{
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		System.out.println("먼데?:" + map);
-		System.out.println(map.get("MEM_IDX"));
-		int a = Integer.parseInt(String.valueOf(map.get("MEM_IDX")));
-		result = optionService.checkpass(a);
+		int idx = Integer.parseInt((String) request.get("MEM_IDX"));
+//		String ori = (String)request.get("oripw");
+//		String newpw = (String)request.get("MEM_PWD");
+
 		
-//		if(map.get("originalpass") == null || != result) {
-//			return 
-//		}
-		
-		//String original = (String)map.get("originalpass");
-//		int idx = Integer.parseInt((String) map.get("MEM_IDX"));
-//		result = optionService.checkpass(idx);
-		
-		
-		return new ResponseEntity<String>("map", HttpStatus.OK);
+		result = optionService.checkpass(idx);
+		System.out.println(request);
+
+		if(result.get("MEM_PWD").equals(request.get("oripw"))) {
+			System.out.println("비밀번호 맞음");
+			
+			optionService.changepass(request);
+			
+			return 0;
+		}else {
+			return 2;
+		}
+	
 	}
 
 }
