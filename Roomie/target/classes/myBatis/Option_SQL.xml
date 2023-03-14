@@ -17,6 +17,12 @@
 		]]>
 
 
-	</update>	
+	</update>
 	
+	<update id="memberDelete" parameterType="hashmap">
+		<![CDATA[
+		UPDATE MEMBER SET MEM_DEL = 0 WHERE MEM_IDX = #{MEM_IDX}
+		]]>
+		
+	</update>
 </mapper>

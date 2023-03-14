@@ -40,7 +40,7 @@ public class StoriesController {
 		
 		storiesMap = storiesSerivce.storiesList(map);
 		
-		System.out.println("dao >> " + storiesMap);
+		System.out.println("dao : " + storiesMap);
 
 		return storiesMap;
 	}

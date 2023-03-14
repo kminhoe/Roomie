@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
 <head>
 <!-- kakao 지도 스타일 시작 -->
 <style>
@@ -255,6 +256,14 @@
 	padding: 0;
 	vertical-align: baseline;
 }
+.current-page-link:before {
+  content: "\00bb"; /* ">" 기호 */
+  margin-right: 5px; /* ">" 기호와 링크 사이의 간격 */
+}
+
+.current-page-link {
+  font-weight: bold; /* 링크 텍스트 굵게 표시 */
+}
 </style>
 <!-- kakao 지도 스타일끝 -->
 <!-- Required meta tags -->
@@ -265,13 +274,11 @@
 <!-- 내비게이션 바 -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-	crossorigin="anonymous">
-<!-- 내비게이션 바 구글 아이콘 이미지 -->
-<link
-	href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
 	rel="stylesheet">
+<!-- 내비게이션 바 구글 아이콘 이미지 -->
+<!-- <link
+	href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+	rel="stylesheet"> -->
 
 <!-- style css -->
 <link rel="stylesheet" type="text/css"
@@ -330,17 +337,16 @@
 		<div class="border left_body"
 			style="width: 850px; height: 750px; flex-direction: row;">
 			<ul style="width: 250px; flex-direction: column;">
-				<li style="padding: 16px 16px 16px calc(32px - 2px);">비밀번호 변경</li>
+				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a href="/roomie/optionList.ya" class="current-page-link">비밀번호 변경</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);">차단 계정</li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);">비공개 설정</li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);">로그아웃</li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);">탈퇴</li>
 				<div class="optionline"></div>
-				<div
-					style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
+				<div style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
 					<img class="navbar-brand"
 						style="height: 44px; object-fit: contain;"
-						src="resources/image/Roomie5.png"> </br> <span>불편한 사항이
+						src="resources/image/Roomie5.png"><span>불편한 사항이
 						있으시면 roomie와 대화해보세요</span>
 				</div>
 			</ul>
@@ -352,14 +358,14 @@
 						</div>
 						<span class="feed_name_txt"> daemyeong </span>
 					</div>
-					<form class="_acyg" name="passwordForm">
-						<input type="hidden" name="MEM_IDX" value="1">
+					<div class="_acyg" id="passwordForm">
+						<input type="hidden" name="MEM_IDX" id="MEM_IDX" value="1">
 						<div class="_ab3p">
 							<aside class="_ad6_">
 								<label class="_ab3q">이전 비밀번호</label>
 							</aside>
 							<div class="_ab3t">
-								<input type="password" name="originalpass" autocomplete="off">
+								<input type="password" id="originalpass" name="originalpass" autocomplete="off">
 							</div>
 						</div>
 						<div class="_ab3p">
@@ -367,7 +373,8 @@
 								<label class="_ab3q">새 비밀번호</label>
 							</aside>
 							<div class="_ab3t">
-								<input type="password" name="newpass" autocomplete="off">
+								<input type="password" id="newpass" name="newpass" autocomplete="off">
+								
 							</div>
 						</div>
 						<div class="_ab3p">
@@ -375,12 +382,12 @@
 								<label class="_ab3q">새 비밀번호 확인</label>
 							</aside>
 							<div class="_ab3t">
-								<input type="password" name="newpasscheck" autocomplete="off">
+								<input type="password" id="newpasscheck" name="newpasscheck" autocomplete="off">
 							</div>
 						</div>
 						<div class="_ab3p" style="justify-content: center;">
 							<aside class="_ad6_" style="text-align: left; padding-left: 0px;">
-								<label class="_ab3q"><button onclick="passwordChange()">비밀번호 변경</button></label>
+								<label class="_ab3q"><button onclick="passwordChange()" value="비밀번호 변경">비밀번호 변경</button></label>
 							</aside>
 						</div>
 						<div class="_ab3p" style="justify-content: center;">
@@ -390,7 +397,7 @@
 										잊으셨나요?</a></label>
 							</aside>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 
@@ -594,11 +601,10 @@
 	</footer>
 
 	<!-- jquery -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-		crossorigin="anonymous"></script>
+<!-- 	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="./resources/js/jquery.validate.min.js"></script>
 	<!-- 모달 스크립트 -->
 	<script>
  
@@ -781,62 +787,6 @@
       
       
       console.log(formData.get(data.files[0]));
-      /* $("#boardupload").on("click", function(e){
-     	 
-     	 var BO_MEM = $("#input_user_id").text();
-     	 var BO_HASH = $("#input_hash").val();
-     	 var BO_PLACE = $("#input_place").val();
-     	 var BO_CONT = $("#input_content").val();
-     	 
-     	 console.log(BO_MEM);
-     	 console.log(BO_HASH);
-     	 console.log(BO_PLACE);
-     	 console.log(BO_CONT);
-     	 console.log(files.files[0]);
-     	 
-     	 /* var formData = new FormData(); 
-     	 formData.append("uploadFile", files.files[0]);
-     	 formData.append("BO_MEM", BO_MEM);
-     	 formData.append("BO_HASH", BO_HASH);
-     	 formData.append("BO_PLACE", BO_PLACE);
-     	 formData.append("BO_CONT", BO_CONT);
-     	 
-     	 $.ajax({
-     		 url: '/roomie/register.ya',
-  			processData: false,
-  			contentType: false,
-  			data: formData,
-  			type: 'POST',
-  			dataType:'json',
-  			success: function(result){
-  			}
-     		 
-     	 });
-     	 
-     	 
-     	 
-      }); */
-      
-      
-/*       $("#boardupload").on("click", function(e){
-
-  		
-      	$.ajax({
-      		url: '/roomie/register.ya',
-			processData: false,
-			contentType: false,
-			data: formData,
-			type: 'POST',
-			dataType:'json',
-            success: function(){
-              	alert("보내기 성공");
-                
-            },
-            err: function(err){
-              console.log("err:", err)
-            }
-            });
-      }); */ 
       
     }
      $(document).ready(function(){
@@ -1037,10 +987,10 @@
     
   </script>
 
-	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
           crossorigin="anonymous">
-  </script> -->
+  </script>
 
 
 
@@ -1406,21 +1356,91 @@ function removeAllChildNods(el) {
     }
 
   </script>
+<script src="./resources/js/jquery.validate.min.js"></script>
+  
   <script>
+    $(function(){
+    	
+    	var html = '<div style="position: relative; z-index: 1; margin-left: -30px; margin-top: 5px;"><img style="object-fit: contain; position: absolute; right: 5px; transform: translateY(-136%);" src="./resources/image/icon_23.png"></div>';
+
+    	// 유효성 검사
+        $("._acyg").validate({
+        //규칙
+        rules:{
+        	newpass: {
+            required : true, // 필수 입력 여부
+            minlength : 8	// 최소 입력 글자수
+          },
+         	newpasscheck: {
+            required : true,
+            minlength : 8,
+            equalTo : newpass
+          }
+          
+        },
+          //메시지
+        messages: {
+          
+          newpass: {
+            required : html, // 비밀번호는 필수 입력입니다.
+            minlength : html // 최소 8글자 이상 입력해주세요.
+          },
+          newpasscheck: {
+            required : html, // 비밀번호 확인은 필수 입력입니다.
+            minlength : html, // 최소 8글자 이상 입력해주세요.
+            equalTo : html // 비밀번호가 일치하지 않습니다.
+          }
+        },
+        //메시지 태그
+        errorElement : 'span', 	// 태그
+        errorClass : 'error',	// 클레스 이름
+        validClass :'vaild' 
+      });
+    });
+
   	function passwordChange(){
-  		var data = $('form[name=passwordForm]').serializeArray();
   		
-  		
+  		var originpw = document.getElementById("originalpass").value;
+  		var newpw = document.getElementById("newpass").value;
+  		var newpwch = document.getElementById("newpasscheck").value;
+  		var idx = $('input[name=MEM_IDX]').val();
+  		let data = new FormData();
+  		console.log(idx);
+  		if(newpw != newpwch){
+  			alert("비밀번호가 일치하지 않습니다");
+  			location.reload();
+  			return false;
+  		}
+  		if(originpw == newpw){
+  			alert("같은 비밀번호로는 변경할수 없습니다.");
+  			location.reload();
+  			return false;
+  		}
+  		  		
+  		data.append('MEM_IDX', idx);
+  		data.append('oripw' , originpw);
+  		data.append('MEM_PWD', newpw);
+  		  		
   		$.ajax({
   			url : "/roomie/checkpass.ya",
   			type : "POST",
+  			processData: false,
+  		  	contentType: false,
   			data : data,
   			dataType : "json",
   			success : function(result){
-  				alert("데이터 전송 성공")
+  				console.log(result);
+  				if(result > 0){
+  					alert("비밀번호를 확인해주세요");
+  					location.reload();
+  				}else{
+  					alert("비밀번호가 변경되었습니다");
+  					location.reload();  					
+  				}	
   				
+  				 
   			}
-  		})
+  		}) 
   	}
   </script>
 </body>
