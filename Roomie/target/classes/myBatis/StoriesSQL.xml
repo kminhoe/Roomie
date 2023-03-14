@@ -9,7 +9,7 @@
 	<select id="selectStories" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT
-			    A.STORY_IDX, A.STORY_MEM, A.STORY_IMAGE, A.STORY_DATE, B.MEM_USER, B.MEM_MEDIA
+			    A.STORY_IDX, A.STORY_MEM, A.STORY_IMAGE, A.STORY_DATE, B.MEM_USER
 			FROM 
 			    STORY A INNER JOIN MEMBER B
 			ON
@@ -18,46 +18,6 @@
 			    AND TO_CHAR(A.STORY_DATE, 'YYYY-MM-DD HH24:MI:SS') > TO_CHAR(SYSDATE-1,'YYYY-MM-DD HH24:MI:SS')
 		]]>
 	</select>
-
-	<select id="storiesList" parameterType="hashmap" resultType="hashmap">
-		<![CDATA[
-			SELECT C.MEM_ID, C.MEM_USER, C.MEM_MEDIA, AB.FRI_MEM, AB.FOLLOWING, AB.STORY_MEM, AB.STORY_IMAGE, AB.STORY_DATE
-			FROM
-			    (SELECT
-			        A.FRI_MEM, A.FOLLOWING, B.STORY_MEM, B.STORY_IMAGE, B.STORY_DATE, ROW_NUMBER() OVER(PARTITION BY A.FOLLOWING ORDER BY B.STORY_DATE DESC) AS RN
-			    FROM 
-			        FRIEND A INNER JOIN STORY B
-			    ON
-			        A.FOLLOWING = B.STORY_MEM
-			    WHERE A.FRI_MEM = #{FRI_MEM}) AB INNER JOIN MEMBER C
-			ON
-			    AB.FOLLOWING = C.MEM_IDX
-			WHERE
-			    RN = 1
-			AND TO_CHAR(AB.STORY_DATE, 'YYYY-MM-DD HH24:MI:SS') > TO_CHAR(SYSDATE-1,'YYYY-MM-DD HH24:MI:SS')
-		]]>
-	</select>
 	
-	<select id="selectStoriesCheck" parameterType="hashmap" resultType="hashmap">
-		<![CDATA[
-			SELECT
-			    SC_IDX, SC_MEM, STORY_IDX
-			FROM
-			    STORY_CHECK
-			WHERE
-			    SC_MEM = #{SC_MEM} AND STORY_IDX = #{STORY_IDX}
-		]]>
-	</select>
-	
-	<insert id="insertStoriesCheck" parameterType="hashmap">
-		<![CDATA[
-			INSERT INTO
-			STORY_CHECK (
-			    SC_IDX, SC_MEM, STORY_IDX
-			) VALUES (
-			    STORY_CHECK_SEQ.NEXTVAL, #{SC_MEM}, #{STORY_IDX}
-			)
-		]]>
-	</insert>
 	
 </mapper>
