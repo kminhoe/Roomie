@@ -25,5 +25,10 @@ public class OptionDAO {
 		 System.out.println("DAO : " + map);
 		sqlSessionTemplate.update("option.changepass", map); 
 	}
+	
+	public void memberDelete(Map<String, Object> map) throws Exception{
+		System.out.println("DAO : "+ map);
+		sqlSessionTemplate.update("option.memberDelete", map);
+	}
 
 }

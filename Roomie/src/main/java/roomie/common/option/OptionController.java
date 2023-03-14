@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,40 +15,65 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class OptionController {
-	
-	@Resource 
+
+	@Resource
 	private OptionService optionService;
-	
-	@GetMapping(value ="/optionList.ya")
-	public ModelAndView getOptionList()throws Exception{
+
+	@GetMapping(value = "/optionList.ya")
+	public ModelAndView getOptionList() throws Exception {
 		ModelAndView mv = new ModelAndView("option/optionList");
-		
+
 		return mv;
 	}
-	
+
 	@PostMapping(value = "/checkpass.ya")
 	@ResponseBody
-	public int passwordCheck(@RequestParam Map<String, Object> request) throws Exception{
+	public int passwordCheck(@RequestParam Map<String, Object> request) throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
-		
+
 		int idx = Integer.parseInt((String) request.get("MEM_IDX"));
 //		String ori = (String)request.get("oripw");
 //		String newpw = (String)request.get("MEM_PWD");
 
-		
 		result = optionService.checkpass(idx);
 		System.out.println(request);
 
-		if(result.get("MEM_PWD").equals(request.get("oripw"))) {
+		if (result.get("MEM_PWD").equals(request.get("oripw"))) {
 			System.out.println("비밀번호 맞음");
-			
 			optionService.changepass(request);
-			
+
 			return 0;
-		}else {
+		} else {
 			return 2;
 		}
+
+	}
+
+	@GetMapping(value = "/memberDelete.ya")
+	public ModelAndView MemberDelete(HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView("option/memberDelete");
+
+		return mv;
+
+
+
+	}
 	
+	@PostMapping(value = "/DeleteMem.ya")
+	@ResponseBody
+	public String DeleteMem(@RequestParam Map<String, Object> map) throws Exception{
+		int idx = Integer.parseInt((String) map.get("MEM_IDX"));
+
+		Map<String, Object> result = optionService.checkpass(idx);
+		
+		System.out.println("결과값 : 	" + map);
+
+		if (result.get("MEM_PWD").equals(map.get("MEM_PWD"))) {
+			optionService.MemberDelete(map);
+		}
+
+		return "/roomie/login.ya";
+		
 	}
 
 }

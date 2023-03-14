@@ -28,6 +28,13 @@ public class OptionServiceImpl implements OptionService{
 		optionDAO.changepass(map); 
 		
 	}
+
+	@Override
+	public void MemberDelete(Map<String, Object> map) throws Exception {
+		System.out.println("Service : "+ map);
+		optionDAO.memberDelete(map);
+		
+	}
 	
 	
 
