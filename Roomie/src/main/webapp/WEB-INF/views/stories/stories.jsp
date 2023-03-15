@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+w<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -20,7 +20,7 @@
   <div class="feed_name">
 	<div class="profile_box">
 	  <img class="profile_img"
-	       src="./resources/image/profile_05.jpg">
+	       src="./resources/files/profile/${STORIES[0].MEM_MEDIA}">
 	</div>
 	<div class="name_content">
 	  <!-- 사용자 이름 -->
@@ -39,11 +39,11 @@
 			<c:choose>
 				<c:when test="${fn:substring(STORY_IMAGE, length -4, length) == '.mp4'}">
 			        <video id="videos" muted style="display: block; max-width: 100%;">
-			            <source src="./resources/image/${S.STORY_IMAGE}" type="video/mp4">
+			            <source src="./resources/files/stories/${S.STORY_IMAGE}" type="video/mp4">
 			        </video>
-				</c:when>
+				</c:when> 
 				<c:otherwise>
-					<img src="./resources/image/${S.STORY_IMAGE}" alt="${S.STORY_IDX}">
+					<img src="./resources/files/stories/${S.STORY_IMAGE}" alt="${S.STORY_IDX}">
 				</c:otherwise>
 			</c:choose>
         </c:forEach>
@@ -54,48 +54,68 @@
     <nav class="slide-nav">
         <div class="slide-thumbs"></div>
         <button class="slide-prev">Previous</button>
-        <button class="slide-next">Next</button>
+        <button class="slide-next" id="slide-next">Next</button>
     </nav>
   </div>
-  
   <!-- 스토리 슬라이드 끝 -->
-
-  <script src="./resources/js/stories.js"></script>
+  
+  <!-- 스토리 읽기 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  
   <script>
-/* 	 $(document).ready(function(){
-		 readStories();
-	 }) */
-  </script>
-  
-  <script>
-/* 	 function readStories() {
-			var paramData = {"MEM_ID": "k_2668536757"};
-			var htmls = '';
+  	function story_check(index) {
+  		var stories_length = '${fn:length(STORIES)}'
+		var arr = new Array();
+		
+  		try {
+	 		<c:forEach items = "${STORIES}" var = "item">
+	 			arr.push(${item.STORY_IDX})
+	 		</c:forEach>
+	
+			console.log("인덱스 : " + arr[index]);
 			
-			htmls += '<img src="./resources/image/cat1.png" alt="Cat 1">';
-			htmls += '<img src="./resources/image/cat2.png" alt="Cat 2">';
-			htmls += '<img src="./resources/image/cat3.png" alt="Cat 3">';
-			htmls += '<img src="./resources/image/cat4.png" alt="Cat 4">';
-
+	   		var paramData = {
+	  				"SC_MEM" : '15',
+	  				"STORY_IDX" : arr[index]
+	  			};
+	  		
 			$.ajax({
-				url: "/roomie/selectStories.ya"
+				url: "/roomie/storiesCheck.ya"
 				, data : paramData 
 				, type : 'POST'
 				, dataType : 'json'
 				, success: function(status){
-	                console.log(status);
-	                
-	                
-	                $('.slide-items').replaceWith(htmls);
-	                
+		          	// console.log(status);
 				}
 				, error: function(error){
 					console.log("에러 : " + error);
 				}
 			});
-		}  */
+		} catch(e) {
+			console.log("오류")
+		}
+  	}
+  </script> 
+  <script>
+  
+  	// 스토리 이미지 or 동영상 확장자 확인
+  	function ext(index) {
+		var arr = new Array();
+		
+  		try {
+	 		<c:forEach items = "${STORIES}" var = "item">
+ 				arr.push('${item.STORY_IMAGE}')
+ 			</c:forEach>
+		
+ 			str = arr[index];
+ 				
+	 		return str.slice(-4);
+		} catch(e) {
+			console.log("오류 : " + e)
+		}
+  	}
   </script>
+  
+  <script type="text/javascript" src="./resources/js/stories.js"></script>
+
 </body>
 </html>

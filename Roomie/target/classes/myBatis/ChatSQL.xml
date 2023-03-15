@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="chat">
+	
+		<!-- 채팅 내용 리스트 -->
+		<select id="selectChatContent" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+				SELECT
+					CHAT_CONTENT, CHAT_MYID, CHAT_OTHERID, CHAT_DATE
+				FROM
+					CHAT
+				WHERE
+					(CHAT_MYID = #{CHAT_MYID} AND CHAT_OTHERID = #{CHAT_OTHERID})
+				OR
+					(CHAT_MYID = #{CHAT_OTHERID} AND CHAT_OTHERID = #{CHAT_MYID})
+				ORDER BY
+					CHAT_DATE ASC
+			]]>
+		</select>
+		
+		<select id="selectChatAll" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+				SELECT
+					CHAT_CONTENT, CHAT_DATE
+				FROM
+				
+					(SELECT
+						CHAT_CONTENT, CHAT_DATE
+					FROM
+						CHAT
+					WHERE
+						(CHAT_MYID = #{CHAT_MYID} AND CHAT_OTHERID = #{CHAT_OTHERID})
+					OR
+						(CHAT_MYID = #{CHAT_OTHERID} AND CHAT_OTHERID = #{CHAT_MYID})
+					ORDER BY
+						CHAT_DATE DESC)
+						
+				WHERE ROWNUM = 1
+			]]>
+		</select>
+		
+		<!-- CHAT_MYID, CHAT_OTHERID가 중복되지 않고 날짜 순으로 정렬 -->
+		<select id="selectChatRoomList" parameterType="hashmap" resultType="String">
+			<![CDATA[
+				SELECT
+					ROOM_MEM
+				FROM
+					ROOM
+				WHERE
+					(ROOM_MEM LIKE #{ROOM_MEM1}
+				OR
+					ROOM_MEM LIKE #{ROOM_MEM2})
+				ORDER BY
+					ROOM_DATE DESC
+			]]>
+		</select>
+		
+		<select id="selectChatRoomList2" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+				SELECT
+					ROOM_MEM
+				FROM
+					ROOM
+				WHERE
+					(ROOM_MEM LIKE #{ROOM_MEM1}
+				OR
+					ROOM_MEM LIKE #{ROOM_MEM2})
+				ORDER BY
+					ROOM_DATE DESC
+			]]>
+		</select>
+		
+		<!-- CHAT_MYID로 친구리스트를 불러오기 -->
+		<!-- @@@@@@@@@@@@ 멤버리스트로 임시 대체 @@@@@@@@@@@@@ -->
+		<select id="selectFriendList" parameterType="String" resultType="hashmap">
+			<![CDATA[
+				SELECT * FROM MEMBER
+			]]>
+		</select>
+		
+		<!-- 채팅방이 존재하는지 확인. -->
+		<select id="selectChatRoomCount" parameterType="hashmap" resultType="int">
+			<![CDATA[
+				SELECT COUNT(ROOM_IDX)
+					FROM ROOM
+				WHERE
+					ROOM_MEM = #{ROOM_MEM1}
+				OR
+					ROOM_MEM = #{ROOM_MEM2}
+			]]>
+		</select>
+		
+		<!-- 메시지입력 -->
+		<insert id="addMessage" parameterType="map">
+			<![CDATA[
+				INSERT INTO
+					CHAT (CHAT_IDX, CHAT_MYID, CHAT_OTHERID, CHAT_CONTENT, CHAT_DATE)
+						VALUES (chat_seq.nextval, #{CHAT_MYID}, #{CHAT_OTHERID}, #{CHAT_CONTENT}, SYSDATE)
+			]]>
+		</insert>
+		
+		<insert id="addChatRoom" parameterType="map">
+			<![CDATA[
+				INSERT INTO
+					ROOM (ROOM_IDX, ROOM_MEM, ROOM_DATE)
+						VALUES (ROOM_seq.nextval, #{ROOM_MEM1}, SYSDATE)
+			]]>
+		</insert>
+		
+		<update id="updateChatRoomDate" parameterType="map">
+			<![CDATA[
+				UPDATE ROOM
+					SET ROOM_DATE = SYSDATE
+						WHERE ROOM_MEM = #{ROOM_MEM1}
+							OR ROOM_MEM = #{ROOM_MEM2}
+			]]>
+		</update>
+		
+		
+		
+		
+	</mapper>

@@ -40,5 +40,43 @@
       )
    ]]>
    </insert>
+   
+   <insert id="likeinsert" parameterType="hashmap">
+	<![CDATA[
+		INSERT INTO BO_LIKE(LIKEB_IDX, LIKEB_MEM, LIKEB_BOARD)
+		VALUES(
+		BO_LIKE_SEQ.NEXTVAL,
+		#{LIKEB_MEM},
+		#{LIKEB_BOARD})
+	]]>
+</insert>	
+
+
+<select id="likeCheck" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM BO_LIKE WHERE LIKEB_MEM = #{LIKEB_MEM}
+	]]>
+</select>
+
+
+<select id="selectBoard" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM 
+(SELECT * FROM
+(SELECT * FROM BOARD B INNER JOIN FRIEND F ON B.BO_MEM = F.FOLLOWING WHERE FRI_MEM = #{MEM_IDX})A
+INNER JOIN MEMBER ON BO_MEM = MEM_IDX)C
+LEFT JOIN (SELECT COUNT(LIKEB_BOARD) AS COUNT, LIKEB_BOARD FROM BO_LIKE GROUP BY LIKEB_BOARD) ON C.BO_IDX=LIKEB_BOARD
+ ORDER BY C.BO_IDX DESC
+	]]>
+</select>
+	
+
+<select id="memCheck" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM MEMBER WHERE MEM_IDX = #{MEM_IDX}
+	]]>
+</select>
+
+
 	
 </mapper>

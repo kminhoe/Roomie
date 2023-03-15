@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="stories">
+
+	<select id="selectStories" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    A.STORY_IDX, A.STORY_MEM, A.STORY_IMAGE, A.STORY_DATE, B.MEM_USER, B.MEM_MEDIA
+			FROM 
+			    STORY A INNER JOIN MEMBER B
+			ON
+			   A.STORY_MEM = B.MEM_IDX
+			WHERE A.STORY_MEM = #{STORY_MEM}
+			    AND TO_CHAR(A.STORY_DATE, 'YYYY-MM-DD HH24:MI:SS') > TO_CHAR(SYSDATE-1,'YYYY-MM-DD HH24:MI:SS')
+		]]>
+	</select>
+
+	<select id="storiesList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT ABC.STORY_IDX, ABC.FRI_MEM, ABC.STORY_MEM, D.MEM_USER, D.MEM_MEDIA, ABC.STORY_IMAGE, ABC.STORY_DATE, ABC.FRI_BEST, ABC.SC_DEL
+			FROM
+			    (SELECT AB.STORY_IDX, C.FRI_MEM, AB.STORY_MEM, AB.STORY_IMAGE, AB.STORY_DATE, C.FRI_BEST, AB.SC_DEL
+			    FROM
+			        (SELECT
+			            A.STORY_IDX, A.STORY_MEM, A.STORY_IMAGE, A.STORY_DATE, B.SC_DEL, ROW_NUMBER() OVER(PARTITION BY A.STORY_MEM ORDER BY A.STORY_DATE DESC) AS RN
+			        FROM
+			            STORY A FULL OUTER JOIN STORY_CHECK B
+			        ON A.STORY_IDX = B.STORY_IDX) AB INNER JOIN FRIEND C
+			    ON AB.STORY_MEM = C.FOLLOWING
+			    WHERE
+			    RN = 1 AND TO_CHAR(AB.STORY_DATE, 'YYYY-MM-DD HH24:MI:SS') > TO_CHAR(SYSDATE-1,'YYYY-MM-DD HH24:MI:SS')) ABC INNER JOIN MEMBER D
+			ON
+			    ABC.STORY_MEM = MEM_IDX
+			WHERE FRI_MEM = #{FRI_MEM}
+			ORDER BY ABC.SC_DEL DESC, ABC.STORY_DATE DESC
+		]]>
+	</select>
+	
+	<select id="selectStoriesCheck" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    SC_IDX, SC_MEM, STORY_IDX
+			FROM
+			    STORY_CHECK
+			WHERE
+			    SC_MEM = #{SC_MEM} AND STORY_IDX = #{STORY_IDX}
+		]]>
+	</select>
+	
+	<insert id="insertStoriesCheck" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO
+			STORY_CHECK (
+			    SC_IDX, SC_MEM, STORY_IDX, SC_DEL
+			) VALUES (
+			    STORY_CHECK_SEQ.NEXTVAL, #{SC_MEM}, #{STORY_IDX}, 'Y'
+			)
+		]]>
+	</insert>
+	
+</mapper>

@@ -107,7 +107,6 @@
 			async : false,
 			success : function(data) {
 				if (data.status == "TRUE") {
-					alert("회원가입을 축하드립니다.")
 					document.form.submit();
 				} else {
 					alert("인증코드가 맞지 않습니다.");

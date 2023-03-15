@@ -24,7 +24,7 @@
 		<select id="selectChatAll" parameterType="hashmap" resultType="hashmap">
 			<![CDATA[
 				SELECT
-					CHAT_CONTENT, CHAT_DATE			
+					CHAT_CONTENT, CHAT_DATE
 				FROM
 				
 					(SELECT
@@ -93,7 +93,6 @@
 			]]>
 		</select>
 		
-		
 		<!-- 메시지입력 -->
 		<insert id="addMessage" parameterType="map">
 			<![CDATA[
@@ -119,5 +118,8 @@
 							OR ROOM_MEM = #{ROOM_MEM2}
 			]]>
 		</update>
+		
+		
+		
 		
 	</mapper>

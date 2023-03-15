@@ -15,7 +15,7 @@ public class StoriesDAO {
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	// 사용자 이름 중복체크
+	// 메인화면 > 스토리 리스트 > 스토리 뷰
 	public List<Map<String, Object>> selectStories(Map<String, Object> map) throws Exception {
 		return sqlSessionTemplate.selectList("stories.selectStories", map);
 	}
@@ -23,5 +23,15 @@ public class StoriesDAO {
 	// 메인화면 > 스토리 리스트
 	public List<Map<String, Object>> storiesList(Map<String, Object> map) throws Exception {
 		return sqlSessionTemplate.selectList("stories.storiesList", map);
+	}
+	
+	// 메인화면 > 스토리 리스트 > 스토리 읽음 확인
+	public Map<String, Object> selectStoriesCheck(Map<String, Object> map) throws Exception {
+		return sqlSessionTemplate.selectOne("stories.selectStoriesCheck", map);
+	}
+
+	// 메인화면 > 스토리 리스트 > 스토리 읽음 표시
+	public void insertStoriesCheck(Map<String, Object> map) throws Exception {
+		sqlSessionTemplate.insert("stories.insertStoriesCheck", map);
 	}
 }

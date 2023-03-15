@@ -1,8 +1,3 @@
-// var video = document.getElementById('videos');
-// video.onloadedmetadata = function(e) {
-
-//     var num = video.duration;
-// }
 
 class SlideStories {
 
@@ -20,7 +15,9 @@ class SlideStories {
         this.items[index].classList.add('active')
         this.thumbItems.forEach((item) => item.classList.remove('active'))
         this.thumbItems[index].classList.add('active')
-		
+
+		story_check(index);
+
         if (index != 4) {
             this.autoSlide(2000)
             document.documentElement.style.setProperty("--slide-thumb-time", "2s");
