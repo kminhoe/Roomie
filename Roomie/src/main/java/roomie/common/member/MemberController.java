@@ -41,7 +41,7 @@ public class MemberController {
 	// 메인 페이지
 	@RequestMapping(value = "/main.ya")
 	public ModelAndView main() throws Exception {
-		ModelAndView mv = new ModelAndView("/member/main");
+		ModelAndView mv = new ModelAndView("/main");
 		
 		return mv;
 	}

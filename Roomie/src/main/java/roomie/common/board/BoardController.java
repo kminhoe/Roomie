@@ -187,6 +187,8 @@ public class BoardController {
 		
 		boardService.registerBoard(map);
 		
+		boardService.registerBoard(map);
+		System.out.println(map);
 		if(map.get("BO_IDX") != null) {
 			System.out.println("이건 먼데?" + map.get("BO_IDX"));
 		

@@ -61,6 +61,7 @@ public class UserController {
 		mv.addObject("following", followingResult);
 		mv.addObject("followingList", followingList);
 		
+		
 		//boardCount
 		Map<String,Object> board = userService.userBoard(map);
 		board.put("BO_MEM", map.get("mem_idx"));
@@ -68,10 +69,21 @@ public class UserController {
 		List<Map<String,Object>> boardList = userService.userBoardList(board);
 		System.out.println(board);
 		mv.addObject("boardList", boardList);
+		
+		//Comments count
+		Map<String,Object> commMapper = new HashMap<String,Object>();
+		
+		for(Map<String,Object> c: boardList) {
+			commMapper.put("COM_ARTNO", c.get("BO_IDX"));
+		}
+		System.out.println(commMapper);
+		Map<String,Object> comments = userService.selectComment(commMapper);
+		mv.addObject("comments", comments);
+		List<Map<String,Object>> commentList = userService.commentList(comments);
+		mv.addObject("commentList", commentList);
+		
+		
 		return mv;
-		
-		
-		
 	}
 	
 	@RequestMapping("userModify.ya")
@@ -198,6 +210,12 @@ public class UserController {
 	
 	@RequestMapping(value="/userFollowing.ya")
 	public ModelAndView userFollowing(@RequestParam Map<String,Object>map)throws Exception{
+		ModelAndView mv = new ModelAndView("/profile/profile");
+		return mv;
+	}
+	
+	@RequestMapping(value="/commentList.ya")
+	public ModelAndView commentList(@RequestParam Map<String,Object>map, HttpServletRequest req) throws Exception {
 		ModelAndView mv = new ModelAndView("/profile/profile");
 		return mv;
 	}
