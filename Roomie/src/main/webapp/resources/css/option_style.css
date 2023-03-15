@@ -1,0 +1,70 @@
+.optionline {
+	margin-top: 300px;
+	width: 100%;
+}
+
+._ab3p {
+	display: flex;
+	justify-content: flex-start;
+	margin-bottom: 16px;
+}
+
+._ad6_ {
+	padding-left: 32px;
+	padding-right: 32px;
+	text-align: right;
+	box-sizing: border-box;
+	color: rgb(var(- -ig-primary-text));
+	flex: 0 0 194px;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 18px;
+	margin-top: 6px;
+}
+
+._ab3q {
+	font-size: 16px;
+	font-weight: 600;
+	vertical-align: baseline;
+}
+
+._ab3t {
+	align-items: stretch;
+	border: 0;
+	box-sizing: border-box;
+	color: rgb(var(- -ig-primary-text));
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	flex-shrink: 0;
+	font: inherit;
+	font-size: 16px;
+	justify-content: flex-start;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+._acyg {
+	align-items: stretch;
+	border: 0;
+	display: flex;
+	flex-direction: column;
+	font: inherit;
+	font-size: 100%;
+	margin: 0;
+	margin-bottom: 16px;
+	margin-top: 32px;
+	padding: 0;
+	vertical-align: baseline;
+}
+
+.current-page-link:before {
+	content: "\00bb"; /* ">" 기호 */
+	margin-right: 5px; /* ">" 기호와 링크 사이의 간격 */
+}
+
+.current-page-link {
+	font-weight: bold; /* 링크 텍스트 굵게 표시 */
+}
