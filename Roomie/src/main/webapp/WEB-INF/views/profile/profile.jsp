@@ -541,6 +541,7 @@ img.track {
 		<div class="profile">
 			
 			<div class="profile-image">
+					
 				<c:choose>
 					<c:when test="${user.MEM_MEDIA == null }">
 						<img style="width: 200px; height: 200px;"
@@ -561,13 +562,18 @@ img.track {
 				<c:when test="${user.MEM_ID != session}">
 					
 					<c:choose>
-						<c:when test="${follow.ISFOLLOW == 'F' || follow.FRI_MEM == user.MEM_ID}">
-					<input type="button" class="btn profile-edit-btn btn btn-primary"
-					id="unfollow_profile" value="FOLLOWING">
-						</c:when>
-						<c:otherwise>
+						<c:when test="${empty following.ISFOLLOW}">
 					<input type="button" class="btn profile-edit-btn btn btn-primary"
 					id="follow_profile" value="FOLLOW">
+						</c:when>
+						<c:when test="${following.FOLLOWING == user.MEM_ID}">
+					<input type="button" class="btn profile-edit-btn btn btn-primary"
+					id="unfollow_profile" value="FOLLOWING">
+						
+						
+						</c:when>
+						<c:otherwise>
+						
 						</c:otherwise>
 					</c:choose>
 					<button class="btn profile-edit-btn">송금하기</button>
@@ -592,7 +598,7 @@ img.track {
 			</div>
 
 			<div class="profile-stats">
-
+					${comments.COM_WRITER}
 				<ul>
 					<li><span class="profile-stat-count">
 					<input type="hidden" name="BO_MEM" value="${user.MEM_IDX}">
@@ -773,11 +779,14 @@ img.track {
           <p class="feed_txt"> <b> ${user.MEM_NAME} </b> ${post.BO_CONT}</p>
         </div>
         <!-- 댓글 목록 -->
+        
         <div style="padding-left:10px;">
-          <span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ</span>
+        	<c:forEach var="coms" items="${commentList}">
+          <span class="feed_txt"> <b> ${coms.COM_WRITER } </b> ${coms.COM_CONT}</span>
           <br>
-          <span class="feed_txt"> <b> junseok </b> 제주도  ㄱ ㄱ </span>
+          	</c:forEach>
          </div>
+         
         </div>
 	</div>
 	</div>
@@ -1097,7 +1106,7 @@ $(document).on('click', '#follow_profile', function(e){
 		type: "POST",
 		success: function(res){
 			alert("입력 완료");
-			e.preventDefault();
+			location.reload();
 			if (elem.value=="FOLLOWING"){
 		    	elem.value = "FOLLOW";
 		    }
@@ -1134,14 +1143,14 @@ $(document).on('click', '#unfollow_profile', function(e){
 		type: "POST",
 		success: function(res){
 			alert("입력 완료");
-			e.preventDefault();
+			location.reload();
 			if (elem.value=="FOLLOW"){
 		    	elem.value = "FOLLOWING";
 		    }
 		    else {
 		    	elem.value = "FOLLOW";
 		    	elem.setAttribute("id" , "follow_profile");
-		    	console.log(elem.id)
+		    	console.log(elem.id);
 		    }
 		},
 		error: function(jqXHR, status, err){

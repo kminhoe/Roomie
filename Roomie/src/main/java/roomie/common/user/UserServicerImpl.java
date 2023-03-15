@@ -86,6 +86,19 @@ public class UserServicerImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userDAO.userBoardList(map);
 	}
+
+	@Override
+	public List<Map<String, Object>> commentList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return userDAO.commentList(map);
+	}
+
+	@Override
+	public Map<String, Object> selectComment(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return userDAO.selectComment(map);
+	}
+
 	
 	
 	

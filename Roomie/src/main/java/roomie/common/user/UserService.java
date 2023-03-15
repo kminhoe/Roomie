@@ -29,5 +29,9 @@ public interface UserService {
 	
 	List<Map<String,Object>> userBoardList(Map<String,Object> map) throws Exception;
 	
+	Map<String,Object> selectComment(Map<String,Object>map)throws Exception;
+	
+	List<Map<String,Object>> commentList(Map<String,Object>map) throws Exception;
+	
 
 }
