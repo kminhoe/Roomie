@@ -75,5 +75,31 @@ public class OptionController {
 		return "/roomie/login.ya";
 		
 	}
+	
+	@GetMapping(value = "/lockList.ya")
+	@ResponseBody
+	public ModelAndView LockList(Integer session) throws Exception{
+		ModelAndView mv = new ModelAndView("option/lockList");
+//		int idx = Integer.parseInt((String)session.getId());
+		
+		session = 2;
+		Map<String, Object> map = new HashMap<>();
+		map = optionService.lockList(session);
+		if(map.get("MEM_OPEN") == null || map.get("MEM_OPEN") == "") {
+			map.put("MEM_OPEN", "N");
+			optionService.updateOpen(session);
+		}
+		System.out.println(map);
+		mv.addObject("lockList", map);
+		
+		return mv;
+	}
+	
+	@PostMapping(value="/updatelock.ya")
+	@ResponseBody
+	public void updateLock(@RequestParam Map<String, Object> map) throws Exception{
+		
+		optionService.updateLock(map);
+	}
 
 }

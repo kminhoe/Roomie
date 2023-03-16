@@ -30,5 +30,25 @@ public class OptionDAO {
 		System.out.println("DAO : "+ map);
 		sqlSessionTemplate.update("option.memberDelete", map);
 	}
+	
+	public void lockChange(Map<String, Object> map) throws Exception{
+		
+		sqlSessionTemplate.update("option.blockChange", map);
+	}
+	
+	public Map<String, Object> lockList(int idx) throws Exception{
+		
+		
+		return sqlSessionTemplate.selectOne("option.lockList", idx);
+	}
+	
+	public void updateLock(Map<String, Object> map) throws Exception{
+		sqlSessionTemplate.update("option.updateLock", map);
+	}
+	
+	public void updateOpen(int idx) throws Exception{
+		sqlSessionTemplate.update("option.updateOpen", idx);
+	}
+	
 
 }

@@ -1,6 +1,5 @@
 package roomie.common.option;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -35,6 +34,32 @@ public class OptionServiceImpl implements OptionService{
 		optionDAO.memberDelete(map);
 		
 	}
+
+	@Override
+	public void lockChange(Map<String, Object> map) throws Exception {
+		
+		optionDAO.lockChange(map);
+	}
+
+	@Override
+	public Map<String, Object> lockList(int idx) throws Exception {
+		return optionDAO.lockList(idx);
+		
+	}
+
+	@Override
+	public void updateLock(Map<String, Object> map) throws Exception {
+		optionDAO.updateLock(map);
+		
+	}
+
+	@Override
+	public void updateOpen(int idx) throws Exception {
+		optionDAO.updateOpen(idx);
+		
+	}
+	
+	
 	
 	
 
