@@ -2,11 +2,57 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<!-- kakao 지도 스타일 시작 -->
 <style>
-
+.onoff-switch-container{
+  display:inline-block;
+  width: 140px;
+  height: 30px;
+  position:relative;
+}
+.onoff-switch-container input[type="checkbox"]{
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+}
+.onoff-switch-container label{
+  padding-left: 70px;
+  line-height: 30px;
+  font-size: 16px;
+}
+.onoff-switch-container label::after{  
+  position:absolute;
+  top:3px;
+  left:4px;
+  content:'';
+  width: 24px;
+  height: 24px;
+  background: #d1d1d1;
+  border-radius: 100%;
+  transition: all 0.3s
+    
+}
+.onoff-switch-container label::before{
+  position:absolute;
+  top:0;
+  left:0;
+  content:'';
+  width: 60px;
+  height: 30px;
+  border:1px solid #d1d1d1;
+  border-radius: 20px;
+  background: #f1f1f1;
+  box-sizing: border-box;
+}
+.onoff-switch-container input[type="checkbox"]:checked + label::after {
+  transform: translateX(28px);
+  background: gold;
+}
+.onoff-switch-container input[type="checkbox"]:checked + label::before {
+  background: #fff;
+}
 </style>
+<head>
 <!-- kakao 지도 스타일끝 -->
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -100,168 +146,93 @@
 			</ul>
 			<div
 				style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
+				<p>비공개 설정</p>
 				<div>
-					<div class="feed_name" style="margin: 5px 0 0 100px;">
-						<div class="profile_box">
-							<img class="profile_img" src="resources/image/profile_06.jpg">
+					<span><h9>게시물 공개 설정</h9></span>
+				
+				<c:if test="${lockList.MEM_OPEN == Y }">
+				<div class="onoff-switch-container">
+					<input type="checkbox" name="onoff-switch" id="onoff-switch1" checked/> <label
+						for="onoff-switch1"></label>
 						</div>
-						<span class="feed_name_txt"> daemyeong </span>
-					</div>
-					<div class="_acyg" id="passwordForm">
-						<input type="hidden" name="MEM_IDX" id="MEM_IDX" value="1">
-						<div class="_ab3p">
-							<aside class="_ad6_">
-								<label class="_ab3q">비밀번호</label>
-							</aside>
-							<div class="_ab3t">
-								<input type="password" id="delpass" name="delpass"
-									autocomplete="off">
-							</div>
-						</div>
-						<div class="_ab3p" style="justify-content: center;">
-							<aside class="_ad6_" style="text-align: left; padding-left: 0px;">
-								<label class="_ab3q"><button onclick="memberDelete()"
-										value="탈퇴하기">탈퇴하기</button></label>
-							</aside>
-						</div>
-					</div>
+				</c:if>
 				</div>
-			</div>
-		</div>
 
-	</div>
-	<!-- 모달 게시글 이미지 업로드 시작 -->
-	<div class="modal_overlay" id="modal_add_feed" style="position: fixed;">
-		<div class="modal_window" id="modal_window"
-			style="width: 800px; height: 600px;">
-			<div class="modal_title">
-				<div class="modal_title_side">
-					<!-- 이미지 추가 버튼 -->
-					<div style="margin-top: -10px;">
-						<img class="uploadpage" id="target_img" style="cursor: pointer;"
-							src="resources/image/icon_34.png">
-					</div>
-				</div>
-				<input type="file" class="real_upload" id="file" name="uploadFile"
-					style="display: none;" multiple>
-				<!-- 모달 타이틀 -->
-				<div style="font-size: 16px;">새 게시물</div>
-				<div class="modal_title_side">
-					<!-- 다음 페이지(글작성) 버튼 -->
-					<div style="margin-top: -8px; margin-right: 15px;">
-						<img style="cursor: pointer;" onclick="modal_add_feed_Next();"
-							src="resources/image/icon_38.png">
-					</div>
-					<!-- 모달 닫기 버튼 -->
-					<div style="margin-top: -8px;">
-						<img id="close_modal_add_feed" style="cursor: pointer;"
-							src="resources/image/icon_40.png">
-					</div>
-				</div>
-			</div>
-			<div class="modal_image_upload" style="position: fixed;">
-				<!-- 업로드 공간 -->
-				<div class="upload">
-					<ul class="upload_list">
 
-					</ul>
-				</div>
 			</div>
-			<div class="image_upload"
-				style="width: 800px; margin-top: 150px; display: inline-block; text-align: center;">
-				<div>
-					<img style="width: 150px; height: 150px;"
-						src="resources/image/icon_31.png">
-				</div>
-				<div style="margin-top: 30px; font-size: 20px;">
-					<a>사진과 동영상을 여기에 끌어다 놓으세요</a>
-				</div>
-				<div style="margin-top: 10px; font-size: 14px; color: #8e8e8e;">
-					<a>최대 업로드 파일 크기 : 10MB</a>
-				</div>
-			</div>
-			<!-- 이미지 왼쪽 버튼 -->
-			<img class="upload_prev" id="upload_prev"
-				style="cursor: pointer; left: 0px; top: -136px; position: relative; z-index: 1;"
-				src="resources/image/icon_35.png">
-			<!-- 이미지 오른쪽 버튼 -->
-			<img class="upload_next" id="upload_next"
-				style="cursor: pointer; left: 726px; top: -136px; position: relative; z-index: 1;"
-				src="resources/image/icon_36.png">
+
 		</div>
-	</div>
-	<!-- 모달 게시글 이미지 업로드 끝 -->
-	<!-- 모달 게시글 글쓰기 시작 -->
-	<div class="modal modal_overlay" id="modal_add_feed_content"
-		style="position: fixed;">
-		<div class="modal_window" style="width: 800px; height: 600px;">
-			<div class="modal_title">
-				<div class="modal_title_side">
-					<!-- 이전 버튼 -->
-					<div style="margin-top: -10px; margin-right: 15px;">
-						<img style="cursor: pointer;" onclick="modal_add_feed_Prev();"
-							src="resources/image/icon_39.png">
-					</div>
-				</div>
-				<!-- 모달 타이틀 -->
-				<div style="font-size: 16px;">새 게시물</div>
-				<div class="modal_title_side">
-					<!-- 모달 닫기 버튼 -->
-					<div style="margin-top: -8px; margin-left: 20px;">
-						<img id="close_modal_add_feed_content" style="cursor: pointer;"
-							src="resources/image/icon_40.png">
-					</div>
-				</div>
-			</div>
-			<div class="modal_image_content" style="height: 100%;">
-				<div id="input_image" class="modal_image_upload_content"></div>
-				<div class="modal_content_write">
-					<div class="feed_name">
-						<div class="profile_box">
-							<img id="input_profile_image" class="profile_img"
-								src="resources/image/profile_05.jpg">
+		<!-- 모달 게시글 이미지 업로드 시작 -->
+		<div class="modal_overlay" id="modal_add_feed"
+			style="position: fixed;">
+			<div class="modal_window" id="modal_window"
+				style="width: 800px; height: 600px;">
+				<div class="modal_title">
+					<div class="modal_title_side">
+						<!-- 이미지 추가 버튼 -->
+						<div style="margin-top: -10px;">
+							<img class="uploadpage" id="target_img" style="cursor: pointer;"
+								src="resources/image/icon_34.png">
 						</div>
-						<span id="input_user_id" class="feed_name_txt"> jshong_</span>
 					</div>
-					<br />
+					<input type="file" class="real_upload" id="file" name="uploadFile"
+						style="display: none;" multiple>
+					<!-- 모달 타이틀 -->
+					<div style="font-size: 16px;">새 게시물</div>
+					<div class="modal_title_side">
+						<!-- 다음 페이지(글작성) 버튼 -->
+						<div style="margin-top: -8px; margin-right: 15px;">
+							<img style="cursor: pointer;" onclick="modal_add_feed_Next();"
+								src="resources/image/icon_38.png">
+						</div>
+						<!-- 모달 닫기 버튼 -->
+						<div style="margin-top: -8px;">
+							<img id="close_modal_add_feed" style="cursor: pointer;"
+								src="resources/image/icon_40.png">
+						</div>
+					</div>
+				</div>
+				<div class="modal_image_upload" style="position: fixed;">
+					<!-- 업로드 공간 -->
+					<div class="upload">
+						<ul class="upload_list">
+
+						</ul>
+					</div>
+				</div>
+				<div class="image_upload"
+					style="width: 800px; margin-top: 150px; display: inline-block; text-align: center;">
 					<div>
-						<textarea id="input_hash"
-							class="feed_content_textarea form-control col-sm-5"
-							style="height: 30px; width: 100%;" rows="1" placeholder="해시태그"></textarea>
+						<img style="width: 150px; height: 150px;"
+							src="resources/image/icon_31.png">
 					</div>
-					<br />
-					<div>
-						<input type="text" id="input_place"
-							class="feed_content_textarea form-control col-sm-5"
-							style="height: 30px; width: 100%; min-height: calc(1.5em + 0.75rem + 2px)"
-							placeholder="위치 공유" onclick="place_add_bnt();">
+					<div style="margin-top: 30px; font-size: 20px;">
+						<a>사진과 동영상을 여기에 끌어다 놓으세요</a>
 					</div>
-					<br />
-					<div style="height: 100%;">
-						<textarea id="input_content"
-							class="feed_content_textarea form-control col-sm-5"
-							style="height: 100%;" rows="10" placeholder="설명을 입력하세요..."></textarea>
-					</div>
-					<br /> <br />
-					<div style="width: 100%; text-align: center">
-						<button class="button" id="boardupload" style="cursor: pointer">글쓰기</button>
+					<div style="margin-top: 10px; font-size: 14px; color: #8e8e8e;">
+						<a>최대 업로드 파일 크기 : 10MB</a>
 					</div>
 				</div>
+				<!-- 이미지 왼쪽 버튼 -->
+				<img class="upload_prev" id="upload_prev"
+					style="cursor: pointer; left: 0px; top: -136px; position: relative; z-index: 1;"
+					src="resources/image/icon_35.png">
+				<!-- 이미지 오른쪽 버튼 -->
+				<img class="upload_next" id="upload_next"
+					style="cursor: pointer; left: 726px; top: -136px; position: relative; z-index: 1;"
+					src="resources/image/icon_36.png">
 			</div>
 		</div>
-	</div>
-	<!-- 모달 게시글 글쓰기 끝 -->
-	<!-- 위치 추가 모달 시작 -->
-
-	<div>
-		<div class="modal modal_overlay" id="modal_place_add"
+		<!-- 모달 게시글 이미지 업로드 끝 -->
+		<!-- 모달 게시글 글쓰기 시작 -->
+		<div class="modal modal_overlay" id="modal_add_feed_content"
 			style="position: fixed;">
 			<div class="modal_window" style="width: 800px; height: 600px;">
 				<div class="modal_title">
 					<div class="modal_title_side">
 						<!-- 이전 버튼 -->
 						<div style="margin-top: -10px; margin-right: 15px;">
-							<img style="cursor: pointer;" onclick="modal_place_Prev();"
+							<img style="cursor: pointer;" onclick="modal_add_feed_Prev();"
 								src="resources/image/icon_39.png">
 						</div>
 					</div>
@@ -270,34 +241,96 @@
 					<div class="modal_title_side">
 						<!-- 모달 닫기 버튼 -->
 						<div style="margin-top: -8px; margin-left: 20px;">
-							<img id="close_modal_add_feed_place" style="cursor: pointer;"
+							<img id="close_modal_add_feed_content" style="cursor: pointer;"
 								src="resources/image/icon_40.png">
 						</div>
 					</div>
 				</div>
-				<div class="map_wrap">
-					<div id="map"
-						style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-
-					<div id="menu_wrap" class="bg_white">
-						<div class="option">
-							<div>
-								<form onsubmit="searchPlaces(); return false;">
-									키워드 : <input type="text" id="keyword" size="15">
-									<button type="submit">검색하기</button>
-								</form>
+				<div class="modal_image_content" style="height: 100%;">
+					<div id="input_image" class="modal_image_upload_content"></div>
+					<div class="modal_content_write">
+						<div class="feed_name">
+							<div class="profile_box">
+								<img id="input_profile_image" class="profile_img"
+									src="resources/image/profile_05.jpg">
 							</div>
+							<span id="input_user_id" class="feed_name_txt"> jshong_</span>
 						</div>
-						<hr>
-						<ul id="placesList"></ul>
-						<div id="pagination"></div>
+						<br />
+						<div>
+							<textarea id="input_hash"
+								class="feed_content_textarea form-control col-sm-5"
+								style="height: 30px; width: 100%;" rows="1" placeholder="해시태그"></textarea>
+						</div>
+						<br />
+						<div>
+							<input type="text" id="input_place"
+								class="feed_content_textarea form-control col-sm-5"
+								style="height: 30px; width: 100%; min-height: calc(1.5em + 0.75rem + 2px)"
+								placeholder="위치 공유" onclick="place_add_bnt();">
+						</div>
+						<br />
+						<div style="height: 100%;">
+							<textarea id="input_content"
+								class="feed_content_textarea form-control col-sm-5"
+								style="height: 100%;" rows="10" placeholder="설명을 입력하세요..."></textarea>
+						</div>
+						<br /> <br />
+						<div style="width: 100%; text-align: center">
+							<button class="button" id="boardupload" style="cursor: pointer">글쓰기</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- 모달 게시글 글쓰기 끝 -->
+		<!-- 위치 추가 모달 시작 -->
 
-	</div>
-	<!-- 위치 추가 모달 끝 -->
+		<div>
+			<div class="modal modal_overlay" id="modal_place_add"
+				style="position: fixed;">
+				<div class="modal_window" style="width: 800px; height: 600px;">
+					<div class="modal_title">
+						<div class="modal_title_side">
+							<!-- 이전 버튼 -->
+							<div style="margin-top: -10px; margin-right: 15px;">
+								<img style="cursor: pointer;" onclick="modal_place_Prev();"
+									src="resources/image/icon_39.png">
+							</div>
+						</div>
+						<!-- 모달 타이틀 -->
+						<div style="font-size: 16px;">새 게시물</div>
+						<div class="modal_title_side">
+							<!-- 모달 닫기 버튼 -->
+							<div style="margin-top: -8px; margin-left: 20px;">
+								<img id="close_modal_add_feed_place" style="cursor: pointer;"
+									src="resources/image/icon_40.png">
+							</div>
+						</div>
+					</div>
+					<div class="map_wrap">
+						<div id="map"
+							style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
+
+						<div id="menu_wrap" class="bg_white">
+							<div class="option">
+								<div>
+									<form onsubmit="searchPlaces(); return false;">
+										키워드 : <input type="text" id="keyword" size="15">
+										<button type="submit">검색하기</button>
+									</form>
+								</div>
+							</div>
+							<hr>
+							<ul id="placesList"></ul>
+							<div id="pagination"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- 위치 추가 모달 끝 -->
 
 
 	</div>
@@ -357,8 +390,7 @@
       modal_add_feed.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      location.reload();
 
     });
     // 모달 글쓰기 닫기
@@ -367,8 +399,7 @@
       modal_add_feed_content.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      location.reload();
     });
     
  	// 모달 위치 닫기
@@ -377,8 +408,7 @@
 	  modal_place_add.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      location.reload();
     });
 
     // 업로드 jquery
@@ -725,7 +755,6 @@
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e089b04e0ca2a1fd1287cb6610d9d01&libraries=services"></script>
 	<script src="./resources/js/kakaomap.js"></script>
-	
 
 	<script>
     const upload_list = document.querySelector('.upload_list'); //전체 슬라이드 컨테이너
@@ -828,24 +857,21 @@
     }
 
   </script>
-	<script>
-  function memberDelete(){
-	  var idx = $('#MEM_IDX').val();
-	  var delpass = $('#delpass').val();
-	  
-	  $.ajax({
-	   	url: '/roomie/DeleteMem.ya',
-		data: {"MEM_IDX" : idx,
-			   "MEM_PWD" : delpass,},
-		type: 'POST',
-		dataType:'text',
-		success: function(status){
-					location.replace("/roomie/login.ya");
-				}
-	   		 
-	   	 });
-	  
+  <script>
+  var autoLoginSwitch = document.getElementById("onoff-switch1");
+  if (${lockList.MEM_OPEN == 'Y'}) {
+    autoLoginSwitch.checked = true;
+  } else {
+    autoLoginSwitch.checked = false;
   }
-  </script>
+  $("#onoff-switch1").on("change", function() {
+      
+      $.ajax({
+        type: "POST",
+        url: "/roomie/updatelock.ya", // 서버에 전송할 JSP 파일 경로
+        data: { 'MEM_IDX': ${lockList.MEM_IDX} }, // 서버에 전송할 데이터
+      });
+    });
+</script>
 </body>
 </html>
