@@ -26,12 +26,12 @@
 	</update>
 	
 	<select id="userFollower" parameterType="hashmap" resultType="hashmap">
-		select count(*) over (PARTITION BY fri_idx) as CNT, fri_mem, following
+		select count(*) over (PARTITION BY fri_idx) as CNT, fri_idx, fri_mem, following, isfollow
 		from friend where fri_mem = #{FRI_MEM}
 	</select>
 	
 	<select id="userFollowing" parameterType="hashmap" resultType="hashmap">
-		select count(*) over (PARTITION BY fri_idx) as CNT, fri_mem, following
+		select count(*) over (PARTITION BY fri_idx) as CNT, fri_idx, fri_mem, following, isfollow
 		from friend where following = #{FOLLOWING}
 	</select>
 	
@@ -64,6 +64,14 @@
 	<delete id="unFollow" parameterType="hashmap">
 		delete from friend where fri_mem = #{FRI_MEM} and FOLLOWING = #{FOLLOWING}
 	</delete>
+	
+	<select id="commentList" parameterType="hashmap" resultType="hashmap">
+		select * from COMT
+	</select>
+	
+	<select id="selectComment" parameterType="hashmap" resultType="hashmap">
+		select * from COMT where COM_ARTNO = #{COM_ARTNO}
+	</select>
 	
 	
 </mapper>
