@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class StoriesController {
-	
+
 	@Resource(name = "storiesService")
 	private StoriesService storiesSerivce;
 
@@ -24,44 +24,60 @@ public class StoriesController {
 		ModelAndView mv = new ModelAndView("/stories/stories");
 
 		System.out.println(storiesSerivce.selectStories(map));
-		
+
 		mv.addObject("STORIES", storiesSerivce.selectStories(map));
-		
+
 		return mv;
-	} 
-	
+	}
+
 	@ResponseBody
-	@RequestMapping(value = "/storiesList.ya", method= {RequestMethod.POST}) 
+	@RequestMapping(value = "/storiesList.ya", method = { RequestMethod.POST })
 	public List<Map<String, Object>> storiesList(@RequestParam Map<String, Object> map) throws Exception {
-		
+
 		List<Map<String, Object>> storiesMap = new ArrayList<Map<String, Object>>();
-		
-		System.out.println("requestParam >> " + map);
-		
+
+		System.out.println("storiesList > requestParam > " + map);
+
 		storiesMap = storiesSerivce.storiesList(map);
-		
+
 		System.out.println("dao : " + storiesMap);
 
 		return storiesMap;
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/storiesCheck.ya", method= {RequestMethod.POST})
+	@RequestMapping(value = "/storiesCheck.ya", method = { RequestMethod.POST })
 	public Map<String, Object> storiesCheck(@RequestParam Map<String, Object> map) throws Exception {
-		
+
 		try {
 			System.out.println("requestParam >> " + map);
-	
+
 			if (storiesSerivce.selectStoriesCheck(map) == null) {
 				System.out.println("selectStoryCheck >> " + storiesSerivce.selectStoriesCheck(map));
 				storiesSerivce.insertStoriesCheck(map);
 			}
-		
+
 			map.put("status", "OK");
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			map.put("status", "FAIL");
 		}
 		return map;
+	}
+
+	// 동영상 API
+	@RequestMapping(value = "/test1.ya")
+	public ModelAndView api() throws Exception {
+		ModelAndView mv = new ModelAndView("/stories/moviemasher");
+
+		return mv;
+	}
+
+	// 동영상 API
+	@RequestMapping(value = "/test2.ya")
+	public ModelAndView api2() throws Exception {
+		ModelAndView mv = new ModelAndView("/stories/umd");
+
+		return mv;
 	}
 }
