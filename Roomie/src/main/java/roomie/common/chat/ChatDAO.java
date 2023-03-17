@@ -27,14 +27,20 @@ public class ChatDAO {
 		return sqlSessionTemplate.selectList("chat.selectChatContent", map);
 	}
 	
-	
-	 
 	public Map<String, Object> selectChatAll(Map<String, Object> map) throws Exception {
 		return sqlSessionTemplate.selectOne("chat.selectChatAll", map);
 	}
 
 	public void addMessage(Map<String, Object> param) throws Exception {
 		sqlSessionTemplate.insert("chat.addMessage", param);
+	}
+	
+	public void addNotifMsg(Map<String, Object> param) throws Exception {
+		sqlSessionTemplate.insert("chat.addNotifMsg", param);
+	}
+	
+	public void updateNotifMsgCheck2(Map<String, Object> param) throws Exception {
+		sqlSessionTemplate.insert("chat.updateNotifMsgCheck2", param);
 	}
 	
 	public List<Map<String, Object>> selectFriendList() throws Exception {
@@ -45,12 +51,24 @@ public class ChatDAO {
 		return sqlSessionTemplate.selectOne("chat.selectChatRoomCount", map);
 	}
 	
+	public String selectNotifMsg1(Map<String, Object> map) throws Exception{
+		return sqlSessionTemplate.selectOne("chat.selectNotifMsg1", map);
+	}
+	
+	public List<Map<String, Object>> selectNotifMsg2(Map<String, Object> map) throws Exception{
+		return sqlSessionTemplate.selectList("chat.selectNotifMsg2", map);
+	}
+	
 	public void addChatRoom(Map<String, Object> map) throws Exception{
 		sqlSessionTemplate.insert("chat.addChatRoom", map);
 	}
 	
 	public void updateChatRoomDate(Map<String, Object> map) throws Exception{
 		sqlSessionTemplate.update("chat.updateChatRoomDate", map);
+	}
+	
+	public void updateNotifMsgCheck(Map<String, Object> map) throws Exception{
+		sqlSessionTemplate.update("chat.updateNotifMsgCheck", map);
 	}
 
 	//@@@@@@@@@@@@@@@@@@테스트 함수@@@@@@@@@@@@@@@@@@@@@@
