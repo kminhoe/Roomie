@@ -13,11 +13,15 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
 @ServerEndpoint("/roomieChat")
-public class ChatServer {
+public class ChatServer extends TextWebSocketHandler {
+	
+	private static final long MAX_SESSION_IDLE_TIMEOUT = 30 * 60 * 1000; // 30분
 	
 	// 현재 채팅 서버에 접속한 클라이언트(WebSocket Session) 목록
-	private static List<Map<String,Session>> sessionList = new ArrayList<Map<String,Session>>(); 
+	private static List<Map<String,Session>> sessionList = new ArrayList<Map<String,Session>>();
 	
 	@OnOpen
 	public void handleOpen(Session session) {
@@ -25,7 +29,7 @@ public class ChatServer {
 		System.out.println("@@@@@@@@@@@@   클라이언트 연결");
 		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
 	}
-	
+
 	@OnMessage
 	public void handleMessage(String msg, Session session) throws IOException {
 		System.out.println("\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ChatServer/handleMessage @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@   ");
@@ -37,16 +41,23 @@ public class ChatServer {
 		if(keyWord.equals("1")) { //onOpen 시 session을 추가하는 메시지일 경우.
 			System.out.println("@@@@@@@@@@@@   keyWord는 1입니다.");
 			memberMap.put(msg.split("#")[1], session);//회원아이디, 웹소켓세션을 Map형식으로 저장.
+			session.setMaxIdleTimeout(MAX_SESSION_IDLE_TIMEOUT); //세션의 타임아웃을 설정.
 			sessionList.add(memberMap);//List<Map>에 주입.
 			System.out.println("@@@@@@@@@@@@   웹소켓 접속 멤버: " + sessionList);
 		}else if(keyWord.equals("2")) { //특정 대상에게 메시지를 보내는 경우.
+			System.out.println("@@@@@@@@@@@@   웹소켓 접속 멤버: " + sessionList);
 			System.out.println("@@@@@@@@@@@@   keyWord는 2입니다.");
 			for(int i=0;i<sessionList.size();i++) { //sessionList를 모두 둘러본다.
 				for(String key : sessionList.get(i).keySet()) { //sessionList에 들어있는 모든 항목의 key값을 둘러본다.
 					if(key.equals(msg.split("#")[1])) { //key값과 메시지 내부의 아이디가 일치한다면,
-						int msgIndex = msg.indexOf("#",2); //문자열 msg중 두번째 "#"의 위치를 확인.(CHAT_CONTENT의 시작위치를 확인하기 위해 필요)
-						System.out.println("@@@@@@@@@@@@   해당 세션에게 메시지를 전송!");
-						sessionList.get(i).get(key).getBasicRemote().sendText(msg.substring(msgIndex + 1)); //해당 key값과 매치되는 session으로 메시지를 보낸다.
+						System.out.println("@@@@@@@@@@@@   메시지 내용: " + msg.substring(msg.indexOf("#",2) + 1));
+						System.out.println("@@@@@@@@@@@@   메시지를 받는 웹소켓세션: " + sessionList.get(i).get(key));
+						if(!sessionList.get(i).get(key).isOpen()) {
+							System.out.println("세션이 닫혀있습니다.");
+						}else {
+							System.out.println("@@@@@@@@@@@@   해당 세션에게 메시지를 전송!");
+							sessionList.get(i).get(key).getBasicRemote().sendText(msg);//해당 key값과 매치되는 session으로 메시지를 보낸다.
+						}
 					}
 				}
 			}
@@ -56,22 +67,30 @@ public class ChatServer {
 				for(String key : sessionList.get(i).keySet()) { //sessionList에 들어있는 모든 항목의 key값을 둘러본다.
 					if(key.equals(msg.split("#")[1])) { //key값과 메시지 내부의 아이디가 일치한다면,
 						sessionList.remove(i); //해당 Session을 삭제.
-						System.out.println("@@@@@@@@@@@@   웹소켓 접속 멤버: " + sessionList);
+						
 					}
 				}
+				System.out.println("@@@@@@@@@@@@   웹소켓 접속 멤버: " + sessionList);
 			}
+		}else if(keyWord.equals("4")) {
+			session.setMaxIdleTimeout(30 * 60 * 1000); //웹소켓 세션의 유효기간을 30분 연장.
+			System.out.println("@@@@@@@@@@@@   웹소켓 시간 연장");
+			System.out.println("@@@@@@@@@@@@   웹소켓 접속 멤버: " + sessionList);
 		}
 		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
 	}
 	
 	@OnClose
 	public void handleClose() {
-		
+		System.out.println("\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ChatServer/handleClose @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@   ");
+		System.out.println("@@@@@@@@@@@@   웹소켓 세션 만료");
+		System.out.println("@@@@@@@@@@@@   웹소켓 접속 멤버: " + sessionList);
+		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
 	}
 	
 	@OnError
 	public void handleError(Throwable t) {
-		
+		System.out.println("에러 발생");
 	}
 
 }

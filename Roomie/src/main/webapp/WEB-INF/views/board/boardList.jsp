@@ -7,10 +7,6 @@
 <head>
 
 
-
-
-
-
 <!-- kakao 지도 스타일끝 -->
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -234,7 +230,7 @@
             </div>
             <!-- 모달 게시글 글쓰기 끝 -->
 
-           <!-- 모달 게시글 글쓰기 시작 -->
+           <!-- 위치 추가 모달 시작 -->
 
             <div>
                <div class="modal modal_overlay" id="modal_place_add"
@@ -253,7 +249,7 @@
                         <div class="modal_title_side">
                            <!-- 모달 닫기 버튼 -->
                            <div style="margin-top: -8px; margin-left: 20px;">
-                              <img id="close_modal_add_feed_content"
+                              <img id="close_modal_add_feed_place"
                                  style="cursor: pointer;" src="resources/image/icon_40.png">
                            </div>
                         </div>
@@ -607,15 +603,7 @@
          </div>
       </footer>
 
-
-      <!-- jquery -->
-      <script
-         src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-         crossorigin="anonymous"></script>
-         
-<!--  <script>
+<script>
     // 스토리 추가 모달
     const modal_add_stories = document.getElementById("modal_add_stories");
     const buttonAddStories = document.getElementById("add_stories");
@@ -624,7 +612,7 @@
         modal_add_stories.style.display = "flex";
         document.body.style.overflowY = "hidden";
       });
- </script>   -->      
+ </script>        
          
          
       <!-- 모달 스크립트 -->
@@ -637,6 +625,7 @@
 
     const modal_add_feed = document.getElementById("modal_add_feed");
     const modal_add_feed_content = document.getElementById("modal_add_feed_content");
+    const modal_add_feed_place = document.getElementById("modal_place_add");
     const buttonAddFeed = document.getElementById("add_feed");
 
     // 모달 글쓰기 이미지 업로드 띄우기
@@ -645,7 +634,7 @@
       document.body.style.overflowY = "hidden";
     });
 
-  //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // 모달 글쓰기 이미지 업로드 닫기
     const buttonCloseModal_add_feed = document.getElementById("close_modal_add_feed");
     buttonCloseModal_add_feed.addEventListener("click", e => {
@@ -812,11 +801,12 @@
       });
       
       
-      console.log(formData.get(data.files[0]));      
+      console.log(formData.get(data.files[0]));
+         
     }
-      $(document).ready(function(){
+     $(document).ready(function(){
         
-     /*  // 스토리 리스트 불러오기
+       // 스토리 리스트 불러오기
        readStories();
         
         var arr = new Array;
@@ -835,7 +825,7 @@
              return false;
           }
           return true;
-       } */
+       }
        var cloneObj = $(".real_upload").clone();
        
        $("input[type='file']").change(function(e){
@@ -959,8 +949,10 @@
        var BO_HASH = $("#input_hash").val();
        var BO_PLACE = $("#input_place").val();
        var BO_CONT = $("#input_content").val();
+       //let files = $("input[name=uploadFile]")[0].files;
+       //var file = $("#input_fileimage").val();
        var file = $("#qwer").val();
-       var BO_ID = $("#mem_id").val();
+      var BO_ID = $("#mem_id").val();
 
        console.log("file이름들: "+ file);
        
@@ -980,6 +972,12 @@
        formData.append("BO_CONT", BO_CONT);
        formData.append("BO_MEDIA", file);
        formData.append("BO_ID", BO_ID);
+       /* Array.from(files).map(e => formData.append("BO_IMAGE", e));
+    formData.append("BO_IMAGE", files); 
+       for(let i = 0; i< files.length; i++){
+         formData.append("BO_IMAGE", files[i]);
+       } */
+       
        
        $.ajax({
           url: '/roomie/boardInsert.ya',
@@ -1047,10 +1045,9 @@
     });
   </script>
 
-      <script type="text/javascript"
+     <script type="text/javascript"
          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e089b04e0ca2a1fd1287cb6610d9d01&libraries=services"></script>
       <script src="./resources/js/kakaomap.js"></script>
-     
      
 
 <script>
@@ -1091,7 +1088,7 @@
     function upload_moveSlide(num) {
       upload_list.style.left = -num * upload_slideWidth + 'px';
       upload_currentIdx = num;
-    
+    }
 
     upload_prev.addEventListener('click', function () {
       /*첫 번째 슬라이드로 표시 됐을때는 
@@ -1109,16 +1106,16 @@
         upload_moveSlide(upload_currentIdx + 1);
       }
     });
-    
-    }
 
-    
     // 글쓰기 다음 페이지
     function modal_add_feed_Next() {
-      $('#modal_add_feed_content').css('display','flex');
+      $('#modal_add_feed_content').css({
+        display : 'flex'
+      });
 
-   
-      $('#modal_add_feed').css('display', 'none');
+      $('#modal_add_feed').css({
+       display: 'none'
+      })
     }
 
     // 이전 페이지
@@ -1129,7 +1126,7 @@
 
       $('#modal_add_feed').css({
        display : 'flex'
-      });
+      })
     }
     
     
@@ -1155,9 +1152,92 @@
 
   </script>
   
+  <script>
+
+    var page = 0;
+    var length = 0;
+  
+   function readStories() {
+      var paramData = {"FRI_MEM": 1};
+      var htmls = '';
+
+      $.ajax({
+         url: "/roomie/storiesList.ya"
+         , data : paramData 
+         , type : 'POST'
+         , dataType : 'json'
+         , success: function(status){
+             
+             for (i=0; i<status.length; i++) {
+               htmls += '<li class="sub_story" style="background-image: url(';
+               if (status[i].SC_DEL != "Y") {
+                htmls += "'./resources/image/rainbow.png'";
+               } else {
+                  htmls += "";
+               }
+             htmls += '">';
+             htmls += '<div class="text">';
+             htmls += '<a onclick="href=' + "'/roomie/stories.ya?STORY_MEM=" + status[i].STORY_MEM + "'" + '">';
+             htmls += '<img src="./resources/files/profile/' + status[i].MEM_MEDIA + '"alt="프로필"></a>'
+             htmls += '<span style="font-size: 12px; margin-left: 3px;);">' + status[i].MEM_USER + '</span>';
+             htmls += '</div>';
+             htmls += '</li>';
+             }
+             
+             length = status.length;
+             
+             // visibility:hidden
+             if (status.length <= 5) {
+                $('.story_next').css("visibility", "hidden");
+             }
+             
+             
+             $('.story_list').html(htmls);
+             
+         }
+         , error: function(error){
+            console.log("에러 : " + error);
+         }
+      });
+   }
+  </script>
+  <script>
+
+     // 왼쪽 버튼
+     function prev_action() {
+        page--; // 페이지 번호 -1
+      
+        // 왼쪽 버튼 비활성화
+        if (page < 1) {
+           $('.story_prev').css("visibility", "hidden");
+        }
+        
+        // 오른쪽 버튼 활성화
+        if (Math.floor(length / 6) > page) {
+           $('.story_next').css("visibility", "visible");
+        }
+     }
+     
+     // 오른쪽 버튼
+     function next_action() {
+        page++; // 페이지 번호 +1
+        
+        // 왼쪽 버튼 활성화
+        if (page > 0) {
+           $('.story_prev').css("visibility", "visible");
+        }
+
+        // 오른쪽 버튼 비활성화
+        if (Math.floor(length / 6) <= page) {
+           $('.story_next').css("visibility", "hidden");
+        }
+     }
+  </script>
+
  <script>
   
   $(document).ready(function(){
+	
      
 
      let like_n = document.querySelectorAll('#like_n');
@@ -1237,91 +1317,8 @@
   });//document.ready
   
   </script> 
-  
-   <script>
 
-    var page = 0;
-    var length = 0;
-  
-   function readStories() {
-      var paramData = {"FRI_MEM": 15};
-      var htmls = '';
-
-		$.ajax({
-			url: "/roomie/storiesList.ya"
-			, data : paramData 
-			, type : 'POST'
-			, dataType : 'json'
-			, success: function(status){
-	          
-	          for (i=0; i<status.length; i++) {
-	      		htmls += '<li class="sub_story" style="background-image: url(';
-	      		if (status[i].SC_DEL != "Y") {
-	    			htmls += "'./resources/image/rainbow.png'";
-	      		} else {
-	      			htmls += "";
-	      		}
-	    		htmls += '">';
-	    		htmls += '<div class="text">';
-	    		htmls += '<a onclick="href=' + "'/roomie/stories.ya?STORY_MEM=" + status[i].STORY_MEM + "'" + '">';
-	    		htmls += '<img src="./resources/image/' + status[i].MEM_MEDIA + '"alt="프로필"></a>'
-	    		htmls += '<span style="font-size: 12px; margin-left: 3px;);">' + status[i].MEM_USER + '</span>';
-	    		htmls += '</div>';
-	    		htmls += '</li>';
-	          }
-	          
-	          length = status.length;
-	          
-	          // visibility:hidden
-	          if (status.length <= 5) {
-	        	  $('.story_next').css("visibility", "hidden");
-	          }
-	          
-	          
-	          $('.story_list').html(htmls);
-	          
-			}
-			, error: function(error){
-				console.log("에러 : " + error);
-			}
-		});
-	}
-  </script>
-  <script>
-
-     // 왼쪽 버튼
-     function prev_action() {
-        page--; // 페이지 번호 -1
-      
-        // 왼쪽 버튼 비활성화
-        if (page < 1) {
-           $('.story_prev').css("visibility", "hidden");
-        }
-        
-        // 오른쪽 버튼 활성화
-        if (Math.floor(length / 6) > page) {
-           $('.story_next').css("visibility", "visible");
-        }
-     }
-     
-     // 오른쪽 버튼
-     function next_action() {
-        page++; // 페이지 번호 +1
-        
-        // 왼쪽 버튼 활성화
-        if (page > 0) {
-           $('.story_prev').css("visibility", "visible");
-        }
-
-        // 오른쪽 버튼 비활성화
-        if (Math.floor(length / 6) <= page) {
-           $('.story_next').css("visibility", "hidden");
-        }
-     }
-  </script>
-  
-  
-  <script>
+<script>
   
   let but = document.querySelectorAll('.more_details'); 
   let idx = document.querySelectorAll('#bo_idx');
@@ -1356,5 +1353,8 @@
 
   
   </script>
+
+
+     
 </body>
 </html>

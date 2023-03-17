@@ -27,10 +27,15 @@ public class ChatController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	
+	@RequestMapping(value = "websocketOpen.ya")
+	public ModelAndView websocketOpen(@RequestParam HashMap<String, Object> param) throws Exception{
+		ModelAndView mv = new ModelAndView("/chat/websocketOpen");
+		return mv;
+	}
+	
 	@RequestMapping(value = "echo.ya")
 	public ModelAndView echo(@RequestParam HashMap<String, Object> param) throws Exception{
 		ModelAndView mv = new ModelAndView("/chat/TestEndpointJspRun");
-		
 		return mv;
 	}
 	
@@ -38,7 +43,6 @@ public class ChatController {
 	@ResponseBody
 	public ModelAndView chatForm(@RequestParam HashMap<String, Object> param, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView("/chat/chatForm");
-		
 		return mv;
 	}
 	
@@ -227,6 +231,47 @@ public class ChatController {
 		}
 		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
 		return chatContent;
+		
+	}
+	
+	@RequestMapping(value = "roomNotif.ya", method= {RequestMethod.POST})
+	@ResponseBody
+	public List<Map<String, Object>> roomNotif(@RequestParam Map<String, Object> param, HttpSession session) throws Exception{
+		System.out.println("\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ChatController/roomNotif @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@   ");
+		
+		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+		Map<String, Object> map	 = new HashMap<String, Object>();
+		
+		if(param.get("TYPE").equals("1")) { //TYPE이 1일 경우 단순 데이터 주입.
+			//알림 테이블에서 송,수신자 아이디로 조회 후
+			System.out.println("@@@@@@@@@@@@         MYID: " + param.get("CHAT_MYID"));
+			System.out.println("@@@@@@@@@@@@      OTHERID: " + param.get("CHAT_OTHERID"));
+			System.out.println("@@@@@@@@@@@@      CONTENT: " + param.get("CHAT_CONTENT"));
+			System.out.println("@@@@@@@@@@@@   NOTIF TYPE: " + param.get("TYPE"));
+			map.put("CHAT_MYID", param.get("CHAT_MYID"));
+			map.put("CHAT_OTHERID", param.get("CHAT_OTHERID"));
+			map.put("CHAT_CONTENT", param.get("CHAT_CONTENT"));
+			if(chatService.selectNotifMsg1(map) != null) { //CASE_1.NOTIFMSG에 알림 데이터 추가.
+				chatService.updateNotifMsgCheck(map); //  데이터가 이미 존재하면 update.
+			}else{ 
+				chatService.addNotifMsg(map); //데이터가 존재하지 않으면 insert.
+			}
+		}else if(param.get("TYPE").equals("2")) { //CASE_2.CHAT_MYID에게 존재하는 알림을 조회.
+			System.out.println("@@@@@@@@@@@@         MYID: " + param.get("CHAT_MYID"));
+			System.out.println("@@@@@@@@@@@@   NOTIF TYPE: " + param.get("TYPE"));
+			map.put("CHAT_MYID", param.get("CHAT_MYID"));
+			result = chatService.selectNotifMsg2(map); //CHAT_MYID를 NOTIFMSG_RECEIVER로하는 NOTIFMSG_SENDER를 주입.(NOTIFMSG_CHECK = '1'인것들만)
+			System.out.println("@@@@@@@@@@@@       result: " + result);
+		}else if(param.get("TYPE").equals("3")) { //CASE_3.알림을 삭제.(NOTIFMSG_CHECK을 '0'으로 변경)
+			System.out.println("@@@@@@@@@@@@         MYID: " + param.get("CHAT_MYID"));
+			System.out.println("@@@@@@@@@@@@      OTHERID: " + param.get("CHAT_OTHERID"));
+			System.out.println("@@@@@@@@@@@@   NOTIF TYPE: " + param.get("TYPE"));
+			map.put("CHAT_MYID", param.get("CHAT_MYID"));
+			map.put("CHAT_OTHERID", param.get("CHAT_OTHERID"));
+			chatService.updateNotifMsgCheck2(map);
+		}
+		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
+		return result;
 		
 	}
 	

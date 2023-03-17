@@ -48,34 +48,54 @@ public class ChatServiceImpl implements ChatService{
 	
 	@Override
 	public List<Map<String, Object>> showFriendList() throws Exception {
-		
 		return chatDAO.selectFriendList();
 	}
 
 	//@@@@@@@테스트 메소드@@@@@@@@@@@@@@@@
 	@Override
 	public List<Map<String, Object>> testChatContent(String chat_myId) {
-
 		return chatDAO.testChatContent(chat_myId);
 	}
 	//@@@@@@@테스트 메소드@@@@@@@@@@@@@@@@
 
 	@Override
 	public int selectChatRoomCount(Map<String, Object> map) throws Exception {
-		
 		return chatDAO.selectChatRoomCount(map);
+	}
+	
+	@Override
+	public String selectNotifMsg1(Map<String, Object> map) throws Exception {
+		return chatDAO.selectNotifMsg1(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectNotifMsg2(Map<String, Object> map) throws Exception {
+		return chatDAO.selectNotifMsg2(map);
 	}
 
 	@Override
 	public void addChatRoom(Map<String, Object> map) throws Exception {
 		chatDAO.addChatRoom(map);
-		
 	}
 
 	@Override
 	public void updateChatRoomDate(Map<String, Object> map) throws Exception {
 		chatDAO.updateChatRoomDate(map);
-		
+	}
+
+	@Override
+	public void updateNotifMsgCheck(Map<String, Object> map) throws Exception {
+		chatDAO.updateNotifMsgCheck(map);
+	}
+
+	@Override
+	public void addNotifMsg(Map<String, Object> map) throws Exception {
+		chatDAO.addNotifMsg(map);
+	}
+	
+	@Override
+	public void updateNotifMsgCheck2(Map<String, Object> map) throws Exception {
+		chatDAO.updateNotifMsgCheck2(map);
 	}
 	
 }
