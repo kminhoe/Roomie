@@ -1,8 +1,15 @@
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
+
+<!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+
+
 <!-- kakao 지도 스타일 시작 -->
 <style>
 
@@ -105,10 +112,10 @@
 						<div class="profile_box">
 							<img class="profile_img" src="resources/image/profile_06.jpg">
 						</div>
-						<span class="feed_name_txt"> daemyeong </span>
+						<span class="feed_name_txt"><%= session.getAttribute("MEM_NAME") %> </span>
 					</div>
 					<div class="_acyg" id="passwordForm">
-						<input type="hidden" name="MEM_IDX" id="MEM_IDX" value="1">
+						<input type="hidden" name="MEM_IDX" id="MEM_IDX" value='<%= session.getAttribute("MEM_IDX")%>'>
 						<div class="_ab3p">
 							<aside class="_ad6_">
 								<label class="_ab3q">비밀번호</label>
@@ -131,173 +138,7 @@
 
 	</div>
 	<!-- 모달 게시글 이미지 업로드 시작 -->
-	<div class="modal_overlay" id="modal_add_feed" style="position: fixed;">
-		<div class="modal_window" id="modal_window"
-			style="width: 800px; height: 600px;">
-			<div class="modal_title">
-				<div class="modal_title_side">
-					<!-- 이미지 추가 버튼 -->
-					<div style="margin-top: -10px;">
-						<img class="uploadpage" id="target_img" style="cursor: pointer;"
-							src="resources/image/icon_34.png">
-					</div>
-				</div>
-				<input type="file" class="real_upload" id="file" name="uploadFile"
-					style="display: none;" multiple>
-				<!-- 모달 타이틀 -->
-				<div style="font-size: 16px;">새 게시물</div>
-				<div class="modal_title_side">
-					<!-- 다음 페이지(글작성) 버튼 -->
-					<div style="margin-top: -8px; margin-right: 15px;">
-						<img style="cursor: pointer;" onclick="modal_add_feed_Next();"
-							src="resources/image/icon_38.png">
-					</div>
-					<!-- 모달 닫기 버튼 -->
-					<div style="margin-top: -8px;">
-						<img id="close_modal_add_feed" style="cursor: pointer;"
-							src="resources/image/icon_40.png">
-					</div>
-				</div>
-			</div>
-			<div class="modal_image_upload" style="position: fixed;">
-				<!-- 업로드 공간 -->
-				<div class="upload">
-					<ul class="upload_list">
-
-					</ul>
-				</div>
-			</div>
-			<div class="image_upload"
-				style="width: 800px; margin-top: 150px; display: inline-block; text-align: center;">
-				<div>
-					<img style="width: 150px; height: 150px;"
-						src="resources/image/icon_31.png">
-				</div>
-				<div style="margin-top: 30px; font-size: 20px;">
-					<a>사진과 동영상을 여기에 끌어다 놓으세요</a>
-				</div>
-				<div style="margin-top: 10px; font-size: 14px; color: #8e8e8e;">
-					<a>최대 업로드 파일 크기 : 10MB</a>
-				</div>
-			</div>
-			<!-- 이미지 왼쪽 버튼 -->
-			<img class="upload_prev" id="upload_prev"
-				style="cursor: pointer; left: 0px; top: -136px; position: relative; z-index: 1;"
-				src="resources/image/icon_35.png">
-			<!-- 이미지 오른쪽 버튼 -->
-			<img class="upload_next" id="upload_next"
-				style="cursor: pointer; left: 726px; top: -136px; position: relative; z-index: 1;"
-				src="resources/image/icon_36.png">
-		</div>
-	</div>
-	<!-- 모달 게시글 이미지 업로드 끝 -->
-	<!-- 모달 게시글 글쓰기 시작 -->
-	<div class="modal modal_overlay" id="modal_add_feed_content"
-		style="position: fixed;">
-		<div class="modal_window" style="width: 800px; height: 600px;">
-			<div class="modal_title">
-				<div class="modal_title_side">
-					<!-- 이전 버튼 -->
-					<div style="margin-top: -10px; margin-right: 15px;">
-						<img style="cursor: pointer;" onclick="modal_add_feed_Prev();"
-							src="resources/image/icon_39.png">
-					</div>
-				</div>
-				<!-- 모달 타이틀 -->
-				<div style="font-size: 16px;">새 게시물</div>
-				<div class="modal_title_side">
-					<!-- 모달 닫기 버튼 -->
-					<div style="margin-top: -8px; margin-left: 20px;">
-						<img id="close_modal_add_feed_content" style="cursor: pointer;"
-							src="resources/image/icon_40.png">
-					</div>
-				</div>
-			</div>
-			<div class="modal_image_content" style="height: 100%;">
-				<div id="input_image" class="modal_image_upload_content"></div>
-				<div class="modal_content_write">
-					<div class="feed_name">
-						<div class="profile_box">
-							<img id="input_profile_image" class="profile_img"
-								src="resources/image/profile_05.jpg">
-						</div>
-						<span id="input_user_id" class="feed_name_txt"> jshong_</span>
-					</div>
-					<br />
-					<div>
-						<textarea id="input_hash"
-							class="feed_content_textarea form-control col-sm-5"
-							style="height: 30px; width: 100%;" rows="1" placeholder="해시태그"></textarea>
-					</div>
-					<br />
-					<div>
-						<input type="text" id="input_place"
-							class="feed_content_textarea form-control col-sm-5"
-							style="height: 30px; width: 100%; min-height: calc(1.5em + 0.75rem + 2px)"
-							placeholder="위치 공유" onclick="place_add_bnt();">
-					</div>
-					<br />
-					<div style="height: 100%;">
-						<textarea id="input_content"
-							class="feed_content_textarea form-control col-sm-5"
-							style="height: 100%;" rows="10" placeholder="설명을 입력하세요..."></textarea>
-					</div>
-					<br /> <br />
-					<div style="width: 100%; text-align: center">
-						<button class="button" id="boardupload" style="cursor: pointer">글쓰기</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 모달 게시글 글쓰기 끝 -->
-	<!-- 위치 추가 모달 시작 -->
-
-	<div>
-		<div class="modal modal_overlay" id="modal_place_add"
-			style="position: fixed;">
-			<div class="modal_window" style="width: 800px; height: 600px;">
-				<div class="modal_title">
-					<div class="modal_title_side">
-						<!-- 이전 버튼 -->
-						<div style="margin-top: -10px; margin-right: 15px;">
-							<img style="cursor: pointer;" onclick="modal_place_Prev();"
-								src="resources/image/icon_39.png">
-						</div>
-					</div>
-					<!-- 모달 타이틀 -->
-					<div style="font-size: 16px;">새 게시물</div>
-					<div class="modal_title_side">
-						<!-- 모달 닫기 버튼 -->
-						<div style="margin-top: -8px; margin-left: 20px;">
-							<img id="close_modal_add_feed_place" style="cursor: pointer;"
-								src="resources/image/icon_40.png">
-						</div>
-					</div>
-				</div>
-				<div class="map_wrap">
-					<div id="map"
-						style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-
-					<div id="menu_wrap" class="bg_white">
-						<div class="option">
-							<div>
-								<form onsubmit="searchPlaces(); return false;">
-									키워드 : <input type="text" id="keyword" size="15">
-									<button type="submit">검색하기</button>
-								</form>
-							</div>
-						</div>
-						<hr>
-						<ul id="placesList"></ul>
-						<div id="pagination"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-	<!-- 위치 추가 모달 끝 -->
+	﻿<%@ include file="upload_modal.jsp" %>
 
 
 	</div>
@@ -633,84 +474,87 @@
   
     
      
-    $("#boardupload").on("click", function(e){
-    	if($("#input_content").val() == "" || $("#input_content").val()== null){
-      		 alert("게시글을 작성해주세요");
-      		 return false;
-      	 }
-     var str = $("#input_hash").val();
-     
-     var checkhash = str.indexOf('#');
-     
-     console.log("str: " + str.length);
-     
-     if(str.length > 0){
-    	 if(checkhash < 0){
-    	 alert("# 태그를 붙여주세요");
-    	 return false;
-     	}
-     }else if(str.length < 0){
-    	 return true;
-     }
-   	 
-  	 
-   	 var BO_MEM = $("#input_user_id").text();
-   	 var BO_HASH = $("#input_hash").val();
-   	 var BO_PLACE = $("#input_place").val();
-   	 var BO_CONT = $("#input_content").val();
-   	 //let files = $("input[name=uploadFile]")[0].files;
-   	 //var file = $("#input_fileimage").val();
-   	 var file = $("#qwer").val();
-   	 
-   	 
-   	 
-   	 
-   	 
-   	 console.log("file이름들: "+ file);
-   	 
-   	 console.log(BO_MEM);
-   	 console.log(BO_HASH);
-   	 console.log(BO_PLACE);
-   	 console.log(BO_CONT);
-   	 //console.log(file);
-   	 
-   	 
-   	 var formData = new FormData();  
-   	 
-   	 //formdata.append("BO_UUID", BO_uuid);
-   	 formData.append("BO_MEM", BO_MEM);
-   	 formData.append("BO_HASH", BO_HASH);
-   	 formData.append("BO_PLACE", BO_PLACE);
-   	 formData.append("BO_CONT", BO_CONT);
-   	 formData.append("BO_MEDIA", file)
-   	 /* Array.from(files).map(e => formData.append("BO_IMAGE", e));
-	 formData.append("BO_IMAGE", files); 
-   	 for(let i = 0; i< files.length; i++){
-   		formData.append("BO_IMAGE", files[i]);
-   	 } */
-   	 
-   	 
-   	 $.ajax({
-   		 url: '/roomie/boardInsert.ya',
-			processData: false,
-			contentType: false,
-			data: formData,
-			type: 'POST',
-			dataType:'text',
-			success: function(status){
-				
-				alert("성공");
-				/* $('#modal_add_feed_content').css({
-            		display: 'none'	
-            	}); */
-				location.reload();
-			}
-   		 
-   	 });
-   	 
-   	 
-   	 
-    });
+     $("#boardupload").on("click", function(e){
+         if($("#input_content").val() == "" || $("#input_content").val()== null){
+               alert("게시글을 작성해주세요");
+               return false;
+            }
+       var str = $("#input_hash").val();
+       
+       var checkhash = str.indexOf('#');
+       
+       console.log("str: " + str.length);
+       
+       if(str.length > 0){
+          if(checkhash < 0){
+          alert("# 태그를 붙여주세요");
+          return false;
+          }
+       }else if(str.length < 0){
+          return true;
+       }
+         
+        
+         var BO_MEM = $("#input_user_id").text();
+         var BO_HASH = $("#input_hash").val();
+         var BO_PLACE = $("#input_place").val();
+         var BO_CONT = $("#input_content").val();
+         //let files = $("input[name=uploadFile]")[0].files;
+         //var file = $("#input_fileimage").val();
+         var file = $("#qwer").val();
+        var BO_ID = $("#mem_id").val();
+        var BO_USER = $("#mem_user").val();
+        
+         console.log("file이름들: "+ file);
+         
+         console.log(BO_MEM);
+         console.log(BO_HASH);
+         console.log(BO_PLACE);
+         console.log(BO_CONT);
+         //console.log(file);
+         
+         
+         var formData = new FormData();  
+         
+         //formdata.append("BO_UUID", BO_uuid);
+         formData.append("BO_MEM", BO_MEM);
+         formData.append("BO_HASH", BO_HASH);
+         formData.append("BO_PLACE", BO_PLACE);
+         formData.append("BO_CONT", BO_CONT);
+         formData.append("BO_MEDIA", file);
+         formData.append("BO_ID", BO_ID);
+         formData.append("BO_USER", BO_USER);
+         
+         /* Array.from(files).map(e => formData.append("BO_IMAGE", e));
+      formData.append("BO_IMAGE", files); 
+         for(let i = 0; i< files.length; i++){
+           formData.append("BO_IMAGE", files[i]);
+         } */
+         
+         
+         $.ajax({
+            url: '/roomie/boardInsert.ya',
+            
+          //formData 사용 시 processData, contentType 필수 작성
+           processData: false,
+           contentType: false,
+           data: formData,
+           type: 'POST',
+           dataType:'text',
+           success: function(status){
+              
+              alert("성공");
+              /* $('#modal_add_feed_content').css({
+                    display: 'none'   
+                 }); */
+              location.reload();
+           }
+            
+         });
+         
+         
+         
+      });
     
   </script>
 

@@ -78,16 +78,16 @@ public class OptionController {
 	
 	@GetMapping(value = "/lockList.ya")
 	@ResponseBody
-	public ModelAndView LockList(Integer session) throws Exception{
+	public ModelAndView LockList(HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView("option/lockList");
-//		int idx = Integer.parseInt((String)session.getId());
+		int idx = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
 		
-		session = 2;
+		System.out.println(session.getAttribute("MEM_IDX"));
 		Map<String, Object> map = new HashMap<>();
-		map = optionService.lockList(session);
+		map = optionService.lockList(idx);
 		if(map.get("MEM_OPEN") == null || map.get("MEM_OPEN") == "") {
 			map.put("MEM_OPEN", "N");
-			optionService.updateOpen(session);
+			optionService.updateOpen(idx);
 		}
 		System.out.println(map);
 		mv.addObject("lockList", map);

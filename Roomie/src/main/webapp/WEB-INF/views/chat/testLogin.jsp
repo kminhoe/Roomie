@@ -12,6 +12,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
+<!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+
+
 <body>
 
 <!-- 로그인하지 않았을 경우 -->

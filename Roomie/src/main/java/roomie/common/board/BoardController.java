@@ -56,7 +56,7 @@ public class BoardController {
 		System.out.println("이거니?"+uploadFile);
 		
 		
-		String uploadFolder = session.getServletContext().getRealPath("/");
+		String uploadFolder = session.getServletContext().getRealPath("/resources/files/board/");
 		
 		System.out.println("경로 : " + uploadFolder);
 		
@@ -100,6 +100,7 @@ public class BoardController {
 			
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
+				
 				multipartFile.transferTo(saveFile);
 
 				

@@ -4,6 +4,11 @@
 <!doctype html>
 <html lang="utf-8">
 <head>
+
+<!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +22,7 @@
         rel="stylesheet">
 
 <!-- 20230307 12:56 -->
+<!-- 20230318 05:55 -->
 
 <style>
 
@@ -69,6 +75,26 @@
 .chat_add{
 		display: none;
 	}
+	
+.chat_addMessage{
+	display: flex;
+	height: 60px;
+	padding: 20px;
+	bottom: 0;
+	background-color: #fff;
+	align-items: center;
+}
+
+.chat_addMessageArea{
+	display: flex;
+	height: 35px;
+	border: solid 1px #DBDBDB;
+	border-radius: 17.5px;
+	padding: 0 20px;
+	align-items: center;
+	width: 100%;
+	justify-content: space-between;
+}
 
 .chat_background{
 
@@ -112,7 +138,10 @@
 }
 
 .chat_input{
-
+	color: gray;
+	font-size: 12px;
+	border: 0;
+	margin-left: 20px;
 }
 
 .chat_input:focus{
@@ -121,6 +150,10 @@
 
 .chat_send{
 	color: skyblue;
+	border: 0;
+	background-color: transparent;
+	font-size: 12px;
+	font-weight: 600;
 }
 
 .chat_send:hover{
@@ -435,16 +468,17 @@ ul li {
 					
 					<!-- 메시지 입력 창 start-->
 					<form id="addMessage" name="addMessage" method="post">
-					<div style="display: flex; height: 60px; padding: 20px; bottom: 0; background-color: #fff; align-items: center; ">
-						<div style="display: flex; height: 35px; border: solid 1px #DBDBDB; border-radius: 17.5px; padding: 0 20px; align-items: center; width: 100%; justify-content: space-between;">				
-							<div>
+					<div class="chat_addMessage">
+						<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@ 채팅입력창 입력되는 구간 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+						<!-- <div class="chat_addMessageArea"> -->
+							<!-- <div>
 								<img style="height: 20px; width: 20px; cursor: pointer;" src="resources/image/icon_emoticon.png">
-								<input type="text" id="CHAT_CONTENT" name="CHAT_CONTENT" class="chat_input" style="color: gray; font-size: 12px; border: 0; margin-left: 20px;" placeholder="메시지 입력..."/>
+								<input type="text" class="chat_input" id="CHAT_CONTENT" name="CHAT_CONTENT" placeholder="메시지 입력..."/>
 							</div>
 							<div>
-								<button type="button" class="chat_send" id="chat_send" name="chat_send" style="border: 0; background-color: transparent; font-size: 12px; font-weight: 600;">보내기</button>
+								<button type="button" class="chat_send" id="chat_send" name="chat_send">보내기</button>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<input type="hidden" id="CHAT_MYID" name="CHAT_MYID" value="<%=session.getAttribute("MEM_ID") %>"/>
 					<div id="chatTarget">
@@ -1004,6 +1038,21 @@ $(document).on("click", ".chat_profile, .sub_story",function(e){
 	
 	$("#" + clickNotifId).html(deleteNotif); //알림 아이콘을 삭제.
 	<!-- 알림 아이콘 삭제 end -->
+	
+	<!-- 채팅입력창 추가 start -->
+	var htmls = "";
+	htmls += 	'<div class="chat_addMessageArea">';
+	htmls +=			'<div>';
+	htmls +=				'<img style="height: 20px; width: 20px; cursor: pointer;" src="resources/image/icon_emoticon.png">';
+	htmls +=				'<input type="text" class="chat_input" id="CHAT_CONTENT" name="CHAT_CONTENT" placeholder="메시지 입력..."/>';
+	htmls +=			'</div>';
+	htmls +=			'<div>';
+	htmls +=				'<button type="button" class="chat_send" id="chat_send" name="chat_send">보내기</button>';
+	htmls +=			'</div>';
+	htmls +=		'</div>';
+	
+	$(".chat_addMessage").html(htmls);
+	<!-- 채팅입력창 추가 end -->
 	
 });
 

@@ -46,6 +46,13 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		
+		<!-- mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
 
 		<!-- @@@@@@@@@@@@@@@@@@@@@ 추가 및 버전 변경 @@@@@@@@@@@@@@@@@@@@@ -->
 		<!-- JSON/XML -->

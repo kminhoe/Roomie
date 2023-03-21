@@ -13,7 +13,7 @@
 
       <!-- 이게 된다고? -->
    <![CDATA[
-      INSERT INTO BOARD(BO_IDX, BO_MEM, BO_MEDIA, BO_DATE, BO_HASH, BO_PLACE, BO_CONT, BO_ID)
+      INSERT INTO BOARD(BO_IDX, BO_MEM, BO_MEDIA, BO_DATE, BO_HASH, BO_PLACE, BO_CONT, BO_ID, BO_USER)
       VALUES(
       #{BO_IDX},
       #{BO_MEM},
@@ -22,7 +22,8 @@
       #{BO_HASH},
       #{BO_PLACE},
       #{BO_CONT},
-      #{BO_ID}
+      #{BO_ID},
+      #{BO_USER}
       )
    ]]>
 

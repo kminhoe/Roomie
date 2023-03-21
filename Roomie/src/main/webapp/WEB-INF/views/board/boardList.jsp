@@ -27,6 +27,10 @@
 <!-- 모달 -->
 ﻿<%@ include file="modal.jsp" %>
 
+<!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+
 <!-- style css -->
 <link rel="stylesheet" type="text/css"
    href="resources/css/main_style.css">
@@ -36,6 +40,10 @@
    href="resources/css/kakaomap_style.css">
    
    
+<!-- 이미지 슬라이더에 필요한 CSS와 JS 파일 로드 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 
 
 
@@ -45,7 +53,7 @@
 <body>
    <!-- 상단 내비게이션 바 시작 -->
    <nav class="navbar navbar-expand-lg navbar-light bg-light"
-      style="width: 100%; position: fixed; z-index: 2;">
+      style="width: 100%; position: fixed; z-index: 2; top: 0; margin-top: 0;">
       <div class="container">
          <img class="navbar-brand" style="height: 44px; object-fit: contain;"
             src="resources/image/Roomie5.png">
@@ -68,8 +76,9 @@
                src="resources/image/icon_22.png"> &nbsp;&nbsp;
             <!-- 채팅 버튼 -->
             <img class="menu_img"
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_04.png"> &nbsp;&nbsp;
+               style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+               src="resources/image/icon_04.png"
+               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
             <!-- 알림 버튼 -->
             <img class="menu_img"
                style="width: 25px; height: 25px; object-fit: contain"
@@ -90,193 +99,16 @@
             <!-- 프로필 이동 버튼 -->
             <c:choose>
 					<c:when test="${empty MEMBER.MEM_MEDIA}">
-						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain""
+						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
 							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
 					</c:when>
 					<c:otherwise>
-						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain""
+						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
 							src="${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
 							
 					</c:otherwise>
 				</c:choose>
-           
-           
-           
-               
-            <!-- 모달 게시글 이미지 업로드 시작 -->
-            <div class="modal_overlay" id="modal_add_feed"
-               style="position: fixed;">
-               <div class="modal_window" id="modal_window"
-                  style="width: 800px; height: 600px;">
-                  <div class="modal_title">
-                     <div class="modal_title_side">
-                        <!-- 이미지 추가 버튼 -->
-                        <div style="margin-top: -10px;">
-                           <img class="uploadpage" id="target_img"
-                              style="cursor: pointer;" src="resources/image/icon_34.png">
-                        </div>
-                     </div>
-                     <input type="file" class="real_upload" id="file"
-                        name="uploadFile" style="display: none;" multiple>
-                     <!-- 모달 타이틀 -->
-                     <div style="font-size: 16px;">새 게시물</div>
-                     <div class="modal_title_side">
-                        <!-- 다음 페이지(글작성) 버튼 -->
-                        <div style="margin-top: -8px; margin-right: 15px;">
-                           <img style="cursor: pointer;" onclick="modal_add_feed_Next();"
-                              src="resources/image/icon_38.png">
-                        </div>
-                        <!-- 모달 닫기 버튼 -->
-                        <div style="margin-top: -8px;">
-                           <img id="close_modal_add_feed" style="cursor: pointer;"
-                              src="resources/image/icon_40.png">
-                        </div>
-                     </div>
-                  </div>
-                  <div class="modal_image_upload" style="position: fixed;">
-                     <!-- 업로드 공간 -->
-                     <div class="upload">
-                        <ul class="upload_list"> 
-                   
-                        </ul>
-                        
-                        </div>
-                  </div>
-                  <div class="image_upload"
-                     style="width: 800px; margin-top: 150px; display: inline-block; text-align: center;">
-                     <div>
-                        <img style="width: 150px; height: 150px;"
-                           src="resources/image/icon_31.png">
-                     </div>
-                     <div style="margin-top: 30px; font-size: 20px;">
-                        <a>사진과 동영상을 여기에 끌어다 놓으세요</a>
-                     </div>
-                     <div style="margin-top: 10px; font-size: 14px; color: #8e8e8e;">
-                        <a>최대 업로드 파일 크기 : 10MB</a>
-                     </div>
-                  </div>
-                  <!-- 이미지 왼쪽 버튼 -->
-                  <img class="upload_prev" id="upload_prev"
-                     style="cursor: pointer; left: 0px; top: -136px; position: relative; z-index: 1;"
-                     src="resources/image/icon_35.png">
-                  <!-- 이미지 오른쪽 버튼 -->
-                  <img class="upload_next" id="upload_next"
-                     style="cursor: pointer; left: 726px; top: -136px; position: relative; z-index: 1;"
-                     src="resources/image/icon_36.png">
-               </div>
-            </div>
-            <!-- 모달 게시글 이미지 업로드 끝 -->
-            
-            <!-- 모달 게시글 글쓰기 시작 -->
-            <div class="modal modal_overlay" id="modal_add_feed_content"
-               style="position: fixed;">
-               <div class="modal_window" style="width: 800px; height: 600px;">
-                  <div class="modal_title">
-                     <div class="modal_title_side">
-                        <!-- 이전 버튼 -->
-                        <div style="margin-top: -10px; margin-right: 15px;">
-                           <img style="cursor: pointer;" onclick="modal_add_feed_Prev();"
-                              src="resources/image/icon_39.png">
-                        </div>
-                     </div>
-                     <!-- 모달 타이틀 -->
-                     <div style="font-size: 16px;">새 게시물</div>
-                     <div class="modal_title_side">
-                        <!-- 모달 닫기 버튼 -->
-                        <div style="margin-top: -8px; margin-left: 20px;">
-                           <img id="close_modal_add_feed_content" style="cursor: pointer;"
-                              src="resources/image/icon_40.png">
-                        </div>
-                     </div>
-                  </div>
-                  <div class="modal_image_content" style="height: 100%;">
-                     <div id="input_image" class="modal_image_upload_content"></div>
-                     <div class="modal_content_write">
-                        <div class="feed_name">
-                           <div class="profile_box">
-                              <img id="input_profile_image" class="profile_img"
-                                 src="resources/image/profile_05.jpg">
-                           </div>
-                           <span id="input_user_id" class="feed_name_txt">${MEMBER.MEM_USER}</span>
-                           <input type="hidden" id="mem_id" value="${MEMBER.MEM_ID}">
-                           
-                        </div>
-                        <br />
-                        <div>
-                           <textarea id="input_hash"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 30px; width: 100%;" rows="1" placeholder="해시태그"></textarea>
-                        </div>
-                        <br />
-                        <div>
-                           <input type="text" id="input_place"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 30px; width: 100%; min-height: calc(1.5em + 0.75rem + 2px)"
-                              placeholder="위치 공유" onclick="place_add_bnt();">
-                        </div>
-                        <br />
-                        <div style="height: 100%;">
-                           <textarea id="input_content"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 100%;" rows="10" placeholder="설명을 입력하세요..."></textarea>
-                        </div>
-                        <br /> <br />
-                        <div style="width: 100%; text-align: center">
-                           <button class="button" id="boardupload" style="cursor: pointer">글쓰기</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!-- 모달 게시글 글쓰기 끝 -->
-
-           <!-- 위치 추가 모달 시작 -->
-
-            <div>
-               <div class="modal modal_overlay" id="modal_place_add"
-                  style="position: fixed;">
-                  <div class="modal_window" style="width: 800px; height: 600px;">
-                     <div class="modal_title">
-                        <div class="modal_title_side">
-                           <!-- 이전 버튼 -->
-                           <div style="margin-top: -10px; margin-right: 15px;">
-                              <img style="cursor: pointer;" onclick="modal_place_Prev();"
-                                 src="resources/image/icon_39.png">
-                           </div>
-                        </div>
-                        <!-- 모달 타이틀 -->
-                        <div style="font-size: 16px;">새 게시물</div>
-                        <div class="modal_title_side">
-                           <!-- 모달 닫기 버튼 -->
-                           <div style="margin-top: -8px; margin-left: 20px;">
-                              <img id="close_modal_add_feed_place"
-                                 style="cursor: pointer;" src="resources/image/icon_40.png">
-                           </div>
-                        </div>
-                     </div>
-                     <div class="map_wrap">
-                        <div id="map"
-                           style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-
-                        <div id="menu_wrap" class="bg_white">
-                           <div class="option">
-                              <div>
-                                 <form onsubmit="searchPlaces(); return false;">
-                                    키워드 : <input type="text" id="keyword" size="15">
-                                    <button type="submit">검색하기</button>
-                                 </form>
-                              </div>
-                           </div>
-                           <hr>
-                           <ul id="placesList"></ul>
-                           <div id="pagination"></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-            </div>
-            <!-- 위치 추가 모달 끝 -->
+			﻿<%@ include file="../option/upload_modal.jsp" %>
          </div>
       </div>
    </nav>
@@ -346,11 +178,23 @@
                   alt="더보기">
             </div>
             
-            <input type="hidden" id="bo_idx" value="${boardList.BO_MEM}">
+            <input type="hidden" id="bo_mem" value="${boardList.BO_MEM}">
+            <input type="hidden" id="bo_name" value="${boardList.BO_USER}">
+            <input type="hidden" id="bo_idx" value="${boardList.BO_IDX}">
 
             
-            <img class="feed_img" style="height: 478px;"
-               src="/roomie/${boardList.BO_MEDIA}">
+            <%-- <img class="feed_img" style="height: 478px;"
+               src="resources/files/board/${boardList.BO_MEDIA}"> --%>
+               
+               <!-- BO_MEDIA를 쉼표로 구분하여 배열에 담기 -->
+               <c:set var="mediaArray" value="${fn:split(boardList.BO_MEDIA, ',')}" />
+
+               <!-- 이미지 슬라이더 -->
+               <div class="slider">
+               <c:forEach items="${mediaArray}" var="media">
+               <div><img class="feed_img" style="height: 478px;" src="resources/files/board/${media}" /></div>
+               </c:forEach>
+               </div>
 
             <div class="feed_icon">
                <div>
@@ -577,7 +421,8 @@
                src="resources/image/icon_22.png"> &nbsp;&nbsp;
             <!-- 채팅 버튼 -->
             <img style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_04.png"> &nbsp;&nbsp;
+               src="resources/image/icon_04.png"
+               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
             <!-- 알림 버튼 -->
             <img style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_01.png"> &nbsp;&nbsp;
@@ -953,7 +798,8 @@
        //var file = $("#input_fileimage").val();
        var file = $("#qwer").val();
       var BO_ID = $("#mem_id").val();
-
+      var BO_USER = $("#mem_user").val();
+      
        console.log("file이름들: "+ file);
        
        console.log(BO_MEM);
@@ -972,6 +818,8 @@
        formData.append("BO_CONT", BO_CONT);
        formData.append("BO_MEDIA", file);
        formData.append("BO_ID", BO_ID);
+       formData.append("BO_USER", BO_USER);
+       
        /* Array.from(files).map(e => formData.append("BO_IMAGE", e));
     formData.append("BO_IMAGE", files); 
        for(let i = 0; i< files.length; i++){
@@ -981,6 +829,8 @@
        
        $.ajax({
           url: '/roomie/boardInsert.ya',
+          
+        //formData 사용 시 processData, contentType 필수 작성
          processData: false,
          contentType: false,
          data: formData,
@@ -1270,7 +1120,11 @@
                              console.log(idx[a].value + "board_idx" + board_idx[a].value);
                            //console.log(but[a].getAttribute('id'));
                            
+                           
                            $('#' + but[a].getAttribute('id')).load(location.href + ' #' + but[a].getAttribute('id'));
+                           
+                           //특정 div 새로고침
+                           //$('#div').load(location.href + ' #div');
                              
                            $('#' + count[a].getAttribute('id')).load(location.href + ' #' + count[a].getAttribute('id'));
      
@@ -1322,6 +1176,9 @@
   
   let but = document.querySelectorAll('.more_details'); 
   let idx = document.querySelectorAll('#bo_idx');
+  let name = document.querySelectorAll('#bo_name');
+  let mem = document.querySelectorAll('#bo_mem');
+
   
   for(let len=0; len < but.length; len++){
 	  
@@ -1330,21 +1187,34 @@
 		    console.log(idx[len].value); 
 			$("#modal_overlay1").css("display", "flex");	
 			var bo_idx = idx[len].value;
+			var bo_name = name[len].value;
+			var bo_mem = mem[len].value;
 			
+			sessionStorage.setItem("BO_IDX", bo_idx ); // 저장
+			sessionStorage.setItem("BO_NAME", bo_name ); // 저장
+			sessionStorage.setItem("BO_MEM", bo_mem ); // 저장
 			
-			$.ajax({
+			 console.log(bo_idx);
+			 console.log(bo_name);
+			
+			 console.log("세션 저장 확인 : " + sessionStorage.getItem("BO_IDX")); // mineItRecord
+			
+			/* $.ajax({
 			    url: "report.ya",
 			    type: "POST",
 			    data: { bo_idx: bo_idx },
 			    success: function(data) {
 			    	
-			    	$('#report1').load(location.href + ' #report1');
+			    	//$('#report1').load(location.href + ' #report1');
 			        console.log("전송 성공");
+			        console.log(bo_idx);
+			        sessionStorage.setItem("BO_IDX", bo_idx ); // 저장
+			        
 			    },
 			    error: function(xhr, status, error) {
 			        console.error("전송 실패: " + error);
 			    }
-			}); 
+			});  */
 		  
 	  });
 	  
@@ -1353,6 +1223,19 @@
 
   
   </script>
+
+<script>
+
+
+$(document).ready(function(){
+    // 이미지 슬라이더 설정
+    $('.slider').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    });
+});
+</script>
 
 
      
