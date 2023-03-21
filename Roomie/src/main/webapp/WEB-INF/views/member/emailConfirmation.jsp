@@ -7,6 +7,12 @@
   <meta charset="utf-8">
   <!-- style css -->
   <link rel="stylesheet" type="text/css" href="./resources/css/signup_style.css">
+  
+  <!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+  
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 타이틀 -->
   <title>가입하기 • ROOMIE</title>

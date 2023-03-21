@@ -90,6 +90,7 @@ public class MemberController {
 				if (memberMap.get("MEM_LOCK").equals("Y")) {
 					System.out.println("상태 : 계정 잠금");
 					dir.addFlashAttribute("login", "lock");
+				    dir.addFlashAttribute("mem_id", memberMap.get("MEM_ID"));
 					mv.setViewName("redirect:/login.ya");
 					return mv;
 				}
@@ -98,7 +99,7 @@ public class MemberController {
 				session.setAttribute("MEM_IDX", memberMap.get("MEM_IDX"));
 				session.setAttribute("MEM_ID", memberMap.get("MEM_ID"));
 				session.setAttribute("MEM_NAME", memberMap.get("MEM_NAME"));
-				mv.setViewName("redirect:/boardList.ya");
+				mv.setViewName("redirect:/websocketOpen.ya");
 			// 입력한 비밀번호가 일치하지 않는 경우
 			} else {
 				System.out.println("상태 : 비밀번호 틀림");

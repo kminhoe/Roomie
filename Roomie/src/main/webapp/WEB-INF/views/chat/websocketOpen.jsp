@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
+<!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+
 <body>
 
 로그인중입니다...

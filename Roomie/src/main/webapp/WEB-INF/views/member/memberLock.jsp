@@ -10,6 +10,14 @@
   <link rel="stylesheet" type="text/css" href="../css/login_style.css">
   <!-- 로딩 화면 css -->
   <link rel="stylesheet" href="../css/fakeLoader.min.css">
+  
+  
+  <!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+  
+  
+  
   <!-- 타이틀 -->
   <title>ROOMIE</title>
 </head>

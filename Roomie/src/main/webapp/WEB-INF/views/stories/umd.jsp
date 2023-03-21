@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<script src='https://unpkg.com/react@18/umd/react.production.min.js' crossorigin></script>
+	<script src='https://unpkg.com/react-dom@18/umd/react-dom.production.min.js' crossorigin></script>
+	<script src='https://unpkg.com/@moviemasher/moviemasher.js@5.1.1/umd/moviemasher.js' crossorigin></script>
+	<script src='https://unpkg.com/@moviemasher/theme-default@5.1.1/umd/theme-default.js' crossorigin></script>
+	<script src='https://unpkg.com/@moviemasher/client-react@5.1.1/umd/client-react.js' crossorigin></script>
+	<link href='https://unpkg.com/@moviemasher/theme-default@5.1.1/moviemasher.css' rel='stylesheet'>
+	<style> /* fit root DIV to viewport */
+		body { margin: 0px; padding: 0px; font-family: sans-serif; }
+		body, #root { width: 100vw; height: 100vh; display: flex; }
+	</style>
+</head>
+<body>
+    <div id='root' class='moviemasher'></div>
+    <script>
+		// create constant referencing root DIV element
+		const element = document.getElementById('root')
+		
+		// destructure constants from packages
+		const { createElement } = React
+		const { createRoot } = ReactDOM
+		const { Masher, MasherDefaultProps } = MovieMasherClient
+		const { TextContainerId } = MovieMasher
+		
+		// create mash object containing text clip on a track
+		const clip = { 
+		  container: { string: 'Hello World!' }, 
+		  containerId: TextContainerId
+		}
+		const mash = { tracks: [{ clips: [clip] }] }
+		
+		// create root and render new Masher with mash in props
+		const props = MasherDefaultProps({ edited: { mash } })
+		const masher = createElement(Masher, props) 
+		createRoot(element).render(masher)
+    </script>
+  </body>
+</html>
