@@ -589,10 +589,32 @@ ul li {
 				
 				if(document.getElementById(newChatContentId)){ //특정 요소가 존재하는지 확인
 					/* 메시지를 보낸 상대와의 채팅방이 이미 열려있는 상태일 땐 메시지알림아이콘을 띄우지 않는다. */
-					chatScroll.scrollTop = chatScroll.scrollHeight; /* 스크롤 가장 아래로 */
+					/* 해당 알림은 DB에서 삭제해준다. */
+					var CHAT_OTHERID = document.getElementById(newChatContentId).name;
 					
+					var notifData3 = {
+						"CHAT_MYID" : MEM_ID
+						,"CHAT_OTHERID" : sender
+						, "TYPE" : 3
+						};
+			
+					$.ajax({
+						  url : "roomNotif.ya"
+						, type : 'POST'
+						, data : notifData3
+						, dataType : 'json'
+						, success: function(result){
+							// roomNotif에서 클릭한 대상에대한 알림 데이터 삭제.
+						}
+						, error: function(error){
+							alert("실패");
+							console.log("에러 : " + error);
+						}
+					});
+					
+					chatScroll.scrollTop = chatScroll.scrollHeight; /* 스크롤 가장 아래로 */
 				}else{
-					$("#" + notifId).html(messageNotification); //id를 notif + "아이디(eamil의 @ 앞 부분)"으로 설정한 자식위치에 messageNotification 주입.	
+					$("#" + notifId).html(messageNotification); //id를 notif + "아이디(eamil의 @ 앞 부분)"으로 설정한 자식위치에 messageNotification 주입.
 				}
 
 			}
@@ -721,32 +743,37 @@ function chatRoomList(result){
 						console.log("에러 : " + error);
 					}
 				});
-				
 		}
 	}
 	<!-- 메시지를 보낸사람과의 채팅창이 열려있을때 실행 end -->
 	
 	<!-- 자신에게 존재하는 메시지알림을 채팅룸에 아이콘으로 표시 start -->
-	var notifData2 = {
-		"CHAT_MYID" : MEM_ID
-		, "TYPE" : 2
-		};
-	
-		$.ajax({
-			  url : "roomNotif.ya"
-			, type : 'POST'
-			, data : notifData2
-			, dataType : 'json'
-			, success: function(result){
-				
-				addNotifMsg(result);
-				
-			}
-			, error: function(error){
-				alert("실패");
-				console.log("에러 : " + error);
-			}
-		});
+	if(document.getElementById(newChatContentId)){ //특정 요소가 존재하는지 확인
+		/* 메시지를 보낸 상대와의 채팅방이 이미 열려있는 상태일 땐 메시지알림아이콘을 띄우지 않는다. */
+		}else{
+			
+			var notifData2 = {
+				"CHAT_MYID" : MEM_ID
+				, "TYPE" : 2
+				};
+			
+				$.ajax({
+					  url : "roomNotif.ya"
+					, type : 'POST'
+					, data : notifData2
+					, dataType : 'json'
+					, success: function(result){
+						
+						addNotifMsg(result);
+						
+					}
+					, error: function(error){
+						alert("실패");
+						console.log("에러 : " + error);
+					}
+				});
+		
+		}
 	<!-- 자신에게 존재하는 메시지알림을 채팅룸에 아이콘으로 표시 end -->
 	
 }
@@ -777,7 +804,7 @@ function showChatList(result){
 	var escapedNewChatContentId2 = escapedNewChatContentId1.replace("\.", "\\.");
 	
 	//result에 담긴 list 항목만큼 반복.
-	for(var i=0; i<result.length; i++){
+	for(var i=result.length; i>=0; i--){
 		var map = result[i];		
 		for(var key in map){
 			//채팅 메시지를 보낸사람에 따라서 출력.
@@ -803,6 +830,42 @@ function showChatList(result){
 			}
 		}
 	}
+}
+</script>
+
+<script> /* addChatList() 추가 채팅리스트를 불러오는 함수 */
+function addChatList(result){
+	
+	var MEM_ID = '<%=(String)session.getAttribute("MEM_ID")%>'
+	var htmls = "";
+	var newChatContentId = document.querySelector("#chatContent .chat_content2").id; //id="chatContent"인 요소의 하위 요소중 class가 .chat_content2인 요소의id값을 선택.
+	var escapedNewChatContentId1 = newChatContentId.replace("\@", "\\@");
+	var escapedNewChatContentId2 = escapedNewChatContentId1.replace("\.", "\\.");
+	
+	//result에 담긴 list 항목만큼 반복.
+	for(var i=result.length; i>=0; i--){
+		var map = result[i];		
+		for(var key in map){
+			//채팅 메시지를 보낸사람에 따라서 출력.
+			if(key == "CHAT_OTHERID"){
+				// 메시지를 입력한 사람의 id가 자신과 같으면 오른쪽에, 자신과 다르면 왼쪽에 표시되도록 분류.
+				if(MEM_ID == result[i]["CHAT_OTHERID"]){
+						htmls += 		'<div class="chat_otherMsgBox">';
+						htmls += 			'<div class="chat_otherMsg">';
+						htmls += 				result[i]["CHAT_CONTENT"];
+						htmls += 			'</div>';
+						htmls += 		'</div>';
+					}else{
+						htmls += 		'<div class="chat_myMsgBox">';
+						htmls += 			'<div class="chat_myMsg">';
+						htmls += 				result[i]["CHAT_CONTENT"];
+						htmls += 			'</div>';
+						htmls += 		'</div>';
+						}
+			}
+		}
+	}
+	$("#" + escapedNewChatContentId2).prepend(htmls); //채팅 상대방의 채팅영역에 채팅내용을 입력.
 }
 </script>
 
@@ -849,8 +912,8 @@ function showFriendList(result){
 		var newChatContentId = escapedSelectedFriendId + "chatContent";
 		
 		<!-- 새로운 상대와 채팅할 영역을 chatContent 하위에 추가 start  -->
-		newChatContent += '<div class="chat_content2" id="' + selectedFriendId + '">';
-		newChatContent += '</div>'
+		newChatContent += '<div class="chat_content2" id="' + newChatContentId + '"' + ' name= "' + selectedFriendId + '">';
+		newChatContent += '</div>';
 		
 		$("#chatContent").html(newChatContent); //newChatContent를 chatContent 하위요소로 추가
 		<!-- 새로운 상대와 채팅할 영역을 chatContent 하위에 추가 end  -->
@@ -867,6 +930,21 @@ function showFriendList(result){
 		$("#modal_overlay").css('display', 'none'); // 모달창 끄기
 		$("#" + newChatContentId).html(empty); // 채팅창 비우기
 		
+		<!-- 채팅입력창 추가 start -->
+		var htmls = "";
+		htmls += 	'<div class="chat_addMessageArea">';
+		htmls +=			'<div>';
+		htmls +=				'<img style="height: 20px; width: 20px; cursor: pointer;" src="resources/image/icon_emoticon.png">';
+		htmls +=				'<input type="text" class="chat_input" id="CHAT_CONTENT" name="CHAT_CONTENT" placeholder="메시지 입력..."/>';
+		htmls +=			'</div>';
+		htmls +=			'<div>';
+		htmls +=				'<button type="button" class="chat_send" id="chat_send" name="chat_send">보내기</button>';
+		htmls +=			'</div>';
+		htmls +=		'</div>';
+		
+		$(".chat_addMessage").html(htmls);
+		<!-- 채팅입력창 추가 end -->
+		
 	});
 }
 </script>
@@ -882,6 +960,7 @@ $(addMessage).on('click', '#chat_send', function(){
 			"CHAT_MYID" : CHAT_MYID
 			, "CHAT_OTHERID" : CHAT_OTHERID
 			, "CHAT_CONTENT" : CHAT_CONTENT
+			
 		};
 	var notifData1 = {
 			"CHAT_MYID" : CHAT_MYID
@@ -889,24 +968,42 @@ $(addMessage).on('click', '#chat_send', function(){
 			, "CHAT_CONTENT" : CHAT_CONTENT
 			, "TYPE" : 1
 		};
-
+	
+	var newChatContentId = document.querySelector("#chatContent .chat_content2").id; //id="chatContent"인 요소의 하위 요소중 class가 chat_content2인 요소의 id.
+	
 	if(chatContent.value == ""){ //입력한 채팅내용이 없는 경우
 		chatContent.focus();//채팅 입력창으로 포커스.
 		return;
 	}else{ //입력한 내용이 있을 경우
 		$.ajax({
-		    url: "addMessage.ya",
-		    type: 'POST',
-		    data: paramData,
-		    dataType: 'json'
-		})
-		.done(function(result) {
-		    showChatList(result);
-		    chatRoomListCallback();
-		})
-		.fail(function(error) {
-		    alert("실패");
-		    console.log("에러 : " + error);
+		    url: "addMessage.ya"
+		    , type: 'POST'
+		    , data: paramData
+		    , dataType: 'json'
+	    	, success: function(result){
+
+	    		<!-- 나의 채팅영역에 보낸 메시지를 임시로 추가 start -->
+				var myMsg ="";
+				
+				myMsg += 		'<div class="chat_myMsgBox">';
+				myMsg += 			'<div class="chat_myMsg">';
+				myMsg += 				CHAT_CONTENT
+				myMsg += 			'</div>';
+				myMsg += 		'</div>';
+				
+				$("#" + newChatContentId).append(myMsg);
+				<!-- 나의 채팅영역에 보낸 메시지를 임시로 추가 end-->
+				
+				var chatScroll = document.getElementById(newChatContentId);
+				chatScroll.scrollTop = chatScroll.scrollHeight; /* 스크롤 가장 아래로 */
+				
+			    chatRoomListCallback();
+	
+			}
+			, error: function(error){
+				alert("실패");
+				console.log("에러 : " + error);
+			}
 		});
 
 		function chatRoomListCallback() {
@@ -955,7 +1052,13 @@ $(addMessage).on('click', '#chat_send', function(){
 </script>
 
 <script> /* 채팅룸(프로필) 선택 시 Controller로 CHAT_OTHERID 전송하고 받아온 데이터로 showChatList() 실행 */
+var chatPageStart = 1; //채팅영역에서 스크롤링 시 변하는 값.
+var chatPageEnd	 = 20; //채팅영역에서 스크롤링 시 변하는 값.
 $(document).on("click", ".chat_profile, .sub_story",function(e){
+	
+	chatPageStart = 1; //채팅룸 선택시 값 초기화.
+	chatPageEnd = 20; //채팅룸 선택시 값 초기화.
+	
 	var MEM_ID = '<%=(String)session.getAttribute("MEM_ID")%>'
 	
 	e.preventDefault();
@@ -969,7 +1072,7 @@ $(document).on("click", ".chat_profile, .sub_story",function(e){
 	var newChatContentId = escapedClickId + "chatContent"; //newChatContent의 id로 적용할 객체.
 	
 	var newChatContent = "";
-	newChatContent += '<div class="chat_content2" id="' + newChatContentId + '">';
+	newChatContent += '<div class="chat_content2" id="' + newChatContentId + '"' + ' name= "' + clickId + '">';
 	newChatContent += '</div>'
 	
 	$("#chatContent").html(newChatContent); //newChatContent를 chatContent 하위요소로 추가
@@ -993,7 +1096,9 @@ $(document).on("click", ".chat_profile, .sub_story",function(e){
 	$.ajax({
 		  url : "chatRoom.ya"
 		, type : 'POST'
-		, data : {"CHAT_OTHERID" : clickId }
+		, data : {"CHAT_OTHERID" : clickId
+			,"chatPageStart" : chatPageStart
+			, "chatPageEnd" : chatPageEnd}
 		, dataType : 'json'
 		, success: function(result){
 			
@@ -1053,6 +1158,58 @@ $(document).on("click", ".chat_profile, .sub_story",function(e){
 	
 	$(".chat_addMessage").html(htmls);
 	<!-- 채팅입력창 추가 end -->
+	
+
+	<!-- 채팅창 스크롤 이벤트 start -->
+	$(".chat_content2").scroll(function(){
+    		
+    		var element = $(".chat_content2");
+    		
+    		/* var scrollHeight = element.prop("scrollHeight");
+    		var clientHeight = element.innerHeight(); */ //임시임시
+    		var scrollTop = element.scrollTop();
+    		
+    		/* console.log(scrollHeight);
+    		console.log(clientHeight); */ //임시임시
+    		/* console.log(scrollTop); */
+			if(scrollTop <= 100 ){
+				
+				chatPageStart += 20;
+				chatPageEnd += 20;
+				
+				$.ajax({
+					  url : "chatRoom.ya"
+					, type : 'POST'
+					, data : {"CHAT_OTHERID" : clickId
+						,"chatPageStart" : chatPageStart
+						, "chatPageEnd" : chatPageEnd}
+					, dataType : 'json'
+					, success: function(result){
+						
+						if(result == null){
+							console.log("##############################################");
+						}else{
+							addChatList(result);
+						}
+						
+					}
+					, error: function(error){
+						alert("실패");
+						console.log("에러 : " + error);
+					}
+				});
+				
+			}
+	})
+	
+	<!-- 채팅창 스크롤 이벤트 start -->
+	
+	//innerHeight: 사용자가 실제로 보는 영역의 높이.
+	//scrollY: 처음부터 scroll로 내려간 거리.
+	//body.offsetHeight: 가려진 부분을 포함한 전체 높이.
+	
+	
+	
 	
 });
 

@@ -182,6 +182,9 @@ public class ChatController {
 		//chatForm에서 데이터를 전송받아 chatMap에 CHAT_MYID와 CHAT_OTHERID 주입.
 		chatMap.put("CHAT_MYID", (String) session.getAttribute("MEM_ID"));
 		chatMap.put("CHAT_OTHERID", (String) param.get("CHAT_OTHERID"));
+		chatMap.put("CHAT_STARTPAGE", param.get("chatPageStart"));
+		chatMap.put("CHAT_ENDPAGE", param.get("chatPageEnd"));
+		System.out.println("@@@@@@@@@@@@   채팅 시작 번호: " + param.get("chatPageStart") +",채팅 끝 번호: " + param.get("chatPageEnd"));
 		
 		//chatMap을 매개로 CHAT_CONTENT, CHAT_MYID, CHAT_OTHERID SELECT.(대화내용)
 		List<Map<String, Object>> chatContent = chatService.selectChatContent(chatMap);
@@ -194,7 +197,7 @@ public class ChatController {
 	
 	@RequestMapping(value = "addMessage.ya", method= {RequestMethod.POST})
 	@ResponseBody
-	public List<Map<String, Object>> addMessage(@RequestParam Map<String, Object> param) throws Exception{
+	public Map<String, Object> addMessage(@RequestParam Map<String, Object> param) throws Exception{
 		System.out.println("\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ChatController/addMessage @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@   ");
 		System.out.println("@@@@@@@@@@@@   MYID: " + param.get("CHAT_MYID"));
 		System.out.println("@@@@@@@@@@@@   OTHERID: " + param.get("CHAT_OTHERID"));
@@ -202,16 +205,6 @@ public class ChatController {
 		
 		//메시지 추가
 		chatService.addMessage(param);
-		
-		Map<String, Object> chatMap = new HashMap<String, Object>();
-		//chatMap에 CHAT_MYID와 CHAT_OTHERID 주입.
-		chatMap.put("CHAT_MYID", param.get("CHAT_MYID"));
-		chatMap.put("CHAT_OTHERID", param.get("CHAT_OTHERID"));
-		
-		//chatMap을 매개로 CHAT_CONTENT, CHAT_MYID, CHAT_OTHERID SELECT.
-		List<Map<String, Object>> chatContent = chatService.selectChatContent(chatMap);
-		
-		System.out.println("@@@@@@@@@@@@   대화 내용: " + chatContent);
 		
 		//ROOM조회
 		String roomMem1 = param.get("CHAT_MYID") + "," + param.get("CHAT_OTHERID");
@@ -230,8 +223,8 @@ public class ChatController {
 			chatService.updateChatRoomDate(roomMem);
 		}
 		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
-		return chatContent;
 		
+		return roomMem;
 	}
 	
 	@RequestMapping(value = "roomNotif.ya", method= {RequestMethod.POST})
