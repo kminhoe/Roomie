@@ -122,9 +122,9 @@
 								<aside class="_ad6_"
 									style="text-align: left; padding-left: 0px;">
 									<label class="_ab3q">
-										<button onclick="javascript:confirm('로그아웃 하시겠습니까?')" >로그아웃																					
+										<button onclick="javascript:confirm('로그아웃 하시겠습니까?')" ><a href="/roomie/memlogout.ya">로그아웃</a>																				
 										</button>
-										<a href="/roomie/memlogout.ya"></a>
+										
 									</label>
 								</aside>
 							</div>
@@ -658,21 +658,6 @@
     }
 
   </script>
-	<script>
-  var autoLoginSwitch = document.getElementById("onoff-switch1");
-  if (${lockList.MEM_OPEN == 'Y'}) {
-    autoLoginSwitch.checked = true;
-  } else {
-    autoLoginSwitch.checked = false;
-  }
-  $("#onoff-switch1").on("change", function() {
-      
-      $.ajax({
-        type: "POST",
-        url: "/roomie/updatelock.ya", // 서버에 전송할 JSP 파일 경로
-        data: { 'MEM_IDX': ${lockList.MEM_IDX} }, // 서버에 전송할 데이터
-      });
-    });
-</script>
+	
 </body>
 </html>
