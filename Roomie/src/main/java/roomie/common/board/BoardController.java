@@ -192,10 +192,6 @@ public class BoardController {
 		
 	}
 	
-
-	
-
-	
 	@RequestMapping(value="/boardList.ya")
 	public ModelAndView boardList(HttpSession session)throws Exception{
 		ModelAndView mv = new ModelAndView("board/boardList");
