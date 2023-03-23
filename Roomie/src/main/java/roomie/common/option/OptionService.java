@@ -18,4 +18,6 @@ public interface OptionService {
 	public void updateLock(Map<String, Object> map) throws Exception;
 	
 	public void updateOpen(int idx) throws Exception;
+	
+	public List<Map<String, Object>> memSelect(Map<String, Object> map) throws Exception;
 }

@@ -1,6 +1,8 @@
 <%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -92,10 +94,14 @@
 			<ul style="width: 250px; flex-direction: column;">
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
 					href="/roomie/optionList.ya" class="current-page-link">비밀번호 변경</a></li>
-				<li style="padding: 16px 16px 16px calc(32px - 2px);">차단 계정</li>
-				<li style="padding: 16px 16px 16px calc(32px - 2px);">비공개 설정</li>
-				<li style="padding: 16px 16px 16px calc(32px - 2px);">로그아웃</li>
-				<li style="padding: 16px 16px 16px calc(32px - 2px);">탈퇴</li>
+				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
+					href="#" class="current-page-link">차단 계정</a></li>
+				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
+					href="/roomie/lockList.ya" class="current-page-link">비공개 설정</a></li>
+				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
+					href="/roomie/logoutForm.ya" class="current-page-link">로그아웃</a></li>
+				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
+					href="/roomie/memberDelete.ya" class="current-page-link">탈퇴</a></li>
 				<div class="optionline"></div>
 				<div
 					style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
@@ -108,12 +114,21 @@
 			<div
 				style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
 				<div>
-					<div class="feed_name" style="margin: 5px 0 0 100px;">
-						<div class="profile_box">
-							<img class="profile_img" src="resources/image/profile_06.jpg">
+					<c:forEach var="boardList" items="${boardList}" varStatus="status">
+						<div class="feed_name" style="margin: 5px 0 0 100px;">
+							<div class="profile_box">
+								<c:choose>
+									<c:when test="${empty boardList.MEM_MEDIA}">
+										<img class="profile_img" src="resources/image/icon_p.jpg">
+									</c:when>
+									<c:otherwise>
+										<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<span class="feed_name_txt">${boardList.MEM_NAME}</span>
 						</div>
-						<span class="feed_name_txt"><%= session.getAttribute("MEM_NAME") %> </span>
-					</div>
+					</c:forEach>
 					<div class="_acyg" id="passwordForm">
 						<input type="hidden" name="MEM_IDX" id="MEM_IDX" value='<%= session.getAttribute("MEM_IDX")%>'>
 						<div class="_ab3p">

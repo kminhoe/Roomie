@@ -1,5 +1,6 @@
 package roomie.common.option;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -57,6 +58,12 @@ public class OptionServiceImpl implements OptionService{
 	public void updateOpen(int idx) throws Exception {
 		optionDAO.updateOpen(idx);
 		
+	}
+
+	@Override
+	public List<Map<String, Object>> memSelect(Map<String, Object> map) throws Exception {
+		
+		return optionDAO.memSelect(map);
 	}
 	
 	
