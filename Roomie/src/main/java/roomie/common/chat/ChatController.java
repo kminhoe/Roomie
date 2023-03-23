@@ -268,4 +268,26 @@ public class ChatController {
 		
 	}
 	
+	@RequestMapping(value = "boardNotif.ya", method= {RequestMethod.POST})
+	@ResponseBody
+	public String boardNotif(@RequestParam Map<String, Object> param, HttpSession session) throws Exception{
+		System.out.println("\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ChatController/boardNotif @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@   ");
+		System.out.println("@@@@@@@@@@@@         MYID: " + param.get("CHAT_MYID"));
+		Map<String, Object> map	 = new HashMap<String, Object>();
+		String result = new String();
+		map.put("CHAT_MYID", param.get("CHAT_MYID"));
+		
+		if(chatService.selectNotifMsg2(map).size() != 0) { //CHAT_MYID를 NOTIFMSG_RECEIVER로하는 알림이 존재한다면,
+			result = "true";
+			System.out.println(chatService.selectNotifMsg2(map).size());
+			System.out.println("@@@@@@@@@@@@   알림이 존재합니다.");
+		}else {
+			result = "false";
+			System.out.println("@@@@@@@@@@@@   알림이 존재하지 않습니다.");
+		}
+		
+		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
+		return result;
+	}
+	
 }

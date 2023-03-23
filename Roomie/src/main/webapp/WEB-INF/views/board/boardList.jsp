@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <head>
 
-
 <!-- kakao 지도 스타일끝 -->
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -28,16 +27,15 @@
 ﻿<%@ include file="modal.jsp" %>
 
 <!-- webSocket 세션 js -->
-<link rel="js" type="text/css"
-   href="resources/js/web.js">
+<script><%@ include file="/resources/js/web.js" %></script>
 
 <!-- style css -->
 <link rel="stylesheet" type="text/css"
-   href="resources/css/main_style.css">
+	href="resources/css/main_style.css">
 <link rel="stylesheet" type="text/css"
-   href="resources/css/modal_style.css">
-   <link rel="stylesheet" type="text/css"
-   href="resources/css/kakaomap_style.css">
+	href="resources/css/modal_style.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/css/kakaomap_style.css">
    
    
 <!-- 이미지 슬라이더에 필요한 CSS와 JS 파일 로드 -->
@@ -61,7 +59,7 @@
          <!-- 검색창 -->
          <!-- <input class="form-control" style="width: 200px" type="search" placeholder="Search" aria-label="Search"> -->
 
-         <div>
+         <div style="display: flex;">
             <!-- 홈 버튼 -->
             <img class="menu_img"
                style="width: 25px; height: 25px; object-fit: contain"
@@ -75,10 +73,19 @@
                style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_22.png"> &nbsp;&nbsp;
             <!-- 채팅 버튼 -->
-            <img class="menu_img"
-               style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
-               src="resources/image/icon_04.png"
-               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+            <div class="menu_img">
+            	<div style="position: relative;">
+		            <div>
+			            <img class="menu_img"
+			               style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+			               src="resources/image/icon_04.png"
+			               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+		            </div>
+		            <div id="msgNotif" style="position: absolute; top: -10px; right: 15px;">
+		            	<img style="width: 10px; height: 10px;" src="">
+		            </div>
+	            </div>
+			</div>
             <!-- 알림 버튼 -->
             <img class="menu_img"
                style="width: 25px; height: 25px; object-fit: contain"
@@ -207,7 +214,6 @@
                 
                  <c:if test="${not empty LIKEB}">
                  
-              
 		          <c:set var="liked" value="false" />
 
                  <c:forEach var="like" items="${LIKEB}">
@@ -1223,21 +1229,47 @@
 
   
   </script>
-
+  
 <script>
+$(window).on('load',function (){
+	
+	var MEM_ID = '<%=(String)session.getAttribute("MEM_ID")%>';
 
+	$.ajax({
+		  url : "boardNotif.ya"
+		, type : 'POST'
+		, data : {"CHAT_MYID" : MEM_ID}
+		, dataType : 'json'
+		, success: function(result){
+			
+			if(result == true){
+				
+				var messageNotification = '<img style="width: 10px; height: 10px;" src="resources/image/icon_notification2.png">';
+				$("#msgNotif").html(messageNotification); //채팅 아이콘에 메시지 알림 아이콘 추가.
+				
+			}
+			
+		}
+		, error: function(error){
+			alert("실패");
+			console.log("에러 : " + error);
+		}
+	});
 
-$(document).ready(function(){
-    // 이미지 슬라이더 설정
-    $('.slider').slick({
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    });
-});
+}
+)
 </script>
 
-
+<script>
+	$(document).ready(function(){
+	    // 이미지 슬라이더 설정
+	    $('.slider').slick({
+	        infinite: true,
+	        slidesToShow: 1,
+	        slidesToScroll: 1
+	    });
+	});
+</script>
      
 </body>
 </html>
