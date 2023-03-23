@@ -1,63 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 
 <!-- webSocket 세션 js -->
-<link rel="js" type="text/css"
-   href="resources/js/web.js">
+<link rel="js" type="text/css" href="resources/js/web.js">
 
-
-<style>
-.onoff-switch-container{
-  display:inline-block;
-  width: 140px;
-  height: 30px;
-  position:relative;
-}
-.onoff-switch-container input[type="checkbox"]{
-  position: absolute;
-  width: 0px;
-  height: 0px;
-  overflow: hidden;
-}
-.onoff-switch-container label{
-  padding-left: 70px;
-  line-height: 30px;
-  font-size: 16px;
-}
-.onoff-switch-container label::after{  
-  position:absolute;
-  top:3px;
-  left:4px;
-  content:'';
-  width: 24px;
-  height: 24px;
-  background: #d1d1d1;
-  border-radius: 100%;
-  transition: all 0.3s
-    
-}
-.onoff-switch-container label::before{
-  position:absolute;
-  top:0;
-  left:0;
-  content:'';
-  width: 60px;
-  height: 30px;
-  border:1px solid #d1d1d1;
-  border-radius: 20px;
-  background: #f1f1f1;
-  box-sizing: border-box;
-}
-.onoff-switch-container input[type="checkbox"]:checked + label::after {
-  transform: translateX(28px);
-  background: gold;
-}
-.onoff-switch-container input[type="checkbox"]:checked + label::before {
-  background: #fff;
-}
-</style>
 <head>
 <!-- kakao 지도 스타일끝 -->
 <!-- Required meta tags -->
@@ -130,7 +80,6 @@
 	</nav>
 	<!-- 상단 내비게이션 바 끝 -->
 
-	<!-- 메인 바디 영역 시작 -->
 	<div class="main_body" style="padding-top: 100px;">
 		<div class="border left_body"
 			style="width: 850px; height: 750px; flex-direction: row;">
@@ -146,35 +95,42 @@
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
 					href="/roomie/memberDelete.ya" class="current-page-link">탈퇴</a></li>
 				<div class="optionline"></div>
-				<div
-					style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
+				<div style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
 					<img class="navbar-brand"
 						style="height: 44px; object-fit: contain;"
-						src="resources/image/Roomie5.png"><span>불편한 사항이 있으시면
-						roomie와 대화해보세요</span>
+						src="resources/image/Roomie5.png"><span>불편한 사항이
+						있으시면 roomie와 대화해보세요</span>
 				</div>
 			</ul>
-			<div
-				style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
-				<p>비공개 설정</p>
+			<div style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
 				<div>
-					<span><h9>게시물 공개 설정</h9></span>
-				
-				<c:if test="${lockList.MEM_OPEN == Y }">
-				<div class="onoff-switch-container">
-					<input type="checkbox" name="onoff-switch" id="onoff-switch1" checked/> <label
-						for="onoff-switch1"></label>
+					<c:forEach var="boardList" items="${boardList}" varStatus="status">
+						<div class="feed_name" style="margin: 5px 0 0 100px;">
+							<div class="profile_box">
+								<c:choose>
+									<c:when test="${empty boardList.MEM_MEDIA}">
+										<img class="profile_img" src="resources/image/icon_p.jpg">
+									</c:when>
+									<c:otherwise>
+										<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<span class="feed_name_txt">${boardList.MEM_NAME}</span>
 						</div>
-				</c:if>
-				</div>
-
-
-			</div>
-
+						<div class="_ab3p" style="justify-content: center;">
+								<aside class="_ad6_"
+									style="text-align: left; padding-left: 0px;">
+									<label class="_ab3q">
+										<button onclick="javascript:confirm('로그아웃 하시겠습니까?')" ><a href="/roomie/memlogout.ya">로그아웃</a>																				
+										</button>
+										
+									</label>
+								</aside>
+							</div>
+				</c:forEach>
 		</div>
-		﻿<%@ include file="upload_modal.jsp" %>
-
-
+		﻿<%@ include file="upload_modal.jsp"%>
 	</div>
 	<!-- 메인 바디 영역 끝 -->
 	<!-- 푸터 시작 -->
@@ -702,21 +658,6 @@
     }
 
   </script>
-  <script>
-  var autoLoginSwitch = document.getElementById("onoff-switch1");
-  if (${lockList.MEM_OPEN == 'Y'}) {
-    autoLoginSwitch.checked = true;
-  } else {
-    autoLoginSwitch.checked = false;
-  }
-  $("#onoff-switch1").on("change", function() {
-      
-      $.ajax({
-        type: "POST",
-        url: "/roomie/updatelock.ya", // 서버에 전송할 JSP 파일 경로
-        data: { 'MEM_IDX': ${lockList.MEM_IDX} }, // 서버에 전송할 데이터
-      });
-    });
-</script>
+	
 </body>
 </html>

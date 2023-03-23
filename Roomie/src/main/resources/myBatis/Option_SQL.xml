@@ -53,4 +53,10 @@
 			where mem_idx = #{MEM_IDX}
 		]]>
 	</update>
+	
+	<select id="memselect" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			select * from member where MEM_IDX = #{MEM_IDX}
+		]]>
+	</select>
 </mapper>

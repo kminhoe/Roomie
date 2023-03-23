@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.session.ResultHandler;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -50,5 +51,8 @@ public class OptionDAO {
 		sqlSessionTemplate.update("option.updateOpen", idx);
 	}
 	
+	public List<Map<String, Object>> memSelect(Map<String, Object> map) throws Exception{
+		return sqlSessionTemplate.selectList("option.memselect", map);
+	}
 
 }
