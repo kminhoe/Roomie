@@ -34,4 +34,9 @@ public class StoriesDAO {
 	public void insertStoriesCheck(Map<String, Object> map) throws Exception {
 		sqlSessionTemplate.insert("stories.insertStoriesCheck", map);
 	}
+	
+	// 메인화면 > 스토리 작성하기
+	public void insertStories(Map<String, Object> map) throws Exception {
+		sqlSessionTemplate.insert("stories.insertStories", map);
+	}
 }

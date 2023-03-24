@@ -17,14 +17,19 @@ class SlideStories {
         this.thumbItems[index].classList.add('active')
 
 		story_check(index);
+		
+		var itemId = this.items[index].id;
+		var itemIdsubString = this.items[index].id.substring(0, 6);
+		
+		console.log(itemId);
 
-        if (index != 4) {
+        if (itemIdsubString != "videos") {
             this.autoSlide(2000)
             document.documentElement.style.setProperty("--slide-thumb-time", "2s");
         } else {
             this.autoSlide(6000)
             document.documentElement.style.setProperty("--slide-thumb-time", "6s");
-            videos.play();
+            this.items[index].id.play();
         }
     }
 
