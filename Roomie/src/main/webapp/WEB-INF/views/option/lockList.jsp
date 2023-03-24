@@ -138,7 +138,7 @@
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
 					href="/roomie/optionList.ya" class="current-page-link">비밀번호 변경</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="#" class="current-page-link">차단 계정</a></li>
+					href="/roomie/blockList.ya" class="current-page-link">차단 계정</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
 					href="/roomie/lockList.ya" class="current-page-link">비공개 설정</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a

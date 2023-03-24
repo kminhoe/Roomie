@@ -1,5 +1,6 @@
 package roomie.common.option;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,21 @@ public class OptionDAO {
 	
 	public List<Map<String, Object>> memSelect(Map<String, Object> map) throws Exception{
 		return sqlSessionTemplate.selectList("option.memselect", map);
+	}
+	
+	public List<Map<String, Object>> blockList(int idx) throws Exception{
+		List<Map<String, Object>> list = new ArrayList<>();
+		
+		list = sqlSessionTemplate.selectList("option.blockList", idx);
+		System.out.println("DAO에서 받은 값 : " + idx );
+		System.out.println("DAO result값 : " + list);
+		return list;
+		
+		
+	}
+	public void deleteblock(Map<String, Object> map) throws Exception{
+		
+		sqlSessionTemplate.delete("option.deleteblock", map);
 	}
 
 }

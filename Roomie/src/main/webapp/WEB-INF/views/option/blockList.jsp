@@ -1,21 +1,14 @@
-<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-<head>
 
 <!-- webSocket 세션 js -->
-<link rel="js" type="text/css"
-   href="resources/js/web.js">
+<link rel="js" type="text/css" href="resources/js/web.js">
 
-
-<!-- kakao 지도 스타일 시작 -->
-<style>
-
-</style>
+<head>
 <!-- kakao 지도 스타일끝 -->
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -87,7 +80,6 @@
 	</nav>
 	<!-- 상단 내비게이션 바 끝 -->
 
-	<!-- 메인 바디 영역 시작 -->
 	<div class="main_body" style="padding-top: 100px;">
 		<div class="border left_body"
 			style="width: 850px; height: 750px; flex-direction: row;">
@@ -103,59 +95,34 @@
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
 					href="/roomie/memberDelete.ya" class="current-page-link">탈퇴</a></li>
 				<div class="optionline"></div>
-				<div
-					style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
+				<div style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
 					<img class="navbar-brand"
 						style="height: 44px; object-fit: contain;"
-						src="resources/image/Roomie5.png"><span>불편한 사항이 있으시면
-						roomie와 대화해보세요</span>
+						src="resources/image/Roomie5.png"><span>불편한 사항이
+						있으시면 roomie와 대화해보세요</span>
 				</div>
 			</ul>
-			<div
-				style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
+			<div style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
 				<div>
-					<c:forEach var="boardList" items="${boardList}" varStatus="status">
+					<c:forEach var="block" items="${blocklist}" varStatus="status">
 						<div class="feed_name" style="margin: 5px 0 0 100px;">
 							<div class="profile_box">
 								<c:choose>
-									<c:when test="${empty boardList.MEM_MEDIA}">
+									<c:when test="${empty block.MEM_MEDIA}">
 										<img class="profile_img" src="resources/image/icon_p.jpg">
 									</c:when>
 									<c:otherwise>
-										<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+										<img class="profile_img" src="/roomie/${block.MEM_MEDIA }">
 									</c:otherwise>
 								</c:choose>
 							</div>
-							<span class="feed_name_txt">${boardList.MEM_NAME}</span>
-						</div>
-					</c:forEach>
-					<div class="_acyg" id="passwordForm">
-						<input type="hidden" name="MEM_IDX" id="MEM_IDX" value='<%= session.getAttribute("MEM_IDX")%>'>
-						<div class="_ab3p">
-							<aside class="_ad6_">
-								<label class="_ab3q">비밀번호</label>
-							</aside>
-							<div class="_ab3t">
-								<input type="password" id="delpass" name="delpass"
-									autocomplete="off">
-							</div>
-						</div>
-						<div class="_ab3p" style="justify-content: center;">
-							<aside class="_ad6_" style="text-align: left; padding-left: 0px;">
-								<label class="_ab3q"><button onclick="memberDelete()"
-										value="탈퇴하기">탈퇴하기</button></label>
-							</aside>
-						</div>
-					</div>
-				</div>
-			</div>
+							<span class="feed_name_txt" id="mem_name">${block.MEM_NAME}</span>
+							<input type="hidden" id="mem_idx${status.index}" value="${block.MEM_IDX}">
+							<button onclick='blockunlock(mem_idx${status.index}.value,<%=session.getAttribute("MEM_IDX")%>)'>차단해제</button>
+						</div>						
+				</c:forEach>
 		</div>
-
-	</div>
-	<!-- 모달 게시글 이미지 업로드 시작 -->
-	﻿<%@ include file="upload_modal.jsp" %>
-
-
+		﻿<%@ include file="upload_modal.jsp"%>
 	</div>
 	<!-- 메인 바디 영역 끝 -->
 	<!-- 푸터 시작 -->
@@ -213,8 +180,7 @@
       modal_add_feed.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      location.reload();
 
     });
     // 모달 글쓰기 닫기
@@ -223,8 +189,7 @@
       modal_add_feed_content.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      location.reload();
     });
     
  	// 모달 위치 닫기
@@ -233,8 +198,7 @@
 	  modal_place_add.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      location.reload();
     });
 
     // 업로드 jquery
@@ -584,7 +548,6 @@
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e089b04e0ca2a1fd1287cb6610d9d01&libraries=services"></script>
 	<script src="./resources/js/kakaomap.js"></script>
-	
 
 	<script>
     const upload_list = document.querySelector('.upload_list'); //전체 슬라이드 컨테이너
@@ -687,24 +650,27 @@
     }
 
   </script>
-	<script>
-  function memberDelete(){
-	  var idx = $('#MEM_IDX').val();
-	  var delpass = $('#delpass').val();
+  
+  <script>
+  function blockunlock(bidx, midx){
+	  var data = {"BLOCKM_IDX" : bidx,
+		  	  "MEM_IDX" : midx};
 	  
-	  $.ajax({
-	   	url: '/roomie/DeleteMem.ya',
-		data: {"MEM_IDX" : idx,
-			   "MEM_PWD" : delpass,},
-		type: 'POST',
-		dataType:'text',
-		success: function(status){
-					location.replace("/roomie/login.ya");
-				}
-	   		 
-	   	 });
-	  
+	  if(confirm("차단을 해제하시겠습니까?") == true){
+		  
+		  $.ajax({
+	          url: '/roomie/unlockbl.ya',
+	          
+	         data: data,
+	         type: 'POST',
+	         success: function(status){
+	        	 location.reload();
+	        	 alert("성공"); 
+	         }
+		  });
+	  }
   }
   </script>
+	
 </body>
 </html>

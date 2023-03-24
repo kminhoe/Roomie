@@ -1,5 +1,6 @@
 package roomie.common.option;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -147,6 +149,29 @@ public class OptionController {
 		session.invalidate();
 
 		return "/member/login";
+	}
+	
+	@GetMapping(value="/blockList.ya")
+	public ModelAndView BlockList(HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView("option/blockList");
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		
+		int idx = Integer.parseInt(session.getAttribute("MEM_IDX").toString());
+		System.out.println("idx : " +idx);
+		list = optionService.blockList(idx);
+		System.out.println("result list : " +list);
+		mv.addObject("blocklist", list);		
+		
+		return mv;
+	}
+	
+	@PostMapping(value="/unlockbl.ya")
+	@ResponseBody
+	public void unlockBlock(@RequestParam Map<String, Object> req) throws Exception{
+		System.out.println(req);
+		
+		optionService.unlockBlock(req);
+	
 	}
 
 }
