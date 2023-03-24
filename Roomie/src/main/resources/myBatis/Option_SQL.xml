@@ -59,4 +59,24 @@
 			select * from member where MEM_IDX = #{MEM_IDX}
 		]]>
 	</select>
+	
+	<select id="blockList" parameterType="int" resultType="hashmap">
+		<![CDATA[
+			select * from
+			(select blockm_idx, block_date 
+			from member m inner join 
+			block b on m.mem_idx = b.mem_idx
+			where b.mem_idx = #{MEM_IDX}) 
+			inner join member on 
+			mem_idx = blockm_idx 
+			order by block_date desc		
+		]]>
+	</select>
+	
+	<delete id="deleteblock">
+		<![CDATA[
+				delete from block
+				where mem_idx = #{MEM_IDX} and blockm_idx = #{BLOCKM_IDX}
+		]]>
+	</delete>
 </mapper>

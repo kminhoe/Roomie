@@ -20,4 +20,8 @@ public interface OptionService {
 	public void updateOpen(int idx) throws Exception;
 	
 	public List<Map<String, Object>> memSelect(Map<String, Object> map) throws Exception;
+	
+	public List<Map<String, Object>> blockList(int idx) throws Exception;
+	
+	public void unlockBlock(Map<String, Object> map) throws Exception;
 }
