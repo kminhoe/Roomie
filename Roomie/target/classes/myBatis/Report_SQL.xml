@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="report">
+
+ <insert id="reportInsert" parameterType="hashmap">
+   <![CDATA[
+      INSERT INTO REPORT(REP_IDX, REP_TYPE, REP_BOARD, REP_MEM, TARGET_MEM, REP_CONT, REP_DATE)
+      VALUES(
+      REPORT_SEQ.NEXTVAL,
+      #{REP_TYPE},
+      #{REP_BOARD},
+      #{REP_MEM},
+      #{TARGET_MEM},
+      #{REP_CONT},
+      SYSDATE
+      )
+   ]]>
+   </insert>
+
+
+</mapper>
