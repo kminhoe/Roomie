@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+
+
+<select id="memberSelect" parameterType="hashmap" resultType="hashmap">
+
+<![CDATA[
+		SELECT * FROM MEMBER
+	]]>
+
+</select>
+
+<select id="reportCheck" parameterType="hashmap" resultType="hashmap">
+
+<![CDATA[
+		 SELECT COUNT(TARGET_MEM), TARGET_MEM FROM REPORT GROUP BY TARGET_MEM;
+	]]>
+
+</select>
+
+
+</mapper>
