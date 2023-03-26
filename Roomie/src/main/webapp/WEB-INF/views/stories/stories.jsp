@@ -38,7 +38,7 @@ w<%@ page language="java" contentType="text/html; charset=UTF-8"
 
 			<c:choose>
 				<c:when test="${fn:substring(STORY_IMAGE, length -4, length) == '.mp4'}">
-			        <video id="videos" muted style="display: block; max-width: 100%;">
+			        <video id="videos${S.STORY_IDX}" muted style="display: block; max-width: 100%;">
 			            <source src="./resources/files/stories/${S.STORY_IMAGE}" type="video/mp4">
 			        </video>
 				</c:when> 
@@ -74,7 +74,7 @@ w<%@ page language="java" contentType="text/html; charset=UTF-8"
 			console.log("인덱스 : " + arr[index]);
 			
 	   		var paramData = {
-	  				"SC_MEM" : '15',
+	  				"SC_MEM" : "${MEM_ID}",
 	  				"STORY_IDX" : arr[index]
 	  			};
 	  		

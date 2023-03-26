@@ -1008,55 +1008,57 @@
 
   </script>
   
-  <script>
+    <script>
 
     var page = 0;
     var length = 0;
   
-   function readStories() {
-      var paramData = {"FRI_MEM": 1};
-      var htmls = '';
+	function readStories() {
+		var paramData = {"FRI_MEM" : "${MEM_ID}"};
+		var htmls = '';
 
-      $.ajax({
-         url: "/roomie/storiesList.ya"
-         , data : paramData 
-         , type : 'POST'
-         , dataType : 'json'
-         , success: function(status){
-             
-             for (i=0; i<status.length; i++) {
-               htmls += '<li class="sub_story" style="background-image: url(';
-               if (status[i].SC_DEL != "Y") {
-                htmls += "'./resources/image/rainbow.png'";
-               } else {
-                  htmls += "";
-               }
-             htmls += '">';
-             htmls += '<div class="text">';
-             htmls += '<a onclick="href=' + "'/roomie/stories.ya?STORY_MEM=" + status[i].STORY_MEM + "'" + '">';
-             htmls += '<img src="./resources/files/profile/' + status[i].MEM_MEDIA + '"alt="프로필"></a>'
-             htmls += '<span style="font-size: 12px; margin-left: 3px;);">' + status[i].MEM_USER + '</span>';
-             htmls += '</div>';
-             htmls += '</li>';
-             }
-             
-             length = status.length;
-             
-             // visibility:hidden
-             if (status.length <= 5) {
-                $('.story_next').css("visibility", "hidden");
-             }
-             
-             
-             $('.story_list').html(htmls);
-             
-         }
-         , error: function(error){
-            console.log("에러 : " + error);
-         }
-      });
-   }
+		$.ajax({
+			url: "/roomie/storiesList.ya"
+			, data : paramData 
+			, type : 'POST'
+			, dataType : 'json'
+			, success: function(status){
+	          
+	          for (i=0; i<status.length; i++) {
+	      		htmls += '<li class="sub_story" style="background-image: url(';
+	      		if (status[i].SC_DEL != "Y") {
+	    			htmls += "'./resources/image/rainbow.png'";
+	      		} else {
+	      			htmls += "";
+	      		}
+	    		htmls += '">';
+	    		htmls += '<div class="text">';
+	    		htmls += '<a onclick="href=' + "'/roomie/stories.ya?STORY_MEM=" + status[i].STORY_MEM + "'" + '">';
+	    		htmls += '<img src="./resources/files/profile/' + status[i].MEM_MEDIA + '"alt="프로필"></a>'
+	    		htmls += '<span style="font-size: 12px; margin-left: 3px;);">' + status[i].MEM_USER + '</span>';
+	    		htmls += '</div>';
+	    		htmls += '</li>';
+	          }
+	          
+	          length = status.length;
+	          
+	          // visibility:hidden
+	          if (status.length <= 5) {
+	        	  $('.story_next').css("visibility", "hidden");
+	          }
+	          
+	          
+	          $('.story_list').html(htmls);
+	          
+			}
+			, error: function(error){
+				console.log("에러 : " + error);
+			}
+		});
+	}
   </script>
+  
+  
   <script>
 
      // 왼쪽 버튼
@@ -1201,7 +1203,7 @@
 			sessionStorage.setItem("BO_MEM", bo_mem ); // 저장
 			
 			 console.log(bo_idx);
-			 console.log(bo_name);
+			 console.log("BO_NAME 확인 : " + bo_name);
 			
 			 console.log("세션 저장 확인 : " + sessionStorage.getItem("BO_IDX")); // mineItRecord
 			

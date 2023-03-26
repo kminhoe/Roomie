@@ -100,9 +100,9 @@
                               <img id="input_profile_image" class="profile_img"
                                  src="resources/image/profile_05.jpg">
                            </div>
-                           <span id="input_user_id" class="feed_name_txt">${MEMBER.MEM_USER}</span>
+                           <span id="input_user_id" class="feed_name_txt">${MEMBER.MEM_NAME}</span>
                            <input type="hidden" id="mem_id" value="${MEMBER.MEM_ID}">
-                           <input type="hidden" id="mem_user" value="${MEMBER.MEM_USER}">
+                           <input type="hidden" id="mem_user" value="${MEMBER.MEM_NAME}">
                            
                         </div>
                         <br />
