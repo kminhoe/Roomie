@@ -111,7 +111,7 @@
 					</c:when>
 					<c:otherwise>
 						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
-							src="${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
+							src="resources/image/${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
 							
 					</c:otherwise>
 				</c:choose>
@@ -658,7 +658,7 @@
      $(document).ready(function(){
         
        // 스토리 리스트 불러오기
-       readStories();
+       /* readStories(); */
         
         var arr = new Array;
         var arr2 = new Array;

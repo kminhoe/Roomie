@@ -2,6 +2,11 @@
 	margin-top: 300px;
 	width: 100%;
 }
+.optionline2 {
+	margin-top: 50px;
+	width: 100%;
+	border-bottom: 1px solid #dee5e7;
+}
 
 ._ab3p {
 	display: flex;
@@ -59,12 +64,8 @@
 	padding: 0;
 	vertical-align: baseline;
 }
-
-.current-page-link:before {
-	content: "\00bb"; /* ">" 기호 */
-	margin-right: 5px; /* ">" 기호와 링크 사이의 간격 */
-}
-
-.current-page-link {
-	font-weight: bold; /* 링크 텍스트 굵게 표시 */
+.optionmenu{
+	text-decoration: none;
+	color: black;
+	
 }

@@ -88,15 +88,15 @@
 			style="width: 850px; height: 750px; flex-direction: row;">
 			<ul style="width: 250px; flex-direction: column;">
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/optionList.ya" class="current-page-link">비밀번호 변경</a></li>
+					href="/roomie/optionList.ya" class="optionmenu">비밀번호 변경</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/blockList.ya" class="current-page-link">차단 계정</a></li>
+					href="/roomie/blockList.ya" class="optionmenu">차단 계정</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/lockList.ya" class="current-page-link">비공개 설정</a></li>
+					href="/roomie/lockList.ya" class="optionmenu">비공개 설정</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/logoutForm.ya" class="current-page-link">로그아웃</a></li>
+					href="/roomie/logoutForm.ya" class="optionmenu">로그아웃</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/memberDelete.ya" class="current-page-link">탈퇴</a></li>
+					href="/roomie/memberDelete.ya" class="optionmenu">탈퇴</a></li>
 				<div class="optionline"></div>
 				<div style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
 					<img class="navbar-brand"
@@ -115,21 +115,22 @@
 										<img class="profile_img" src="resources/image/icon_p.jpg">
 									</c:when>
 									<c:otherwise>
-										<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+										<img class="profile_img" src="resources/files/profile/${boardList.MEM_MEDIA }">
 									</c:otherwise>
 								</c:choose>
 							</div>
 							<span class="feed_name_txt">${boardList.MEM_NAME}</span>
 						</div>
 					</c:forEach>
-					<div class="_acyg" id="passwordForm">
+					<div class="_acyg" id="passwordForm">					
 						<input type="hidden" name="MEM_IDX" id="MEM_IDX" value='<%= session.getAttribute("MEM_IDX")%>'>
 						<div class="_ab3p">
 							<aside class="_ad6_">
 								<label class="_ab3q">이전 비밀번호</label>
 							</aside>
 							<div class="_ab3t">
-								<input type="password" id="originalpass" name="originalpass" autocomplete="off">
+							<input autocomplete="current-password" class="_aaie _aaic _ag7n" spellcheck="true" type="password" 
+								id="originalpass" name="originalpass" autocomplete="off">
 							</div>
 						</div>
 						<div class="_ab3p">
@@ -202,7 +203,7 @@
 <!-- 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="./resources/js/jquery.validate.min.js"></script>
+	
 	<!-- 모달 스크립트 -->
 	<script>
  
@@ -697,43 +698,41 @@
     }
 
   </script>
+<script src="./resources/js/jquery-3.2.1.min.js"></script>
 <script src="./resources/js/jquery.validate.min.js"></script>
   
-  <script>
-    $(function(){
-    	
-    	var html = '<div style="position: relative; z-index: 1; margin-left: -30px; margin-top: 5px;"><img style="object-fit: contain; position: absolute; right: 5px; transform: translateY(-136%);" src="./resources/image/icon_23.png"></div>';
+<script>
+  $(function(){
+    var html = '<div style="position: relative; z-index: 1; margin-left: -30px; margin-top: 5px;"><img style="object-fit: contain; position: absolute; right: 5px; transform: translateY(-136%);" src="./resources/image/icon_23.png"></div>';
 
-    	// 유효성 검사
-        $("._acyg").validate({
-        //규칙
-        rules:{
-        	newpass: {
-            required : true, // 필수 입력 여부
-            minlength : 8	// 최소 입력 글자수
-          },
-         	newpasscheck: {
-            required : true,
-            minlength : 8,
-            equalTo : newpass
-          }
-          
+    // 유효성 검사
+    $("._acyg").validate({
+      //규칙
+      rules:{
+        newpass: {
+          required : true, // 필수 입력 여부
+          minlength : 8	// 최소 입력 글자수
         },
-          //메시지
-        messages: {
-          
-          newpass: {
-            required : html, // 비밀번호는 필수 입력입니다.
-            minlength : html // 최소 8글자 이상 입력해주세요.
-          },
-          newpasscheck: {
-            required : html, // 비밀번호 확인은 필수 입력입니다.
-            minlength : html, // 최소 8글자 이상 입력해주세요.
-            equalTo : html // 비밀번호가 일치하지 않습니다.
-          }
+        newpasscheck: {
+          required : true,
+          minlength : 8,
+          equalTo : "newpass" // newpass 필드의 name 속성값
+        }
+      },
+      //메시지
+      messages: {
+        newpass: {
+          required : html, // 비밀번호는 필수 입력입니다.
+          minlength : html // 최소 8글자 이상 입력해주세요.
         },
-        //메시지 태그
-        errorElement : 'span', 	// 태그
+        newpasscheck: {
+          required : html, // 비밀번호 확인은 필수 입력입니다.
+          minlength : html, // 최소 8글자 이상 입력해주세요.
+          equalTo : html // 비밀번호가 일치하지 않습니다.
+        }
+      },
+      //메시지 태그
+      errorElement : 'span', 	// 태그
         errorClass : 'error',	// 클레스 이름
         validClass :'vaild' 
       });

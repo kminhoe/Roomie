@@ -53,11 +53,8 @@ public class BoardController {
 		
 		log.info("update ajax post......");
 		
-		System.out.println("이거니?"+uploadFile);
-		
-		
-		String uploadFolder = session.getServletContext().getRealPath("/resources/files/board/");
-		
+		System.out.println("이거니?"+uploadFile);		
+		String uploadFolder = session.getServletContext().getRealPath("/resources/files/board/");		
 		System.out.println("경로 : " + uploadFolder);
 		
 		//String uploadFolderPath = getFolder();
@@ -150,7 +147,8 @@ public class BoardController {
 	
 	@PostMapping(value="/boardInsert.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<String> insertboard(HttpSession session, MultipartHttpServletRequest request, @RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
+	public ResponseEntity<String> insertboard(HttpSession session, MultipartHttpServletRequest request, 
+											@RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
 		Map<String, Object> hm = new HashMap<>();
 		System.out.println("받았니? : " + request);
 		System.out.println("받았니? : " + map);
@@ -179,16 +177,12 @@ public class BoardController {
 					boardService.inserthasg(hm);
 					System.out.println(hm);
 				}
-			}
-			
-			
-	
+			}	
 		}else {
 			System.out.println(map.get("BO_IDX"));
 		}
 		
 		return new ResponseEntity<String>("redirect:/roomie/boardList.ya", HttpStatus.OK);
-
 		
 	}
 	
@@ -201,7 +195,7 @@ public class BoardController {
 		//좋아요 확인
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("LIKEB_MEM", 2);
+		map.put("LIKEB_MEM", session.getAttribute("MEM_IDX"));
 
 		List<Map<String, Object>> like = boardService.likeCheck(map);
 		
