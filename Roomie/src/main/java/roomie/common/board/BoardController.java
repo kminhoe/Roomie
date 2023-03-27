@@ -53,11 +53,8 @@ public class BoardController {
 		
 		log.info("update ajax post......");
 		
-		System.out.println("이거니?"+uploadFile);
-		
-		
-		String uploadFolder = session.getServletContext().getRealPath("/resources/files/board/");
-		
+		System.out.println("이거니?"+uploadFile);		
+		String uploadFolder = session.getServletContext().getRealPath("/resources/files/board/");		
 		System.out.println("경로 : " + uploadFolder);
 		
 		//String uploadFolderPath = getFolder();

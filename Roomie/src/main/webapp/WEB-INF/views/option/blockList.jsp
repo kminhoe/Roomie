@@ -85,15 +85,15 @@
 			style="width: 850px; height: 750px; flex-direction: row;">
 			<ul style="width: 250px; flex-direction: column;">
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/optionList.ya" class="current-page-link">비밀번호 변경</a></li>
+					href="/roomie/optionList.ya" class="optionmenu">비밀번호 변경</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/blockList.ya" class="current-page-link">차단 계정</a></li>
+					href="/roomie/blockList.ya" class="optionmenu">차단 계정</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/lockList.ya" class="current-page-link">비공개 설정</a></li>
+					href="/roomie/lockList.ya" class="optionmenu">비공개 설정</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/logoutForm.ya" class="current-page-link">로그아웃</a></li>
+					href="/roomie/logoutForm.ya" class="optionmenu">로그아웃</a></li>
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
-					href="/roomie/memberDelete.ya" class="current-page-link">탈퇴</a></li>
+					href="/roomie/memberDelete.ya" class="optionmenu">탈퇴</a></li>
 				<div class="optionline"></div>
 				<div style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
 					<img class="navbar-brand"
@@ -102,28 +102,39 @@
 						있으시면 roomie와 대화해보세요</span>
 				</div>
 			</ul>
-			<div style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
+			<div style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%; overflow: auto;">
+				<div>
+					<span>차단 관리</span>
+				</div>
+				<div>회원님께서 차단하신 친구리스트입니다. 차단을 해제 하실려면 해제 버튼을 눌러주세요.</div>
+					<div class="optionline2"></div>
 				<div>
 					<c:forEach var="block" items="${blocklist}" varStatus="status">
 						<div class="feed_name" style="margin: 5px 0 0 100px;">
-							<div class="profile_box">
+							<div class="profile_box" style="float: left;">
 								<c:choose>
 									<c:when test="${empty block.MEM_MEDIA}">
 										<img class="profile_img" src="resources/image/icon_p.jpg">
 									</c:when>
 									<c:otherwise>
-										<img class="profile_img" src="/roomie/${block.MEM_MEDIA }">
+										<img class="profile_img" src="resources/files/profile/${block.MEM_MEDIA }">
 									</c:otherwise>
 								</c:choose>
 							</div>
-							<span class="feed_name_txt" id="mem_name">${block.MEM_NAME}</span>
-							<input type="hidden" id="mem_idx${status.index}" value="${block.MEM_IDX}">
-							<button onclick='blockunlock(mem_idx${status.index}.value,<%=session.getAttribute("MEM_IDX")%>)'>차단해제</button>
+							<div>
+								<span class="feed_name_txt" id="mem_name">${block.MEM_NAME}</span>
+							</div>
+								<input type="hidden" id="mem_idx${status.index}" value="${block.MEM_IDX}">							
+							<div style="float: right; margin-left: 200px;">
+								<button class="login-button" onclick='blockunlock(mem_idx${status.index}.value,<%=session.getAttribute("MEM_IDX")%>)'>차단해제</button>
+							</div>
 						</div>						
 				</c:forEach>
+			</div>
 		</div>
 		﻿<%@ include file="upload_modal.jsp"%>
 	</div>
+	
 	<!-- 메인 바디 영역 끝 -->
 	<!-- 푸터 시작 -->
 	<footer>
