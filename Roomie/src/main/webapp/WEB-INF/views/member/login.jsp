@@ -289,12 +289,12 @@ onclick="send()"
   
   function send(){
 	  
-	  var email = {"mail" : $("input[name='MEM_ID']").val()};
+	  var mail = {"mail" : $("input[name='mem_id']").val()};
 	    
 	    
 	    $.ajax({
 	        url : "/roomie/emailcheck.ya" 
-	        ,data :email
+	        ,data :mail
 	        ,success: function(map){
 	        	  
 	        	let arr = new Array();

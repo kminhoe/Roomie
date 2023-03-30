@@ -89,6 +89,7 @@ public class MemberController {
 				// 계정 잠금 여부
 				if (memberMap.get("MEM_LOCK").equals("Y")) {
 					System.out.println("상태 : 계정 잠금");
+					System.out.println("아이디 확인 : " + memberMap.get("MEM_ID"));
 					dir.addFlashAttribute("login", "lock");
 				    dir.addFlashAttribute("mem_id", memberMap.get("MEM_ID"));
 					mv.setViewName("redirect:/login.ya");
@@ -460,6 +461,8 @@ public class MemberController {
  		ModelAndView mv = new ModelAndView("member/passwordreset");
  		
  		 Map<String, Object> reset = new  HashMap<String, Object>();
+ 		 
+ 		Map<String, Object> lock = new  HashMap<String, Object>();
  		
  		if(map.get("password") != null ) {
 
@@ -469,7 +472,17 @@ public class MemberController {
          System.out.println("reset map 확인 : " + reset);
  		
  		memberService.passwordreset(reset);
+ 		
+ 		//idx값 찾기
+ 		String id = (String) map.get("email");
+ 		
+ 		Map<String, Object> mem = memberService.emailcheck(id);
+ 		
+ 		lock.put("mem_idx", mem.get("MEM_IDX"));
+ 		memberService.statusChange(lock);
+ 		
  		}
+ 		
  		else if(map.get("password") == null) {
  			System.out.println("비밀번호 입력 X");
  		}

@@ -47,4 +47,11 @@ public class MemberDAO {
     public String selectMemberName(String name) throws Exception{
     	return sqlSessionTemplate.selectOne("member.selectMemberName", name);
     }
+    
+    
+    //잠금 풀었을 때 경고 상태 변경하기
+    public int statusChange(Map<String, Object> map) throws Exception{
+		return sqlSessionTemplate.update("member.statusChange", map);
+	}
+    
 }

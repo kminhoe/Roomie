@@ -20,9 +20,49 @@ public class AdminDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("admin.memberSelect", map);
 	}
 	
-	public Map<String, Object> reportCheck(Map<String, Object> map) throws Exception{
+	public List<Map<String, Object>> memberSelectOne(Map<String, Object> map) throws Exception{
 		
-		return sqlSessionTemplate.selectOne("admin.reportCheck",map);
+		return (List<Map<String, Object>>) selectList("admin.memberSelectOne",map);
+		}
+	
+	public int warning(Map<String, Object> map) throws Exception{
+		
+		return sqlSessionTemplate.update("admin.warning", map);
+		}
+	
+    public int nothing(Map<String, Object> map) throws Exception{
+		
+		return sqlSessionTemplate.update("admin.nothing", map);
+		}
+    
+   public int lockMember(Map<String, Object> map) throws Exception{
+		
+		return sqlSessionTemplate.update("admin.lockMember", map);
+		}
+   
+   public int delMember(Map<String, Object> map) throws Exception{
+		
+		return sqlSessionTemplate.update("admin.delMember", map);
+		}
+   
+   public int changeStatus(Map<String, Object> map) throws Exception{
+		
+		return sqlSessionTemplate.update("admin.changeStatus", map);
+		}
+   
+   //게시판
+   public List<Map<String, Object>> boardSelect() throws Exception {
+		return (List<Map<String, Object>>) selectList("admin.boardSelect");
+	}
+   
+   public List<Map<String, Object>> boardSelectOne(Map<String, Object> map) throws Exception{
+		
+		return (List<Map<String, Object>>) selectList("admin.boardSelectOne",map);
+		}
+   
+   public Map<String, Object> boardLike(Map<String, Object> map) throws Exception{
+		
+		return sqlSessionTemplate.selectOne("admin.boardLike",map);
 		}
 
 }
