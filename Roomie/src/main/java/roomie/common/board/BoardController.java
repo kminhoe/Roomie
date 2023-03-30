@@ -195,10 +195,12 @@ public class BoardController {
 		
 		System.out.println("세션 확인 : " + session.getAttribute("MEM_IDX"));
 		
+		int idx1 = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
+		
 		//좋아요 확인
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("LIKEB_MEM", 2);
+		map.put("LIKEB_MEM", idx1);
 
 		List<Map<String, Object>> like = boardService.likeCheck(map);
 		
