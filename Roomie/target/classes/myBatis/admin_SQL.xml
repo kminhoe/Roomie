@@ -9,18 +9,103 @@
 <select id="memberSelect" parameterType="hashmap" resultType="hashmap">
 
 <![CDATA[
-		SELECT * FROM MEMBER
+		 SELECT * FROM MEMBER 
+ LEFT JOIN (SELECT COUNT(TARGET_MEM)AS COUNT, TARGET_MEM FROM REPORT GROUP BY TARGET_MEM) ON MEM_IDX = TARGET_MEM
 	]]>
 
 </select>
 
-<select id="reportCheck" parameterType="hashmap" resultType="hashmap">
+<select id="memberSelectOne" parameterType="hashmap" resultType="hashmap">
 
 <![CDATA[
-		 SELECT COUNT(TARGET_MEM), TARGET_MEM FROM REPORT GROUP BY TARGET_MEM;
+
+SELECT ROW_NUMBER() OVER (ORDER BY R.REP_DATE DESC) RN, M.*, R.*
+FROM MEMBER M
+INNER JOIN REPORT R ON M.MEM_IDX = R.TARGET_MEM
+WHERE M.MEM_IDX = #{MEM_IDX}
+ORDER BY R.REP_DATE DESC
 	]]>
 
 </select>
 
+
+<update id="warning" parameterType="hashmap" >
+
+<![CDATA[
+		  UPDATE REPORT 
+		  SET REP_STATUS = '경고처리'
+		  WHERE REP_IDX = #{REP_IDX}	]]>
+
+</update>
+
+<update id="nothing" parameterType="hashmap" >
+
+<![CDATA[
+		  UPDATE REPORT 
+		  SET REP_STATUS = '해당없음'
+		  WHERE REP_IDX = #{REP_IDX}	]]>
+
+</update>
+
+<update id="lockMember" parameterType="hashmap" >
+
+<![CDATA[
+		  UPDATE MEMBER 
+		  SET MEM_LOCK = 'Y'
+		  WHERE MEM_IDX = #{MEM_IDX}	]]>
+
+</update>
+
+<update id="delMember" parameterType="hashmap" >
+
+<![CDATA[
+		  UPDATE MEMBER 
+		  SET MEM_DEL = '0'
+		  WHERE MEM_IDX = #{MEM_IDX}	]]>
+
+</update>
+
+<update id="changeStatus" parameterType="hashmap" >
+
+<![CDATA[
+		  UPDATE MEMBER 
+		  SET MEM_DEL = '1', MEM_LOCK = 'N'
+		  WHERE MEM_IDX = #{MEM_IDX}	]]>
+
+</update>
+
+
+
+<!-- 게시판 -->
+<select id="boardSelect" parameterType="hashmap" resultType="hashmap">
+
+<![CDATA[
+		 SELECT * FROM BOARD
+ LEFT JOIN (SELECT COUNT(TARGET_MEM)AS COUNT, TARGET_MEM FROM REPORT WHERE REP_TYPE = 'board' GROUP BY TARGET_MEM) ON BO_MEM = TARGET_MEM
+	]]>
+
+</select>
+
+<select id="boardSelectOne" parameterType="hashmap" resultType="hashmap">
+
+<![CDATA[
+
+SELECT ROW_NUMBER() OVER (ORDER BY R.REP_DATE DESC) RN, M.*, R.*
+FROM BOARD M
+INNER JOIN REPORT R ON M.BO_MEM = R.TARGET_MEM
+WHERE M.BO_IDX = #{BO_IDX} AND R.REP_TYPE = 'board'
+ORDER BY R.REP_DATE DESC
+	]]>
+
+</select>
+
+<select id="boardLike" parameterType="hashmap" resultType="hashmap">
+
+<![CDATA[
+
+SELECT COUNT(*) AS COUNT FROM BO_LIKE WHERE LIKEB_BOARD = #{BO_IDX}
+	]]>
+
+</select>
 
 </mapper>

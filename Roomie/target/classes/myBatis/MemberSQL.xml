@@ -97,4 +97,12 @@
 		]]>
 	</select>
 	
+
+	
+	<update id="statusChange" parameterType="hashmap">
+	<![CDATA[
+		update report set REP_STATUS = '처리완료' where TARGET_MEM = #{mem_idx} AND REP_STATUS = '경고처리'
+	]]>
+</update>
+	
 </mapper>

@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>roomie admin</title>
+<title>ROOMIE ADMIN</title>
 
   <head>
     <meta charset="utf-8">
@@ -133,7 +134,7 @@
                 <select id="id_search_select" class="form-select" data-control="select2" data-placeholder="Select an option" data-hide-search="true">
                     <option value="1"  selected >전체</option>
                     <option value="2" >회원명</option>
-                    <option value="3" >법인명</option>
+                    <option value="3" >이메일</option>
                 </select>
             </div>
             <input id="id_search_word" type="text" class="form-control form-control-solid" name="name"  value="" >
@@ -180,15 +181,15 @@
             <div id="id_report_type_div" class="d-flex fw-bold h-100">
                 <div class="form-check form-check-custom form-check-solid me-9">
                     <input class="form-check-input" name="radio_input3" type="radio" value="-1"  checked="checked" >
-                    <label class="form-check-label ms-3">전체</label>
+                    <label class="form-check-label">전체</label>
                 </div>
                 <div class="form-check form-check-custom form-check-solid me-9">
                     <input class="form-check-input" name="radio_input3" type="radio" value="0" >
-                    <label class="form-check-label ms-3">있음</label>
+                    <label class="form-check-label">있음</label>
                 </div>
                 <div class="form-check form-check-custom form-check-solid">
                     <input class="form-check-input" name="radio_input3" type="radio" value="1" >
-                    <label class="form-check-label ms-3">없음</label>
+                    <label class="form-check-label">없음</label>
                 </div>
             </div>
         </div>
@@ -227,7 +228,7 @@
                 <th>회원명</th>
                 <th>이메일</th>
                 <th class="text-center" colspan="4">처리 안된 피신고</th>
-                <th>메모</th>
+                <th>가입일</th>
             </tr>
         </thead>
         <tbody>
@@ -235,23 +236,28 @@
             <c:forEach var="member" items="${member}">
             
             <tr>
-                <td><a href="./detail/aXeyNPyMZnAE3mCTXAgbSe" class="text-dark text-truncate">${member.MEM_NAME}</a></td>
+                <td><a class="loc">${member.MEM_NAME}</a></td>
+                <input type="hidden" id="mem_idx" value="${member.MEM_IDX}"/>
+                
                 <td class="text-truncate">${member.MEM_ID}</td>
 
+                <c:choose>
+                <c:when test="${member.COUNT != null}">
                 <td class="text-center"colspan="4">                                
-                2
+                ${member.COUNT}
                 </td>
+                </c:when>
+                <c:otherwise>
+                <td class="text-center"colspan="4">                                
+                0
+                </td>
+                </c:otherwise>
+                </c:choose>
+                
                 <td name="na_memo_td" data-member_uuid='aXeyNPyMZnAE3mCTXAgbSe' data-memo=''>
                     <div class="popover-markup">
-                        <a class="trigger text-gray-900 cursor-pointer" data-bs-dismiss="true">
-                            
-                            <span>메모 입력하기</span>
-                            
-                        </a>
-                        <div class="title text-gray-900" hidden>
-                        </div>
-                        <div class="content p-0">
-                        </div>
+                        <fmt:formatDate value="${member.MEM_RDATE}" pattern="yyyy-MM-dd" />
+                        
                     </div>
                 </td>
             </tr>
@@ -268,6 +274,45 @@
 </div>
 
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+
+	
+	let loc = document.querySelectorAll('.loc'); 
+	let idx = document.querySelectorAll('#mem_idx'); 
+	
+	for(let i=0; i < loc.length; i++){
+		
+		loc[i].addEventListener('click',function(){
+			
+			let mem_idx = idx[i].value;
+			
+			console.log(mem_idx);
+			
+			$.ajax({
+			    url: "/roomie/adminMemberC.ya",
+			    type: "GET",
+			    data: { mem_idx: mem_idx },
+			    success: function(data) {
+			        
+			    	console.log("확인" + mem_idx);
+			        window.location.href = "/roomie/adminMemberD.ya?mem_idx=" + mem_idx;
+			        
+			    },
+			    error: function(xhr, status, error) {
+			        console.error("전송 실패: " + error);
+			    }
+			});
+			
+			
+		});
+		
+	}
+	
+
+
+</script>
   </body>
 </html>
