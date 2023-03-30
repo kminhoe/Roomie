@@ -86,4 +86,14 @@ public class MemberServiceImpl implements MemberService {
 		public String selectMemberName(String String) throws Exception {
 			return memberDAO.selectMemberName(String);
 		}
+
+		//신고 상태 변경
+		@Override
+		public void statusChange(Map<String, Object> map) throws Exception {
+			// TODO Auto-generated method stub
+			memberDAO.statusChange(map);
+		}
+		
+
+		
 }
