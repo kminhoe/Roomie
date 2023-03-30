@@ -3,6 +3,7 @@ package roomie.common.user;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +22,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import roomie.common.like.LikeService;
+
 @Controller
 public class UserController {
 	
 	@Resource(name="userService")
 	private UserService userService;
+	@Resource(name="replyService")
+	private ReplyService replyService;
+	@Resource
+	private LikeService likeService;
 	
 	String base_path = "";
 	String base_path2 = "";
@@ -37,7 +44,6 @@ public class UserController {
 		HttpSession session = req.getSession();
 		mv.addObject("session", session.getAttribute("MEM_ID"));
 		map.put("BO_MEM", map.get("mem_idx"));
-		System.out.println(map);
 		System.out.println("session: " + session.getAttribute("MEM_ID"));
 		
 		//member profile
@@ -49,7 +55,6 @@ public class UserController {
 		follower.put("FRI_MEM", mapper.get("MEM_ID"));
 		Map<String,Object> followerresult = userService.userFollower(follower);
 		List<Map<String,Object>> followerList = userService.userFollowerList(follower);
-		System.out.println("follower: " +follower);
 		mv.addObject("follow", followerresult);
 		mv.addObject("followerList", followerList);
 		
@@ -64,23 +69,51 @@ public class UserController {
 		
 		//boardCount
 		Map<String,Object> board = userService.userBoard(map);
+		System.out.println(board);
 		board.put("BO_MEM", map.get("mem_idx"));
 		mv.addObject("board", board);
 		List<Map<String,Object>> boardList = userService.userBoardList(board);
-		System.out.println(board);
 		mv.addObject("boardList", boardList);
 		
-		//Comments count
-		Map<String,Object> commMapper = new HashMap<String,Object>();
-		
-		for(Map<String,Object> c: boardList) {
-			commMapper.put("COM_ARTNO", c.get("BO_IDX"));
+		for(Map<String,Object> commentMapper : boardList ) {
+			System.out.println("commentMapper: " + commentMapper.get("BO_IDX"));
+			
+			Map<String,Object> comMap = new HashMap<String,Object>();
+			comMap.put("BO_IDX", commentMapper.get("BO_IDX"));
+			System.out.println("ComMap: " + comMap);
+			List<Map<String,Object>> commentList = replyService.commentList(comMap);
+			mv.addObject("commentList", commentList);
 		}
-		System.out.println(commMapper);
-		Map<String,Object> comments = userService.selectComment(commMapper);
-		mv.addObject("comments", comments);
-		List<Map<String,Object>> commentList = userService.commentList(comments);
-		mv.addObject("commentList", commentList);
+		
+//		//LIKE
+//		//좋아요 확인
+//				Map<String, Object> likeMap = new HashMap<>();
+//				
+//				map.put("LIKEB_MEM", session.getAttribute("MEM_ID"));
+//
+//				List<Map<String, Object>> like = userService.likeCheck(likeMap);
+//				
+//				System.out.println(like);
+//				
+//				mv.addObject("LIKEB", like);
+//				
+//				//like board 배열에 담기
+//				List<Integer> list1 = new ArrayList<Integer>();
+//						
+//				for(int i=0; i < like.size(); i++) {
+//					
+//					list1.add(i, Integer.parseInt(String.valueOf(like.get(i).get("LIKEB_BOARD"))));
+//					
+//				}
+//				
+//				System.out.println(list1);
+//				
+//				int idx = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
+//				
+//		
+//		
+		
+		
 		
 		
 		return mv;
@@ -210,12 +243,6 @@ public class UserController {
 	
 	@RequestMapping(value="/userFollowing.ya")
 	public ModelAndView userFollowing(@RequestParam Map<String,Object>map)throws Exception{
-		ModelAndView mv = new ModelAndView("/profile/profile");
-		return mv;
-	}
-	
-	@RequestMapping(value="/commentList.ya")
-	public ModelAndView commentList(@RequestParam Map<String,Object>map, HttpServletRequest req) throws Exception {
 		ModelAndView mv = new ModelAndView("/profile/profile");
 		return mv;
 	}
