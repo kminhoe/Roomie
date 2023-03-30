@@ -137,7 +137,7 @@
 	        url : "/roomie/passwordreset.ya" 
 	        ,data :data
 	        ,success: function(data){	        	
-	        		alert("보내기 성공");
+	        		//alert("보내기 성공");
 	        		location.href = '/roomie/login.ya'
 	        },error : function(req,status,err){
 	        	alert("실패");

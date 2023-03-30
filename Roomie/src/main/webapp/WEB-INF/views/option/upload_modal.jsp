@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 
 <!-- webSocket 세션 js -->
@@ -39,10 +41,8 @@
                   <div class="modal_image_upload" style="position: fixed;">
                      <!-- 업로드 공간 -->
                      <div class="upload">
-                        <ul class="upload_list"> 
-                   
-                        </ul>
-                        
+                        <ul class="upload_list">                    
+                        </ul>                        
                         </div>
                   </div>
                   <div class="image_upload"
@@ -96,13 +96,16 @@
                      <div id="input_image" class="modal_image_upload_content"></div>
                      <div class="modal_content_write">
                         <div class="feed_name">
-                           <div class="profile_box">
-                              <img id="input_profile_image" class="profile_img"
-                                 src="resources/image/profile_05.jpg">
+                           <div class="profile_box">                              
+                                 <c:if test="${empty MEMBER.MEM_MEDIA}">
+									<img id="input_profile_image" class="profile_img" src="resources/image/icon_p.jpg" > 
+								 </c:if>
+								 	<img id="input_profile_image" class="profile_img"
+                                 src="resources/image/${MEMBER.MEM_MEDIA }">								 
                            </div>
-                           <span id="input_user_id" class="feed_name_txt">${MEMBER.MEM_USER}</span>
+                           <span id="input_user_id" class="feed_name_txt">${MEMBER.MEM_NAME}</span>
                            <input type="hidden" id="mem_id" value="${MEMBER.MEM_ID}">
-                           <input type="hidden" id="mem_user" value="${MEMBER.MEM_USER}">
+                           <input type="hidden" id="mem_user" value="${MEMBER.MEM_NAME}">
                            
                         </div>
                         <br />

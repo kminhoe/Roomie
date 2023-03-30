@@ -6,60 +6,8 @@
 <html>
 
 <!-- webSocket 세션 js -->
-<link rel="js" type="text/css"
-   href="resources/js/web.js">
+<link rel="js" type="text/css" href="resources/js/web.js">
 
-
-<style>
-.onoff-switch-container{
-  display:inline-block;
-  width: 140px;
-  height: 30px;
-  position:relative;
-}
-.onoff-switch-container input[type="checkbox"]{
-  position: absolute;
-  width: 0px;
-  height: 0px;
-  overflow: hidden;
-}
-.onoff-switch-container label{
-  padding-left: 70px;
-  line-height: 30px;
-  font-size: 16px;
-}
-.onoff-switch-container label::after{  
-  position:absolute;
-  top:3px;
-  left:4px;
-  content:'';
-  width: 24px;
-  height: 24px;
-  background: #d1d1d1;
-  border-radius: 100%;
-  transition: all 0.3s
-    
-}
-.onoff-switch-container label::before{
-  position:absolute;
-  top:0;
-  left:0;
-  content:'';
-  width: 60px;
-  height: 30px;
-  border:1px solid #d1d1d1;
-  border-radius: 20px;
-  background: #f1f1f1;
-  box-sizing: border-box;
-}
-.onoff-switch-container input[type="checkbox"]:checked + label::after {
-  transform: translateX(28px);
-  background: gold;
-}
-.onoff-switch-container input[type="checkbox"]:checked + label::before {
-  background: #fff;
-}
-</style>
 <head>
 <!-- kakao 지도 스타일끝 -->
 <!-- Required meta tags -->
@@ -132,7 +80,6 @@
 	</nav>
 	<!-- 상단 내비게이션 바 끝 -->
 
-	<!-- 메인 바디 영역 시작 -->
 	<div class="main_body" style="padding-top: 100px;">
 		<div class="border left_body"
 			style="width: 850px; height: 750px; flex-direction: row;">
@@ -148,36 +95,46 @@
 				<li style="padding: 16px 16px 16px calc(32px - 2px);"><a
 					href="/roomie/memberDelete.ya" class="optionmenu">탈퇴</a></li>
 				<div class="optionline"></div>
-				<div
-					style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
+				<div style="padding: 16px 16px 16px calc(32px - 2px); border-top: 1px solid #dee2e6;">
 					<img class="navbar-brand"
 						style="height: 44px; object-fit: contain;"
-						src="resources/image/Roomie5.png"><span>불편한 사항이 있으시면
-						roomie와 대화해보세요</span>
+						src="resources/image/Roomie5.png"><span>불편한 사항이
+						있으시면 roomie와 대화해보세요</span>
 				</div>
 			</ul>
-			<div
-				style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
-				<p>비공개 설정</p>
+			<div style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%; overflow: auto;">
 				<div>
-					<span><h9>게시물 공개 설정</h9></span>
-				
-				<c:if test="${boardList.MEM_OPEN == Y }">
-				<div class="onoff-switch-container">
-					<input type="checkbox" name="onoff-switch" id="onoff-switch1" checked/> <label
-						for="onoff-switch1"></label>
-						</div>
-				</c:if>
+					<span>차단 관리</span>
 				</div>
-
-
+				<div>회원님께서 차단하신 친구리스트입니다. 차단을 해제 하실려면 해제 버튼을 눌러주세요.</div>
+					<div class="optionline2"></div>
+				<div>
+					<c:forEach var="block" items="${blocklist}" varStatus="status">
+						<div class="feed_name" style="margin: 5px 0 0 100px;">
+							<div class="profile_box" style="float: left;">
+								<c:choose>
+									<c:when test="${empty block.MEM_MEDIA}">
+										<img class="profile_img" src="resources/image/icon_p.jpg">
+									</c:when>
+									<c:otherwise>
+										<img class="profile_img" src="resources/files/profile/${block.MEM_MEDIA }">
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div>
+								<span class="feed_name_txt" id="mem_name">${block.MEM_NAME}</span>
+							</div>
+								<input type="hidden" id="mem_idx${status.index}" value="${block.MEM_IDX}">							
+							<div style="float: right; margin-left: 200px;">
+								<button class="login-button" onclick='blockunlock(mem_idx${status.index}.value,<%=session.getAttribute("MEM_IDX")%>)'>차단해제</button>
+							</div>
+						</div>						
+				</c:forEach>
 			</div>
-
 		</div>
-		﻿<%@ include file="upload_modal.jsp" %>
-
-
+		﻿<%@ include file="upload_modal.jsp"%>
 	</div>
+	
 	<!-- 메인 바디 영역 끝 -->
 	<!-- 푸터 시작 -->
 	<footer>
@@ -704,21 +661,27 @@
     }
 
   </script>
+  
   <script>
-  var autoLoginSwitch = document.getElementById("onoff-switch1");
-  if (${lockList.MEM_OPEN == 'Y'}) {
-    autoLoginSwitch.checked = true;
-  } else {
-    autoLoginSwitch.checked = false;
+  function blockunlock(bidx, midx){
+	  var data = {"BLOCKM_IDX" : bidx,
+		  	  "MEM_IDX" : midx};
+	  
+	  if(confirm("차단을 해제하시겠습니까?") == true){
+		  
+		  $.ajax({
+	          url: '/roomie/unlockbl.ya',
+	          
+	         data: data,
+	         type: 'POST',
+	         success: function(status){
+	        	 location.reload();
+	        	 alert("성공"); 
+	         }
+		  });
+	  }
   }
-  $("#onoff-switch1").on("change", function() {
-      
-      $.ajax({
-        type: "POST",
-        url: "/roomie/updatelock.ya", // 서버에 전송할 JSP 파일 경로
-        data: { 'MEM_IDX': ${lockList.MEM_IDX} }, // 서버에 전송할 데이터
-      });
-    });
-</script>
+  </script>
+	
 </body>
 </html>

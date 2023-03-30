@@ -420,6 +420,7 @@ $("#block").click( function() {
 	    success: function(data) {
 	        console.log("전송 성공");
 	        $("#modal_overlay5").css("display", "none"); //차단
+	        location.reload();
 
 	    },
 	    error: function(xhr, status, error) {

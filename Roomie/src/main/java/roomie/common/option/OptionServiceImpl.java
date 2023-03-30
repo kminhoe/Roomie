@@ -1,5 +1,7 @@
 package roomie.common.option;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -56,6 +58,28 @@ public class OptionServiceImpl implements OptionService{
 	@Override
 	public void updateOpen(int idx) throws Exception {
 		optionDAO.updateOpen(idx);
+		
+	}
+
+	@Override
+	public List<Map<String, Object>> memSelect(Map<String, Object> map) throws Exception {
+		
+		return optionDAO.memSelect(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> blockList(int idx) throws Exception {
+		List<Map<String, Object>> list = new ArrayList<>();
+		
+		list = optionDAO.blockList(idx);
+		
+		System.out.println("Service : " + idx);
+		return list;
+	}
+
+	@Override
+	public void unlockBlock(Map<String, Object> map) throws Exception {
+		optionDAO.deleteblock(map);
 		
 	}
 	
