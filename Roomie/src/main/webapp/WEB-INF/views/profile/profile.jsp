@@ -580,14 +580,17 @@ img.track {
 				<c:otherwise>
 				<button class="btn profile-edit-btn btn btn-primary"
 					id="edit_profile">프로필 수정하기</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;<a  id="add_feed"><img
+					
+					<button class="btn profile-edit-btn btn btn-primary"
+					aria-label="profile settings" onclick="location.href='/roomie/optionList.ya'">
+					<i class="fas fa-cog" aria-hidden="true">설정</i>
+				</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+					<a  id="add_feed"><img
 					style="width: 30px; height: 27px;"
 					src="resources/image/icon_08.png"></a><br>
 
-				<button class="btn profile-settings-btn"
-					aria-label="profile settings">
-					<i class="fas fa-cog" aria-hidden="true"></i>
-				</button>
+				
 				</c:otherwise>
 				</c:choose>
 				
@@ -597,7 +600,6 @@ img.track {
 			</div>
 
 			<div class="profile-stats">
-
 				<ul>
 					<li><span class="profile-stat-count">
 					<input type="hidden" name="BO_MEM" value="${user.MEM_IDX}">
@@ -658,44 +660,6 @@ img.track {
 	</div>
 	<!-- End of container -->
 
-	<!--
-    <div class='container'>        
-        <form action=''>
-            
-            <input type='hidden' id='hidden_token'>
-            <div class='col-sm-6 form-group row mt-4 px-0'>
-                <label for='Genre' class='form-label col-sm-2'>Genre:</label>
-                <select name='' id='select_genre' class='form-control form-control-sm col-sm-10'>
-                    <option>Select...</option>                    
-                </select>
-            </div>
-            <div class='col-sm-6 form-group row px-0'>
-                <label for='Genre' class='form-label col-sm-2'>Playlists:</label>
-                <select name='' id='select_playlist' class='form-control form-control-sm col-sm-10'>
-                    <option>Select...</option>                    
-                </select>
-            </div>                  
-            <div class='col-sm-6 row form-group px-0'>
-                <button type='submit' id='btn_submit' class='btn btn-success col-sm-12'>Search</button>
-            </div>          
-        </form>        
-        <div class='row'>
-            <div class='col-sm-6 px-0'>
-                <div class='list-group song-list'>
-                    
-                </div>                                             
-            </div>
-            <div class='offset-md-1 col-sm-4' id='song-detail'>                
-            </div>
-        </div>   
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
-    <script src='spotifyController.js' type='text/javascript'></script>
--->
-
 	<c:choose>
 	<c:when test="${empty user.MEM_MUSIC}"></c:when>
 	<c:otherwise>
@@ -706,6 +670,7 @@ img.track {
 		
 		<div class="gallery">
 			<c:forEach items="${boardList}" var="post" varStatus="vs">
+			
 			
 			<div id="post${vs.index}" align="center" class="gallery-item" tabindex="0">
 				<img 
@@ -730,6 +695,7 @@ img.track {
 			</div>
 			
 			<div id="modal_post${vs.index}" class="modal_overlay" style="z-index:1050; height: -webkit-fill-available; position: fixed;">
+			
 		<div class="modal_title_side">
 					<span style="cursor: grab;" id="close_modal5${vs.index}"
 						class="material-icons-outlined"> close </span>
@@ -741,7 +707,7 @@ img.track {
 			<div class="border feed_box" style="width: auto; margin:0px;">
         
         <img class="feed_img" src="${post.BO_MEDIA }">
-  
+  		
        
         
       </div>
@@ -776,10 +742,21 @@ img.track {
         <div class="feed_content">
           <!-- 이름, 게시글 내용 -->
           <p class="feed_txt"> <b> ${user.MEM_NAME} </b> ${post.BO_CONT}</p>
+          
+     
         </div>
         <!-- 댓글 목록 -->
         <div style="padding-left:10px;">
-          <span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ</span>
+        <input type="hidden" name="COM_WRITER" id="comment_writer" value="${session}">
+        <input type="text" value="${post.BO_IDX}" name="BO_IDX" id="comment_artno">
+        <input type="text" name="COM_CONT" id="comment_content"> <button id="comment_submit">전송</button>
+        <br>
+        <hr>
+        <br>
+        	${commentList}
+        	<c:forEach var="coms" items="${commentList}">
+          <span class="feed_txt"> <b> ${coms.COM_WRITER } </b> ${coms.COM_CONT}</span>
+          <button id="comment_reply">reply</button>
           <br>
           <span class="feed_txt"> <b> junseok </b> 제주도  ㄱ ㄱ </span>
          </div>
@@ -791,7 +768,10 @@ img.track {
 	</div>	
 	<script>
 	 var index = '<c:out value='${vs.index}'/>'
-	    console.log(index);
+	 var BO_IDX = document.getElementById("comment_artno");
+	 var COM_WRITER = document.getElementById("comment_writer");
+	 var COM_CONT = document.getElementById("comment_content");
+
 	 
 	   for(i = 0; i <= index; i++){
 		   	const modal5 = document.getElementById("modal_post"+index);
@@ -800,6 +780,7 @@ img.track {
 	    		modal5.style.top = window.pageYOffset = 'px';
 	    		modal5.style.display = "flex";
 	    		document.body.style.overflow = "hidden";
+	    		console.log(BO_IDX);
 	    });
 	    	const buttonCloseModal5 = document.getElementById("close_modal5"+index);
 	        buttonCloseModal5.addEventListener("click", function() {
@@ -808,7 +789,36 @@ img.track {
 	    	 });
 	   }
 
-	</script>
+
+
+		
+		$(document).on('click', '#comment_submit', function(e){
+			e.preventDefault();
+	   
+	   
+	   var param = {"BO_IDX" : BO_IDX.value, 
+	         "COM_WRITER" : COM_WRITER.value, 
+	         "COM_CONT" : COM_CONT.value
+	         }
+	   console.log(param);
+	$.ajax({
+		url: "/roomie/insertComment.ya",
+		data: param,
+		type: "POST",
+		success: function(res){
+			alert("comment 완료");
+			location.reload();
+		},
+		error: function(jqXHR, status, err){
+			alert(jqXHR.responseText);
+			location.reload();
+		}
+	})
+})
+
+
+</script>
+	
 		</c:forEach>
 
 
@@ -1386,7 +1396,7 @@ function setImageFromFile(input, expression) {
 		    dataType: 'json',
 		    crossDomain: true,
 		    headers: {
-		        "Authorization": `Bearer BQDoDZHeeGe6EbnaEdlCGxQlfY1ZSEhKNRI8d_RwlPthyGuz56_2sIrnZvzIGX_Y99nbVA9QoedUi8ykxk9Da1UyaUSre05pQn7vS1hIuct3f1gJLV5b7M8aMuc38-kbgzJdKN9ACCkj9NXcRRj0QHlN6qS6WqfNkXyEE2b4uF50NjDGrh-R3lf8CLoS2Fi129ES`
+		        "Authorization": `Bearer BQDlcpha3zXRIRNJUwF2R3cQ1NkFama2PR2oDwbanq4XK3VT7ojXcjLI78BRC2wZURXSzAooqxgUI3Iijl0BO_Tv4n4dpSmURBGK_Xz-Ck8ryXpQ09NmT50tTbvnjKl5HSx9EYos7byKoRUBqXuMeHLJMXs_U-28YiH4rAB2LMJn1gF1wNKR0Xja3zeLxfl2FSwK`
 		      },
 
 		    success: function(data)
@@ -1396,8 +1406,8 @@ function setImageFromFile(input, expression) {
 
 					trackResults.forEach(function callback(track) {
 						var $row = $('<div class="row"></div>');
-						var $col3 = $('<div class="col-md-3"></div>');
-						var $col9 = $('<div class="col-md-9"></div>');
+						var $col3 = $('<div class="contents"><div class="col-md-6"></div>');
+						var $col9 = $('<div class="col-md-6"></div></div>');
 						var $track = $('<a target="_blank" href="' + track.preview_url + '""></a>');
 
 						if(track.preview_url) {
@@ -2157,8 +2167,6 @@ function setImageFromFile(input, expression) {
     }
 
   </script>
-
-
 
 
 

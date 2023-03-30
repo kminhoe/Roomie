@@ -88,16 +88,13 @@ public class UserServicerImpl implements UserService {
 	}
 
 	@Override
-	public List<Map<String, Object>> commentList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		return userDAO.commentList(map);
+		return userDAO.userLikeCheck(map);
 	}
 
-	@Override
-	public Map<String, Object> selectComment(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return userDAO.selectComment(map);
-	}
+
+		
 
 	
 	

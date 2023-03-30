@@ -63,12 +63,8 @@ public class UserDAO {
 		return sqlSessionTemplate.selectList("user.userBoardList", map);
 	}
 	
-	public List<Map<String,Object>> commentList(Map<String,Object>map) throws Exception {
-		return sqlSessionTemplate.selectList("user.commentList", map);
-	}
-	
-	public Map<String,Object> selectComment(Map<String,Object>map) throws Exception {
-		return sqlSessionTemplate.selectOne("user.selectComment", map);
+	public List<Map<String,Object>> userLikeCheck(Map<String,Object> map) throws Exception {
+		return sqlSessionTemplate.selectList("user.userLike", map);
 	}
 
 }
