@@ -26,13 +26,11 @@
 	</update>
 	
 	<select id="userFollower" parameterType="hashmap" resultType="hashmap">
-		select count(*) over (PARTITION BY fri_idx) as CNT, fri_idx, fri_mem, following, isfollow
-		from friend where fri_mem = #{FRI_MEM}
+		select count(*) as CNT from friend where fri_mem = #{FRI_MEM}
 	</select>
 	
 	<select id="userFollowing" parameterType="hashmap" resultType="hashmap">
-		select count(*) over (PARTITION BY fri_idx) as CNT, fri_idx, fri_mem, following, isfollow
-		from friend where following = #{FOLLOWING}
+		select count(*) as CNT from friend where following = #{FOLLOWING}
 	</select>
 	
 	<select id="userBoard" parameterType="hashmap" resultType="hashmap">
@@ -40,7 +38,7 @@
 	</select>
 	
 	<select	id="userBoardList" parameterType="hashmap" resultType="hashmap">
-		select * from board where bo_mem = #{BO_MEM}
+		select * from board where bo_mem = #{BO_MEM} order by bo_date desc
 	</select>
 	
 	<update id="userMusic" parameterType="hashmap">
@@ -66,11 +64,20 @@
 	</delete>
 	
 	<select id="commentList" parameterType="hashmap" resultType="hashmap">
-		select * from COMT
+		SELECT *
+				FROM COMT
+				WHERE COM_ARTNO = #{BO_IDX}
+				
 	</select>
 	
-	<select id="selectComment" parameterType="hashmap" resultType="hashmap">
-		select * from COMT where COM_ARTNO = #{COM_ARTNO}
+	<insert id="insertComment" parameterType="hashmap">
+		insert into comt (com_idx, com_artno, com_writer, com_date, com_cont) values (comt_seq.nextval, #{BO_IDX}, #{COM_WRITER}, sysdate, #{COM_CONT})
+	</insert>
+	
+	<select id="likeCheck" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM BO_LIKE WHERE LIKEB_MEM = #{LIKEB_MEM}
+	]]>
 	</select>
 	
 	

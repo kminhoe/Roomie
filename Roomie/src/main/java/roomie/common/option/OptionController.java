@@ -22,7 +22,8 @@ public class OptionController {
 	@GetMapping(value = "/optionList.ya")
 	public ModelAndView getOptionList() throws Exception {
 		ModelAndView mv = new ModelAndView("option/optionList");
-
+		
+		
 		return mv;
 	}
 
