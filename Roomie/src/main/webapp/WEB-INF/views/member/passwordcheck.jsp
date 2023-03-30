@@ -8,6 +8,13 @@
   <meta charset="utf-8">
   <!-- style css -->
   <link rel="stylesheet" type="text/css" href="./resources/css/signup_style.css">
+  
+  <!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+  
+  
+  
   <!-- 타이틀 -->
   <title>비밀번호 재설정 • ROOMIE</title>
 </head>

@@ -10,5 +10,18 @@ public interface OptionService {
 	public void changepass(Map<String, Object> map) throws Exception;
 	
 	public void MemberDelete(Map<String, Object> map) throws Exception;
+	
+	public Map<String, Object> lockList(int idx) throws Exception;
+	
+	public void lockChange(Map<String, Object> map) throws Exception;
 
+	public void updateLock(Map<String, Object> map) throws Exception;
+	
+	public void updateOpen(int idx) throws Exception;
+	
+	public List<Map<String, Object>> memSelect(Map<String, Object> map) throws Exception;
+	
+	public List<Map<String, Object>> blockList(int idx) throws Exception;
+	
+	public void unlockBlock(Map<String, Object> map) throws Exception;
 }

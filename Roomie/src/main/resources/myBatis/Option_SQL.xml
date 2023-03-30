@@ -2,15 +2,16 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+
 <mapper namespace="option">
-	<select id="checkpassword" parameterType="hashmap" resultType="hashmap">
+	<select id="checkpassword" parameterType="hashmap"
+		resultType="hashmap">
 		<![CDATA[
 			SELECT MEM_PWD FROM MEMBER
 			WHERE MEM_IDX = #{MEM_IDX}
 		]]>
 	</select>
-	
+
 	<update id="changepass" parameterType="hashmap">
 		<![CDATA[
 			UPDATE MEMBER SET MEM_PWD = #{MEM_PWD} WHERE MEM_IDX = #{MEM_IDX}
@@ -18,11 +19,64 @@
 
 
 	</update>
-	
+
 	<update id="memberDelete" parameterType="hashmap">
 		<![CDATA[
 		UPDATE MEMBER SET MEM_DEL = 0 WHERE MEM_IDX = #{MEM_IDX}
 		]]>
-		
+
 	</update>
+	
+	<select id="lockList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT MEM_OPEN, MEM_IDX FROM MEMBER
+			WHERE MEM_IDX = #{MEM_IDX}
+		]]>
+		
+	</select>
+	
+	<update id="updateOpen" parameterType="int">
+		<![CDATA[
+			UPDATE MEMBER SET
+			MEM_OPEN = 'N'
+			WHERE MEM_IDX = #{MEM_IDX}
+		]]>
+	</update>
+
+	<update id="updateLock" parameterType="hashmap">
+		<![CDATA[
+			update member
+			set	mem_open = case
+			when mem_open = 'Y' then 'N'
+			when mem_open = 'N' then 'Y'
+			end
+			where mem_idx = #{MEM_IDX}
+		]]>
+	</update>
+	
+	<select id="memselect" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			select * from member where MEM_IDX = #{MEM_IDX}
+		]]>
+	</select>
+	
+	<select id="blockList" parameterType="int" resultType="hashmap">
+		<![CDATA[
+			select * from
+			(select blockm_idx, block_date 
+			from member m inner join 
+			block b on m.mem_idx = b.mem_idx
+			where b.mem_idx = #{MEM_IDX}) 
+			inner join member on 
+			mem_idx = blockm_idx 
+			order by block_date desc		
+		]]>
+	</select>
+	
+	<delete id="deleteblock">
+		<![CDATA[
+				delete from block
+				where mem_idx = #{MEM_IDX} and blockm_idx = #{BLOCKM_IDX}
+		]]>
+	</delete>
 </mapper>

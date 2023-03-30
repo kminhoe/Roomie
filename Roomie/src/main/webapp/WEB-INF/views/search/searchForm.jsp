@@ -17,7 +17,11 @@
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
         rel="stylesheet">
          
-
+         
+<!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+   
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

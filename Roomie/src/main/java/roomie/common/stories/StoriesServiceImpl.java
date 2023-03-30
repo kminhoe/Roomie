@@ -35,4 +35,10 @@ public class StoriesServiceImpl implements StoriesService {
 		// TODO Auto-generated method stub
 		storiesDAO.insertStoriesCheck(map);
 	}
+
+	@Override
+	public void insertStories(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		storiesDAO.insertStories(map);
+	}
 }

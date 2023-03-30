@@ -1,201 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <head>
-<!-- kakao 지도 스타일 시작 -->
-<style>
-.map_wrap, .map_wrap * {
-   margin: 0;
-   padding: 0;
-   font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-   font-size: 12px;
-}
 
-.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
-   color: #000;
-   text-decoration: none;
-}
-
-.map_wrap {
-   position: relative;
-   width: 100%;
-   height: 500px;
-}
-
-#menu_wrap {
-   position: absolute;
-   top: 0;
-   left: 0;
-   bottom: 0;
-   width: 250px;
-   margin: 10px 0 30px 10px;
-   padding: 5px;
-   overflow-y: auto;
-   background: rgba(255, 255, 255, 0.7);
-   z-index: 1;
-   font-size: 12px;
-   border-radius: 10px;
-}
-
-.bg_white {
-   background: #fff;
-}
-
-#menu_wrap hr {
-   display: block;
-   height: 1px;
-   border: 0;
-   border-top: 2px solid #5F5F5F;
-   margin: 3px 0;
-}
-
-#menu_wrap .option {
-   text-align: center;
-}
-
-#menu_wrap .option p {
-   margin: 10px 0;
-}
-
-#menu_wrap .option button {
-   margin-left: 5px;
-}
-
-#placesList {
-   flex-direction: column;
-}
-#placesList li {
-   list-style: none;
-}
-
-
-#placesList .item {
-   position: static;
-   border-bottom: 1px solid #888;
-   overflow: hidden;
-   cursor: pointer;
-   min-height: 65px;
-}
-
-#placesList .item span {
-   display: block;
-   margin-top: 4px;
-}
-
-#placesList .item h5, #placesList .item .info {
-   text-overflow: ellipsis;
-   overflow: hidden;
-   white-space: nowrap;
-}
-
-#placesList .item .info {
-   padding: 10px 0 10px 55px;
-}
-
-#placesList .info .gray {
-   color: #8a8a8a;
-}
-
-#placesList .info .jibun {
-   padding-left: 26px;
-   background:
-      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png)
-      no-repeat;
-}
-
-#placesList .info .tel {
-   color: #009900;
-}
-
-#placesList .item .markerbg {
-   float: left;
-   position: absolute;
-   width: 36px;
-   height: 37px;
-   margin: 10px 0 0 10px;
-   background:
-      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
-      no-repeat;
-}
-
-#placesList .item .marker_1 {
-   background-position: 0 -10px;
-}
-
-#placesList .item .marker_2 {
-   background-position: 0 -56px;
-}
-
-#placesList .item .marker_3 {
-   background-position: 0 -102px
-}
-
-#placesList .item .marker_4 {
-   background-position: 0 -148px;
-}
-
-#placesList .item .marker_5 {
-   background-position: 0 -194px;
-}
-
-#placesList .item .marker_6 {
-   background-position: 0 -240px;
-}
-
-#placesList .item .marker_7 {
-   background-position: 0 -286px;
-}
-
-#placesList .item .marker_8 {
-   background-position: 0 -332px;
-}
-
-#placesList .item .marker_9 {
-   background-position: 0 -378px;
-}
-
-#placesList .item .marker_10 {
-   background-position: 0 -423px;
-}
-
-#placesList .item .marker_11 {
-   background-position: 0 -470px;
-}
-
-#placesList .item .marker_12 {
-   background-position: 0 -516px;
-}
-
-#placesList .item .marker_13 {
-   background-position: 0 -562px;
-}
-
-#placesList .item .marker_14 {
-   background-position: 0 -608px;
-}
-
-#placesList .item .marker_15 {
-   background-position: 0 -654px;
-}
-
-#pagination {
-   margin: 10px auto;
-   text-align: center;
-}
-
-#pagination a {
-   display: inline-block;
-   margin-right: 10px;
-}
-
-#pagination .on {
-   font-weight: bold;
-   cursor: default;
-   color: #777;
-}
-</style>
 <!-- kakao 지도 스타일끝 -->
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -213,11 +23,27 @@
    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
    rel="stylesheet">
 
+<!-- 모달 -->
+﻿<%@ include file="modal.jsp" %>
+
+<!-- webSocket 세션 js -->
+<script><%@ include file="/resources/js/web.js" %></script>
+
 <!-- style css -->
 <link rel="stylesheet" type="text/css"
-   href="resources/css/main_style.css">
+	href="resources/css/main_style.css">
 <link rel="stylesheet" type="text/css"
-   href="resources/css/modal_style.css">
+	href="resources/css/modal_style.css">
+<link rel="stylesheet" type="text/css"
+	href="resources/css/kakaomap_style.css">
+   
+   
+<!-- 이미지 슬라이더에 필요한 CSS와 JS 파일 로드 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+
+
 
 <!-- 타이틀 -->
 <title>ROOMIE</title>
@@ -225,7 +51,7 @@
 <body>
    <!-- 상단 내비게이션 바 시작 -->
    <nav class="navbar navbar-expand-lg navbar-light bg-light"
-      style="width: 100%; position: fixed; z-index: 2;">
+      style="width: 100%; position: fixed; z-index: 2; top: 0; margin-top: 0;">
       <div class="container">
          <img class="navbar-brand" style="height: 44px; object-fit: contain;"
             src="resources/image/Roomie5.png">
@@ -233,7 +59,7 @@
          <!-- 검색창 -->
          <!-- <input class="form-control" style="width: 200px" type="search" placeholder="Search" aria-label="Search"> -->
 
-         <div>
+         <div style="display: flex;">
             <!-- 홈 버튼 -->
             <img class="menu_img"
                style="width: 25px; height: 25px; object-fit: contain"
@@ -247,9 +73,19 @@
                style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_22.png"> &nbsp;&nbsp;
             <!-- 채팅 버튼 -->
-            <img class="menu_img"
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_04.png"> &nbsp;&nbsp;
+            <div class="menu_img">
+            	<div style="position: relative;">
+		            <div>
+			            <img class="menu_img"
+			               style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+			               src="resources/image/icon_04.png"
+			               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+		            </div>
+		            <div id="msgNotif" style="position: absolute; top: -10px; right: 15px;">
+		            	<img style="width: 10px; height: 10px;" src="">
+		            </div>
+	            </div>
+			</div>
             <!-- 알림 버튼 -->
             <img class="menu_img"
                style="width: 25px; height: 25px; object-fit: contain"
@@ -267,178 +103,19 @@
             <img class="menu_img" id="add_feed"
                style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_08.png"> &nbsp;&nbsp;
-            <!-- 모달 게시글 이미지 업로드 시작 -->
-            <div class="modal_overlay" id="modal_add_feed"
-               style="position: fixed;">
-               <div class="modal_window" id="modal_window"
-                  style="width: 800px; height: 600px;">
-                  <div class="modal_title">
-                     <div class="modal_title_side">
-                        <!-- 이미지 추가 버튼 -->
-                        <div style="margin-top: -10px;">
-                           <img class="uploadpage" id="target_img"
-                              style="cursor: pointer;" src="resources/image/icon_34.png">
-                        </div>
-                     </div>
-                     <input type="file" class="real_upload" id="file"
-                        name="uploadFile" style="display: none;" multiple>
-                     <!-- 모달 타이틀 -->
-                     <div style="font-size: 16px;">새 게시물</div>
-                     <div class="modal_title_side">
-                        <!-- 다음 페이지(글작성) 버튼 -->
-                        <div style="margin-top: -8px; margin-right: 15px;">
-                           <img style="cursor: pointer;" onclick="modal_add_feed_Next();"
-                              src="resources/image/icon_38.png">
-                        </div>
-                        <!-- 모달 닫기 버튼 -->
-                        <div style="margin-top: -8px;">
-                           <img id="close_modal_add_feed" style="cursor: pointer;"
-                              src="resources/image/icon_40.png">
-                        </div>
-                     </div>
-                  </div>
-                  <div class="modal_image_upload" style="position: fixed;">
-                     <!-- 업로드 공간 -->
-                     <div class="upload">
-                        <ul class="upload_list"> 
-
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="image_upload"
-                     style="width: 800px; margin-top: 150px; display: inline-block; text-align: center;">
-                     <div>
-                        <img style="width: 150px; height: 150px;"
-                           src="resources/image/icon_31.png">
-                     </div>
-                     <div style="margin-top: 30px; font-size: 20px;">
-                        <a>사진과 동영상을 여기에 끌어다 놓으세요</a>
-                     </div>
-                     <div style="margin-top: 10px; font-size: 14px; color: #8e8e8e;">
-                        <a>최대 업로드 파일 크기 : 10MB</a>
-                     </div>
-                  </div>
-                  
-                  <c:if test=""></c:if>
-                  <!-- 이미지 왼쪽 버튼 -->
-                  <img class="upload_prev" id="upload_prev"
-                     style="cursor: pointer; left: 0px; top: -136px; position: relative; z-index: 1;"
-                     src="resources/image/icon_35.png">
-                  <!-- 이미지 오른쪽 버튼 -->
-                  
-                  <img class="upload_next" id="upload_next"
-                     style="cursor: pointer; left: 726px; top: -136px; position: relative; z-index: 1;"
-                     src="resources/image/icon_36.png">
-               </div>
-            </div>
-            <!-- 모달 게시글 이미지 업로드 끝 -->
-            <!-- 모달 게시글 글쓰기 시작 -->
-            <div class="modal modal_overlay" id="modal_add_feed_content"
-               style="position: fixed;">
-               <div class="modal_window" style="width: 800px; height: 600px;">
-                  <div class="modal_title">
-                     <div class="modal_title_side">
-                        <!-- 이전 버튼 -->
-                        <div style="margin-top: -10px; margin-right: 15px;">
-                           <img style="cursor: pointer;" onclick="modal_add_feed_Prev();"
-                              src="resources/image/icon_39.png">
-                        </div>
-                     </div>
-                     <!-- 모달 타이틀 -->
-                     <div style="font-size: 16px;">새 게시물</div>
-                     <div class="modal_title_side">
-                        <!-- 모달 닫기 버튼 -->
-                        <div style="margin-top: -8px; margin-left: 20px;">
-                           <img id="close_modal_add_feed_content" style="cursor: pointer;"
-                              src="resources/image/icon_40.png">
-                        </div>
-                     </div>
-                  </div>
-                  <div class="modal_image_content" style="height: 100%;">
-                     <div id="input_image" class="modal_image_upload_content"></div>
-                     <div class="modal_content_write">
-                        <div class="feed_name">
-                           <div class="profile_box">
-                              <img id="input_profile_image" class="profile_img"
-                                 src="resources/image/profile_05.jpg">
-                           </div>
-                           <span id="input_user_id" class="feed_name_txt"> jshong_</span>
-                        </div>
-                        <br />
-                        <div>
-                           <textarea id="input_hash"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 30px; width: 100%;" rows="1" placeholder="해시태그"></textarea>
-                        </div>
-                        <br />
-                        <div>
-                           <input type="text" id="input_place"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 30px; width: 100% ; min-height: calc(1.5em + 0.75rem + 2px)"
-                              placeholder="위치 공유" onclick="place_add_bnt();">
-                        </div>
-                        <br />
-                        <div style="height: 100%;">
-                           <textarea id="input_content"
-                              class="feed_content_textarea form-control col-sm-5"
-                              style="height: 100%;" rows="10" placeholder="설명을 입력하세요..."></textarea>
-                        </div>
-                        <br /> <br />
-                        <div style="width: 100%; text-align: center">
-                           <button class="button" id="boardupload" style="cursor: pointer">글쓰기</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!-- 모달 게시글 글쓰기 끝 -->
-            <!-- 위치 추가 모달 시작 -->
-
-            <div>
-               <div class="modal modal_overlay" id="modal_place_add"
-                  style="position: fixed;">
-                  <div class="modal_window" style="width: 800px; height: 600px;">
-                     <div class="modal_title">
-                        <div class="modal_title_side">
-                           <!-- 이전 버튼 -->
-                           <div style="margin-top: -10px; margin-right: 15px;">
-                              <img style="cursor: pointer;" onclick="modal_place_Prev();"
-                                 src="resources/image/icon_39.png">
-                           </div>
-                        </div>
-                        <!-- 모달 타이틀 -->
-                        <div style="font-size: 16px;">새 게시물</div>
-                        <div class="modal_title_side">
-                           <!-- 모달 닫기 버튼 -->
-                           <div style="margin-top: -8px; margin-left: 20px;">
-                              <img id="close_modal_add_feed_place"
-                                 style="cursor: pointer;" src="resources/image/icon_40.png">
-                           </div>
-                        </div>
-                     </div>
-                     <div class="map_wrap">
-                        <div id="map"
-                           style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-
-                        <div id="menu_wrap" class="bg_white">
-                           <div class="option">
-                              <div>
-                                 <form onsubmit="searchPlaces(); return false;">
-                                    키워드 : <input type="text" id="keyword" size="15">
-                                    <button type="submit">검색하기</button>
-                                 </form>
-                              </div>
-                           </div>
-                           <hr>
-                           <ul id="placesList"></ul>
-                           <div id="pagination"></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-            </div>
-            <!-- 위치 추가 모달 끝 -->
+            <!-- 프로필 이동 버튼 -->
+            <c:choose>
+					<c:when test="${empty MEMBER.MEM_MEDIA}">
+						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
+							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
+					</c:when>
+					<c:otherwise>
+						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
+							src="${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
+							
+					</c:otherwise>
+				</c:choose>
+			﻿<%@ include file="../option/upload_modal.jsp" %>
          </div>
       </div>
    </nav>
@@ -448,6 +125,7 @@
    <div class="main_body">
       <!-- 왼쪽 바디 영역 시작 -->
       <div class="left_body">
+      
          <!-- 스토리 시작 -->
          <div class="story">
             <!-- 왼쪽 버튼 -->
@@ -459,14 +137,14 @@
                <li class="sub_story">
                   <div class="text">
                      <a onclick="href='#'"><img
-                        src="resources/files/profile/profile_01.jpg" alt="프로필"></a> <span
+                        src="resources/image/profile_01.jpg" alt="프로필"></a> <span
                         style="font-size: 12px; margin-left: 3px;"></span>
                   </div>
                </li>
                <li>
                   <div class="sub_story">
                      <div class="text">
-                        <img src="resources/files/profile/profile_02.jpg" alt="프로필"> <span
+                        <img src="resources/image/profile_02.jpg" alt="프로필"> <span
                            style="font-size: 12px; margin-left: 3px;"></span>
                      </div>
                   </div>
@@ -480,26 +158,93 @@
             </div>
          </div>
          <!-- 스토리 끝 -->
+         
          <!-- 게시글 시작 -->
+         
+         <c:forEach var="boardList" items="${boardList}" varStatus="status">
+         
+         
          <div class="border feed_box">
             <div class="feed_name">
                <div class="profile_box">
-                  <img class="profile_img" src="resources/image/profile_06.jpg">
+               
+               <c:choose>
+					<c:when test="${empty boardList.MEM_MEDIA}">
+						<img class="profile_img" src="resources/image/icon_p.jpg" > 
+					</c:when>
+					<c:otherwise>
+						<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+					</c:otherwise>
+				</c:choose>
+               
+                 
                </div>
-               <span class="feed_name_txt"> daemyeong </span>
+               <span class="feed_name_txt"> ${boardList.MEM_NAME} </span>
                <!-- 더보기 버튼 -->
-               <img class="more_details" src="resources/image/icon_28.png"
+               <img class="more_details" style="right: -340px !important;" src="resources/image/icon_28.png"
                   alt="더보기">
             </div>
-            <img class="feed_img"
-               src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800">
+            
+            <input type="hidden" id="bo_mem" value="${boardList.BO_MEM}">
+            <input type="hidden" id="bo_name" value="${boardList.BO_USER}">
+            <input type="hidden" id="bo_idx" value="${boardList.BO_IDX}">
+
+            
+            <%-- <img class="feed_img" style="height: 478px;"
+               src="resources/files/board/${boardList.BO_MEDIA}"> --%>
+               
+               <!-- BO_MEDIA를 쉼표로 구분하여 배열에 담기 -->
+               <c:set var="mediaArray" value="${fn:split(boardList.BO_MEDIA, ',')}" />
+
+               <!-- 이미지 슬라이더 -->
+               <div class="slider">
+               <c:forEach items="${mediaArray}" var="media">
+               <div><img class="feed_img" style="height: 478px;" src="resources/files/board/${media}" /></div>
+               </c:forEach>
+               </div>
 
             <div class="feed_icon">
                <div>
-                  <!-- 좋아요 버튼 -->
-                  <img class="material-icons-outlined"
+                 
+                 <!-- 좋아요 -->
+                 <div id="likeBut${status.index}" class="likeBut" style="display: inline-block;">
+                 
+                <input type="hidden" id="idx" value="${MEMBER.MEM_IDX}">
+                <input type="hidden" id="board_idx" value="${boardList.BO_IDX}">
+                
+                 <c:if test="${not empty LIKEB}">
+                 
+		          <c:set var="liked" value="false" />
+
+                 <c:forEach var="like" items="${LIKEB}">
+                     <c:if test="${boardList.BO_IDX == like.LIKEB_BOARD}">
+                     <c:set var="liked" value="true" />
+                     </c:if>
+                 </c:forEach>
+
+                <c:if test="${liked == true}">
+                
+
+                <img class="material-icons-outlined" id="like_y" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/heart_yes (2).png" >
+                
+                </c:if>
+
+                <c:if test="${liked == false}">
+
+                <img class="material-icons-outlined" id="like_n" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_01.png" >
+                </c:if>
+
+                 </c:if>
+                 
+                 <c:if test="${empty LIKEB}">
+  
+                 <img class="material-icons-outlined" id="like_n"
                      style="width: 20px; height: 20px; object-fit: contain"
                      src="resources/image/icon_01.png">
+                 
+                 </c:if>
+                 </div>
+                 
                   <!-- 댓글 버튼 -->
                   <img class="material-icons-outlined"
                      style="width: 20px; height: 20px; object-fit: contain"
@@ -517,16 +262,29 @@
                </div>
             </div>
             <div class="feed_like">
+            <div class="likec" id="feed_like${status.index}" style="padding: 0px;">
                <!-- 좋아요 표시 -->
                <p class="feed_txt">
-                  <b>좋아요 10개</b>
+
+               <c:choose>
+               <c:when test="${boardList.COUNT == null}">
+               <b>좋아요 0개</b>
+               <input type="hidden" value="${boardList.COUNT}">
+               </c:when>
+               
+               <c:otherwise>
+               <b>좋아요 ${boardList.COUNT}개</b>
+               <input type="hidden" value="${boardList.COUNT}">
+               </c:otherwise>
+               </c:choose>
+               
+
                </p>
-            </div>
+            </div></div>
             <div class="feed_content">
                <!-- 이름, 게시글 내용 -->
                <p class="feed_txt">
-                  <b> daemyeong </b> 코로나라서 해외여행을 못가니 최근 제주도 가는사람이 늘고있습니다~ 제주도도
-                  조심해야되는건 마찬가지~!
+                  <b> ${boardList.MEM_NAME} </b> ${boardList.BO_CONT}
                </p>
             </div>
             <!-- 댓글 목록 -->
@@ -545,61 +303,10 @@
                </span>
             </div>
          </div>
+         
+         </c:forEach>
          <!-- 게시글 끝 -->
-         <!-- 두번째 게시글 시작 -->
-         <div class="border feed_box">
-            <div class="feed_name">
-               <div class="profile_box">
-                  <img class="profile_img" src="resources/image/profile_06.jpg">
-               </div>
-               <span class="feed_name_txt"> daemyeong </span>
-            </div>
-            <img class="feed_img"
-               src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800">
-
-            <div class="feed_icon">
-               <div>
-                  <!-- 좋아요 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_01.png">
-                  <!-- 댓글 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_03.png">
-                  <!-- 공유 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_04.png">
-               </div>
-               <div>
-                  <!-- 게시글 저장 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_05.png">
-               </div>
-            </div>
-            <div class="feed_like">
-               <!-- 좋아요 표시 -->
-               <p class="feed_txt">
-                  <b>좋아요 10개</b>
-               </p>
-            </div>
-            <div class="feed_content">
-               <!-- 이름, 게시글 내용 -->
-               <p class="feed_txt">
-                  <b> daemyeong </b> 코로나라서 해외여행을 못가니 최근 제주도 가는사람이 늘고있습니다~ 제주도도
-                  조심해야되는건 마찬가지~!
-               </p>
-            </div>
-            <!-- 댓글 목록 -->
-            <div class="feed_reply">
-               <span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ
-               </span> <span class="feed_txt"> <b> junseok </b> 제주도 ㄱ ㄱ
-               </span>
-            </div>
-         </div>
-         <!-- 두번째 게시글 끝 -->
+        
          <!-- 왼쪽 바디 영역 끝 -->
          <!-- 오른쪽 바디 영역 시작 -->
          <div class="right_body">
@@ -720,7 +427,8 @@
                src="resources/image/icon_22.png"> &nbsp;&nbsp;
             <!-- 채팅 버튼 -->
             <img style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_04.png"> &nbsp;&nbsp;
+               src="resources/image/icon_04.png"
+               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
             <!-- 알림 버튼 -->
             <img style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_01.png"> &nbsp;&nbsp;
@@ -732,19 +440,23 @@
             <img style="width: 25px; height: 25px; object-fit: contain"
                onclick="document.getElementById('add_feed').click();"
                src="resources/image/icon_08.png"> &nbsp;&nbsp;
+               <!-- 프로필 이동 버튼 -->
+            <c:choose>
+					<c:when test="${empty MEMBER.MEM_MEDIA}">
+						<img style="width: 25px; height: 25px; object-fit: contain""
+							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
+					</c:when>
+					<c:otherwise>
+						<img style="width: 25px; height: 25px; object-fit: contain""
+							src="${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
+					</c:otherwise>
+				</c:choose>
          </div>
       </footer>
 
-      <!-- jquery -->
-      <script
-         src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-         crossorigin="anonymous"></script>
-         
- <script>
- 	// 스토리 추가 모달
- 	const modal_add_stories = document.getElementById("modal_add_stories");
+<script>
+    // 스토리 추가 모달
+    const modal_add_stories = document.getElementById("modal_add_stories");
     const buttonAddStories = document.getElementById("add_stories");
     
     buttonAddStories.addEventListener("click", e => {
@@ -773,14 +485,16 @@
       document.body.style.overflowY = "hidden";
     });
 
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // 모달 글쓰기 이미지 업로드 닫기
     const buttonCloseModal_add_feed = document.getElementById("close_modal_add_feed");
     buttonCloseModal_add_feed.addEventListener("click", e => {
       modal_add_feed.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      /* $('.upload_list').html('');
+      $('#input_content').val(''); */
+      location.reload();
 
     });
     // 모달 글쓰기 닫기
@@ -789,18 +503,22 @@
       modal_add_feed_content.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      /* $('.upload_list').html('');
+      $('#input_content').val(''); */
+      location.reload();
     });
     // 위치 모달 닫기
     const buttonCloseModal_add_feed_place = document.getElementById("close_modal_add_feed_place");
     buttonCloseModal_add_feed_place.addEventListener("click", e => {
-    	modal_place_add.style.display = "none";
+       modal_place_add.style.display = "none";
       document.body.style.overflowY = "visible";
       upload_moveSlide(0);
-      $('.upload_list').html('');
-      $('#input_content').val('');
+      /* $('.upload_list').html('');
+      $('#input_content').val(''); */
+      location.reload();
     });
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 
     // 업로드 jquery
     $('.modal_image_upload')
@@ -935,67 +653,11 @@
       
       
       console.log(formData.get(data.files[0]));
-      /* $("#boardupload").on("click", function(e){
          
-         var BO_MEM = $("#input_user_id").text();
-         var BO_HASH = $("#input_hash").val();
-         var BO_PLACE = $("#input_place").val();
-         var BO_CONT = $("#input_content").val();
-         
-         console.log(BO_MEM);
-         console.log(BO_HASH);
-         console.log(BO_PLACE);
-         console.log(BO_CONT);
-         console.log(files.files[0]);
-         
-         /* var formData = new FormData(); 
-         formData.append("uploadFile", files.files[0]);
-         formData.append("BO_MEM", BO_MEM);
-         formData.append("BO_HASH", BO_HASH);
-         formData.append("BO_PLACE", BO_PLACE);
-         formData.append("BO_CONT", BO_CONT);
-         
-         $.ajax({
-            url: '/roomie/register.ya',
-           processData: false,
-           contentType: false,
-           data: formData,
-           type: 'POST',
-           dataType:'json',
-           success: function(result){
-           }
-            
-         });
-         
-         
-         
-      }); */
-      
-      
-/*       $("#boardupload").on("click", function(e){
-
-        
-         $.ajax({
-            url: '/roomie/register.ya',
-         processData: false,
-         contentType: false,
-         data: formData,
-         type: 'POST',
-         dataType:'json',
-            success: function(){
-                 alert("보내기 성공");
-                
-            },
-            err: function(err){
-              console.log("err:", err)
-            }
-            });
-      }); */ 
-      
     }
      $(document).ready(function(){
-    	 
-    	// 스토리 리스트 불러오기
+        
+       // 스토리 리스트 불러오기
        readStories();
         
         var arr = new Array;
@@ -1141,7 +803,9 @@
        //let files = $("input[name=uploadFile]")[0].files;
        //var file = $("#input_fileimage").val();
        var file = $("#qwer").val();
-
+      var BO_ID = $("#mem_id").val();
+      var BO_USER = $("#mem_user").val();
+      
        console.log("file이름들: "+ file);
        
        console.log(BO_MEM);
@@ -1158,7 +822,10 @@
        formData.append("BO_HASH", BO_HASH);
        formData.append("BO_PLACE", BO_PLACE);
        formData.append("BO_CONT", BO_CONT);
-       formData.append("BO_MEDIA", file)
+       formData.append("BO_MEDIA", file);
+       formData.append("BO_ID", BO_ID);
+       formData.append("BO_USER", BO_USER);
+       
        /* Array.from(files).map(e => formData.append("BO_IMAGE", e));
     formData.append("BO_IMAGE", files); 
        for(let i = 0; i< files.length; i++){
@@ -1168,6 +835,8 @@
        
        $.ajax({
           url: '/roomie/boardInsert.ya',
+          
+        //formData 사용 시 processData, contentType 필수 작성
          processData: false,
          contentType: false,
          data: formData,
@@ -1232,266 +901,10 @@
     });
   </script>
 
-      <script type="text/javascript"
+     <script type="text/javascript"
          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e089b04e0ca2a1fd1287cb6610d9d01&libraries=services"></script>
-      <script>
-// 마커를 담을 배열입니다
-var markers = [];
-
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
-
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-// 장소 검색 객체를 생성합니다
-var ps = new kakao.maps.services.Places();  
-
-// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
-// 키워드로 장소를 검색합니다
-//searchPlaces();
-
-// 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
-
-    var keyword = document.getElementById('keyword').value;
-
-    if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
-        return false;
-    }
-
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB); 
-}
-
-// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-function placesSearchCB(data, status, pagination) {
-    if (status === kakao.maps.services.Status.OK) {
-       
-       console.log(data);
-
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
-
-        // 페이지 번호를 표출합니다
-        displayPagination(pagination);
-
-    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
-        alert('검색 결과가 존재하지 않습니다.');
-        return;
-
-    } else if (status === kakao.maps.services.Status.ERROR) {
-
-        alert('검색 결과 중 오류가 발생했습니다.');
-        return;
-
-    }
-}
-
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
-
-    var listEl = document.getElementById('placesList'), 
-    menuEl = document.getElementById('menu_wrap'),
-    fragment = document.createDocumentFragment(), 
-    bounds = new kakao.maps.LatLngBounds(), 
-    listStr = '';
-    
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
-
-    // 지도에 표시되고 있는 마커를 제거합니다
-    removeMarker();
-    
-    for ( var i=0; i<places.length; i++ ) {
-
-        // 마커를 생성하고 지도에 표시합니다
-        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i), 
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        bounds.extend(placePosition);
-
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function(marker, title) {
-            kakao.maps.event.addListener(marker, 'mouseover', function() {
-                displayInfowindow(marker, title);
-            });
-
-            kakao.maps.event.addListener(marker, 'mouseout', function() {
-                infowindow.close();
-            });
-
-            itemEl.onmouseover =  function () {
-                displayInfowindow(marker, title);
-            };
-
-            itemEl.onmouseout =  function () {
-                infowindow.close();
-            };
-            kakao.maps.event.addListener(marker, 'click', function(){
-               alert("값전달하자!!"+ title);
-               
-               document.getElementById('input_place').value = title;
-               $('#modal_place_add').css({
-                  display : 'none'
-               });
-               map.relayout();
-               $('#modal_add_feed_content').css({
-                  display: 'flex'   
-               });
-            });
-            itemEl.onclick = function () {
-               alert("값전달해볼까?"+ title);
-               document.getElementById('input_place').value = title;
-      
-               $('#modal_place_add').css({
-                  display : 'none'
-               });
-               map.relayout();
-               $('#modal_add_feed_content').css({
-                  display: 'flex'   
-               });
-            };
-            
-        })(marker, places[i].place_name);
-        
-
-        fragment.appendChild(itemEl);
-    }
-
-    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-    listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
-
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    map.setBounds(bounds);
-}
-
-// 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, places) {
-
-    var el = document.createElement('li'),
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-                '<div class="info" id="srname"' +(index+1)+'>' +
-                '   <h5>' + places.place_name + '</h5>';
-                
-
-    if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>' +
-                    '   <span class="jibun gray">' +  places.address_name  + '</span>';
-    } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>'; 
-    }
-                 
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-                '</div>';
-                
-    var resultword = $('#srname'+(index+1)+' h').val();
-
-    el.innerHTML = itemStr;
-    el.className = 'item';
-    el.onclick = searchresult(resultword)
-    
-    console.log(resultword);
-
-    return el;
-}
-
-function searchresult(rw){
-   console.log(rw);
-   
-   
-}
-
-// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-            marker = new kakao.maps.Marker({
-            position: position, // 마커의 위치
-            image: markerImage 
-        });
-
-    marker.setMap(map); // 지도 위에 마커를 표출합니다
-    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
-
-    return marker;
-}
-
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
-function removeMarker() {
-    for ( var i = 0; i < markers.length; i++ ) {
-        markers[i].setMap(null);
-    }   
-    markers = [];
-}
-
-// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i; 
-
-    // 기존에 추가된 페이지번호를 삭제합니다
-    while (paginationEl.hasChildNodes()) {
-        paginationEl.removeChild (paginationEl.lastChild);
-    }
-
-    for (i=1; i<=pagination.last; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
-
-        if (i===pagination.current) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    pagination.gotoPage(i);
-                }
-            })(i);
-        }
-
-        fragment.appendChild(el);
-    }
-    paginationEl.appendChild(fragment);
-}
-
-// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-// 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title) {
-    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-    infowindow.setContent(content);
-    infowindow.open(map, marker);
-}
-
- // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {   
-    while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
-    }
-}
-</script>
+      <script src="./resources/js/kakaomap.js"></script>
+     
 
 <script>
     const upload_list = document.querySelector('.upload_list'); //전체 슬라이드 컨테이너
@@ -1595,13 +1008,13 @@ function removeAllChildNods(el) {
 
   </script>
   
-  <script>
+    <script>
 
     var page = 0;
     var length = 0;
   
 	function readStories() {
-		var paramData = {"FRI_MEM": 1};
+		var paramData = {"FRI_MEM" : "${MEM_ID}"};
 		var htmls = '';
 
 		$.ajax({
@@ -1644,37 +1057,221 @@ function removeAllChildNods(el) {
 		});
 	}
   </script>
+  
+  
   <script>
 
-  	// 왼쪽 버튼
-  	function prev_action() {
-  		page--; // 페이지 번호 -1
-		
-  		// 왼쪽 버튼 비활성화
-  		if (page < 1) {
-  			$('.story_prev').css("visibility", "hidden");
-  		}
-  		
-  		// 오른쪽 버튼 활성화
-  		if (Math.floor(length / 6) > page) {
-  			$('.story_next').css("visibility", "visible");
-  		}
-  	}
-  	
-  	// 오른쪽 버튼
-  	function next_action() {
-  		page++; // 페이지 번호 +1
-  		
-  		// 왼쪽 버튼 활성화
-  		if (page > 0) {
-  			$('.story_prev').css("visibility", "visible");
-  		}
+     // 왼쪽 버튼
+     function prev_action() {
+        page--; // 페이지 번호 -1
+      
+        // 왼쪽 버튼 비활성화
+        if (page < 1) {
+           $('.story_prev').css("visibility", "hidden");
+        }
+        
+        // 오른쪽 버튼 활성화
+        if (Math.floor(length / 6) > page) {
+           $('.story_next').css("visibility", "visible");
+        }
+     }
+     
+     // 오른쪽 버튼
+     function next_action() {
+        page++; // 페이지 번호 +1
+        
+        // 왼쪽 버튼 활성화
+        if (page > 0) {
+           $('.story_prev').css("visibility", "visible");
+        }
 
-  		// 오른쪽 버튼 비활성화
-  		if (Math.floor(length / 6) <= page) {
-  			$('.story_next').css("visibility", "hidden");
-  		}
-  	}
+        // 오른쪽 버튼 비활성화
+        if (Math.floor(length / 6) <= page) {
+           $('.story_next').css("visibility", "hidden");
+        }
+     }
   </script>
+
+ <script>
+  
+  $(document).ready(function(){
+	
+     
+
+     let like_n = document.querySelectorAll('#like_n');
+     let like_y = document.querySelectorAll('#like_y');
+     
+     let idx = document.querySelectorAll('#idx');
+     let board_idx = document.querySelectorAll('#board_idx');
+
+     let but = document.querySelectorAll('.likeBut');
+     
+     let count = document.querySelectorAll('.likec');
+     
+     
+     for(let a=0; a < but.length; a++){
+        
+        but[a].addEventListener('click', function(event) {
+           // 이벤트 발생한 요소가 자식 요소인 경우에만 이벤트 처리
+           if (event.target && event.target.matches('#like_y')) {
+             // 자식 요소에 대한 이벤트 처리
+             
+                       console.log(board_idx[a].value);
+             
+                       var like= { "idx": idx[a].value, "board_idx": board_idx[a].value }
+                    
+                    $.ajax({
+                          url : "/roomie/likeBdelete.ya" 
+                          ,data : like
+                          ,success: function(like){      
+                             
+                             console.log(idx[a].value + "board_idx" + board_idx[a].value);
+                           //console.log(but[a].getAttribute('id'));
+                           
+                           
+                           $('#' + but[a].getAttribute('id')).load(location.href + ' #' + but[a].getAttribute('id'));
+                           
+                           //특정 div 새로고침
+                           //$('#div').load(location.href + ' #div');
+                             
+                           $('#' + count[a].getAttribute('id')).load(location.href + ' #' + count[a].getAttribute('id'));
+     
+
+                          },error : function(request,error,data){
+                             alert("실패");
+                              console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+                          }
+                      });//ajax  
+                           
+           } else if(event.target && event.target.matches('#like_n')){
+              
+              console.log(board_idx[a].value);
+              
+              
+              var like= { "idx": idx[a].value, "board_idx": board_idx[a].value }
+              
+              $.ajax({
+                    url : "/roomie/likeBinsert.ya" 
+                    ,data : like
+                    ,success: function(){              
+
+                       console.log(idx[a].value + "board_idx" + board_idx[a].value);
+                       //console.log(but[a].getAttribute('id'));
+                       
+                       $('#' + but[a].getAttribute('id')).load(location.href + ' #' + but[a].getAttribute('id'));
+                   
+                       $('#' + count[a].getAttribute('id')).load(location.href + ' #' + count[a].getAttribute('id'));
+            
+                    },error : function(request,error,data){
+                       alert("실패");
+                        console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+                    }
+                });//ajax  
+              
+           }
+         });
+        
+     }
+     
+     
+     
+   
+  });//document.ready
+  
+  </script> 
+
+<script>
+  
+  let but = document.querySelectorAll('.more_details'); 
+  let idx = document.querySelectorAll('#bo_idx');
+  let name = document.querySelectorAll('#bo_name');
+  let mem = document.querySelectorAll('#bo_mem');
+
+  
+  for(let len=0; len < but.length; len++){
+	  
+	  but[len].addEventListener('click',function(){
+		 
+		    console.log(idx[len].value); 
+			$("#modal_overlay1").css("display", "flex");	
+			var bo_idx = idx[len].value;
+			var bo_name = name[len].value;
+			var bo_mem = mem[len].value;
+			
+			sessionStorage.setItem("BO_IDX", bo_idx ); // 저장
+			sessionStorage.setItem("BO_NAME", bo_name ); // 저장
+			sessionStorage.setItem("BO_MEM", bo_mem ); // 저장
+			
+			 console.log(bo_idx);
+			 console.log("BO_NAME 확인 : " + bo_name);
+			
+			 console.log("세션 저장 확인 : " + sessionStorage.getItem("BO_IDX")); // mineItRecord
+			
+			/* $.ajax({
+			    url: "report.ya",
+			    type: "POST",
+			    data: { bo_idx: bo_idx },
+			    success: function(data) {
+			    	
+			    	//$('#report1').load(location.href + ' #report1');
+			        console.log("전송 성공");
+			        console.log(bo_idx);
+			        sessionStorage.setItem("BO_IDX", bo_idx ); // 저장
+			        
+			    },
+			    error: function(xhr, status, error) {
+			        console.error("전송 실패: " + error);
+			    }
+			});  */
+		  
+	  });
+	  
+  }
+  
+
+  
+  </script>
+  
+<script>
+$(window).on('load',function (){
+	
+	var MEM_ID = '<%=(String)session.getAttribute("MEM_ID")%>';
+
+	$.ajax({
+		  url : "boardNotif.ya"
+		, type : 'POST'
+		, data : {"CHAT_MYID" : MEM_ID}
+		, dataType : 'json'
+		, success: function(result){
+			
+			if(result == true){
+				
+				var messageNotification = '<img style="width: 10px; height: 10px;" src="resources/image/icon_notification2.png">';
+				$("#msgNotif").html(messageNotification); //채팅 아이콘에 메시지 알림 아이콘 추가.
+				
+			}
+			
+		}
+		, error: function(error){
+			alert("실패");
+			console.log("에러 : " + error);
+		}
+	});
+
+}
+)
+</script>
+
+<script>
+	$(document).ready(function(){
+	    // 이미지 슬라이더 설정
+	    $('.slider').slick({
+	        infinite: true,
+	        slidesToShow: 1,
+	        slidesToScroll: 1
+	    });
+	});
+</script>
+     
 </body>
 </html>

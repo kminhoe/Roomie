@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="block">
+
+ <insert id="blockInsert" parameterType="hashmap">
+   <![CDATA[
+      MERGE INTO BLOCK B
+      USING (
+      SELECT #{MEM_IDX} AS MEM_IDX, #{BLOCKM_IDX} AS BLOCKM_IDX
+      FROM DUAL
+      ) S
+      ON (B.MEM_IDX = S.MEM_IDX AND B.BLOCKM_IDX = S.BLOCKM_IDX)
+      WHEN NOT MATCHED THEN
+      INSERT (BLOCK_IDX, MEM_IDX, BLOCKM_IDX, BLOCK_DATE)
+      VALUES (BLOCK_SEQ.NEXTVAL, S.MEM_IDX, S.BLOCKM_IDX, SYSDATE)
+   ]]>
+   </insert>
+
+
+</mapper>

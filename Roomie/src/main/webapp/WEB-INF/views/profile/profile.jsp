@@ -11,6 +11,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+<!-- webSocket 세션 js -->
+<link rel="js" type="text/css"
+   href="resources/js/web.js">
+
+
 <!--Modal-->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -541,7 +546,6 @@ img.track {
 		<div class="profile">
 			
 			<div class="profile-image">
-					
 				<c:choose>
 					<c:when test="${user.MEM_MEDIA == null }">
 						<img style="width: 200px; height: 200px;"
@@ -562,18 +566,13 @@ img.track {
 				<c:when test="${user.MEM_ID != session}">
 					
 					<c:choose>
-						<c:when test="${empty following.ISFOLLOW}">
-					<input type="button" class="btn profile-edit-btn btn btn-primary"
-					id="follow_profile" value="FOLLOW">
-						</c:when>
-						<c:when test="${following.FOLLOWING == user.MEM_ID}">
+						<c:when test="${follow.ISFOLLOW == 'F' || follow.FRI_MEM == user.MEM_ID}">
 					<input type="button" class="btn profile-edit-btn btn btn-primary"
 					id="unfollow_profile" value="FOLLOWING">
-						
-						
 						</c:when>
 						<c:otherwise>
-						
+					<input type="button" class="btn profile-edit-btn btn btn-primary"
+					id="follow_profile" value="FOLLOW">
 						</c:otherwise>
 					</c:choose>
 					<button class="btn profile-edit-btn">송금하기</button>
@@ -747,7 +746,6 @@ img.track {
      
         </div>
         <!-- 댓글 목록 -->
-        
         <div style="padding-left:10px;">
         <input type="hidden" name="COM_WRITER" id="comment_writer" value="${session}">
         <input type="text" value="${post.BO_IDX}" name="BO_IDX" id="comment_artno">
@@ -760,9 +758,8 @@ img.track {
           <span class="feed_txt"> <b> ${coms.COM_WRITER } </b> ${coms.COM_CONT}</span>
           <button id="comment_reply">reply</button>
           <br>
-          	</c:forEach>
+          <span class="feed_txt"> <b> junseok </b> 제주도  ㄱ ㄱ </span>
          </div>
-         
         </div>
 	</div>
 	</div>
@@ -1115,7 +1112,7 @@ $(document).on('click', '#follow_profile', function(e){
 		type: "POST",
 		success: function(res){
 			alert("입력 완료");
-			location.reload();
+			e.preventDefault();
 			if (elem.value=="FOLLOWING"){
 		    	elem.value = "FOLLOW";
 		    }
@@ -1152,7 +1149,7 @@ $(document).on('click', '#unfollow_profile', function(e){
 		type: "POST",
 		success: function(res){
 			alert("입력 완료");
-			location.reload();
+			e.preventDefault();
 			if (elem.value=="FOLLOW"){
 		    	elem.value = "FOLLOWING";
 		    }

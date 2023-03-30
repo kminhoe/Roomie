@@ -53,13 +53,8 @@ public class BoardController {
 		
 		log.info("update ajax post......");
 		
-//		log.info("받아왔니?"+ image);
-//		
-		System.out.println("이거니?"+uploadFile);
-		
-		
-		String uploadFolder = session.getServletContext().getRealPath("/");
-		
+		System.out.println("이거니?"+uploadFile);		
+		String uploadFolder = session.getServletContext().getRealPath("/resources/files/board/");		
 		System.out.println("경로 : " + uploadFolder);
 		
 		//String uploadFolderPath = getFolder();
@@ -89,13 +84,12 @@ public class BoardController {
 			//IE일때 파일경로 수정
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 			log.info("only file name: "+ uploadFileName);
-//			map.put("BO_MEDIA", uploadFileName);
+
 			
 			long dt = System.currentTimeMillis();
 			
 			System.out.println("데이터tostring : " +dt);
-			
-//			UUID uuid = UUID.randomUUID();
+
 			
 			uploadFileName = dt + "_" + uploadFileName;
 			map.put("BO_MEDIA", uploadFileName);
@@ -103,32 +97,18 @@ public class BoardController {
 			
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
-				multipartFile.transferTo(saveFile);
 				
-//				map.put("BO_UUID", uuid.toString());
-				//map.put("BO_UPLOADPATH", uploadFolderPath);
-				//check type
+				multipartFile.transferTo(saveFile);
+
 				
 				if(Files.probeContentType(saveFile.toPath()).startsWith("image")) {
 					map.put("BO_MEDIATYPE", "image");
-//					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-//					
-//					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
-//					
-//					thumbnail.close();					
+			
 						
 				}else if(Files.probeContentType(saveFile.toPath()).startsWith("video")) {
 					map.put("BO_MEDIATYPE", "video");
 				}
-//				if(checkImageType(saveFile)) {
-//					
-//					map.put("BO_IMAGE", true);
-//					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-//					
-//					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
-//					
-//					thumbnail.close();
-//				}
+
 				System.out.println(map);
 				list.add(map);
 				/* boardService.registerBoard(map); */
@@ -137,22 +117,11 @@ public class BoardController {
 				e.printStackTrace();
 			}
 			
-//			list.add(map);
-//			System.out.println(list);
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	/*
-	 * private String getFolder() { SimpleDateFormat sdf = new
-	 * SimpleDateFormat("yyyy-MM-dd");
-	 * 
-	 * Date date = new Date();
-	 * 
-	 * String str = sdf.format(date);
-	 * 
-	 * return str.replace("-", File.separator); }
-	 */
+
 	
 	@GetMapping("/display.ya")
 	@ResponseBody
@@ -183,12 +152,11 @@ public class BoardController {
 		System.out.println("받았니? : " + request);
 		System.out.println("받았니? : " + map);
 		
-		map.put("BO_MEM", session.getAttribute("MEM_IDX"));
+		
+		map.put("BO_MEM", Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX"))));
 		
 		boardService.registerBoard(map);
 		
-		boardService.registerBoard(map);
-		System.out.println(map);
 		if(map.get("BO_IDX") != null) {
 			System.out.println("이건 먼데?" + map.get("BO_IDX"));
 		
@@ -217,33 +185,9 @@ public class BoardController {
 		}
 		
 		return new ResponseEntity<String>("redirect:/roomie/boardList.ya", HttpStatus.OK);
-		
-		
-	
-		
-		
-		
+
 		
 	}
-	
-//	private boolean checkImageType(File file) {
-//		try {
-//			String contentType = Files.probeContentType(file.toPath());
-//			
-//			return contentType.startsWith("image");
-//			if(contentType.startsWith("image")) {
-//				return true;			
-//			}
-//			if(contentType.startsWith("video")) {
-//				return true;
-//			}	
-//		}catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return false;
-//	}
-	
-
 	
 	@RequestMapping(value="/boardList.ya")
 	public ModelAndView boardList(HttpSession session)throws Exception{
@@ -251,10 +195,12 @@ public class BoardController {
 		
 		System.out.println("세션 확인 : " + session.getAttribute("MEM_IDX"));
 		
+		int idx1 = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
+		
 		//좋아요 확인
 		Map<String, Object> map = new HashMap<>();
 		
-		map.put("LIKEB_MEM", 2);
+		map.put("LIKEB_MEM", idx1);
 
 		List<Map<String, Object>> like = boardService.likeCheck(map);
 		
@@ -281,17 +227,29 @@ public class BoardController {
 		
 		fri.put("MEM_IDX", idx);
 		
-		List<Map<String, Object>> board = boardService.selectBoard(fri);
+		//나의 ID 구하기
+		Map<String, Object> mem_id = boardService.memCheck(fri);
 		
-		System.out.println(board);
+		String id = (String) mem_id.get("MEM_ID");
+		
+		System.out.println("회원 아이디 구하기" + id);
 		
 		
-		mv.addObject("boardList", board);
+		Map<String, Object> fri_id = new HashMap<>();
 		
-
+		 fri_id.put("MEM_ID", id);
+		
+			
+		 List<Map<String, Object>> board = boardService.selectBoard(fri_id);
+			  
+		 System.out.println(board);
+			 
+			  
+		 mv.addObject("boardList", board);
+			 
+		 
+		
 		//본인 확인
-		//int idx = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
-		
 		Map<String, Object> mem = new HashMap<>();
 		
 		mem.put("MEM_IDX", idx);

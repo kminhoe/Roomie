@@ -19,6 +19,8 @@ public interface MemberService {
   	public Map<String, Object> emailcheck(String mail) throws Exception;
   	//비밀번호 재설정
   	public void passwordreset(Map<String, Object> map) throws Exception;
+  	//신고 상태 변경
+  	public void statusChange(Map<String, Object> map) throws Exception;
 
 }
 
