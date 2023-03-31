@@ -76,6 +76,21 @@ public class ChatServer extends TextWebSocketHandler {
 			session.setMaxIdleTimeout(30 * 60 * 1000); //웹소켓 세션의 유효기간을 30분 연장.
 			System.out.println("@@@@@@@@@@@@   웹소켓 시간 연장");
 			System.out.println("@@@@@@@@@@@@   웹소켓 접속 멤버: " + sessionList);
+		}else if(keyWord.equals("5")) { //좋아요 알림 기능.
+			System.out.println("@@@@@@@@@@@@   keyWord는 5입니다.(좋아요 알림)");
+			for(int i=0;i<sessionList.size();i++) { //sessionList를 모두 둘러본다.
+				for(String key : sessionList.get(i).keySet()) { //sessionList에 들어있는 모든 항목의 key값을 둘러본다.
+					if(key.equals(msg.split("#")[1])) { //key값과 메시지 내부의 아이디가 일치한다면(받는사람 아이디)
+						System.out.println("@@@@@@@@@@@@   좋아요를 받는 웹소켓세션: " + sessionList.get(i).get(key));
+						if(!sessionList.get(i).get(key).isOpen()) {
+							System.out.println("세션이 닫혀있습니다.");
+						}else {
+							System.out.println("@@@@@@@@@@@@   해당 세션의 게시글을 좋아합니다.");
+							sessionList.get(i).get(key).getBasicRemote().sendText("like#true");//해당 key값과 매치되는 session으로 "true"를 보낸다.
+						}
+					}
+				}
+			}
 		}
 		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
 	}

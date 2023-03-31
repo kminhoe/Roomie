@@ -47,6 +47,56 @@
 
 <!-- 타이틀 -->
 <title>ROOMIE</title>
+
+<style>
+.test_modal {
+	width: 300px;
+	height: auto;
+	right: 70px;
+	position: absolute;
+	display: none;
+}
+
+.modal_notif {
+	width: 100%;
+	height: auto;
+	bottom: 0px;
+	background: white;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: 10px;
+	padding: 10px;
+	overflow-x: hidden;
+	
+}
+
+.alarm_profileImg{
+	margin-right: 20px;
+	border: 1px solid #DBDBDB;
+	border-radius: 50%;
+	height: 50px;
+	cursor: pointer;
+}
+
+.alarm_list0{
+	background-color: white;
+	cursor: pointer;
+}
+
+.alarm_list1{
+	background-color: #98bcd5;
+	cursor: pointer;
+}
+
+.alarm_list0:hover {
+	background-color: #F2F3F5;
+}
+
+.alarm_list1:hover {
+	background-color: #98BCF7;
+}
+
+</style>
+
 </head>
 <body>
    <!-- 상단 내비게이션 바 시작 -->
@@ -87,9 +137,18 @@
 	            </div>
 			</div>
             <!-- 알림 버튼 -->
-            <img class="menu_img"
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_01.png"> &nbsp;&nbsp;
+            <div class="menu_img">
+            	<div style="position: relative;">
+            		<div>
+            			<img class="menu_img" id="notifBtn"
+							style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+							src="resources/image/icon_01.png"> &nbsp;&nbsp;
+            		</div>
+            		<div id="notifAlarm" style="position: absolute; top: -10px; right: 15px;">
+		            	<img style="width: 10px; height: 10px;" src="">
+		            </div>
+            	</div>
+            </div>
             <!-- 스토리 버튼 -->
             <img class="menu_img" id="add_stories"
                style="width: 25px; height: 25px; object-fit: contain"
@@ -453,6 +512,58 @@
 				</c:choose>
          </div>
       </footer>
+
+<!-- 모달 start -->
+	
+	<div class="test_modal" id="close1">
+		<div style="display: relative; height: 20px; width: 20px; transform: rotate(45deg); background-color: white; position:absolute; top:-10px; left: 150px;"></div>
+		<div class="modal_notif">
+			<div class="likeAlarm">
+				<div style="display: flex; justify-content: center;">
+				좋아요
+				</div>
+				<div id="likeAlarmList">
+					<div style="display: flex; justify-content: center; padding: 30px; color: gray;">
+						좋아요 알림이 없습니다...
+					</div>
+				</div>
+			</div>
+			<div style="border-bottom: 1px solid #EBEDF0; margin: 10px;"></div>
+			<div class="reviewAlarm">
+				<div style="display: flex; justify-content: center;">
+				댓글
+				</div>
+				<div id="reviewAlarmList">
+					<div style="display: flex; justify-content: center; padding: 30px; color: gray;">
+						댓글 알림이 없습니다...
+					</div>
+				</div>
+			</div>
+			<div style="border-bottom: 1px solid #EBEDF0; margin: 10px;"></div>
+			<div class="followAlarm">
+				<div style="display: flex; justify-content: center;">
+				팔로우
+				</div>
+				<div id="followAlarmList">
+					<div style="display: flex; justify-content: center; padding: 30px; color: gray;">
+						팔로우 알림이 없습니다...
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	<!-- 모달 end -->
+
+<script> /* 모달 관련 script */
+	//클릭 이벤트
+	$(document).on('click', function(e) {
+		if($(e.target).is('#notifBtn')) { //클릭한 요소의 id가 notifBtn 이라면
+			$('.test_modal').css('display', 'flex'); //test_modal class의 display 속성을 flex로 변경.
+		}else if(!$(e.target).closest('.test_modal').length && !$(e.target).is('.test_modal')) { //클릭한 요소의 id가 notifBtn이 아니라면
+			$('.test_modal').css('display', 'none'); //test_modal class의 display 속성을 none로 변경.
+		}
+	});
+</script>
 
 <script>
     // 스토리 추가 모달
@@ -1161,6 +1272,8 @@
                        $('#' + but[a].getAttribute('id')).load(location.href + ' #' + but[a].getAttribute('id'));
                    
                        $('#' + count[a].getAttribute('id')).load(location.href + ' #' + count[a].getAttribute('id'));
+                       
+                       webSocket.send('5#' + board_id[a].value);
             
                     },error : function(request,error,data){
                        alert("실패");
@@ -1231,35 +1344,148 @@
 
   
   </script>
-  
+
 <script>
 $(window).on('load',function (){
 	
 	var MEM_ID = '<%=(String)session.getAttribute("MEM_ID")%>';
 
+	/* 알림 표시 추가 */
 	$.ajax({
 		  url : "boardNotif.ya"
 		, type : 'POST'
 		, data : {"CHAT_MYID" : MEM_ID}
-		, dataType : 'json'
+		, dataType : 'text'
 		, success: function(result){
 			
-			if(result == true){
-				
+			//1.메시지 알림 표시 여부
+			if(result.split("#")[1] == "true"){
 				var messageNotification = '<img style="width: 10px; height: 10px;" src="resources/image/icon_notification2.png">';
-				$("#msgNotif").html(messageNotification); //채팅 아이콘에 메시지 알림 아이콘 추가.
-				
+				$("#msgAlarm").html(messageNotification); //채팅 아이콘에 메시지 알림 아이콘 추가.
+			}
+			
+			//2.활동 알림 표시 여부(좋아요, 댓글, 팔로우 등...)
+			if(result.split("#")[2] == "true"){
+				var likeNotification = '<img style="width: 10px; height: 10px;" src="resources/image/icon_notification2.png">';
+				$("#notifAlarm").html(likeNotification); //알림 아이콘에 메시지 알림 아이콘 추가.
 			}
 			
 		}
 		, error: function(error){
-			alert("실패");
-			console.log("에러 : " + error);
+			alert("실패3");
+			console.log("에러 : " + JSON.stringify(error));
 		}
 	});
-
+	
+	/* 알림 리스트 추가 */
+	$.ajax({
+		  url : "alarmList.ya"
+		, type : 'POST'
+		, data : {"MEM_ID" : MEM_ID}
+		, dataType : 'json'
+		, success: function(result){
+			
+			var htmls = "";
+				
+				//LikeController의 alarmList에서 반송된 List<Map>형식의 데이터를 2중 for문을 통해 사용.
+				for(var i=0; i<result.length; i++){ //알림은 최대 3개까지만 표시.
+					
+					if(i == 3){break} //좋아요 알림은 3개까지만 표시.
+					
+					if(result[i]["NOTIFLIKE_CHECK"] == 1){ //확인하지 않은 알림의 경우(배경색이 흰색)
+					
+						htmls +=		'<div class="alarm_list1" id="' + result[i]["NOTIFLIKE_IDX"]  +'notifLikeIdx" style="display: flex; padding: 10px;">';
+						htmls +=			'<div>';
+						htmls +=				'<img class="alarm_profileImg" src="resources/image/profile_05.jpg">';
+						htmls +=			'</div>';
+						htmls +=			'<div style="font-size: 14px; color: gray;">';
+						htmls +=				result[i]["NOTIFLIKE_SENDER"]  + '님이<br>';
+						htmls +=				result[i]["NOTIFLIKE_BOARD"] + '글을 좋아합니다^^';
+						htmls +=			'</div>';
+						htmls +=		'</div>';
+					
+					}else{ //이미 확인한 알림의 경우
+						
+						htmls +=		'<div class="alarm_list0" id="' + result[i]["NOTIFLIKE_IDX"]  +'notifLikeIdx" style="display: flex; padding: 10px;">';
+						htmls +=			'<div>';
+						htmls +=				'<img class="alarm_profileImg" src="resources/image/profile_05.jpg">';
+						htmls +=			'</div>';
+						htmls +=			'<div style="font-size: 14px; color: gray;">';
+						htmls +=				result[i]["NOTIFLIKE_SENDER"]  + '님이<br>';
+						htmls +=				result[i]["NOTIFLIKE_BOARD"] + '글을 좋아합니다^^';
+						htmls +=			'</div>';
+						htmls +=		'</div>';		
+				
+					}
+					
+				}
+				$("#likeAlarmList").html(htmls); //id="likeAlarmList"인 요소 하위에 htlmls 추가.
+			
+		}
+		, error: function(error){
+			alert("실패3");
+			console.log("에러 : " + JSON.stringify(error));
+		}
+	});
+	
 }
 )
+</script>
+
+<script> /* 알림 리스트(class="alarm_list1")를 클릭했을 때 발생하는 이벤트 */
+$(document).on('click','.alarm_list1',function(e){
+	
+	e.preventDefault(); //버블링 방지
+	var notifLikeIdx = e.currentTarget.id.replace("notifLikeIdx","");
+	
+	//좋아요 알림을 지우기위한 변수
+	var paramData1 = {
+			"TYPE" : "1"
+			, "NOTIFLIKE_IDX" : notifLikeIdx
+		};
+
+	$.ajax({
+		  url : "checkAlarm.ya"
+		, type : 'POST'
+		, data : paramData1
+		
+		, success: function(result){
+		
+			/* 알림 데이터를 확인 */
+			
+		}
+		, error: function(error){
+			alert("실패3");
+			console.log("에러 : " + JSON.stringify(error));
+		}
+	});
+	
+	//click한 대상의 class를 변경.
+	$('.alarm_list1[id ="' + e.currentTarget.id + '"]').addClass('alarm_list0');
+	$('.alarm_list1[id ="' + e.currentTarget.id + '"]').removeClass('alarm_list1');
+	
+})
+
+</script>
+
+<script> /* 알림 버튼의 위치에따라 모달창의 위치를 유동적으로 바꾸는 기능 */
+	const button = document.querySelector('#notifBtn');
+	const modal = document.querySelector('.test_modal');
+	
+	positionModal();
+	
+	window.addEventListener('resize', positionModal);
+	
+	function positionModal() {
+		const rect = button.getBoundingClientRect();
+		const modalRect = modal.getBoundingClientRect();
+		
+		const top = rect.top + window.pageYOffset + rect.height;
+		const left = rect.left + window.pageXOffset;
+		
+		modal.style.top = (top + 30) + 'px';
+		modal.style.left = (left - 150) + 'px';
+	}
 </script>
 
 <script>

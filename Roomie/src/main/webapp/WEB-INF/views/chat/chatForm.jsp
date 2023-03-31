@@ -198,11 +198,10 @@
 	align-items: center;
 }
 
-.chat_profileMsg{
+.chat_profile{
 	text-overflow:ellipsis;
 	overflow:hidden;
 	white-space:nowrap;
-	width:150px;
 }
 
 .chat_profileDate{
@@ -546,7 +545,7 @@ ul li {
 	//페이지가 닫히기 직전에 일반세션의 아이디를 키값으로 갖는 웹소켓세션을 삭제요청(ChatServer)
 	window.onbeforeunload = function() {
 		if("<%=session.getAttribute("MEM_ID")%>" != ""){
-			webSocket.send('3#' + "<%=session.getAttribute("MEM_ID")%>" + '#1');
+			webSocket.send('3#' + '<%=session.getAttribute("MEM_ID")%>' + '#1');
 		}
 	}
 	
