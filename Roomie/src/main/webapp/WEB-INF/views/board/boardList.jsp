@@ -965,7 +965,7 @@
             
             location.reload();
             
-<<<<<<< HEAD
+
             $('.uploadB').html(
             		'<div class="border feed_box">'+
             		'<div class="feed_name">'+
@@ -1019,9 +1019,8 @@
             		'<input class="inputBox" type="text" placeholder="댓글 달기..."></div>'+
             		'<span><button class="buttonBox" type="summit">게시</button></span></div></div>'
                   );
-=======
+
            
->>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
             
          }
           
