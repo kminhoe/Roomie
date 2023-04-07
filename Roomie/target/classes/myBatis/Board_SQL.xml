@@ -15,15 +15,15 @@
    <![CDATA[
       INSERT INTO BOARD(BO_IDX, BO_MEM, BO_MEDIA, BO_DATE, BO_HASH, BO_PLACE, BO_CONT, BO_ID, BO_USER)
       VALUES(
-      #{BO_IDX},
+      BOARD_SEQ.nextval,
       #{BO_MEM},
       #{BO_MEDIA},
       SYSDATE,
       #{BO_HASH},
       #{BO_PLACE},
       #{BO_CONT},
-      #{BO_ID},
-      #{BO_USER}
+      #{BO_MEM},
+      #{BO_MEM}
       )
    ]]>
 
