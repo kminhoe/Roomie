@@ -85,7 +85,7 @@ font-weight: 600;
 }
 
 .gallery-item-likes {
-margin-right: 2.2rem;
+margin-right: 0.2rem;
 }
 
 .gallery-item-type {
@@ -320,8 +320,9 @@ Remove or comment-out the code block below to see how the browser will fall-back
 		position: absolute;
 		top: 0;
 		width: 100%;
+		height: 100%;
 		aspect-ratio: 1;
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: rgba(0, 0, 0, 0.5);
 	}
 	
 	/* 태영 search result */
@@ -352,66 +353,33 @@ Remove or comment-out the code block below to see how the browser will fall-back
 	
 	.test_modal {
 
-width: 500px;
-		height: 650px;
-background: white;
+        width: 450px;
+		height: 500px;
+        background: white;
         backdrop-filter: blur(13.5px);
         -webkit-backdrop-filter: blur(13.5px);
         border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
         position: relative;
         padding: 10px;
-        top: 75px;
         overflow-x: hidden;
-		/* width: 500px;
-		height: 650px;
-		background: white;
-        backdrop-filter: blur(13.5px);
-        -webkit-backdrop-filter: blur(13.5px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        position: relative;
-        padding: 10px;
-        top: 75px;
-        /* X축의 가운데를 기준으로 
-		transform: translate(-50%);
-		padding: 10px;
-		z-index: 1;
- 
-		left: 50% */
+        top: 20px;
+
 		
 	}
 	
 	.test_modal2 {
 	
-	width: 500px;
-		height: 650px;
-background: white;
+	    width: 450px;
+		height: 500px;
+        background: white;
         backdrop-filter: blur(13.5px);
         -webkit-backdrop-filter: blur(13.5px);
         border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
         position: relative;
         padding: 10px;
-        top: 75px;
         overflow-x: hidden;
-		/* width: 500px;
-		height: 650px;
-		position: relative;
-		left: 50%;
-		top: 75px;
-		display: none;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background-color: #fff;
-		border-radius: 10px;
-		border: 1px solid rgba(255, 255, 255, 0.18);
-		/* X축의 가운데를 기준으로 
-		transform: translate(-50%);
-		padding: 10px;
-		z-index: 2;
-		overflow-x: hidden;  */
+        top: 20px;
+
 	}
 	 
 }
@@ -421,7 +389,7 @@ background: white;
 
 
 width: 450px;
-height: 600px;
+height: 500px;
 bottom: 50px;
 overflow-x: hidden; 
 background-color:yellow;
@@ -435,34 +403,37 @@ overflow-x: scroll;
 
 .close1{
 
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        overflow-x: hidden;
+   width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    position: fixed;
         
 }
 
 .close2{
 
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        
-        overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    position: fixed;
         
 }
 
@@ -477,6 +448,26 @@ p {
  
  color: #808080;
 }
+
+
+   .modal_overlay{
+
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow-x: hidden;
+        background: rgba(0, 0, 0, 0.8);
+        
+}
+
+
 
 </style>
 
@@ -512,118 +503,46 @@ p {
 	<!-- 게시물 리스트 start -->
 	<div class="search_container" id="container" style="height: calc(100% - 40px); position: relative; top: 60px;">
 		<div class="search_gallery">
-			<div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
+		
+		 <c:forEach var="board" items="${BOARD}">
+		 
+		 
+		 <div align="center" class="search_gallery_item" tabindex="0" style="width: 286.5px; height: 286.5px;">
+				<img src="resources/files/board/${board.BO_MEDIA}" class="gallery-image" alt="" style="width: 286.5px; height: 286.5px; ">
+				<div class="gallery-item-info" style="color: #ffffff;">
 					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 56</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 2</li>
+						<li class="gallery-item-likes">
+						<!-- 좋아요 -->
+						<c:set var="liked" value="false" />
+
+                         <c:forEach var="like" items="${LIKEC}">
+                         <c:if test="${board.BO_IDX == like.LIKEB_BOARD}">
+                         <c:set var="liked" value="true" />
+                         </c:if>
+                         </c:forEach>
+						
+				<c:if test="${board.COUNT != null}">
+                <li class="gallery-item-likes"><img src="resources/image/w_heart.png" style="height: 27px; width: 27px;">
+                ${board.COUNT}</li>
+                </c:if>
+
+                <c:if test="${board.COUNT == null}">
+
+                </c:if>
+                
+          
+						<li class="gallery-item-comments"><img src="resources/image/w_comment.png" style="height: 27px; width: 27px;"> 5</li>
 					</ul>
 				</div>
 			</div>
-            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 31</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 5</li>
-					</ul>
-				</div>
-			</div>
-            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 56</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 2</li>
-					</ul>
-				</div>
-			</div>
-            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 31</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 5</li>
-					</ul>
-				</div>
-			</div>
-            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 31</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 5</li>
-					</ul>
-				</div>
-			</div>
-            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 56</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 2</li>
-					</ul>
-				</div>
-			</div>
-            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 31</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 5</li>
-					</ul>
-				</div>
-			</div>
-			            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 56</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 2</li>
-					</ul>
-				</div>
-			</div>
-            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 31</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 5</li>
-					</ul>
-				</div>
-			</div>
-            <div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 31</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 5</li>
-					</ul>
-				</div>
-			</div>
-			<div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 31</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 5</li>
-					</ul>
-				</div>
-			</div>
-			<div align="center" class="search_gallery_item" tabindex="0">
-				<img src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800" class="gallery-image" alt="">
-				<div class="gallery-item-info">
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i><img src="image/icon_01.png" style="height: 30px; width: 30px;"> 31</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i><img src="image/icon_03.png" style="height: 30px; width: 30px;"> 5</li>
-					</ul>
-				</div>
-			</div>
+		 
+		</c:forEach> 
+
 
 		</div>
-		
 	</div>
+	
+	
 	<!-- 모달 start -->
 	<!-- 모달창 꼬리표 -->
 	<div id="close1" class="close1">
@@ -663,7 +582,7 @@ p {
 		
 		<div id="result${status.index}" class="searchResult">
 		<div class="mem_result" name="result" style=" height: 60px; position: relative; value="${searchL}">
-   		<img src="resources/image/test.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">
+   		<img src="resources/image/icon_p.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">
    		<div style='float: right; left: 13%; top: 10%; position: absolute;'>
    		<input type='hidden' id='hash_tag' value='${searchL}'>
    		<div id = 'test' style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>${searchL}</div>
@@ -714,23 +633,7 @@ p {
 				장소
 			</button>
 		</div>
-		<!-- 검색 분류태그 end -->
-		<!-- 검색 결과 start-->
-		<%-- <c:if test="">
-			<div style="display:none; width:100%; height:calc(100% - 100px); background-color: yellow;">
-			
-			</div>
-		</c:if>
-		<c:if test="">
-			<div style="display:none; width:100%; height:calc(100% - 100px); background-color: green;">
-			
-			</div>
-		</c:if>
-		<c:if test="">
-			<div style="display:none; width:100%; height:calc(100% - 100px); background-color: blue;">
-			
-			</div>
-		</c:if> --%>
+
 		<div class="keywords" id="keywords" style="width: 450px; top: 55px; position: absolute;">
 		<!-- 검색 결과 start-->
 		<c:forEach var="hash" items="${hash}">
@@ -747,6 +650,124 @@ p {
 	</div>
 	</div>
 	<!-- 모달 end -->
+
+
+		 <!-- 모달 시작 -->
+        <c:forEach var="board" items="${BOARD}">
+		<div id="modal_post" class="modal_overlay" style="z-index:1050; height: -webkit-fill-available; position: fixed;">
+			<div>
+			<span style="cursor: grab;" id="close_modal5"
+						class="material-icons-outlined"> close </span>
+						</div>
+
+			<div style="width: 800px; height: 480px; overflow: hidden; ">
+
+			<div class="contents">
+			<div  class="row">
+			<div class="col-md-8" style="width: 410px; height: 300px; padding: 0px">
+			<div class="border feed_box" style="width: 410px; height: 480px; margin:0px;">
+        
+        <img src="resources/files/board/${board.BO_MEDIA}" style="width: 410px; height: 480px; margin:0px;">
+  		
+       
+        
+      </div>
+	</div>
+	
+	<div class="col-md-4" style="background-color:white; width: 380px; height: 480px; padding: 0px; margin: 0px;">
+	
+	<div class="feed_name" style="height: 60px; display:table; width: 100% ">
+          <div class="profile_box" style="width: 40px; height: 60px; display:table-cell; vertical-align:middle;">
+            <img class="profile_img" src="resources/files/profile/profile_01.jpg" 
+            style="border-radius: 70%; width: 40px; height: 40px; ">
+          </div>
+          <span class="feed_name_txt" 
+          style="font-weight: bold; width: 20%; display:table-cell; vertical-align:middle; font-size: 15px;"> 
+          &nbsp;&nbsp;${board.BO_USER } </span>
+          <span class="_ac6e _ac6f _ac6h" style="display:table-cell; width: 10px; vertical-align:middle; font-size: 15px;">
+          •</span>
+          <span class="feed_name_txt" 
+          style="font-weight: bold; display:table-cell; vertical-align:middle; width: 50px; font-size: 13px;"> 
+          팔로우</span>
+          <div class="etc" style="height: 60px; display:table-cell; vertical-align:middle; text-align: right; ">
+            <img class="etc_img" src="resources/image/icon_28.png" >&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+          
+    </div>
+    
+        <hr style="margin: 0px">
+	 <div class="feed_icon">
+          <div>
+            <!-- 좋아요 버튼 -->
+            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_01.png">
+            <!-- 댓글 버튼 -->
+            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_03.png">
+            <!-- 공유 버튼 -->
+            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_04.png">
+          </div>
+          <div>
+            <!-- 게시글 저장 버튼 -->
+            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_05.png">
+          </div>
+        </div>
+        <div class="feed_like">
+          <!-- 좋아요 표시 -->
+          <br>
+          <p class="feed_txt"> <b>${status.index}</b></p>
+        </div>
+        <div class="feed_content">
+          <!-- 이름, 게시글 내용 -->
+          <p class="feed_txt"> <b> ${user.MEM_NAME} </b> ${post.BO_CONT}</p>
+          
+     
+        </div>
+        <!-- 댓글 목록 -->
+        <div style="padding-left:10px;">
+        <input type="hidden" name="COM_WRITER" id="comment_writer" value="">
+        <input type="text" value="" name="BO_IDX" id="comment_artno">
+        <input type="text" name="COM_CONT" id="comment_content"> <button id="comment_submit">전송</button>
+        <br>
+        <hr>
+        <br>
+        	${commentList}
+        	<c:forEach var="coms" items="${commentList}">
+          <span class="feed_txt"> <b> ${coms.COM_WRITER } </b> ${coms.COM_CONT}</span>
+          <button id="comment_reply">reply</button>
+          <br>
+          </c:forEach>
+         </div>
+        </div>
+	</div>
+	</div>
+	</div>
+				
+	</div>	
+	</c:forEach>
+
+<!-- 모달 끝 -->
+
+
+
+<script>
+
+
+var image = document.querySelectorAll(".search_gallery_item");
+var modal = document.querySelectorAll(".modal_overlay");
+
+for(let q=0; q < image.length; q++){
+	
+	image[q].addEventListener('click', function() {
+		
+		console.log(image.length);
+		console.log(q);
+		modal[q].style.display = "flex";
+		
+	});
+	
+}
+
+
+</script>
 
 
 <script>
@@ -882,7 +903,7 @@ $j(document).ready(function(){
     
     
     
-    search.addEventListener('keyup', function(e) {
+ search.addEventListener('keyup', function(e) {
     	
     	$j("#close1").css('display', 'none');
     	$j("#close2").css('display', 'flex');
@@ -916,7 +937,7 @@ $j(document).ready(function(){
 
     			
     			html += '<div class="mem_result" name="result" style=" height: 60px; position: relative; value="' + item + '">' +
-    		  '<img src="resources/image/test.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
+    		  '<img src="resources/image/icon_p.jpg" style="height: 40px; border-radius: 50%; position: absolute; top: 15%; width: 40px; left:4%">' + " " +
     		  "<div style='float: right; left: 13%; top: 10%; position: absolute;'>" +
     		  "<input type='hidden' id='hash_tag' value='" + item + "'>" +
     		  "<div id = 'test' style='height: 20px; width: 400px; vertical-align: middle; font-size: 14px; font-weight: bold; text-align: left; padding: 0 0 0 10px; '>" + item + '</div>' + "\n" +
@@ -924,7 +945,7 @@ $j(document).ready(function(){
     		  
     			$j('#tag_id').click();
     			
-    		}
+    		} 
     	  
     	  });
     	
