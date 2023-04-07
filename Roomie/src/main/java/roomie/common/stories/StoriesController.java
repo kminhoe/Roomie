@@ -88,7 +88,7 @@ public class StoriesController {
 	// 스토리 업로드
 	@RequestMapping(value = "/storiesUploadPro.ya")
 	public ModelAndView storiesUploadPro(@RequestParam Map<String, Object> map, @RequestParam("videoInput") MultipartFile multipartFile, HttpServletRequest req) throws Exception {
-		ModelAndView mv = new ModelAndView("/board/boardList");
+		ModelAndView mv = new ModelAndView("redirect:/boardList.ya");
 		
 		String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename()); // 확장자명
 
