@@ -114,7 +114,7 @@ public class SearchController {
 	
 	@RequestMapping(value = "searchDelete.ya")
 	@ResponseBody
-	public String searchDelete(@RequestParam Map<String, Object> data) throws Exception{
+	public String searchDelete(@RequestParam Map<String, Object> data, HttpSession session) throws Exception{
 		
 		//ModelAndView mv = new ModelAndView("/search/searchForm");
 		
@@ -122,8 +122,10 @@ public class SearchController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		int idx = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
+		
 		map.put("SEARCH_KEYWORD", data.get("keyword"));
-	    map.put("SEARCH_MEM", 1);
+	    map.put("SEARCH_MEM", idx);
 		
 		searchService.searchDelete(map);
 		
@@ -131,9 +133,9 @@ public class SearchController {
 		
 		//Map<String, Object> mem = new HashMap<String, Object>();
 		//mem.put("SEARCH_MEM", 1);
-		int id = 1;
+
 		
-		List<Map<String, Object>> slist = searchService.searchList(id);
+		List<Map<String, Object>> slist = searchService.searchList(idx);
 		
 		System.out.println(slist);
 		
