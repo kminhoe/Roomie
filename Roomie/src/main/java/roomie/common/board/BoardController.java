@@ -23,6 +23,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -201,6 +202,7 @@ public class BoardController {
 		Map<String, Object> map = new HashMap<>();
 		
 
+
 		map.put("LIKEB_MEM", session.getAttribute("MEM_IDX"));
 
 		map.put("LIKEB_MEM", idx1);
@@ -336,4 +338,8 @@ public class BoardController {
 
 	}
 	
+
 }
+
+
+

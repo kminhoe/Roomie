@@ -5,32 +5,97 @@
 
 <mapper namespace="like">
 	
-<insert id="likeBinsert" parameterType="hashmap">
-
-<![CDATA[
-		INSERT INTO BO_LIKE(LIKEB_IDX, LIKEB_MEM, LIKEB_BOARD)
-		VALUES(
-		BO_LIKE_SEQ.NEXTVAL,
-		#{LIKEB_MEM},
-		#{LIKEB_BOARD})
-	]]>
-
-</insert>
-
-<insert id="likeBdelete" parameterType="hashmap">
-
-<![CDATA[
-		DELETE FROM BO_LIKE
-           WHERE LIKEB_MEM = #{LIKEB_MEM} AND LIKEB_BOARD = #{LIKEB_BOARD}
-	]]>
-
-</insert>
-
-<select id="likeBcount" parameterType="hashmap" resultType="hashmap">
+	<insert id="likeBinsert" parameterType="hashmap">
+	
 	<![CDATA[
-		SELECT * FROM BO_LIKE WHERE LIKEB_BOARD = #{LIKEB_BOARD}
-	]]>
-</select>
-
+			INSERT INTO BO_LIKE(LIKEB_IDX, LIKEB_MEM, LIKEB_BOARD)
+			VALUES(
+			BO_LIKE_SEQ.NEXTVAL,
+			#{LIKEB_MEM},
+			#{LIKEB_BOARD})
+		]]>
+	
+	</insert>
+	
+	<insert id="likeBdelete" parameterType="hashmap">
+	
+	<![CDATA[
+			DELETE FROM BO_LIKE
+	           WHERE LIKEB_MEM = #{LIKEB_MEM} AND LIKEB_BOARD = #{LIKEB_BOARD}
+		]]>
+	
+	</insert>
+	
+	<select id="likeBcount" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT * FROM BO_LIKE WHERE LIKEB_BOARD = #{LIKEB_BOARD}
+		]]>
+	</select>
+	
+	<!-- 좋아요 알림 데이터 추가 start -->
+	<insert id="insertNotifLike" parameterType="hashmap">	
+	<![CDATA[
+		INSERT INTO NOTIFLIKE (NOTIFLIKE_IDX, NOTIFLIKE_MEM, NOTIFLIKE_SENDER, NOTIFLIKE_BOARD, NOTIFLIKE_DATE, NOTIFLIKE_CHECK)
+			SELECT 
+				NOTIFLIKE_SEQUENCE.NEXTVAL,
+				(SELECT BO_ID FROM BOARD WHERE BO_IDX = #{LIKEB_BOARD}),
+				(SELECT BO_ID FROM BOARD WHERE BO_MEM = #{LIKEB_MEM} AND ROWNUM = 1),
+				#{LIKEB_BOARD},
+				SYSDATE,
+				1
+			FROM DUAL
+		]]>
+	</insert>	
+	<!-- 좋아요 알림 데이터 추가 end -->
+	
+	<!-- 좋아요 알림 데이터 삭제 start -->
+	<delete id="deleteNotifLike" parameterType="hashmap">	
+	<![CDATA[
+		DELETE FROM NOTIFLIKE
+			WHERE
+				NOTIFLIKE_MEM = (SELECT BO_ID FROM BOARD WHERE BO_IDX = #{LIKEB_BOARD})
+			AND
+				NOTIFLIKE_SENDER = (SELECT BO_ID FROM BOARD WHERE BO_MEM = #{LIKEB_MEM} AND ROWNUM = 1)
+			AND
+				NOTIFLIKE_BOARD = #{LIKEB_BOARD}
+		]]>
+	</delete>
+	<!-- 좋아요 알림 데이터 삭제 end -->
+	
+	<!-- 좋아요 알림 데이터 조회 start -->
+	<select id="selectNotifLike" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+				SELECT *
+					FROM NOTIFLIKE
+				WHERE
+					NOTIFLIKE_MEM = #{MEM_ID}
+				ORDER BY
+					NOTIFLIKE_CHECK DESC
+			]]>
+	</select>
+	<!-- 좋아요 알림 데이터 조회 end -->
+	
+	<!-- 확인하지 않은 좋아요 알림 데이터 조회 start -->
+	<select id="selectNotifLike2" parameterType="hashmap" resultType="hashmap">
+			<![CDATA[
+				SELECT *
+					FROM NOTIFLIKE
+				WHERE
+					NOTIFLIKE_MEM = #{MEM_ID}
+				AND
+					NOTIFLIKE_CHECK = '1'
+			]]>
+	</select>
+	<!-- 확인하지 않은 좋아요 알림 데이터 조회 end -->
+	
+	<!-- 좋아요 알림 데이터 체크 start -->
+	<update id="checkNotifLike" parameterType="map">
+			<![CDATA[
+				UPDATE NOTIFLIKE
+					SET NOTIFLIKE_CHECK = '0'
+						WHERE NOTIFLIKE_IDX = #{NOTIFLIKE_IDX}
+			]]>
+		</update>
+	<!-- 좋아요 알림 데이터 체크 end -->
 	
 </mapper>
