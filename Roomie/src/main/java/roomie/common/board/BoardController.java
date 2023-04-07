@@ -248,6 +248,7 @@ public class BoardController {
 			 
 			  
 		 mv.addObject("boardList", board);
+		 
 			 
 		 
 		
