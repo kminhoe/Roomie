@@ -201,11 +201,8 @@ public class BoardController {
 		//좋아요 확인
 		Map<String, Object> map = new HashMap<>();
 		
-<<<<<<< HEAD
-		map.put("LIKEB_MEM", session.getAttribute("MEM_IDX"));
-=======
 		map.put("LIKEB_MEM", idx1);
->>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
+
 
 		List<Map<String, Object>> like = boardService.likeCheck(map);
 		
