@@ -33,6 +33,7 @@ public class CommentController {
 		model.addAttribute("comment", CommentMap);
 		model.addAttribute("counter", commentCounter);
 		
+		
 		System.out.println(CommentMap);
 		System.out.println(commentCounter);
 		
