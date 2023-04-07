@@ -546,7 +546,7 @@ p {
 	<!-- 모달 start -->
 	<!-- 모달창 꼬리표 -->
 	<div id="close1" class="close1">
-	<div class="test_modal" id="modal1">
+	<div class="test_modal" id="modal1" style="padding: 0px;">
 		<div style="position: relative; height: 20px; width: 20px; background-color: #fff; transform: rotate(45deg); top: -20px; z-index: 0; margin: auto;"></div>
 		<div id="searchlist">
 		
