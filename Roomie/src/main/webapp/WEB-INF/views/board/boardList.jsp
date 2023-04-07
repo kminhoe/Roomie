@@ -160,11 +160,14 @@
          <!-- 스토리 끝 -->
          
          <!-- 게시글 시작 -->
+         <div id="create_box">
          
+         </div>
          <c:forEach var="boardList" items="${boardList}" varStatus="status">
          
          
          <div class="border feed_box">
+         
             <div class="feed_name">
                <div class="profile_box">
                
@@ -844,7 +847,7 @@
          dataType:'text',
          success: function(status){
             
-            alert("성공");
+            console.log("성공 :" + status);
             /* $('#modal_add_feed_content').css({
                   display: 'none'   
                }); */

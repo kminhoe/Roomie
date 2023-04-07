@@ -3,9 +3,7 @@ package roomie.common.board;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 import roomie.common.like.LikeService;
@@ -147,8 +144,10 @@ public class BoardController {
 	
 	@PostMapping(value="/boardInsert.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<String> insertboard(HttpSession session, MultipartHttpServletRequest request, @RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
+	public ResponseEntity<ModelAndView> insertboard(HttpSession session, MultipartHttpServletRequest request, 
+			@RequestParam Map<String, Object> map, String cidx) throws Exception {
 		Map<String, Object> hm = new HashMap<>();
+		ModelAndView mv = new ModelAndView("redirect:/roomie/boardList.ya");
 		System.out.println("받았니? : " + request);
 		System.out.println("받았니? : " + map);
 		
@@ -180,8 +179,10 @@ public class BoardController {
 		}else {
 			System.out.println(map.get("BO_IDX"));
 		}
+		mv.addObject("create", boardService.createContent(cidx));
 		
-		return new ResponseEntity<String>("redirect:/roomie/boardList.ya", HttpStatus.OK);
+		
+		return ResponseEntity.ok(mv);
 		
 	}
 	
@@ -196,11 +197,11 @@ public class BoardController {
 		//좋아요 확인
 		Map<String, Object> map = new HashMap<>();
 		
-<<<<<<< HEAD
+
 		map.put("LIKEB_MEM", session.getAttribute("MEM_IDX"));
-=======
+
 		map.put("LIKEB_MEM", idx1);
->>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
+
 
 		List<Map<String, Object>> like = boardService.likeCheck(map);
 		

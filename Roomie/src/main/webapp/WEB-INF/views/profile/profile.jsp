@@ -694,6 +694,7 @@ img.track {
 				</div>
 			</div>
 			
+			
 			<div id="modal_post${vs.index}" class="modal_overlay" style="z-index:1050; height: -webkit-fill-available; position: fixed;">
 			
 		<div class="modal_title_side">
@@ -758,7 +759,7 @@ img.track {
           <span class="feed_txt"> <b> ${coms.COM_WRITER } </b> ${coms.COM_CONT}</span>
           <button id="comment_reply">reply</button>
           <br>
-          <span class="feed_txt"> <b> junseok </b> 제주도  ㄱ ㄱ </span>
+          </c:forEach>
          </div>
         </div>
 	</div>

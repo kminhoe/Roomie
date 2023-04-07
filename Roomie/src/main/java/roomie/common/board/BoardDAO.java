@@ -12,36 +12,38 @@ import roomie.common.dao.AbstractDAO;
 
 @Repository("boardDAO")
 public class BoardDAO extends AbstractDAO {
-	
+
 	@Resource(name = "sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
-	
-	public int register(Map<String, Object> map) throws Exception{
+
+	public int register(Map<String, Object> map) throws Exception {
 		System.out.println("DAO:" + map);
-		
-		
+
 		return sqlSessionTemplate.insert("board.boardregister", map);
 	}
-	
-	public void hashinsert(Map<String, Object> map) throws Exception{
-		
+
+	public void hashinsert(Map<String, Object> map) throws Exception {
+
 		sqlSessionTemplate.insert("board.hashinsert", map);
 	}
-	
 
-public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Exception {
-	return (List<Map<String, Object>>) selectList("board.likeCheck", map);
-}
-
-public List<Map<String, Object>> selectBoard(Map<String, Object> map) throws Exception {
-	return (List<Map<String, Object>>) selectList("board.selectBoard", map);
-}
-
-//본인 확인
-public Map<String, Object> memCheck(Map<String, Object> map) throws Exception{
-	
-	return sqlSessionTemplate.selectOne("board.memCheck",map);
+	public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("board.likeCheck", map);
 	}
 
+	public List<Map<String, Object>> selectBoard(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("board.selectBoard", map);
+	}
 
-} 
+//본인 확인
+	public Map<String, Object> memCheck(Map<String, Object> map) throws Exception {
+
+		return sqlSessionTemplate.selectOne("board.memCheck", map);
+	}
+	
+	public Map<String, Object> createdContent(String cidx) throws Exception{
+		
+		return sqlSessionTemplate.selectOne("board.createdcontent", cidx);
+	}
+
+}

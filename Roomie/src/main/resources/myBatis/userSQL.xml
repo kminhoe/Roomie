@@ -56,7 +56,7 @@
 	</select>
 	
 	<insert id="follow" parameterType="hashmap">
-		insert into friend (fri_idx, fri_mem, following) values (fri_seq.nextval, #{FRI_MEM}, #{FOLLOWING})
+		insert into friend (fri_idx, fri_mem, following) values (friend_seq.nextval, #{FRI_MEM}, #{FOLLOWING})
 	</insert>
 	
 	<delete id="unFollow" parameterType="hashmap">

@@ -47,6 +47,12 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDAO.memCheck(map);
 	}
+
+	@Override
+	public Map<String, Object> createContent(String cidx) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.createdContent(cidx);
+	}
 	
 	
 	
