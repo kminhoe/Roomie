@@ -93,6 +93,12 @@ public class UserServicerImpl implements UserService {
 		return userDAO.userLikeCheck(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> memberList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return userDAO.memberList(map);
+	}
+
 
 		
 

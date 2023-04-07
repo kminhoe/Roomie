@@ -63,6 +63,10 @@
 		delete from friend where fri_mem = #{FRI_MEM} and FOLLOWING = #{FOLLOWING}
 	</delete>
 	
+	<select id="memberList" parameterType="hashmap" resultType="hashmap">
+		select * from member where mem_idx != ${MEM_IDX}
+	</select>
+	
 	
 	
 	
