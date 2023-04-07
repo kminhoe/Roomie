@@ -56,29 +56,14 @@
 	</select>
 	
 	<insert id="follow" parameterType="hashmap">
-		insert into friend (fri_idx, fri_mem, following) values (fri_seq.nextval, #{FRI_MEM}, #{FOLLOWING})
+		insert into friend (fri_idx, fri_mem, following) values (friend_seq.nextval, #{FRI_MEM}, #{FOLLOWING})
 	</insert>
 	
 	<delete id="unFollow" parameterType="hashmap">
 		delete from friend where fri_mem = #{FRI_MEM} and FOLLOWING = #{FOLLOWING}
 	</delete>
 	
-	<select id="commentList" parameterType="hashmap" resultType="hashmap">
-		SELECT *
-				FROM COMT
-				WHERE COM_ARTNO = #{BO_IDX}
-				
-	</select>
 	
-	<insert id="insertComment" parameterType="hashmap">
-		insert into comt (com_idx, com_artno, com_writer, com_date, com_cont) values (comt_seq.nextval, #{BO_IDX}, #{COM_WRITER}, sysdate, #{COM_CONT})
-	</insert>
-	
-	<select id="likeCheck" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT * FROM BO_LIKE WHERE LIKEB_MEM = #{LIKEB_MEM}
-	]]>
-	</select>
 	
 	
 </mapper>
