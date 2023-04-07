@@ -112,7 +112,7 @@
 										<img class="profile_img" src="resources/image/icon_p.jpg">
 									</c:when>
 									<c:otherwise>
-										<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+										<img class="profile_img" src="resources/files/profile/${boardList.MEM_MEDIA}">
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -122,13 +122,16 @@
 								<aside class="_ad6_"
 									style="text-align: left; padding-left: 0px;">
 									<label class="_ab3q">
-										<button onclick="javascript:confirm('로그아웃 하시겠습니까?')" ><a href="/roomie/memlogout.ya">로그아웃</a>																				
+										<button class="login-button" onclick="javascript:confirm('로그아웃 하시겠습니까?')" >
+										
+										<a class="optionmenu" href="/roomie/memlogout.ya">로그아웃</a>																				
 										</button>
 										
 									</label>
 								</aside>
 							</div>
 				</c:forEach>
+		</div>
 		</div>
 		﻿<%@ include file="upload_modal.jsp"%>
 	</div>
