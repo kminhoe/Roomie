@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="reply">
+
+	<select id="commentList" parameterType="hashmap" resultType="hashmap">
+		select * from comt where com_artno = #{BO_IDX} order by com_ref desc, com_step asc
+	</select>
+	
+	<select id="commentCounter" parameterType="hashmap" resultType="hashmap">
+		select count(*) as counter from comt where com_artno = #{BO_IDX}
+	</select>
+	
+	<insert id="insertComment" parameterType="hashmap">
+		insert into comt values (comt_seq.nextval, #{COM_ARTNO}, #{COM_WRITER}, SYSDATE, #{COM_CONT}, #{COM_REF}, #{COM_STEP}, #{COM_LEVEL})
+	</insert>
+	
+	<insert id="insertReply" parameterType="hashmap">
+		insert into comt values (comt_seq.nextval, #{COM_ARTNO2}, #{COM_WRITER2}, SYSDATE, #{COM_CONT2}, #{COM_REF2}, #{COM_STEP2}, #{COM_LEVEL2})
+	</insert>
+	
+	<update id="deleteComment" parameterType="hashmap">
+		update comt set com_cont = '---삭제된 댓글---' where com_idx = #{COM_IDX}
+	</update>
+
+</mapper>

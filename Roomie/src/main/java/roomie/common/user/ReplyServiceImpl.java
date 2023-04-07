@@ -14,14 +14,30 @@ public class ReplyServiceImpl implements ReplyService{
 	private ReplyDAO replyDAO;
 
 	@Override
-	public List<Map<String, Object>> commentList(Map<String,Object> map) throws Exception {
+	public List<Map<String, Object>> commentList(int idx) throws Exception {
 		// TODO Auto-generated method stub
-		return replyDAO.commentList(map);
+		return replyDAO.commentList(idx);
+	}
+	
+	public int insertComment(Map<String,Object>map) throws Exception {
+		return replyDAO.insertComment(map);
+	}
+	
+	public int deleteComment(int COM_IDX) throws Exception {
+		return replyDAO.deleteComment(COM_IDX);
 	}
 
 	@Override
-	public void insertComment(Map<String, Object> map) throws Exception {
+	public int insertReply(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		replyDAO.insertComment(map);
+		return replyDAO.insertReply(map);
 	}
+
+	@Override
+	public Map<String, Object> commentCounter(int idx) throws Exception {
+		// TODO Auto-generated method stub
+		return replyDAO.commentCounter(idx);
+	}
+
+	
 }
