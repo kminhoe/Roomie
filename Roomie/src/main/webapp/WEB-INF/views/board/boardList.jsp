@@ -771,7 +771,7 @@
      $(document).ready(function(){
         
        // 스토리 리스트 불러오기
-       /* readStories(); */
+       readStories();
         
         var arr = new Array;
         var arr2 = new Array;
@@ -1145,6 +1145,7 @@
 	      		} else {
 	      			htmls += "";
 	      		}
+	      		
 	    		htmls += '">';
 	    		htmls += '<div class="text">';
 	    		htmls += '<a onclick="href=' + "'/roomie/stories.ya?STORY_MEM=" + status[i].STORY_MEM + "'" + '">';
@@ -1174,7 +1175,6 @@
   
   
   <script>
-
      // 왼쪽 버튼
      function prev_action() {
         page--; // 페이지 번호 -1
