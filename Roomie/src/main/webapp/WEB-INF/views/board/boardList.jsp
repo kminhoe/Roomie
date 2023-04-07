@@ -373,22 +373,22 @@
          <!-- 오른쪽 바디 영역 시작 -->
          <div class="right_body">
             <!-- 계정 전환 시작 -->
-            <div class="feed_name" style="justify-content: space-between">
+            <div class="feed_name" id="feed_name1" style="justify-content: space-between">
                <div style="display: flex; align-items: center;">
                   <div class="big_profile_box">
                      <!-- 계정 프로필 이미지 -->
-                     <img class="profile_img" src="resources/image/profile_06.jpg">
+                     <img class="profile_img" src="${MEMBER.MEM_MEDIA}">
                   </div>
                   <div class="name_content">
                      <!-- 사용자 이름 -->
-                     <span class="feed_name_txt"> daemyeong </span>
+                     <span class="feed_name_txt"> ${MEMBER.MEM_ID} </span>
                      <!-- 이름 -->
-                     <span class="name_content_txt"> Yoon Daemyeong </span>
+                     <span class="name_content_txt"> ${MEMBER.MEM_NAME} </span>
                   </div>
                </div>
 
                <!-- 계정 전환 -->
-               <a class="link_txt"> 전환 </a>
+               <a class="link_txt"> 로그아웃 </a>
             </div>
             <!-- 계정 전환 끝 -->
             <!-- 회원님을 위한 추천 -->
@@ -399,69 +399,41 @@
             <!-- 회원 목록 시작 -->
             <div>
                <!-- 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
+               <!-- <div class="feed_name" style="justify-content: space-between">
                   <div class="profile_box">
-                     <!-- 회원 프로필 이미지 -->
+                     회원 프로필 이미지
                      <img class="profile_img" src="resources/image/profile_01.jpg">
                   </div>
                   <div class="name_content">
-                     <!-- 회원 사용자 이름 -->
+                     회원 사용자 이름
                      <span class="feed_name_txt"> yeongjun </span>
-                     <!-- 회원 상태 -->
+                     회원 상태
                      <span class="name_content_txt"> EZEN 신규가입</span>
                   </div>
-                  <!-- 팔로우 버튼 -->
+                  팔로우 버튼
                   <a class="link_txt"> 팔로우 </a>
-               </div>
+               </div> -->
                <!-- 회원 끝 -->
                <!-- 첫번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
+               <c:forEach var="member" items="${memberList}">
+               <div class="feed_name" onclick="location.href='/roomie/userProfile.ya?mem_idx=${member.MEM_IDX}'" style="justify-content: space-between">
+          
                   <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_02.jpg">
+                  <c:if test="${empty member.MEM_MEDIA}">
+                  	<img class="profile_img" src="resources/image/icon_14.png">
+                  </c:if>
+                     <img class="profile_img" id="feed_name2" src="resources/image/profile/${member.MEM_MEDIA}">
                   </div>
                   <div class="name_content">
-                     <span class="feed_name_txt"> junseok </span> <span
-                        class="name_content_txt"> yeongjun 외 5명이 팔로우</span>
+                     <span class="feed_name_txt" id="feed_name2"> ${member.MEM_ID} </span> <span
+                        class="name_content_txt"></span>
                   </div>
                   <a class="link_txt"> 팔로우 </a>
+               
                </div>
+               
+               </c:forEach>
                <!-- 첫번째 회원 끝 -->
-               <!-- 두번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_03.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> taeyeong </span> <span
-                        class="name_content_txt"> yeongjun 외 5명이 팔로우</span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 두번째 회원 끝 -->
-               <!-- 세번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_04.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> minhoe </span> <span
-                        class="name_content_txt"> 회원님을 위한 추천 </span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 세번째 회원 끝 -->
-               <!-- 네번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_05.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> jeongsu </span> <span
-                        class="name_content_txt"> 회원님을 위한 추천 </span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 네번째 회원 끝 -->
             </div>
             <!-- 회원 추천 목록 끝 -->
 
@@ -1501,6 +1473,17 @@ $(document).on('click','.alarm_list1',function(e){
 	    });
 	});
 </script>
+
+<script type="text/javascript">
+
+$("#feed_name1").on('click', function(){
+	location.href='/roomie/userProfile.ya?mem_idx=${MEMBER.MEM_IDX}';
+});
+
+
+</script>
+
+
      
 </body>
 </html>

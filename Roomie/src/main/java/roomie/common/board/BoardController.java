@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.extern.log4j.Log4j;
 import roomie.common.chat.ChatService;
 import roomie.common.like.LikeService;
+import roomie.common.user.UserService;
 
 @Controller
 @Log4j
@@ -47,6 +48,9 @@ public class BoardController {
 	
 	@Resource
 	private ChatService chatService;
+	
+	@Resource
+	private UserService userService;
 	
 	@PostMapping(value="/register.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
@@ -263,6 +267,10 @@ public class BoardController {
 		//좋아요 카운트
 		
 
+		//멤버 리스트
+		
+		List<Map<String,Object>> memberList = userService.memberList(mem);
+		mv.addObject("memberList", memberList);
 		
 		
 		

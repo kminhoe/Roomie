@@ -31,5 +31,7 @@ public interface UserService {
 	
 	public List<Map<String, Object>> likeCheck(Map<String, Object> map) throws Exception;
 	
+	public List<Map<String,Object>> memberList(Map<String,Object>map) throws Exception;
+	
 
 }

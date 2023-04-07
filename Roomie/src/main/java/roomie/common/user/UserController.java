@@ -212,7 +212,7 @@ public class UserController {
 		
 		
 		base_path2 = "/Users/gjy/git/Roomie/yeong-jun/Roomie/src/main/webapp/resources/upload/";
-		base_path = session.getServletContext().getRealPath("/");
+		base_path = session.getServletContext().getRealPath("/resources/files/profile/");
 
 		
 		System.out.println(base_path);
