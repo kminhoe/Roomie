@@ -43,6 +43,22 @@ DELETE FROM SEARCH
            WHERE SEARCH_KEYWORD = #{SEARCH_KEYWORD} AND SEARCH_MEM = #{SEARCH_MEM}
 
 </delete>
-		
+
+<select id="memCheck" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM MEMBER WHERE MEM_IDX = #{MEM_IDX}
+	]]>
+</select>
+
+
+
+<select id="boardList" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+SELECT * FROM
+(SELECT * FROM BOARD INNER JOIN MEMBER ON BO_MEM = MEM_IDX WHERE MEM_MBTI = #{MEM_MBTI}) A
+LEFT JOIN (SELECT COUNT(*) AS COUNT, LIKEB_BOARD FROM BO_LIKE GROUP BY LIKEB_BOARD) B
+ON A.BO_IDX = B.LIKEB_BOARD	ORDER BY A.BO_DATE DESC	
+	]]>
+</select>
 	
 </mapper>

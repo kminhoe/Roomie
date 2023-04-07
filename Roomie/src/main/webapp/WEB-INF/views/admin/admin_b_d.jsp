@@ -168,7 +168,9 @@ input[type="date"], focus {
                 </tr>
                 <tr class="fw-bolder fs-6 text-sliver-800 border-sliver-400">
                     <th class=" ps-5 w-150px" style="background-color: #EDE9DA;">이미지</th>
-                    <td class="w-350px">BOARD 이미지 경로</td>
+                    <td class="w-350px">
+                    <img class="feed_img" style="height: 478px;" src="resources/files/board/${BOARD.BO_MEDIA}" />
+                    </td>
                 </tr>
                 <tr class="fw-bolder fs-6 text-sliver-800 border-sliver-400">
                     <th class=" ps-5 w-150px" style="background-color: #EDE9DA;">내용</th>
@@ -296,7 +298,7 @@ $(document).ready(function() {
 			    data: { rep_idx: rep_idx },
 			    success: function(data) {
 			        
-			    	$('#rep').load(location.href + ' #rep');
+			    	location.reload();
                    
 			        
 			    },
@@ -317,7 +319,7 @@ $(document).ready(function() {
 			    data: { rep_idx: rep_idx },
 			    success: function(data) {
 			        
-			    	$('#rep').load(location.href + ' #rep');
+			    	location.reload();
 			        
 			    },
 			    error: function(xhr, status, error) {

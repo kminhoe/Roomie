@@ -15,4 +15,10 @@ public interface SearchService {
 	
 	public void searchDelete(Map<String, Object> map) throws Exception;
 	
+	public List<Map<String, Object>> boardList(Map<String, Object> map) throws Exception;
+	
+	public Map<String, Object> memCheck(Map<String, Object> map) throws Exception;
+	
+	
+	
 } 
