@@ -353,7 +353,7 @@
                   <input class="inputBox" type="text" placeholder="댓글 달기...">
                </div>
                <span>
-                  <button class="buttonBox" type="summit">게시</button>
+                  <button class="buttonBox" type="submit">게시</button>
                </span>
             </div>
          </div>
@@ -366,8 +366,8 @@
          <!-- 오른쪽 바디 영역 시작 -->
          <div class="right_body">
             <!-- 계정 전환 시작 -->
-            <div class="feed_name" id="feed_name1" style="justify-content: space-between">
-               <div style="display: flex; align-items: center;">
+            <div class="feed_name"  style="justify-content: space-between">
+               <div id="feed_name1" style="display: flex; align-items: center;">
                   <div class="big_profile_box">
                      <!-- 계정 프로필 이미지 -->
                      <c:choose>
@@ -381,14 +381,14 @@
                   </div>
                   <div class="name_content">
                      <!-- 사용자 이름 -->
-                     <span class="feed_name_txt"> ${MEMBER.MEM_NAME } </span>
+                     <span class="feed_name_txt"> ${MEMBER.MEM_USER } </span>
                      <!-- 이름 -->
-                     <span class="name_content_txt"> ${MEMBER.MEM_USER } </span>
+                     <span class="name_content_txt"> ${MEMBER.MEM_NAME } </span>
                   </div>
                </div>
 
                <!-- 계정 전환 -->
-               <a class="link_txt"> 로그아웃 </a>
+               <a href="/roomie/memlogout.ya" class="link_txt" style="font-size: 8px"> 로그아웃 </a>
             </div>
             <!-- 계정 전환 끝 -->
             <!-- 회원님을 위한 추천 -->
@@ -425,8 +425,10 @@
                      <img class="profile_img" id="feed_name2" src="resources/image/profile/${member.MEM_MEDIA}">
                   </div>
                   <div class="name_content">
-                     <span class="feed_name_txt" id="feed_name2"> ${member.MEM_ID} </span> <span
-                        class="name_content_txt"></span>
+                     <span class="feed_name_txt" id="feed_name2"> ${member.MEM_ID} </span> 
+                     <c:if test="${member.MEM_MBTI == MEMBER.MEM_MBTI}">
+                     <span class="name_content_txt"> 회원님을 위한 추천</span>
+                     </c:if>
                   </div>
                   <a class="link_txt"> 팔로우 </a>
                
@@ -435,18 +437,7 @@
                </c:forEach>
                <!-- 첫번째 회원 끝 -->
 
-               <!-- 세번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_04.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> minhoe </span> <span
-                        class="name_content_txt"> 회원님을 위한 추천 </span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 세번째 회원 끝 -->
+          
               
             </div>
             <!-- 회원 추천 목록 끝 -->
