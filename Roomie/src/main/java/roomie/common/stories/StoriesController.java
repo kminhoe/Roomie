@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
@@ -86,11 +87,15 @@ public class StoriesController {
 	
 	// 스토리 업로드
 	@RequestMapping(value = "/storiesUploadPro.ya")
-	public ModelAndView storiesUploadPro(@RequestParam Map<String, Object> map, @RequestParam("videoInput") MultipartFile multipartFile) throws Exception {
-		ModelAndView mv = new ModelAndView("/stories/storiesUpload");
+	public ModelAndView storiesUploadPro(@RequestParam Map<String, Object> map, @RequestParam("videoInput") MultipartFile multipartFile, HttpServletRequest req) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/boardList.ya");
 		
 		String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename()); // 확장자명
-		String path = "/Users/jeongsuhong/git/Roomie/Roomie/Roomie/src/main/webapp/resources/files/stories/"; // 스토리 저장 절대 경로
+
+        // System.getProperty("user.dir")을 통해 
+        // 현재 working dir까지 가져오고 그 뒤에 경로는 따로 추가해 줌
+
+		String path = req.getSession().getServletContext().getRealPath("/resources/files/stories/"); // 스토리 저장 절대 경로
 		
 		Date date = new Date(); // data 객체 생성
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); // simpleDateFormat 객체 생성

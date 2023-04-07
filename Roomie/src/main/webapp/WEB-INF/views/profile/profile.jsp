@@ -700,8 +700,8 @@ img.track {
 				
 				</div>
 			</div>
-			
-			<div id="modal_post${vs.index}" class="modal_overlay" style="z-index:1050; height: -webkit-fill-available; position: fixed;">
+			<!-- 모달 시작 -->
+		<div id="modal_post${vs.index}" class="modal_overlay" style="z-index:1050; height: -webkit-fill-available; position: fixed;">
 			
 		<div class="modal_title_side">
 					<span style="cursor: grab;" id="close_modal5${vs.index}"
@@ -744,7 +744,7 @@ img.track {
         <div class="feed_like">
           <!-- 좋아요 표시 -->
           <br>
-          <p class="feed_txt"> <b>좋아요 10개</b></p>
+          <p class="feed_txt"> <b>좋아요 10개 </b></p>
         </div>
         <div class="feed_content">
           <!-- 이름, 게시글 내용 -->

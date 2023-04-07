@@ -43,6 +43,20 @@ public class SearchServiceImpl implements SearchService {
 		searchDAO.searchDelete(map);
 	}
 	
+
+	@Override
+	public List<Map<String, Object>> boardList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return searchDAO.boardList(map);
+	}
+
+	@Override
+	public Map<String, Object> memCheck(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return searchDAO.memCheck(map);
+	}
+
+
 	
 	
 	

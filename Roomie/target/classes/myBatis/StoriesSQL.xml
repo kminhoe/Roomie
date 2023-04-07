@@ -61,5 +61,15 @@
 			)
 		]]>
 	</insert>
-	
+
+	<insert id="insertStories" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO
+			STORY (
+			    STORY_IDX, STORY_MEM, STORY_IMAGE, STORY_DATE
+			) VALUES (
+			    STORY_SEQ.NEXTVAL, #{STORY_MEM}, #{STORY_IMAGE}, SYSDATE
+			)
+		]]>
+	</insert>
 </mapper>

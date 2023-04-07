@@ -23,6 +23,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
+import roomie.common.chat.ChatService;
 import roomie.common.like.LikeService;
 
 @Controller
@@ -43,6 +45,9 @@ public class BoardController {
 	@Resource
 	private LikeService likeService;
 	
+	@Resource
+	private ChatService chatService;
+	
 	@PostMapping(value="/register.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<Map<String, Object>>> insertBoard(MultipartFile[] uploadFile, HttpSession session) throws Exception{
@@ -54,7 +59,7 @@ public class BoardController {
 		log.info("update ajax post......");
 		
 		System.out.println("이거니?"+uploadFile);		
-		String uploadFolder = session.getServletContext().getRealPath("/resources/files/board/");		
+		String uploadFolder = session.getServletContext().getRealPath("/resources/files/board");		
 		System.out.println("경로 : " + uploadFolder);
 		
 		//String uploadFolderPath = getFolder();
@@ -176,16 +181,12 @@ public class BoardController {
 					boardService.inserthasg(hm);
 					System.out.println(hm);
 				}
-			}
-			
-			
-	
+			}	
 		}else {
 			System.out.println(map.get("BO_IDX"));
 		}
 		
 		return new ResponseEntity<String>("redirect:/roomie/boardList.ya", HttpStatus.OK);
-
 		
 	}
 	
@@ -201,6 +202,7 @@ public class BoardController {
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("LIKEB_MEM", idx1);
+
 
 		List<Map<String, Object>> like = boardService.likeCheck(map);
 		
@@ -267,6 +269,69 @@ public class BoardController {
 		return mv; 
 	}
 	
-	
+	@RequestMapping(value = "boardNotif.ya", method= {RequestMethod.POST})
+	@ResponseBody
+	public String boardNotif(@RequestParam Map<String, Object> param, HttpSession session) throws Exception{
+		System.out.println("\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ChatController/boardNotif @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@   ");
+		System.out.println("@@@@@@@@@@@@         MYID: " + param.get("CHAT_MYID"));
+		Map<String, Object> map	 = new HashMap<String, Object>();
+		String result = "result";
+		map.put("MEM_ID", param.get("CHAT_MYID"));
+		
+		/* 알림의 종류에따른 존재를 #을 붙여서 표시 */
+		
+		//1.메시지 알림을 조회
+		if(chatService.selectNotifMsg2(map).size() != 0) { //CHAT_MYID를 NOTIFMSG_RECEIVER로하는 알림이 존재한다면,
+			result += "#true";
+			System.out.println(chatService.selectNotifMsg2(map).size());
+			System.out.println("@@@@@@@@@@@@         메시지 알림이 존재합니다.");
+		}else {
+			result += "#false";
+			System.out.println("@@@@@@@@@@@@         메시지 알림이 존재하지 않습니다.");
+		}
 
+		//2.좋아요 알림을 조회
+		if(likeService.selectNotifLike(map).size() != 0) {
+			result += "#true";
+			System.out.println(likeService.selectNotifLike(map).size());
+			System.out.println("@@@@@@@@@@@@         좋아요 알림이 존재합니다.");
+		}else {
+			result += "#false";
+			System.out.println("@@@@@@@@@@@@         좋아요 알림이 존재하지 않습니다.");
+		}
+		
+		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
+		return result;
+	}
+	
+	@RequestMapping(value = "alarmList.ya", method= {RequestMethod.POST})
+	@ResponseBody
+	public List<Map<String, Object>> alarmList(@RequestParam Map<String, Object> param, HttpSession session) throws Exception{
+		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+		Map<String, Object> map	 = new HashMap<String, Object>();
+		map.put("MEM_ID", param.get("MEM_ID"));
+		
+		result = likeService.selectNotifLike(map);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "checkAlarm.ya", method= {RequestMethod.POST})
+	@ResponseBody
+	public void checkAlarm(@RequestParam Map<String, Object> param, HttpSession session) throws Exception{
+		Map<String, Object> map	 = new HashMap<String, Object>();
+		map.put("MEM_ID", param.get("MEM_ID"));
+		System.out.println(param.get("TYPE"));
+		
+		String typeKey = (String) param.get("TYPE");
+		System.out.println(typeKey);
+		
+		if(typeKey.equals("1")) { //1.좋아요 알림의 경우
+			map.put("NOTIFLIKE_IDX", param.get("NOTIFLIKE_IDX"));
+			System.out.println(param.get("NOTIFLIKE_IDX"));
+			likeService.checkNotifLike(map);
+		}
+
+	}
+	
 }

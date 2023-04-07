@@ -99,6 +99,7 @@ ORDER BY R.REP_DATE DESC
 
 </select>
 
+
 <select id="boardLike" parameterType="hashmap" resultType="hashmap">
 
 <![CDATA[

@@ -252,42 +252,20 @@ public class ChatController {
 		}else if(param.get("TYPE").equals("2")) { //CASE_2.CHAT_MYID에게 존재하는 알림을 조회.
 			System.out.println("@@@@@@@@@@@@         MYID: " + param.get("CHAT_MYID"));
 			System.out.println("@@@@@@@@@@@@   NOTIF TYPE: " + param.get("TYPE"));
-			map.put("CHAT_MYID", param.get("CHAT_MYID"));
+			map.put("MEM_ID", param.get("CHAT_MYID"));
 			result = chatService.selectNotifMsg2(map); //CHAT_MYID를 NOTIFMSG_RECEIVER로하는 NOTIFMSG_SENDER를 주입.(NOTIFMSG_CHECK = '1'인것들만)
 			System.out.println("@@@@@@@@@@@@       result: " + result);
 		}else if(param.get("TYPE").equals("3")) { //CASE_3.알림을 삭제.(NOTIFMSG_CHECK을 '0'으로 변경)
 			System.out.println("@@@@@@@@@@@@         MYID: " + param.get("CHAT_MYID"));
 			System.out.println("@@@@@@@@@@@@      OTHERID: " + param.get("CHAT_OTHERID"));
 			System.out.println("@@@@@@@@@@@@   NOTIF TYPE: " + param.get("TYPE"));
-			map.put("CHAT_MYID", param.get("CHAT_MYID"));
+			map.put("MEM_ID", param.get("CHAT_MYID"));
 			map.put("CHAT_OTHERID", param.get("CHAT_OTHERID"));
 			chatService.updateNotifMsgCheck2(map);
 		}
 		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
 		return result;
 		
-	}
-	
-	@RequestMapping(value = "boardNotif.ya", method= {RequestMethod.POST})
-	@ResponseBody
-	public String boardNotif(@RequestParam Map<String, Object> param, HttpSession session) throws Exception{
-		System.out.println("\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ChatController/boardNotif @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@   ");
-		System.out.println("@@@@@@@@@@@@         MYID: " + param.get("CHAT_MYID"));
-		Map<String, Object> map	 = new HashMap<String, Object>();
-		String result = new String();
-		map.put("CHAT_MYID", param.get("CHAT_MYID"));
-		
-		if(chatService.selectNotifMsg2(map).size() != 0) { //CHAT_MYID를 NOTIFMSG_RECEIVER로하는 알림이 존재한다면,
-			result = "true";
-			System.out.println(chatService.selectNotifMsg2(map).size());
-			System.out.println("@@@@@@@@@@@@   알림이 존재합니다.");
-		}else {
-			result = "false";
-			System.out.println("@@@@@@@@@@@@   알림이 존재하지 않습니다.");
-		}
-		
-		System.out.println("@@@@@@@@@@@@" + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + "\n");
-		return result;
 	}
 	
 }

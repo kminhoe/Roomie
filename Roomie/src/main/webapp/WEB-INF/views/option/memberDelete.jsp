@@ -111,6 +111,7 @@
 						roomie와 대화해보세요</span>
 				</div>
 			</ul>
+			
 			<div
 				style="padding: 16px 42px 16px 16px; border-left: 1px solid #dee2e6; width: 90%;">
 				<div>
@@ -150,13 +151,12 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
+	
 	<!-- 모달 게시글 이미지 업로드 시작 -->
 	﻿<%@ include file="upload_modal.jsp" %>
 
 
-	</div>
 	<!-- 메인 바디 영역 끝 -->
 	<!-- 푸터 시작 -->
 	<footer>

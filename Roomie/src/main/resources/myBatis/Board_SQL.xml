@@ -83,5 +83,6 @@ WHERE BLOCKM_IDX IS NULL
 </select>
 
 
+
 	
 </mapper>
