@@ -961,59 +961,7 @@
             
             location.reload();
             
-            $('.uploadB').html(
-            		'<div class="border feed_box">'+
-            		'<div class="feed_name">'+
-            		'<div class="profile_box">'+
-            		'<c:choose>'+
-            		'<c:when test="${empty boardList.MEM_MEDIA}">'+
-            		'<img class="profile_img" src="resources/image/icon_p.jpg" >'+ 
-            		'</c:when>'+
-            		'<c:otherwise>'+
-            		'<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">'+
-            		'</c:otherwise>'+
-            		'</c:choose>'+               
-            		'</div>'+
-            		'<span class="feed_name_txt"> ${boardList.MEM_NAME} </span>'+
-
-            		'<img class="more_details" style="right: -340px !important;" src="resources/image/icon_28.png" alt="더보기">'+
-            		'</div>'+
-         
-            		'<c:set var="mediaArray" value="${fn:split(boardList.BO_MEDIA, ',')}" />'+
-            	
-            		'<div class="slider">'+
-            		'<c:forEach items="${mediaArray}" var="media">'+
-            		'<div><img class="feed_img" style="height: 478px;" src="resources/files/board/${media}" /></div>'+
-            		'</c:forEach></div>'+
-            		'<div class="feed_icon">'+
-            		'<div>'+
-            	
-            		'<img class="material-icons-outlined" id="like_n" style="width: 20px; height: 20px; object-fit: contain"  src="resources/image/icon_01.png"></div>'+
-            	
-            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_03.png">'+
-            	
-            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_04.png"></div>'+
-            		'<div>'+
-            	
-            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain"  src="resources/image/icon_05.png"></div></div>'+
-            		'<div class="feed_like">'+
-            		'<div class="likec" id="feed_like${status.index}" style="padding: 0px;">'+
            
-            		'<p class="feed_txt">'+
-            		'<b>좋아요 0개</b></p></div></div>'+
-            		'<div class="feed_content">'+
-            		
-            		'<p class="feed_txt">'+
-            		'<b> ${boardList.MEM_NAME} </b> ${boardList.BO_CONT}</p></div>'+
-            	
-            		'<div class="feed_reply">'+
-            		'<span class="feed_txt"> <b>  </b> </span> <span class="feed_txt"> <b> </b> </span></div>'+
-            	
-            		'<div class="inputContainer">'+
-            		'<div class="type_comment">'+
-            		'<input class="inputBox" type="text" placeholder="댓글 달기..."></div>'+
-            		'<span><button class="buttonBox" type="summit">게시</button></span></div></div>'
-                  );
             
          }
           
