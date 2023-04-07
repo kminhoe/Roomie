@@ -71,7 +71,8 @@
             <!-- 탑색 탭 버튼 -->
             <img class="menu_img"
                style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_22.png"> &nbsp;&nbsp;
+               src="resources/image/icon_22.png"
+               onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
             <!-- 채팅 버튼 -->
             <div class="menu_img">
             	<div style="position: relative;">
@@ -93,7 +94,7 @@
             <!-- 스토리 버튼 -->
             <img class="menu_img" id="add_stories"
                style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_17.png"> &nbsp;&nbsp;
+               src="resources/image/icon_17.png" onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'"> &nbsp;&nbsp;
             <div class="modal_overlay" id="modal_add_stories" style="position: fixed;">
            		<div class="modal_window_stories" id="modal_window_stories" style="width: 800px; height: 600px;">
 
@@ -163,11 +164,12 @@
          <div id="create_box">
          
          </div>
+         <div class="uploadB"></div>
+         
          <c:forEach var="boardList" items="${boardList}" varStatus="status">
          
          
          <div class="border feed_box">
-         
             <div class="feed_name">
                <div class="profile_box">
                
@@ -422,12 +424,11 @@
             <!-- 홈 버튼 -->
             <img style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_09.png"> &nbsp;&nbsp;
-            <!-- 검색 탭 버튼 -->
-            <img style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_07.png"> &nbsp;&nbsp;
-            <!-- 탑색 탭 버튼 -->
-            <img style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_22.png"> &nbsp;&nbsp;
+            <!-- 탐색 탭 버튼 -->
+            <img 
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_22.png"
+               onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
             <!-- 채팅 버튼 -->
             <img style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_04.png"
@@ -436,9 +437,9 @@
             <img style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_01.png"> &nbsp;&nbsp;
             <!-- 스토리 버튼 -->
-            <img style="width: 25px; height: 25px; object-fit: contain"
-               onclick="document.getElementById('add_stories').click();"
-               src="resources/image/icon_17.png"> &nbsp;&nbsp;
+            <img id="add_stories"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_17.png" onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'"> &nbsp;&nbsp;
             <!-- 게시글 버튼 -->
             <img style="width: 25px; height: 25px; object-fit: contain"
                onclick="document.getElementById('add_feed').click();"
@@ -847,11 +848,64 @@
          dataType:'text',
          success: function(status){
             
-            console.log("성공 :" + status);
-            /* $('#modal_add_feed_content').css({
-                  display: 'none'   
-               }); */
+            alert("성공");
+            
             location.reload();
+            
+            $('.uploadB').html(
+            		'<div class="border feed_box">'+
+            		'<div class="feed_name">'+
+            		'<div class="profile_box">'+
+            		'<c:choose>'+
+            		'<c:when test="${empty boardList.MEM_MEDIA}">'+
+            		'<img class="profile_img" src="resources/image/icon_p.jpg" >'+ 
+            		'</c:when>'+
+            		'<c:otherwise>'+
+            		'<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">'+
+            		'</c:otherwise>'+
+            		'</c:choose>'+               
+            		'</div>'+
+            		'<span class="feed_name_txt"> ${boardList.MEM_NAME} </span>'+
+
+            		'<img class="more_details" style="right: -340px !important;" src="resources/image/icon_28.png" alt="더보기">'+
+            		'</div>'+
+         
+            		'<c:set var="mediaArray" value="${fn:split(boardList.BO_MEDIA, ',')}" />'+
+            	
+            		'<div class="slider">'+
+            		'<c:forEach items="${mediaArray}" var="media">'+
+            		'<div><img class="feed_img" style="height: 478px;" src="resources/files/board/${media}" /></div>'+
+            		'</c:forEach></div>'+
+            		'<div class="feed_icon">'+
+            		'<div>'+
+            	
+            		'<img class="material-icons-outlined" id="like_n" style="width: 20px; height: 20px; object-fit: contain"  src="resources/image/icon_01.png"></div>'+
+            	
+            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_03.png">'+
+            	
+            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_04.png"></div>'+
+            		'<div>'+
+            	
+            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain"  src="resources/image/icon_05.png"></div></div>'+
+            		'<div class="feed_like">'+
+            		'<div class="likec" id="feed_like${status.index}" style="padding: 0px;">'+
+           
+            		'<p class="feed_txt">'+
+            		'<b>좋아요 0개</b></p></div></div>'+
+            		'<div class="feed_content">'+
+            		
+            		'<p class="feed_txt">'+
+            		'<b> ${boardList.MEM_NAME} </b> ${boardList.BO_CONT}</p></div>'+
+            	
+            		'<div class="feed_reply">'+
+            		'<span class="feed_txt"> <b>  </b> </span> <span class="feed_txt"> <b> </b> </span></div>'+
+            	
+            		'<div class="inputContainer">'+
+            		'<div class="type_comment">'+
+            		'<input class="inputBox" type="text" placeholder="댓글 달기..."></div>'+
+            		'<span><button class="buttonBox" type="summit">게시</button></span></div></div>'
+                  );
+            
          }
           
        });
