@@ -1,4 +1,4 @@
-w<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -28,9 +28,9 @@ w<%@ page language="java" contentType="text/html; charset=UTF-8"
 	  <span class="feed_name_txt"> ${STORIES[0].MEM_USER} </span>
 	</div>
   </div>
-  
   <!-- 스토리스 슬라이드 시작 -->
   <div data-slide="slide" class="slide">
+  	<img src="./resources/image/icon_41.png" style="width: 30px; height: 30px; margin-left: 410px; margin-top: 10px; position: fixed; z-index: 2; cursor: pointer;" alt="close" onclick="window.location.href='boardList.ya'">
     <div class="slide-items" id="slide-items">
   		<!-- 스토리 리스트 시작 -->
         <c:forEach items="${STORIES}" var="S">     
