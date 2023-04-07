@@ -164,17 +164,9 @@
                style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_08.png"> &nbsp;&nbsp;
             <!-- 프로필 이동 버튼 -->
-            <c:choose>
-					<c:when test="${empty MEMBER.MEM_MEDIA}">
 						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
 							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
-					</c:when>
-					<c:otherwise>
-						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
-							src="resources/image/${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
-							
-					</c:otherwise>
-				</c:choose>
+
 			﻿<%@ include file="../option/upload_modal.jsp" %>
          </div>
       </div>
@@ -186,7 +178,7 @@
       <!-- 왼쪽 바디 영역 시작 -->
       <div class="left_body">
       
-         <!-- 스토리 시작 -->
+                <!-- 스토리 시작 -->
          <div class="story">
             <!-- 왼쪽 버튼 -->
             <div class="story_prev"
@@ -197,14 +189,14 @@
                <li class="sub_story">
                   <div class="text">
                      <a onclick="href='#'"><img
-                        src="resources/image/profile_01.jpg" alt="프로필"></a> <span
+                        src="resources/image/icon_42.png" alt="프로필"></a> <span
                         style="font-size: 12px; margin-left: 3px;"></span>
                   </div>
                </li>
                <li>
                   <div class="sub_story">
                      <div class="text">
-                        <img src="resources/image/profile_02.jpg" alt="프로필"> <span
+                        <img src="resources/image/icon_42.png" alt="프로필"> <span
                            style="font-size: 12px; margin-left: 3px;"></span>
                      </div>
                   </div>
@@ -213,7 +205,7 @@
             
             <!-- 오른쪽 버튼 -->
             <div class="story_next"
-               style="top: -68px; left: 436px; cursor: pointer; position: relative; z-index: 1; width: 20px;">
+               style="top: -68px; left: 436px; cursor: pointer; position: relative; z-index: 1; width: 20px; visibility: hidden;">
                <img src="resources/image/icon_30.png" onclick="next_action();">
             </div>
          </div>
@@ -369,6 +361,7 @@
          </c:forEach>
          <!-- 게시글 끝 -->
         
+        <!-- 친구 -->
          <!-- 왼쪽 바디 영역 끝 -->
          <!-- 오른쪽 바디 영역 시작 -->
          <div class="right_body">
@@ -377,13 +370,20 @@
                <div style="display: flex; align-items: center;">
                   <div class="big_profile_box">
                      <!-- 계정 프로필 이미지 -->
-                     <img class="profile_img" src="${MEMBER.MEM_MEDIA}">
+                     <c:choose>
+					<c:when test="${empty MEMBER.MEM_MEDIA}">
+						<img class="profile_img" src="resources/image/icon_p.jpg" > 
+					</c:when>
+					<c:otherwise>
+						<img class="profile_img" src="/roomie/${MEMBER.MEM_MEDIA }">
+					</c:otherwise>
+				</c:choose>
                   </div>
                   <div class="name_content">
                      <!-- 사용자 이름 -->
-                     <span class="feed_name_txt"> ${MEMBER.MEM_ID} </span>
+                     <span class="feed_name_txt"> ${MEMBER.MEM_NAME } </span>
                      <!-- 이름 -->
-                     <span class="name_content_txt"> ${MEMBER.MEM_NAME} </span>
+                     <span class="name_content_txt"> ${MEMBER.MEM_USER } </span>
                   </div>
                </div>
 
@@ -434,6 +434,20 @@
                
                </c:forEach>
                <!-- 첫번째 회원 끝 -->
+
+               <!-- 세번째 회원 시작 -->
+               <div class="feed_name" style="justify-content: space-between">
+                  <div class="profile_box">
+                     <img class="profile_img" src="resources/image/profile_04.jpg">
+                  </div>
+                  <div class="name_content">
+                     <span class="feed_name_txt"> minhoe </span> <span
+                        class="name_content_txt"> 회원님을 위한 추천 </span>
+                  </div>
+                  <a class="link_txt"> 팔로우 </a>
+               </div>
+               <!-- 세번째 회원 끝 -->
+              
             </div>
             <!-- 회원 추천 목록 끝 -->
 
@@ -474,16 +488,8 @@
                onclick="document.getElementById('add_feed').click();"
                src="resources/image/icon_08.png"> &nbsp;&nbsp;
                <!-- 프로필 이동 버튼 -->
-            <c:choose>
-					<c:when test="${empty MEMBER.MEM_MEDIA}">
-						<img style="width: 25px; height: 25px; object-fit: contain""
-							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
-					</c:when>
-					<c:otherwise>
-						<img style="width: 25px; height: 25px; object-fit: contain""
-							src="${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
-					</c:otherwise>
-				</c:choose>
+			<img style="width: 25px; height: 25px; object-fit: contain"
+				src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
          </div>
       </footer>
 
@@ -1130,8 +1136,8 @@
 	          length = status.length;
 	          
 	          // visibility:hidden
-	          if (status.length <= 5) {
-	        	  $('.story_next').css("visibility", "hidden");
+	          if (status.length > 6) {
+	        	  $('.story_next').css("visibility", "visible");
 	          }
 	          
 	          
@@ -1144,7 +1150,6 @@
 		});
 	}
   </script>
-  
   
   <script>
      // 왼쪽 버튼
