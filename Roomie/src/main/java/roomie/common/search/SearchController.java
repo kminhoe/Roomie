@@ -37,8 +37,8 @@ public class SearchController {
 		mv.addObject("hash", list);
 		mv.addObject("mem", mem);
 		
-
-		int a = 1;
+        //세션 idx 값 받아오는 것
+		int a = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
 		List<Map<String, Object>> keyword = searchService.searchList(a);
 		
 
@@ -68,6 +68,24 @@ public class SearchController {
 		System.out.println(keyword);
 		mv.addObject("keyword", strArrayWithoutDuplicates);
 		
+		
+		//boardList
+		Map<String, Object> mem_idx = new HashMap<String, Object>();
+		
+		mem_idx.put("MEM_IDX", a);
+		Map<String, Object> MEMBER = searchService.memCheck(mem_idx);
+		
+	    System.out.println(MEMBER.get("MEM_MBTI"));
+		
+	    Map<String, Object> mbti = new HashMap<String, Object>();
+	    mbti.put("MEM_MBTI", MEMBER.get("MEM_MBTI"));
+	    List<Map<String, Object>> BOARD = searchService.boardList(mbti); 
+	    
+	    mv.addObject("BOARD", BOARD);
+	    mv.addObject("BOARD2", BOARD);
+	    
+
+		
 		return mv;
 	}
 	
@@ -76,7 +94,7 @@ public class SearchController {
 	
 	@RequestMapping(value = "searchResult.ya")
 	@ResponseBody
-	public ModelAndView searchResult(@RequestParam Map<String, Object> data) throws Exception{
+	public ModelAndView searchResult(@RequestParam Map<String, Object> data, HttpSession session) throws Exception{
 		
 		ModelAndView mv = new ModelAndView("/search/searchForm");
 		
@@ -85,7 +103,7 @@ public class SearchController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("SEARCH_KEYWORD", data.get("keyword"));
-		map.put("SEARCH_MEM", 1);
+		map.put("SEARCH_MEM", Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX"))));
 		
 		searchService.insertKeyword(map);
 		

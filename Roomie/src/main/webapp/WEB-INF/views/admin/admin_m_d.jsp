@@ -348,7 +348,7 @@ $(document).ready(function() {
 			    data: { rep_idx: rep_idx },
 			    success: function(data) {
 			        
-			    	$('#rep').load(location.href + ' #rep');
+			    	location.reload();
                    
 			        
 			    },
@@ -369,7 +369,7 @@ $(document).ready(function() {
 			    data: { rep_idx: rep_idx },
 			    success: function(data) {
 			        
-			    	$('#rep').load(location.href + ' #rep');
+			    	location.reload();
 			        
 			    },
 			    error: function(xhr, status, error) {
@@ -407,8 +407,7 @@ document.getElementById("sel_but").addEventListener("click", function() {
 	    data: { status : selectedValue, mem_idx : mem_idx },
 	    success: function(data) {
 	        
-	    
-	        
+	    	
 	    },
 	    error: function(xhr, status, error) {
 	        console.error("전송 실패: " + error);

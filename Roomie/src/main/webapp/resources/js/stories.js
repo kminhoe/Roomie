@@ -18,18 +18,18 @@ class SlideStories {
 
 		story_check(index);
 		
-		var itemId = this.items[index].id;
+		var videos = this.items[index];
 		var itemIdsubString = this.items[index].id.substring(0, 6);
-		
-		console.log(itemId);
 
         if (itemIdsubString != "videos") {
-            this.autoSlide(2000)
-            document.documentElement.style.setProperty("--slide-thumb-time", "2s");
+            this.autoSlide("3000")
+            document.documentElement.style.setProperty("--slide-thumb-time", "3s");
         } else {
-            this.autoSlide(6000)
-            document.documentElement.style.setProperty("--slide-thumb-time", "6s");
-            this.items[index].id.play();
+        	var times = videos.duration;
+        	console.log(times * 1000);
+            this.autoSlide(times * 1000)
+            document.documentElement.style.setProperty("--slide-thumb-time", times + "s");
+            this.items[index].play();
         }
     }
 

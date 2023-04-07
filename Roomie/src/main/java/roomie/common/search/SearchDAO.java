@@ -35,5 +35,17 @@ public class SearchDAO extends AbstractDAO {
 	public void searchDelete(Map<String, Object> map) throws Exception {
 		 delete("search.searchDelete", map);
 	} 
+	
+	//boardList
+	public List<Map<String, Object>> boardList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("search.boardList", map);
+	}
+	
+	public Map<String, Object> memCheck(Map<String, Object> map) throws Exception {
+		return sqlSessionTemplate.selectOne("search.memCheck", map);
+	}
+	
+
+	
 
 }
