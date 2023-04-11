@@ -1,6 +1,5 @@
 package roomie.common.search;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -84,7 +83,7 @@ public class SearchController {
 	    mv.addObject("BOARD", BOARD);
 	    mv.addObject("BOARD2", BOARD);
 	    
-
+	    System.out.println("BOARD : " + BOARD);
 		
 		return mv;
 	}
