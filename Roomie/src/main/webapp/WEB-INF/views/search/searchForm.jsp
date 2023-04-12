@@ -10,6 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Bootstrap CSS -->
+  <!-- style css -->
+  <link rel="stylesheet" type="text/css" href="./resources/css/login_style.css">
   <!-- 내비게이션 바 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">      
@@ -655,11 +657,6 @@ p {
 		 <!-- 모달 시작 -->
         <c:forEach var="board" items="${BOARD}">
 		<div id="modal_post" class="modal_overlay" style="z-index:1050; height: -webkit-fill-available; position: fixed;">
-			<div>
-			<span style="cursor: grab;" id="close_modal5"
-						class="material-icons-outlined"> close </span>
-						</div>
-
 			<div style="width: 800px; height: 480px; overflow: hidden; ">
 
 			<div class="contents">
@@ -676,40 +673,35 @@ p {
 	
 	<div class="col-md-4" style="background-color:white; width: 380px; height: 480px; padding: 0px; margin: 0px;">
 	
-	<div class="feed_name" style="height: 60px; display:table; width: 100% ">
-          <div class="profile_box" style="width: 40px; height: 60px; display:table-cell; vertical-align:middle;">
-            <img class="profile_img" src="resources/files/profile/profile_01.jpg" 
-            style="border-radius: 70%; width: 40px; height: 40px; ">
-          </div>
-          <span class="feed_name_txt" 
-          style="font-weight: bold; width: 20%; display:table-cell; vertical-align:middle; font-size: 15px;"> 
-          &nbsp;&nbsp;${board.BO_USER } </span>
-          <span class="_ac6e _ac6f _ac6h" style="display:table-cell; width: 10px; vertical-align:middle; font-size: 15px;">
-          •</span>
-          <span class="feed_name_txt" 
-          style="font-weight: bold; display:table-cell; vertical-align:middle; width: 50px; font-size: 13px;"> 
-          팔로우</span>
-          <div class="etc" style="height: 60px; display:table-cell; vertical-align:middle; text-align: right; ">
-            <img class="etc_img" src="resources/image/icon_28.png" >&nbsp;&nbsp;&nbsp;&nbsp;
-          </div>
-          
+	<div class="feed_name" style="height: 60px; display:table; margin: 0; position: relative; left: 15px;">
+      <div class="profile_box" style="width: 40px; height: 60px; display:table-cell; vertical-align:middle;">
+        <!-- 프로필 MEM_MEDIA -->
+        <img class="profile_img" src="resources/files/profile/${board.MEM_MEDIA}" 
+        style="border-radius: 70%; width: 40px; height: 40px; ">
+      </div>
+      
+      <span class="feed_name_txt" 
+	      style="font-weight: bold; width: 20%; display:table-cell; vertical-align:middle; font-size: 15px;"> 
+	      &nbsp;&nbsp;${board.MEM_NAME} </span>
+	  <span class="_ac6e _ac6f _ac6h" style="display:table-cell; width: 25px; vertical-align:middle; font-size: 15px;">•</span>
+      <span class="feed_name_txt" style="font-weight: bold; display:table-cell; vertical-align:middle; width: 35px; font-size: 13px;">팔로우</span>
+      
+   	  <div class="feed_icon" style="position: relative; top: 8px; left: 60px;">
+          <!-- 좋아요 버튼 -->
+          <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_01.png">
+          <!-- 댓글 버튼 -->
+          <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_03.png">
+          <!-- 공유 버튼 -->
+          <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_04.png">
+          <!-- 게시글 저장 버튼 -->
+          <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_05.png">
+      	  <!-- ... 버튼 -->    
+          <img class="etc_img" src="resources/image/icon_28.png" >
+          <!-- 모달 닫기 버튼 -->
+          <span style="position: relative; top: 10px;" id="close1" class="material-icons-outlined" onclick="closes()"> close </span>
+      </div>
     </div>
-    
         <hr style="margin: 0px">
-	 <div class="feed_icon">
-          <div>
-            <!-- 좋아요 버튼 -->
-            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_01.png">
-            <!-- 댓글 버튼 -->
-            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_03.png">
-            <!-- 공유 버튼 -->
-            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_04.png">
-          </div>
-          <div>
-            <!-- 게시글 저장 버튼 -->
-            <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_05.png">
-          </div>
-        </div>
         <div class="feed_like">
           <!-- 좋아요 표시 -->
           <br>
@@ -717,15 +709,18 @@ p {
         </div>
         <div class="feed_content">
           <!-- 이름, 게시글 내용 -->
-          <p class="feed_txt"> <b> ${user.MEM_NAME} </b> ${post.BO_CONT}</p>
-          
-     
+          <p class="feed_txt" style="text-align: left; margin: 25px;">${board.BO_CONT}</p>
+          <!-- 해쉬 -->
+          <p class="feed_txt" style="text-align: left; margin: 25px;">${board.BO_HASH}</p>
         </div>
         <!-- 댓글 목록 -->
         <div style="padding-left:10px;">
         <input type="hidden" name="COM_WRITER" id="comment_writer" value="">
-        <input type="text" value="" name="BO_IDX" id="comment_artno">
-        <input type="text" name="COM_CONT" id="comment_content"> <button id="comment_submit">전송</button>
+      <div class="login-wrapper flex-center">
+      </div>
+        <input type="hidden" value="" name="BO_IDX" id="comment_artno">
+        <input class="login-input" style="width: 300px;" type="text" id="COM_CONT" name="COM_CONT" placeholder="댓글 입력"/>
+         <button class="login-button" type="submit" id="comment_submit" style="width: 50px; cursor:pointer">확인</button>
         <br>
         <hr>
         <br>
@@ -997,6 +992,13 @@ $j(document).ready(function(){
 }); 
 
 </script>	
+
+<script>
+	function closes() {
+	  //모달창 꺼지기
+      $j(".modal_overlay").css({display:"none"});
+	}
+</script>
 
 <script type="text/javascript">
 
