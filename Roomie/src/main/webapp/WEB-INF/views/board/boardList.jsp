@@ -342,10 +342,23 @@
                </p>
             </div>
             <!-- 댓글 목록 -->
-            <div class="feed_reply">
-               <span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ
-               </span> <span class="feed_txt"> <b> junseok </b> 제주도 ㄱ ㄱ
-               </span>
+            <div class="feed_reply" id="feed_reply${status.index}">
+            
+             <%-- 해당 게시물에 해당하는 댓글만 출력 --%>
+             <c:forEach items="${comList}" var="comment" varStatus="sta">
+             <c:if test="${sta.index == 0 || sta.index == 1}">
+                <c:if test="${comment.COM_ARTNO eq boardList.BO_IDX}">
+                    <!-- 작성자 닉네임 -->
+
+                    <span class="feed_txt"> <b> ${comment.MEM_NAME} </b> ${comment.COM_CONT} </span>
+   
+                  
+                </c:if>
+                </c:if>
+            </c:forEach>
+            <span class="feed_click" style="color: #808080; font-size: 13px; margin: 3px 3px 3px 3px;"> <b> +더보기 </b> </span>  
+            
+
             </div>
             <!-- 댓글 달기 -->
             <div class="inputContainer">
@@ -353,7 +366,7 @@
                   <input class="inputBox" type="text" placeholder="댓글 달기...">
                </div>
                <span>
-                  <button class="buttonBox" type="summit">게시</button>
+                  <button class="buttonBox" >게시</button>
                </span>
             </div>
          </div>
@@ -388,7 +401,7 @@
                </div>
 
                <!-- 계정 전환 -->
-               <a class="link_txt"> 로그아웃 </a>
+               <a href="/roomie/memlogout.ya" class="link_txt" style="font-size: 8px"> 로그아웃 </a>
             </div>
             <!-- 계정 전환 끝 -->
             <!-- 회원님을 위한 추천 -->
@@ -398,35 +411,20 @@
             </div>
             <!-- 회원 목록 시작 -->
             <div>
-               <!-- 회원 시작 -->
-               <!-- <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     회원 프로필 이미지
-                     <img class="profile_img" src="resources/image/profile_01.jpg">
-                  </div>
-                  <div class="name_content">
-                     회원 사용자 이름
-                     <span class="feed_name_txt"> yeongjun </span>
-                     회원 상태
-                     <span class="name_content_txt"> EZEN 신규가입</span>
-                  </div>
-                  팔로우 버튼
-                  <a class="link_txt"> 팔로우 </a>
-               </div> -->
-               <!-- 회원 끝 -->
+
                <!-- 첫번째 회원 시작 -->
-               <c:forEach var="member" items="${memberList}">
+               <c:forEach var="member" items="${notFriend}">
                <div class="feed_name" onclick="location.href='/roomie/userProfile.ya?mem_idx=${member.MEM_IDX}'" style="justify-content: space-between">
           
                   <div class="profile_box">
                   <c:if test="${empty member.MEM_MEDIA}">
-                  	<img class="profile_img" src="resources/image/icon_14.png">
+                  	<img class="profile_img" src="resources/image/icon_p.jpg">
                   </c:if>
                      <img class="profile_img" id="feed_name2" src="resources/image/profile/${member.MEM_MEDIA}">
                   </div>
                   <div class="name_content">
-                     <span class="feed_name_txt" id="feed_name2"> ${member.MEM_ID} </span> <span
-                        class="name_content_txt"></span>
+                     <span class="feed_name_txt"> ${member.MEM_NAME} </span> <span
+                        class="name_content_txt"> 회원님을 위한 추천 </span>
                   </div>
                   <a class="link_txt"> 팔로우 </a>
                
@@ -434,19 +432,6 @@
                
                </c:forEach>
                <!-- 첫번째 회원 끝 -->
-
-               <!-- 세번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_04.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> minhoe </span> <span
-                        class="name_content_txt"> 회원님을 위한 추천 </span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 세번째 회원 끝 -->
               
             </div>
             <!-- 회원 추천 목록 끝 -->
@@ -1488,7 +1473,45 @@ $("#feed_name1").on('click', function(){
 
 </script>
 
+<script>
 
+let button_text = document.querySelectorAll('.buttonBox');
+let input = document.querySelectorAll('.inputBox');
+let bo_idx = document.querySelectorAll('#bo_idx');
+let reply = document.querySelectorAll('.feed_reply');
+
+
+for(let b=0; b < button_text.length; b++){
+
+	button_text[b].addEventListener('click',function(){
+	
+	
+	console.log(input[b].value);
+	console.log(bo_idx[b].value);
+
+	var data = {text :input[b].value, bo_idx : bo_idx[b].value }
+	
+ $.ajax({
+	  url : "/roomie/insertComment.ya"
+	, data : data
+	
+	, success: function(result){
+	
+		console.log("성공");
+
+		$('#' + reply[b].getAttribute('id')).load(location.href + ' #' + reply[b].getAttribute('id'));
+		
+	}
+	, error: function(error){
+		
+	}
+	
+}); //ajax 
+
+}); //click
+
+} //for
+</script>
      
 </body>
 </html>

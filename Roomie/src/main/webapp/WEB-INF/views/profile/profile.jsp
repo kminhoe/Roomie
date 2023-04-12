@@ -692,10 +692,12 @@ img.track {
 							class="fas fa-heart" aria-hidden="true"></i><img
 							src="resources/image/icon_01.png"
 							style="height: 30px; width: 30px;"> 56</li>
+						
+						
 						<li class="gallery-item-comments"><span
 							class="visually-hidden">Comments:</span><i class="fas fa-comment"
 							aria-hidden="true"></i><img src="resources/image/icon_03.png"
-							style="height: 30px; width: 30px;"></li>
+							style="height: 30px; width: 30px;">${counter.COUNTER}</li>
 					</ul>
 				
 				</div>
@@ -761,11 +763,11 @@ img.track {
 	    <input type="hidden" id="COM_STEP" name="COM_STEP" value="0">
 	    <input type="hidden" id="COM_LEVEL" name="COM_LEVEL" value="0">
 	    <input type="hidden" id="COM_IDX" name="COM_IDX" value="0">
-        <input type="text" name="COM_CONT" id="comment_content${vs.index}"> <button id="comment_submit">전송</button>
+        <input type="text" name="COM_CONT" id="comment_content${vs.index}"> <button id="comment_submit${vs.index}">전송</button>
         <br>
         <hr>
         <br>
-        	<div class="contents" id="commentList">
+        	<div class="contents" id="commentList${vs.index}">
         	
         	</div>
          </div>
@@ -869,7 +871,7 @@ img.track {
 				                 	/* alert(htmls); */
 			 				});	//each end
 						}
-						$("#commentList").html(htmls);
+						$("#commentList${vs.index}").html(htmls);
 						
 					},
 					error : function(jqXHR, status, err){
@@ -878,7 +880,8 @@ img.track {
 				})
 	    	}
 	    	
-	    	$(document).on('click', "#comment_submit", function(){
+	    	$(document).on('click', "#comment_submit${vs.index}", function(e){
+	    		e.stopPropagation();
 	    		var COM_ARTNO = $("#comment_artno${vs.index}").val();
 	    		var COM_WRITER = $("#COM_WRITER").val();
 	    		var COM_CONT = $("#comment_content${vs.index}").val();
@@ -981,6 +984,7 @@ img.track {
 	    	const buttonCloseModal5 = document.getElementById("close_modal5"+index);
 	        buttonCloseModal5.addEventListener("click", function(i) {
 	   	        modal5.style.display = "none";
+	   	        location.reload();
 	   	        document.body.style.overflowY = "visible";
 	    	 });
 	        
@@ -1565,6 +1569,7 @@ function setImageFromFile(input, expression) {
 	  // your code here
 	  const client_id = '51f7b5ab05bf459e88b90c02e8f14f4a';
 	  const client_secret = '499305d4bc4c4fe2840bd99f41f71ab8';
+	  const token ='BQCOGoDHgzmNPQW_QfT4dr35qT27uj_bBQqlp_pTyqe8HecvOS1XQYAZui4aBcY8_I1Taddp3847SvgS226gyTAuYUexeFoNNT5CVWvh1q33UZSTmMeBuaTOoVeqr3mn2OhbtE8PNMompFq-Bwo8EgjytYXNmHo1WkLGV_NHDCKKUn34ydsWshqvexZsWlaraCMLX1VYHPbrw_RscAVeBptWAFsn4gtpSHZKb48bhLWP0lDzDe38Ux3fza-TuHiWyRub5fL3lOCXD7MmDK_cSVdYoJBuHpJ7unBFb2b00tQZ3w7QeWSGL13rm3f5xUF4CocaiSYXwfN7rRanC8Xm7tTKmS0rbqn82o1RFunAGvF0we8';
 		  
 	  $('#search_spotify').on('submit', function(event) {
 	  	event.preventDefault();
@@ -1581,7 +1586,7 @@ function setImageFromFile(input, expression) {
 		    dataType: 'json',
 		    crossDomain: true,
 		    headers: {
-		        "Authorization": `Bearer BQDlcpha3zXRIRNJUwF2R3cQ1NkFama2PR2oDwbanq4XK3VT7ojXcjLI78BRC2wZURXSzAooqxgUI3Iijl0BO_Tv4n4dpSmURBGK_Xz-Ck8ryXpQ09NmT50tTbvnjKl5HSx9EYos7byKoRUBqXuMeHLJMXs_U-28YiH4rAB2LMJn1gF1wNKR0Xja3zeLxfl2FSwK`
+		        "Authorization": 'Basic ' + (new Buffer.fromn(client_id + ':' + client_secret).toString('base64'));
 		      },
 
 		    success: function(data)

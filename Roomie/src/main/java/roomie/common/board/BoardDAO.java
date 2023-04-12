@@ -43,5 +43,22 @@ public Map<String, Object> memCheck(Map<String, Object> map) throws Exception{
 	return sqlSessionTemplate.selectOne("board.memCheck",map);
 	}
 
+//친구가 아닌 멤버 리스트 출력
+public List<Map<String, Object>> notFriend(Map<String, Object> map) throws Exception {
+	return (List<Map<String, Object>>) selectList("board.notFriend", map);
+}
+
+//댓글 입력
+public void insertComment(Map<String, Object> map) throws Exception{
+	
+	sqlSessionTemplate.insert("board.insertComment", map);
+}
+
+//댓글 리스트
+public List<Map<String, Object>> selectComment() throws Exception {
+	return (List<Map<String, Object>>) selectList("board.selectComment");
+}
+
+
 
 } 
