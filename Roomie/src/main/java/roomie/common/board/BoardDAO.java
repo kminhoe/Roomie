@@ -41,7 +41,7 @@ public class BoardDAO extends AbstractDAO {
 		return sqlSessionTemplate.selectOne("board.memCheck", map);
 	}
 	
-	public Map<String, Object> createdContent(String cidx) throws Exception{
+	public Map<String, Object> createdContent(int cidx) throws Exception{
 		
 		return sqlSessionTemplate.selectOne("board.createdcontent", cidx);
 	}

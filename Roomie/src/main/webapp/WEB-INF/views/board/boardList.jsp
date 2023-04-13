@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -14,17 +14,17 @@
 <!-- Bootstrap CSS -->
 <!-- 내비게이션 바 -->
 <link
-   href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-   rel="stylesheet"
-   integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-   crossorigin="anonymous">
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+	crossorigin="anonymous">
 <!-- 내비게이션 바 구글 아이콘 이미지 -->
 <link
-   href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-   rel="stylesheet">
+	href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+	rel="stylesheet">
 
 <!-- 모달 -->
-﻿<%@ include file="modal.jsp" %>
+﻿<%@ include file="modal.jsp"%>
 
 <!-- webSocket 세션 js -->
 <script><%@ include file="/resources/js/web.js" %></script>
@@ -36,12 +36,15 @@
 	href="resources/css/modal_style.css">
 <link rel="stylesheet" type="text/css"
 	href="resources/css/kakaomap_style.css">
-   
-   
+
+
 <!-- 이미지 슬라이더에 필요한 CSS와 JS 파일 로드 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 
 
 
@@ -66,10 +69,9 @@
 	border-radius: 10px;
 	padding: 10px;
 	overflow-x: hidden;
-	
 }
 
-.alarm_profileImg{
+.alarm_profileImg {
 	margin-right: 20px;
 	border: 1px solid #DBDBDB;
 	border-radius: 50%;
@@ -77,12 +79,12 @@
 	cursor: pointer;
 }
 
-.alarm_list0{
+.alarm_list0 {
 	background-color: white;
 	cursor: pointer;
 }
 
-.alarm_list1{
+.alarm_list1 {
 	background-color: #98bcd5;
 	cursor: pointer;
 }
@@ -94,473 +96,465 @@
 .alarm_list1:hover {
 	background-color: #98BCF7;
 }
-
 </style>
 
 </head>
 <body>
-   <!-- 상단 내비게이션 바 시작 -->
-   <nav class="navbar navbar-expand-lg navbar-light bg-light"
-      style="width: 100%; position: fixed; z-index: 2; top: 0; margin-top: 0;">
-      <div class="container">
-         <img class="navbar-brand" style="height: 44px; object-fit: contain;"
-            src="resources/image/Roomie5.png">
+	<!-- 상단 내비게이션 바 시작 -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light"
+		style="width: 100%; position: fixed; z-index: 2; top: 0; margin-top: 0;">
+		<div class="container">
+			<img class="navbar-brand" style="height: 44px; object-fit: contain;"
+				src="resources/image/Roomie5.png">
 
-         <!-- 검색창 -->
-         <!-- <input class="form-control" style="width: 200px" type="search" placeholder="Search" aria-label="Search"> -->
+			<!-- 검색창 -->
+			<!-- <input class="form-control" style="width: 200px" type="search" placeholder="Search" aria-label="Search"> -->
 
-         <div style="display: flex;">
-            <!-- 홈 버튼 -->
-            <img class="menu_img"
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_09.png"> &nbsp;&nbsp;
-            <!-- 검색 버튼 
+			<div style="display: flex;">
+				<!-- 홈 버튼 -->
+				<img class="menu_img"
+					style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_09.png"> &nbsp;&nbsp;
+				<!-- 검색 버튼 
             <img class="menu_img"
                style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_07.png"> &nbsp;&nbsp; -->
-            <!-- 탑색 탭 버튼 -->
-            <img class="menu_img"
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_22.png"
-               onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
-            <!-- 채팅 버튼 -->
-            <div class="menu_img">
-            	<div style="position: relative;">
-		            <div>
-			            <img class="menu_img"
-			               style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
-			               src="resources/image/icon_04.png"
-			               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
-		            </div>
-		            <div id="msgNotif" style="position: absolute; top: -10px; right: 15px;">
-		            	<img style="width: 10px; height: 10px;" src="">
-		            </div>
-	            </div>
-			</div>
-            <!-- 알림 버튼 -->
-            <div class="menu_img">
-            	<div style="position: relative;">
-            		<div>
-            			<img class="menu_img" id="notifBtn"
-							style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
-							src="resources/image/icon_01.png"> &nbsp;&nbsp;
-            		</div>
-            		<div id="notifAlarm" style="position: absolute; top: -10px; right: 15px;">
-		            	<img style="width: 10px; height: 10px;" src="">
-		            </div>
-            	</div>
-            </div>
-            <!-- 스토리 버튼 -->
-            <img class="menu_img" id="add_stories"
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_17.png" onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'"> &nbsp;&nbsp;
-            <div class="modal_overlay" id="modal_add_stories" style="position: fixed;">
-           		<div class="modal_window_stories" id="modal_window_stories" style="width: 800px; height: 600px;">
-
-           		</div>
-           </div>
-            <!-- 게시글 업로드 버튼 -->
-            <img class="menu_img" id="add_feed"
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_08.png"> &nbsp;&nbsp;
-            <!-- 프로필 이동 버튼 -->
-            <c:choose>
+				<!-- 탑색 탭 버튼 -->
+				<img class="menu_img"
+					style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_22.png"
+					onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
+				<!-- 채팅 버튼 -->
+				<div class="menu_img">
+					<div style="position: relative;">
+						<div>
+							<img class="menu_img"
+								style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+								src="resources/image/icon_04.png"
+								onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+						</div>
+						<div id="msgNotif"
+							style="position: absolute; top: -10px; right: 15px;">
+							<img style="width: 10px; height: 10px;" src="">
+						</div>
+					</div>
+				</div>
+				<!-- 알림 버튼 -->
+				<div class="menu_img">
+					<div style="position: relative;">
+						<div>
+							<img class="menu_img" id="notifBtn"
+								style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+								src="resources/image/icon_01.png"> &nbsp;&nbsp;
+						</div>
+						<div id="notifAlarm"
+							style="position: absolute; top: -10px; right: 15px;">
+							<img style="width: 10px; height: 10px;" src="">
+						</div>
+					</div>
+				</div>
+				<!-- 스토리 버튼 -->
+				<img class="menu_img" id="add_stories"
+					style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_17.png"
+					onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'">
+				&nbsp;&nbsp;
+				<div class="modal_overlay" id="modal_add_stories"
+					style="position: fixed;">
+					<div class="modal_window_stories" id="modal_window_stories"
+						style="width: 800px; height: 600px;"></div>
+				</div>
+				<!-- 게시글 업로드 버튼 -->
+				<img class="menu_img" id="add_feed"
+					style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_08.png"> &nbsp;&nbsp;
+				<!-- 프로필 이동 버튼 -->
+				<c:choose>
 					<c:when test="${empty MEMBER.MEM_MEDIA}">
-						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
+						<img class="menu_img"
+							style="width: 25px; height: 25px; object-fit: contain"
 							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
 					</c:when>
 					<c:otherwise>
-						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
+						<img class="menu_img"
+							style="width: 25px; height: 25px; object-fit: contain"
 							src="resources/image/${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
 							
 					</c:otherwise>
 				</c:choose>
-			﻿<%@ include file="../option/upload_modal.jsp" %>
-         </div>
-      </div>
-   </nav>
-   <!-- 상단 내비게이션 바 끝 -->
+				﻿<%@ include file="../option/upload_modal.jsp"%>
+			</div>
+		</div>
+	</nav>
+	<!-- 상단 내비게이션 바 끝 -->
 
-   <!-- 메인 바디 영역 시작 -->
-   <div class="main_body">
-      <!-- 왼쪽 바디 영역 시작 -->
-      <div class="left_body">
-      
-         <!-- 스토리 시작 -->
-         <div class="story">
-            <!-- 왼쪽 버튼 -->
-            <div class="story_prev"
-               style="top: 50px; cursor: pointer; position: relative; z-index: 1; width: 20px; visibility: hidden;">
-               <img src="resources/image/icon_29.png" onclick="prev_action();">
-            </div>
-            <ul class="story_list">
-               <li class="sub_story">
-                  <div class="text">
-                     <a onclick="href='#'"><img
-                        src="resources/image/profile_01.jpg" alt="프로필"></a> <span
-                        style="font-size: 12px; margin-left: 3px;"></span>
-                  </div>
-               </li>
-               <li>
-                  <div class="sub_story">
-                     <div class="text">
-                        <img src="resources/image/profile_02.jpg" alt="프로필"> <span
-                           style="font-size: 12px; margin-left: 3px;"></span>
-                     </div>
-                  </div>
-               </li>
-            </ul>
-            
-            <!-- 오른쪽 버튼 -->
-            <div class="story_next"
-               style="top: -68px; left: 436px; cursor: pointer; position: relative; z-index: 1; width: 20px;">
-               <img src="resources/image/icon_30.png" onclick="next_action();">
-            </div>
-         </div>
-         <!-- 스토리 끝 -->
-         
-         <!-- 게시글 시작 -->
-         <div id="create_box">
-         
-         </div>
-         <div class="uploadB"></div>
-         
-         <div class="uploadB"></div>
-         
-         <c:forEach var="boardList" items="${boardList}" varStatus="status">
-         
-         
-         <div class="border feed_box">
-            <div class="feed_name">
-               <div class="profile_box">
-               
-               <c:choose>
-					<c:when test="${empty boardList.MEM_MEDIA}">
-						<img class="profile_img" src="resources/image/icon_p.jpg" > 
-					</c:when>
-					<c:otherwise>
-						<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
-					</c:otherwise>
-				</c:choose>
-               
-                 
-               </div>
-               <span class="feed_name_txt"> ${boardList.MEM_NAME} </span>
-               <!-- 더보기 버튼 -->
-               <img class="more_details" style="right: -340px !important;" src="resources/image/icon_28.png"
-                  alt="더보기">
-            </div>
-            
-            <input type="hidden" id="bo_mem" value="${boardList.BO_MEM}">
-            <input type="hidden" id="bo_name" value="${boardList.BO_USER}">
-            <input type="hidden" id="bo_idx" value="${boardList.BO_IDX}">
+	<!-- 메인 바디 영역 시작 -->
+	<div class="main_body">
+		<!-- 왼쪽 바디 영역 시작 -->
+		<div class="left_body">
 
-            
-            <%-- <img class="feed_img" style="height: 478px;"
+			<!-- 스토리 시작 -->
+			<div class="story">
+				<!-- 왼쪽 버튼 -->
+				<div class="story_prev"
+					style="top: 50px; cursor: pointer; position: relative; z-index: 1; width: 20px; visibility: hidden;">
+					<img src="resources/image/icon_29.png" onclick="prev_action();">
+				</div>
+				<ul class="story_list">
+					
+				</ul>
+
+				<!-- 오른쪽 버튼 -->
+				<div class="story_next"
+					style="top: -68px; left: 436px; cursor: pointer; position: relative; z-index: 1; width: 20px;">
+					<img src="resources/image/icon_30.png" onclick="next_action();">
+				</div>
+			</div>
+			<!-- 스토리 끝 -->
+
+			<!-- 게시글 시작 -->
+			<div class="create_box"></div>
+
+			<c:forEach var="boardList" items="${boardList}" varStatus="status">
+
+
+				<div class="border feed_box">
+					<div class="feed_name">
+						<div class="profile_box">
+
+							<c:choose>
+								<c:when test="${empty boardList.MEM_MEDIA}">
+									<img class="profile_img" src="resources/image/icon_p.jpg">
+								</c:when>
+								<c:otherwise>
+									<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+								</c:otherwise>
+							</c:choose>
+
+
+						</div>
+						<span class="feed_name_txt"> ${boardList.MEM_NAME} </span>
+						<!-- 더보기 버튼 -->
+						<img class="more_details" style="right: -340px !important;"
+							src="resources/image/icon_28.png" alt="더보기">
+					</div>
+
+					<input type="hidden" id="bo_mem" value="${boardList.BO_MEM}">
+					<input type="hidden" id="bo_name" value="${boardList.BO_USER}">
+					<input type="hidden" id="bo_idx" value="${boardList.BO_IDX}">
+
+
+					<%-- <img class="feed_img" style="height: 478px;"
                src="resources/files/board/${boardList.BO_MEDIA}"> --%>
-               
-               <!-- BO_MEDIA를 쉼표로 구분하여 배열에 담기 -->
-               <c:set var="mediaArray" value="${fn:split(boardList.BO_MEDIA, ',')}" />
 
-               <!-- 이미지 슬라이더 -->
-               <div class="slider">
-               <c:forEach items="${mediaArray}" var="media">
-               <div><img class="feed_img" style="height: 478px;" src="resources/files/board/${media}" /></div>
-               </c:forEach>
-               </div>
+					<!-- BO_MEDIA를 쉼표로 구분하여 배열에 담기 -->
+					<c:set var="mediaArray"
+						value="${fn:split(boardList.BO_MEDIA, ',')}" />
 
-            <div class="feed_icon">
-               <div>
-                 
-                 <!-- 좋아요 -->
-                 <div id="likeBut${status.index}" class="likeBut" style="display: inline-block;">
-                 
-                <input type="hidden" id="idx" value="${MEMBER.MEM_IDX}">
-                <input type="hidden" id="board_idx" value="${boardList.BO_IDX}">
-                
-                 <c:if test="${not empty LIKEB}">
-                 
-		         <c:set var="liked" value="false" />
+					<!-- 이미지 슬라이더 -->
+					<div class="slider">
+						<c:forEach items="${mediaArray}" var="media">
+							<div>
+								<img class="feed_img" style="height: 478px;"
+									src="resources/files/board/${media}" />
+							</div>
+						</c:forEach>
+					</div>
 
-                 <c:forEach var="like" items="${LIKEB}">
-                     <c:if test="${boardList.BO_IDX == like.LIKEB_BOARD}">
-                     <c:set var="liked" value="true" />
-                     </c:if>
-                 </c:forEach>
+					<div class="feed_icon">
+						<div>
 
-                <c:if test="${liked == true}">
-                
+							<!-- 좋아요 -->
+							<div id="likeBut${status.index}" class="likeBut"
+								style="display: inline-block;">
 
-                <img class="material-icons-outlined" id="like_y" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/heart_yes (2).png" >
-                
-                </c:if>
+								<input type="hidden" id="idx" value="${MEMBER.MEM_IDX}">
+								<input type="hidden" id="board_idx" value="${boardList.BO_IDX}">
 
-                <c:if test="${liked == false}">
+								<c:if test="${not empty LIKEB}">
 
-                <img class="material-icons-outlined" id="like_n" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_01.png" >
-                </c:if>
+									<c:set var="liked" value="false" />
 
-                 </c:if>
-                 
-                 <c:if test="${empty LIKEB}">
-  
-                 <img class="material-icons-outlined" id="like_n"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_01.png">
-                 
-                 </c:if>
-                 </div>
-                 
-                  <!-- 댓글 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_03.png">
-                  <!-- 공유 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_04.png">
-               </div>
-               <div>
-                  <!-- 게시글 저장 버튼 -->
-                  <img class="material-icons-outlined"
-                     style="width: 20px; height: 20px; object-fit: contain"
-                     src="resources/image/icon_05.png">
-               </div>
-            </div>
-            <div class="feed_like">
-            <div class="likec" id="feed_like${status.index}" style="padding: 0px;">
-               <!-- 좋아요 표시 -->
-               <p class="feed_txt">
+									<c:forEach var="like" items="${LIKEB}">
+										<c:if test="${boardList.BO_IDX == like.LIKEB_BOARD}">
+											<c:set var="liked" value="true" />
+										</c:if>
+									</c:forEach>
 
-               <c:choose>
-               <c:when test="${boardList.COUNT == null}">
-               <b>좋아요 0개</b>
-               <input type="hidden" value="${boardList.COUNT}">
-               </c:when>
-               
-               <c:otherwise>
-               <b>좋아요 ${boardList.COUNT}개</b>
-               <input type="hidden" value="${boardList.COUNT}">
-               </c:otherwise>
-               </c:choose>
-               
+									<c:if test="${liked == true}">
 
-               </p>
-            </div></div>
-            <div class="feed_content">
-               <!-- 이름, 게시글 내용 -->
-               <p class="feed_txt">
-                  <b> ${boardList.MEM_NAME} </b> ${boardList.BO_CONT}
-               </p>
-            </div>
-            <!-- 댓글 목록 -->
-            <div class="feed_reply">
-               <span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ
-               </span> <span class="feed_txt"> <b> junseok </b> 제주도 ㄱ ㄱ
-               </span>
-            </div>
-            <!-- 댓글 달기 -->
-            <div class="inputContainer">
-               <div class="type_comment">
-                  <input class="inputBox" type="text" placeholder="댓글 달기...">
-               </div>
-               <span>
-                  <button class="buttonBox" type="summit">게시</button>
-               </span>
-            </div>
-         </div>
-         
-         </c:forEach>
-         <!-- 게시글 끝 -->
-        
-         <!-- 왼쪽 바디 영역 끝 -->
-         <!-- 오른쪽 바디 영역 시작 -->
-         <div class="right_body">
-            <!-- 계정 전환 시작 -->
-            <div class="feed_name" style="justify-content: space-between">
-               <div style="display: flex; align-items: center;">
-                  <div class="big_profile_box">
-                     <!-- 계정 프로필 이미지 -->
-                     <img class="profile_img" src="resources/image/profile_06.jpg">
-                  </div>
-                  <div class="name_content">
-                     <!-- 사용자 이름 -->
-                     <span class="feed_name_txt"> daemyeong </span>
-                     <!-- 이름 -->
-                     <span class="name_content_txt"> Yoon Daemyeong </span>
-                  </div>
-               </div>
 
-               <!-- 계정 전환 -->
-               <a class="link_txt"> 전환 </a>
-            </div>
-            <!-- 계정 전환 끝 -->
-            <!-- 회원님을 위한 추천 -->
-            <div class="recommend_box">
-               <span style="color: gray"> 회원님을 위한 추천</span> <span
-                  style="font-size: 12px"> 모두 보기 </span>
-            </div>
-            <!-- 회원 목록 시작 -->
-            <div>
-               <!-- 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <!-- 회원 프로필 이미지 -->
-                     <img class="profile_img" src="resources/image/profile_01.jpg">
-                  </div>
-                  <div class="name_content">
-                     <!-- 회원 사용자 이름 -->
-                     <span class="feed_name_txt"> yeongjun </span>
-                     <!-- 회원 상태 -->
-                     <span class="name_content_txt"> EZEN 신규가입</span>
-                  </div>
-                  <!-- 팔로우 버튼 -->
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 회원 끝 -->
-               <!-- 첫번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_02.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> junseok </span> <span
-                        class="name_content_txt"> yeongjun 외 5명이 팔로우</span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 첫번째 회원 끝 -->
-               <!-- 두번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_03.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> taeyeong </span> <span
-                        class="name_content_txt"> yeongjun 외 5명이 팔로우</span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 두번째 회원 끝 -->
-               <!-- 세번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_04.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> minhoe </span> <span
-                        class="name_content_txt"> 회원님을 위한 추천 </span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 세번째 회원 끝 -->
-               <!-- 네번째 회원 시작 -->
-               <div class="feed_name" style="justify-content: space-between">
-                  <div class="profile_box">
-                     <img class="profile_img" src="resources/image/profile_05.jpg">
-                  </div>
-                  <div class="name_content">
-                     <span class="feed_name_txt"> jeongsu </span> <span
-                        class="name_content_txt"> 회원님을 위한 추천 </span>
-                  </div>
-                  <a class="link_txt"> 팔로우 </a>
-               </div>
-               <!-- 네번째 회원 끝 -->
-            </div>
-            <!-- 회원 추천 목록 끝 -->
+										<img class="material-icons-outlined" id="like_y"
+											style="width: 20px; height: 20px; object-fit: contain"
+											src="resources/image/heart_yes (2).png">
 
-            <!-- ROOMIE -->
-            <div class="comment_box">
-               <span> 소개 · 도움말 · 홍보 센터 · API · 채용 정보 </span> <span>
-                  개인정보처리방침 · 약관 · 위치 · 인기 계정 · 해시태그 · 언어 </span> <br> <span> ⓒ
-                  2023 ROOMIE </span>
-            </div>
-         </div>
-         <!-- 오른쪽 바디 영역 끝 -->
-      </div>
-      <!-- 메인 바디 영역 끝 -->
-      <!-- 푸터 시작 -->
-      <footer>
-         <div>
-            <!-- 홈 버튼 -->
-            <img style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_09.png"> &nbsp;&nbsp;
-            <!-- 탐색 탭 버튼 -->
-            <img 
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_22.png"
-               onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
-            <!-- 채팅 버튼 -->
-            <img style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_04.png"
-               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
-            <!-- 알림 버튼 -->
-            <img style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_01.png"> &nbsp;&nbsp;
-            <!-- 스토리 버튼 -->
-            <img id="add_stories"
-               style="width: 25px; height: 25px; object-fit: contain"
-               src="resources/image/icon_17.png" onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'"> &nbsp;&nbsp;
-            <!-- 게시글 버튼 -->
-            <img style="width: 25px; height: 25px; object-fit: contain"
-               onclick="document.getElementById('add_feed').click();"
-               src="resources/image/icon_08.png"> &nbsp;&nbsp;
-               <!-- 프로필 이동 버튼 -->
-            <c:choose>
+									</c:if>
+
+									<c:if test="${liked == false}">
+
+										<img class="material-icons-outlined" id="like_n"
+											style="width: 20px; height: 20px; object-fit: contain"
+											src="resources/image/icon_01.png">
+									</c:if>
+
+								</c:if>
+
+								<c:if test="${empty LIKEB}">
+
+									<img class="material-icons-outlined" id="like_n"
+										style="width: 20px; height: 20px; object-fit: contain"
+										src="resources/image/icon_01.png">
+
+								</c:if>
+							</div>
+
+							<!-- 댓글 버튼 -->
+							<img class="material-icons-outlined"
+								style="width: 20px; height: 20px; object-fit: contain"
+								src="resources/image/icon_03.png">
+							<!-- 공유 버튼 -->
+							<img class="material-icons-outlined"
+								style="width: 20px; height: 20px; object-fit: contain"
+								src="resources/image/icon_04.png">
+						</div>
+						<div>
+							<!-- 게시글 저장 버튼 -->
+							<img class="material-icons-outlined"
+								style="width: 20px; height: 20px; object-fit: contain"
+								src="resources/image/icon_05.png">
+						</div>
+					</div>
+					<div class="feed_like">
+						<div class="likec" id="feed_like${status.index}"
+							style="padding: 0px;">
+							<!-- 좋아요 표시 -->
+							<p class="feed_txt">
+
+								<c:choose>
+									<c:when test="${boardList.COUNT == null}">
+										<b>좋아요 0개</b>
+										<input type="hidden" value="${boardList.COUNT}">
+									</c:when>
+
+									<c:otherwise>
+										<b>좋아요 ${boardList.COUNT}개</b>
+										<input type="hidden" value="${boardList.COUNT}">
+									</c:otherwise>
+								</c:choose>
+
+
+							</p>
+						</div>
+					</div>
+					<div class="feed_content">
+						<!-- 이름, 게시글 내용 -->
+						<p class="feed_txt">
+							<b> ${boardList.MEM_NAME} </b> ${boardList.BO_CONT}
+						</p>
+					</div>
+					<!-- 댓글 목록 -->
+					<div class="feed_reply">
+						<span class="feed_txt"> <b> taeyeong </b> 제주도 가고 싶어요 ㅠㅠ
+						</span> <span class="feed_txt"> <b> junseok </b> 제주도 ㄱ ㄱ
+						</span>
+					</div>
+					<!-- 댓글 달기 -->
+					<div class="inputContainer">
+						<div class="type_comment">
+							<input class="inputBox" type="text" placeholder="댓글 달기...">
+						</div>
+						<span>
+							<button class="buttonBox" type="summit">게시</button>
+						</span>
+					</div>
+				</div>
+
+			</c:forEach>
+			<!-- 게시글 끝 -->
+
+			<!-- 왼쪽 바디 영역 끝 -->
+			<!-- 오른쪽 바디 영역 시작 -->
+			<div class="right_body">
+				<!-- 계정 전환 시작 -->
+				<div class="feed_name" style="justify-content: space-between">
+					<div style="display: flex; align-items: center;">
+						<div class="big_profile_box">
+							<!-- 계정 프로필 이미지 -->
+							<img class="profile_img" src="resources/image/profile_06.jpg">
+						</div>
+						<div class="name_content">
+							<!-- 사용자 이름 -->
+							<span class="feed_name_txt"> daemyeong </span>
+							<!-- 이름 -->
+							<span class="name_content_txt"> Yoon Daemyeong </span>
+						</div>
+					</div>
+
+					<!-- 계정 전환 -->
+					<a class="link_txt"> 전환 </a>
+				</div>
+
+				<!-- 계정 전환 끝 -->
+				<!-- 회원님을 위한 추천 -->
+				<div class="recommend_box">
+					<span style="color: gray"> 회원님을 위한 추천</span> <span
+						style="font-size: 12px"> 모두 보기 </span>
+				</div>
+				<!-- 회원 목록 시작 -->
+				<div>
+					<!-- 회원 시작 -->
+					<div class="feed_name" style="justify-content: space-between">
+						<div class="profile_box">
+							<!-- 회원 프로필 이미지 -->
+							<img class="profile_img" src="resources/image/profile_01.jpg">
+						</div>
+						<div class="name_content">
+							<!-- 회원 사용자 이름 -->
+							<span class="feed_name_txt"> yeongjun </span>
+							<!-- 회원 상태 -->
+							<span class="name_content_txt"> EZEN 신규가입</span>
+						</div>
+						<!-- 팔로우 버튼 -->
+						<a class="link_txt"> 팔로우 </a>
+					</div>
+					<!-- 회원 끝 -->
+					<!-- 첫번째 회원 시작 -->
+					<div class="feed_name" style="justify-content: space-between">
+						<div class="profile_box">
+							<img class="profile_img" src="resources/image/profile_02.jpg">
+						</div>
+						<div class="name_content">
+							<span class="feed_name_txt"> junseok </span> <span
+								class="name_content_txt"> yeongjun 외 5명이 팔로우</span>
+						</div>
+						<a class="link_txt"> 팔로우 </a>
+					</div>
+					<!-- 첫번째 회원 끝 -->
+					<!-- 두번째 회원 시작 -->
+					<div class="feed_name" style="justify-content: space-between">
+						<div class="profile_box">
+							<img class="profile_img" src="resources/image/profile_03.jpg">
+						</div>
+						<div class="name_content">
+							<span class="feed_name_txt"> taeyeong </span> <span
+								class="name_content_txt"> yeongjun 외 5명이 팔로우</span>
+						</div>
+						<a class="link_txt"> 팔로우 </a>
+					</div>
+					<!-- 두번째 회원 끝 -->
+					<!-- 세번째 회원 시작 -->
+					<div class="feed_name" style="justify-content: space-between">
+						<div class="profile_box">
+							<img class="profile_img" src="resources/image/profile_04.jpg">
+						</div>
+						<div class="name_content">
+							<span class="feed_name_txt"> minhoe </span> <span
+								class="name_content_txt"> 회원님을 위한 추천 </span>
+						</div>
+						<a class="link_txt"> 팔로우 </a>
+					</div>
+					<!-- 세번째 회원 끝 -->
+					<!-- 네번째 회원 시작 -->
+					<div class="feed_name" style="justify-content: space-between">
+						<div class="profile_box">
+							<img class="profile_img" src="resources/image/profile_05.jpg">
+						</div>
+						<div class="name_content">
+							<span class="feed_name_txt"> jeongsu </span> <span
+								class="name_content_txt"> 회원님을 위한 추천 </span>
+						</div>
+						<a class="link_txt"> 팔로우 </a>
+					</div>
+					<!-- 네번째 회원 끝 -->
+				</div>
+				<!-- 회원 추천 목록 끝 -->
+
+				<!-- ROOMIE -->
+				<div class="comment_box">
+					<span> 소개 · 도움말 · 홍보 센터 · API · 채용 정보 </span> <span>
+						개인정보처리방침 · 약관 · 위치 · 인기 계정 · 해시태그 · 언어 </span> <br> <span> ⓒ
+						2023 ROOMIE </span>
+				</div>
+			</div>
+			<!-- 오른쪽 바디 영역 끝 -->
+		</div>
+		<!-- 메인 바디 영역 끝 -->
+		<!-- 푸터 시작 -->
+		<footer>
+			<div>
+				<!-- 홈 버튼 -->
+				<img style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_09.png"> &nbsp;&nbsp;
+				<!-- 탐색 탭 버튼 -->
+				<img style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_22.png"
+					onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
+				<!-- 채팅 버튼 -->
+				<img style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_04.png"
+					onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+				<!-- 알림 버튼 -->
+				<img style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_01.png"> &nbsp;&nbsp;
+				<!-- 스토리 버튼 -->
+				<img id="add_stories"
+					style="width: 25px; height: 25px; object-fit: contain"
+					src="resources/image/icon_17.png"
+					onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'">
+				&nbsp;&nbsp;
+				<!-- 게시글 버튼 -->
+				<img style="width: 25px; height: 25px; object-fit: contain"
+					onclick="document.getElementById('add_feed').click();"
+					src="resources/image/icon_08.png"> &nbsp;&nbsp;
+				<!-- 프로필 이동 버튼 -->
+				<c:choose>
 					<c:when test="${empty MEMBER.MEM_MEDIA}">
-						<img style="width: 25px; height: 25px; object-fit: contain""
-							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
+						<img style="width: 25px; height: 25px; object-fit: contain;" src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
 					</c:when>
 					<c:otherwise>
-						<img style="width: 25px; height: 25px; object-fit: contain""
-							src="${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
+						<img style="width: 25px; height: 25px; object-fit: contain;" src="resources/files/profile/${MEMBER.MEM_MEDIA}" alt=""> &nbsp;&nbsp;
 					</c:otherwise>
 				</c:choose>
-         </div>
-      </footer>
+			</div>
+		</footer>
 
-<!-- 모달 start -->
-	
-	<div class="test_modal" id="close1">
-		<div style="display: relative; height: 20px; width: 20px; transform: rotate(45deg); background-color: white; position:absolute; top:-10px; left: 150px;"></div>
-		<div class="modal_notif">
-			<div class="likeAlarm">
-				<div style="display: flex; justify-content: center;">
-				좋아요
-				</div>
-				<div id="likeAlarmList">
-					<div style="display: flex; justify-content: center; padding: 30px; color: gray;">
-						좋아요 알림이 없습니다...
+		<!-- 모달 start -->
+
+		<div class="test_modal" id="close1">
+			<div
+				style="display: relative; height: 20px; width: 20px; transform: rotate(45deg); background-color: white; position: absolute; top: -10px; left: 150px;"></div>
+			<div class="modal_notif">
+				<div class="likeAlarm">
+					<div style="display: flex; justify-content: center;">좋아요</div>
+					<div id="likeAlarmList">
+						<div
+							style="display: flex; justify-content: center; padding: 30px; color: gray;">
+							좋아요 알림이 없습니다...</div>
 					</div>
 				</div>
-			</div>
-			<div style="border-bottom: 1px solid #EBEDF0; margin: 10px;"></div>
-			<div class="reviewAlarm">
-				<div style="display: flex; justify-content: center;">
-				댓글
-				</div>
-				<div id="reviewAlarmList">
-					<div style="display: flex; justify-content: center; padding: 30px; color: gray;">
-						댓글 알림이 없습니다...
+				<div style="border-bottom: 1px solid #EBEDF0; margin: 10px;"></div>
+				<div class="reviewAlarm">
+					<div style="display: flex; justify-content: center;">댓글</div>
+					<div id="reviewAlarmList">
+						<div
+							style="display: flex; justify-content: center; padding: 30px; color: gray;">
+							댓글 알림이 없습니다...</div>
 					</div>
 				</div>
-			</div>
-			<div style="border-bottom: 1px solid #EBEDF0; margin: 10px;"></div>
-			<div class="followAlarm">
-				<div style="display: flex; justify-content: center;">
-				팔로우
-				</div>
-				<div id="followAlarmList">
-					<div style="display: flex; justify-content: center; padding: 30px; color: gray;">
-						팔로우 알림이 없습니다...
+				<div style="border-bottom: 1px solid #EBEDF0; margin: 10px;"></div>
+				<div class="followAlarm">
+					<div style="display: flex; justify-content: center;">팔로우</div>
+					<div id="followAlarmList">
+						<div
+							style="display: flex; justify-content: center; padding: 30px; color: gray;">
+							팔로우 알림이 없습니다...</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>	
-	<!-- 모달 end -->
+		<!-- 모달 end -->
 
-<script> /* 모달 관련 script */
+		<script> /* 모달 관련 script */
 	//클릭 이벤트
 	$(document).on('click', function(e) {
 		if($(e.target).is('#notifBtn')) { //클릭한 요소의 id가 notifBtn 이라면
@@ -571,7 +565,7 @@
 	});
 </script>
 
-<script>
+		<script>
     // 스토리 추가 모달
     const modal_add_stories = document.getElementById("modal_add_stories");
     const buttonAddStories = document.getElementById("add_stories");
@@ -580,11 +574,11 @@
         modal_add_stories.style.display = "flex";
         document.body.style.overflowY = "hidden";
       });
- </script>        
-         
-         
-      <!-- 모달 스크립트 -->
-  <script>
+ </script>
+
+
+		<!-- 모달 스크립트 -->
+		<script>
  
      const realUpload = document.querySelector('.real_upload');
      const upload = document.querySelector('.uploadpage');
@@ -775,7 +769,7 @@
      $(document).ready(function(){
         
        // 스토리 리스트 불러오기
-       /* readStories(); */
+        readStories();
         
         var arr = new Array;
         var arr2 = new Array;
@@ -893,6 +887,7 @@
     
      
     $("#boardupload").on("click", function(e){
+ 
        if($("#input_content").val() == "" || $("#input_content").val()== null){
              alert("게시글을 작성해주세요");
              return false;
@@ -958,73 +953,60 @@
          contentType: false,
          data: formData,
          type: 'POST',
-         dataType:'text',
-         success: function(status){
+         dataType:'json',
+         success: function(data){
+        	 
+        	
+        	var create = data.create;
+        	var creElement = document.getElementById("create_box");
+        	var mediaList = create.BO_MEDIA;
+        	var arrayMedia = mediaList.split(",");
             
-            alert("성공");
+            console.log("성공" + create.MEM_ID);
             
-            location.reload();
+            $(".modal_overlay").css("display", "none");
+            $('.create_box').addClass('border');
+            $('.create_box').css("display", "block");
             
-
-            $('.uploadB').html(
-            		'<div class="border feed_box">'+
-            		'<div class="feed_name">'+
-            		'<div class="profile_box">'+
-            		'<c:choose>'+
-            		'<c:when test="${empty boardList.MEM_MEDIA}">'+
-            		'<img class="profile_img" src="resources/image/icon_p.jpg" >'+ 
-            		'</c:when>'+
-            		'<c:otherwise>'+
-            		'<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">'+
-            		'</c:otherwise>'+
-            		'</c:choose>'+               
-            		'</div>'+
-            		'<span class="feed_name_txt"> ${boardList.MEM_NAME} </span>'+
-
-            		'<img class="more_details" style="right: -340px !important;" src="resources/image/icon_28.png" alt="더보기">'+
-            		'</div>'+
-         
-            		'<c:set var="mediaArray" value="${fn:split(boardList.BO_MEDIA, ',')}" />'+
-            	
-            		'<div class="slider">'+
-            		'<c:forEach items="${mediaArray}" var="media">'+
-            		'<div><img class="feed_img" style="height: 478px;" src="resources/files/board/${media}" /></div>'+
-            		'</c:forEach></div>'+
-            		'<div class="feed_icon">'+
-            		'<div>'+
-            	
-            		'<img class="material-icons-outlined" id="like_n" style="width: 20px; height: 20px; object-fit: contain"  src="resources/image/icon_01.png"></div>'+
-            	
-            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_03.png">'+
-            	
-            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_04.png"></div>'+
-            		'<div>'+
-            	
-            		'<img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain"  src="resources/image/icon_05.png"></div></div>'+
-            		'<div class="feed_like">'+
-            		'<div class="likec" id="feed_like${status.index}" style="padding: 0px;">'+
+            /* location.reload(); */
+            var html = "";
+            
+            html += '<div class="create_name"><div class="create_profile_box">';
+            if(!create.MEM_MEDIA){
+            	html += '<img class="create_profile_img" src="resources/image/icon_p.jpg">';
+            }else{
+            	html += '<img class="create_profile_img" src="resources/files/profile/'+create.MEM_MEDIA+'">';
+            }
+            html += '</div><span class="create_name_txt"> '+create.MEM_NAME+'</span>';
+            html += '<img class="more_details" style="right: -340px !important;" src="resources/image/icon_28.png" alt="더보기"></div>';
+            html += '<input type="hidden" id="bo_mem" value="'+create.BO_MEM+'">';
+            html += '<input type="hidden" id="bo_id" value="'+create.BO_USER+'">';
+            html += '<input type="hidden" id="bo_idx" value="'+create.BO_IDX+'">';
+            html += '<div class="createSlider">';
+            for (var i = 0; i < arrayMedia.length; i++) {
+            	  var media = arrayMedia[i];
+            	 
+            	  html += '<div><img class="create_img" style="height: 478px;" src="resources/files/board/'+media+'" /></div>';
+            }
+            html += '</div>'
+            $('.create_box').append(html);
+            $('#modal_overlay').load(location.href + '#modal_overlay')
+            
            
-            		'<p class="feed_txt">'+
-            		'<b>좋아요 0개</b></p></div></div>'+
-            		'<div class="feed_content">'+
-            		
-            		'<p class="feed_txt">'+
-            		'<b> ${boardList.MEM_NAME} </b> ${boardList.BO_CONT}</p></div>'+
-            	
-            		'<div class="feed_reply">'+
-            		'<span class="feed_txt"> <b>  </b> </span> <span class="feed_txt"> <b> </b> </span></div>'+
-            	
-            		'<div class="inputContainer">'+
-            		'<div class="type_comment">'+
-            		'<input class="inputBox" type="text" placeholder="댓글 달기..."></div>'+
-            		'<span><button class="buttonBox" type="summit">게시</button></span></div></div>'
-                  );
-
-           
-            
+    		    // 이미지 슬라이더 설정
+    		    $('.createSlider').slick({
+    		        infinite: true,
+    		        slidesToShow: 1,
+    		        slidesToScroll: 1
+    		    });
+			document.querySelector(['body']).style.removeProperty(['overflow-y']);
+    	},
+         error: function(xhr, status, error) { // 요청이 실패했을 때의 콜백 함수
+                console.error(error);
          }
           
        });
+       
        
        
        
@@ -1032,13 +1014,13 @@
     
   </script>
 
-      <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+		<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
           crossorigin="anonymous">
   </script> -->
 
-      <!-- 프로필 슬라이드 -->
-      <script>
+		<!-- 프로필 슬라이드 -->
+		<script>
     const story_list = document.querySelector('.story_list'); //전체 슬라이드 컨테이너
     const story_slideImg = document.querySelectorAll('.story_list li'); //모든 슬라이드들
     let story_currentIdx = 0; //현재 슬라이드 index
@@ -1074,12 +1056,12 @@
     });
   </script>
 
-     <script type="text/javascript"
-         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e089b04e0ca2a1fd1287cb6610d9d01&libraries=services"></script>
-      <script src="./resources/js/kakaomap.js"></script>
-     
+		<script type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e089b04e0ca2a1fd1287cb6610d9d01&libraries=services"></script>
+		<script src="./resources/js/kakaomap.js"></script>
 
-<script>
+
+		<script>
     const upload_list = document.querySelector('.upload_list'); //전체 슬라이드 컨테이너
     const upload_slideImg = document.querySelectorAll('.upload_list li'); //모든 슬라이드들
     let upload_currentIdx = 0; //현재 슬라이드 index
@@ -1180,8 +1162,8 @@
     }
 
   </script>
-  
-    <script>
+
+		<script>
 
     var page = 0;
     var length = 0;
@@ -1230,9 +1212,9 @@
 		});
 	}
   </script>
-  
-  
-  <script>
+
+
+		<script>
 
      // 왼쪽 버튼
      function prev_action() {
@@ -1265,7 +1247,7 @@
      }
   </script>
 
- <script>
+		<script>
   
   $(document).ready(function(){
 	
@@ -1353,9 +1335,9 @@
    
   });//document.ready
   
-  </script> 
+  </script>
 
-<script>
+		<script>
   
   let but = document.querySelectorAll('.more_details'); 
   let idx = document.querySelectorAll('#bo_idx');
@@ -1407,10 +1389,10 @@
   
   </script>
 
-<script>
+		<script>
 $(window).on('load',function (){
 	
-	var MEM_ID = '<%=(String)session.getAttribute("MEM_ID")%>';
+	var MEM_ID = '<%=(String) session.getAttribute("MEM_ID")%>';
 
 	/* 알림 표시 추가 */
 	$.ajax({
@@ -1494,7 +1476,7 @@ $(window).on('load',function (){
 )
 </script>
 
-<script> /* 알림 리스트(class="alarm_list1")를 클릭했을 때 발생하는 이벤트 */
+		<script> /* 알림 리스트(class="alarm_list1")를 클릭했을 때 발생하는 이벤트 */
 $(document).on('click','.alarm_list1',function(e){
 	
 	e.preventDefault(); //버블링 방지
@@ -1530,7 +1512,7 @@ $(document).on('click','.alarm_list1',function(e){
 
 </script>
 
-<script> /* 알림 버튼의 위치에따라 모달창의 위치를 유동적으로 바꾸는 기능 */
+		<script> /* 알림 버튼의 위치에따라 모달창의 위치를 유동적으로 바꾸는 기능 */
 	const button = document.querySelector('#notifBtn');
 	const modal = document.querySelector('.test_modal');
 	
@@ -1550,7 +1532,7 @@ $(document).on('click','.alarm_list1',function(e){
 	}
 </script>
 
-<script>
+		<script>
 	$(document).ready(function(){
 	    // 이미지 슬라이더 설정
 	    $('.slider').slick({
@@ -1560,6 +1542,5 @@ $(document).on('click','.alarm_list1',function(e){
 	    });
 	});
 </script>
-     
 </body>
 </html>

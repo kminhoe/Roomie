@@ -27,9 +27,6 @@
       )
    ]]>
 
-
-
-
    </insert>
 
    <insert id="hashinsert" parameterType="hashmap">
@@ -66,7 +63,7 @@
 		SELECT * FROM
 (SELECT * FROM 
 (SELECT * FROM
-(SELECT * FROM BOARD B INNER JOIN FRIEND F ON B.BO_ID = F.FOLLOWING WHERE FRI_MEM = 'qwert@qwer.com')A
+(SELECT * FROM BOARD B INNER JOIN FRIEND F ON B.BO_ID = F.FOLLOWING WHERE FRI_MEM = #{MEM_ID})A
 INNER JOIN MEMBER ON BO_MEM = MEM_IDX)C
 LEFT JOIN (SELECT COUNT(LIKEB_BOARD) AS COUNT, LIKEB_BOARD FROM BO_LIKE GROUP BY LIKEB_BOARD) ON C.BO_IDX=LIKEB_BOARD)D
 LEFT JOIN BLOCK ON D.BO_MEM = BLOCK.BLOCKM_IDX
@@ -79,6 +76,12 @@ WHERE BLOCKM_IDX IS NULL
 <select id="memCheck" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		SELECT * FROM MEMBER WHERE MEM_IDX = #{MEM_IDX}
+	]]>
+</select>
+
+<select id="createdcontent" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		select * from (select * from board b inner join member m on b.bo_mem = m.mem_idx) where BO_IDX = #{BO_IDX}
 	]]>
 </select>
 

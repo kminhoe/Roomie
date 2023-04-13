@@ -16,6 +16,6 @@ public interface BoardService {
 	
 	public Map<String, Object> memCheck(Map<String, Object> map) throws Exception; // 본인 확인
 	
-	public Map<String, Object> createContent(String cidx) throws Exception;
+	public Map<String, Object> createContent(int cidx) throws Exception;
 	
 } 
