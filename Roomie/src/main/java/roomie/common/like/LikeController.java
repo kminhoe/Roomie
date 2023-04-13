@@ -76,6 +76,41 @@ public class LikeController {
 		return "board/boardList"; 
 	}
 	
+	//모달창
+	@RequestMapping(value="/likeMinsert.ya")
+	public String likeMinsert(HttpSession session, @RequestParam Map<String, Object> map)throws Exception{
+		
+		
+        System.out.println("like insert : " +map);
+		
+        Map<String, Object> like = new HashMap<String, Object>();
+		
+		  like.put("LIKEB_MEM", map.get("idx")); 
+		  like.put("LIKEB_BOARD",map.get("board_idx"));
+		  
+		  likeService.likeBinsert(like);
+		 
+        
+		return "search/searchForm"; 
+	}
 	
+	@RequestMapping(value="/likeMdelete.ya")
+	public String likeMdelete(HttpSession session, @RequestParam Map<String, Object> map)throws Exception{
+		
+		
+        System.out.println("like delete : " +map);
+		
+		
+		 Map<String, Object> like = new HashMap<String, Object>();
+		  
+		  like.put("LIKEB_MEM", map.get("idx"));
+		  like.put("LIKEB_BOARD",map.get("board_idx"));
+		  
+		   likeService.likeBdelete(like);
+		 
+		 
+        
+		return "board/boardList"; 
+	}
 
 }

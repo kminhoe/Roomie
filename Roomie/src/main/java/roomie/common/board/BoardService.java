@@ -22,6 +22,7 @@ public interface BoardService {
 	
 	public List<Map<String, Object>> selectComment() throws Exception;
 	
-
+	//업로드 게시물 확인
+	public Map<String, Object> createContent(int cidx) throws Exception;
 	
 } 

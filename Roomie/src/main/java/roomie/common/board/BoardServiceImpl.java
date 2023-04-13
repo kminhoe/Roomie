@@ -69,7 +69,11 @@ public class BoardServiceImpl implements BoardService{
 
 
 	
-	
+	@Override
+	public Map<String, Object> createContent(int cidx) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.createdContent(cidx);
+	}
 	
 	
 } 
