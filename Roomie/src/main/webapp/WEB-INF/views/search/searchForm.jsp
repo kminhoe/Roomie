@@ -477,30 +477,78 @@ p {
 	
 <body>
 	<!-- 상단 내비게이션 바 시작 -->
-	<nav class="" style="width: 100%; display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; align-items: center; position: fixed; z-index: 1; background-color: #fff;" >
-		<div class="search_container" style="display: flex; justify-content: space-between; align-items: center; width: 900px; min-width: 350px;">
-			<img class="navbar-brand" style="height: 44px; object-fit: contain;" src="resources/image/roomie_logo_1.png">
-			
-			<!-- 검색창 -->
-			<input class="form-control" id="searchBox" style="width: 200px; height: 30px;"  type="search" placeholder="Search" aria-label="Search">
-			
-			<div class="search_menu">
-				<!-- 홈 버튼 -->
-				<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain" src="resources/image/icon_09.png"> &nbsp;&nbsp;
-				<!-- 탑색 탭 버튼 -->
-				<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain" src="resources/image/icon_22.png"> &nbsp;&nbsp;
-				<!-- 채팅 버튼 -->
-				<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain" src="resources/image/icon_12.png"> &nbsp;&nbsp;
-				<!-- 알림 버튼 -->
-				<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain" src="resources/image/icon_10.png"> &nbsp;&nbsp;	
+   <nav class="navbar navbar-expand-lg navbar-light bg-light"
+      style="width: 100%; position: fixed; z-index: 2; top: 0; margin-top: 0;">
+      <div class="container">
+         <img class="navbar-brand" style="height: 44px; object-fit: contain;"
+            src="resources/image/Roomie5.png">
+
+         <!-- 검색창 -->
+         <!-- <input class="form-control" style="width: 200px" type="search" placeholder="Search" aria-label="Search"> -->
+
+         <div style="display: flex;">
+            <!-- 홈 버튼 -->
+            <img class="menu_img"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_09.png"> &nbsp;&nbsp;
+            <!-- 검색 버튼 
+            <img class="menu_img"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_07.png"> &nbsp;&nbsp; -->
+            <!-- 탑색 탭 버튼 -->
+            <img class="menu_img"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_22.png"
+               onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
+            <!-- 채팅 버튼 -->
+            <div class="menu_img">
+            	<div style="position: relative;">
+		            <div>
+			            <img class="menu_img"
+			               style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+			               src="resources/image/icon_04.png"
+			               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+		            </div>
+		            <div id="msgNotif" style="position: absolute; top: -10px; right: 15px;">
+		            	<img style="width: 10px; height: 10px;" src="">
+		            </div>
+	            </div>
 			</div>
-			<div class="search_icon_alert">
-				<!-- 알림 버튼 mobile -->
-				<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain;" src="resources/image/icon_10.png"> &nbsp;&nbsp;
-			</div>
-		</div>
-	</nav>
-	<!-- 상단 내비게이션 바 끝 -->
+            <!-- 알림 버튼 -->
+            <div class="menu_img">
+            	<div style="position: relative;">
+            		<div>
+            			<img class="menu_img" id="notifBtn"
+							style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+							src="resources/image/icon_01.png"> &nbsp;&nbsp;
+            		</div>
+            		<div id="notifAlarm" style="position: absolute; top: -10px; right: 15px;">
+		            	<img style="width: 10px; height: 10px;" src="">
+		            </div>
+            	</div>
+            </div>
+            <!-- 스토리 버튼 -->
+            <img class="menu_img" id="add_stories"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_17.png" onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'"> &nbsp;&nbsp;
+            <div class="modal_overlay" id="modal_add_stories" style="position: fixed;">
+           		<div class="modal_window_stories" id="modal_window_stories" style="width: 800px; height: 600px;">
+
+           		</div>
+           </div>
+            <!-- 게시글 업로드 버튼 -->
+            <img class="menu_img" id="add_feed"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_08.png"> &nbsp;&nbsp;
+            <!-- 프로필 이동 버튼 -->
+						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
+							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
+
+			﻿<%@ include file="../option/upload_modal.jsp" %>
+         </div>
+      </div>
+   </nav>
+   <!-- 상단 내비게이션 바 끝 -->
 
 	<!-- 게시물 리스트 start -->
 	<div class="search_container" id="container" style="height: calc(100% - 40px); position: relative; top: 60px;">
@@ -655,7 +703,7 @@ p {
 
 
 		 <!-- 모달 시작 -->
-        <c:forEach var="board" items="${BOARD}">
+        <c:forEach var="board" items="${BOARD}" varStatus="status">
 		<div id="modal_post" class="modal_overlay" style="z-index:1050; height: -webkit-fill-available; position: fixed;">
 			<div style="width: 800px; height: 480px; overflow: hidden; ">
 
@@ -676,8 +724,16 @@ p {
 	<div class="feed_name" style="height: 60px; display:table; margin: 0; position: relative; left: 15px;">
       <div class="profile_box" style="width: 40px; height: 60px; display:table-cell; vertical-align:middle;">
         <!-- 프로필 MEM_MEDIA -->
-        <img class="profile_img" src="resources/files/profile/${board.MEM_MEDIA}" 
-        style="border-radius: 70%; width: 40px; height: 40px; ">
+        
+        <c:choose>
+					<c:when test="${empty boardList.MEM_MEDIA}">
+						<img class="profile_img" style="width: 40px; height: 40px;" src="resources/image/icon_p.jpg" > 
+					</c:when>
+					<c:otherwise>
+						<img class="profile_img" style="width: 40px; height: 40px;" src="resources/files/profile/${board.MEM_MEDIA}">
+					</c:otherwise>
+				</c:choose>
+
       </div>
       
       <span class="feed_name_txt" 
@@ -688,7 +744,47 @@ p {
       
    	  <div class="feed_icon" style="position: relative; top: 8px; left: 60px;">
           <!-- 좋아요 버튼 -->
-          <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_01.png">
+          
+          <!-- 좋아요 -->
+                 <div id="likeBut${status.index}" class="likeBut" style="display: inline-block;">
+                 
+                <input type="hidden" id="idx" value="${board.MEM_IDX}">
+                <input type="hidden" id="board_idx" value="${board.BO_IDX}">
+                
+                 <c:if test="${not empty LIKEB}">
+                 
+		         <c:set var="liked" value="false" />
+
+                 <c:forEach var="like" items="${LIKEB}">
+                     <c:if test="${board.BO_IDX == like.LIKEB_BOARD}">
+                     <c:set var="liked" value="true" />
+                     </c:if>
+                 </c:forEach>
+
+                <c:if test="${liked == true}">
+                
+
+                <img class="material-icons-outlined" id="like_y" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/heart_yes (2).png" >
+                
+                </c:if>
+
+                <c:if test="${liked == false}">
+
+                <img class="material-icons-outlined" id="like_n" style="width: 20px; height: 20px; object-fit: contain" src="resources/image/icon_01.png" >
+                </c:if>
+
+                 </c:if>
+                 
+                 <c:if test="${empty LIKEB}">
+  
+                 <img class="material-icons-outlined" id="like_n"
+                     style="width: 20px; height: 20px; object-fit: contain"
+                     src="resources/image/icon_01.png">
+                 
+                 </c:if>
+                 </div>
+          
+          
           <!-- 댓글 버튼 -->
           <img class="material-icons-outlined" style="width: 20px; height: 20px; object-fit: contain" src="./resources/image/icon_03.png">
           <!-- 공유 버튼 -->
@@ -741,6 +837,37 @@ p {
 
 <!-- 모달 끝 -->
 
+<!-- 푸터 시작 -->
+      <footer>
+         <div>
+            <!-- 홈 버튼 -->
+            <img style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_09.png"> &nbsp;&nbsp;
+            <!-- 탐색 탭 버튼 -->
+            <img 
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_22.png"
+               onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
+            <!-- 채팅 버튼 -->
+            <img style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_04.png"
+               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+            <!-- 알림 버튼 -->
+            <img style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_01.png"> &nbsp;&nbsp;
+            <!-- 스토리 버튼 -->
+            <img id="add_stories"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_17.png" onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'"> &nbsp;&nbsp;
+            <!-- 게시글 버튼 -->
+            <img style="width: 25px; height: 25px; object-fit: contain"
+               onclick="document.getElementById('add_feed').click();"
+               src="resources/image/icon_08.png"> &nbsp;&nbsp;
+               <!-- 프로필 이동 버튼 -->
+			<img style="width: 25px; height: 25px; object-fit: contain"
+				src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
+         </div>
+      </footer>
 
 
 <script>
@@ -1315,7 +1442,100 @@ $j(document).on("click", function(e){
     
 
     
-	</script>
+</script>
+
+<!-- 좋아요 -->
+<script>
+  
+$j(document).ready(function(){
+	
+     
+
+     let like_n = document.querySelectorAll('#like_n');
+     let like_y = document.querySelectorAll('#like_y');
+     
+     let idx = document.querySelectorAll('#idx');
+     let board_idx = document.querySelectorAll('#board_idx');
+
+     let but = document.querySelectorAll('.likeBut');
+     
+     let count = document.querySelectorAll('.likec');
+     
+     
+     for(let a=0; a < but.length; a++){
+        
+        but[a].addEventListener('click', function(event) {
+        	
+           // 이벤트 발생한 요소가 자식 요소인 경우에만 이벤트 처리
+           if (event.target && event.target.matches('#like_y')) {
+             // 자식 요소에 대한 이벤트 처리
+             
+                       console.log(board_idx[a].value);
+             
+                       var like= { "idx": idx[a].value, "board_idx": board_idx[a].value }
+                    
+                       $j.ajax({
+                          url : "/roomie/likeMdelete.ya" 
+                          ,data : like
+                          ,success: function(like){      
+                             
+                             console.log(idx[a].value + "board_idx" + board_idx[a].value);
+                           //console.log(but[a].getAttribute('id'));
+                           
+                           
+                           $j('#' + but[a].getAttribute('id')).load(location.href + ' #' + but[a].getAttribute('id'));
+                           
+                           //특정 div 새로고침
+                           //$('#div').load(location.href + ' #div');
+                             
+                           $j('#' + count[a].getAttribute('id')).load(location.href + ' #' + count[a].getAttribute('id'));
+     
+
+                          },error : function(request,error,data){
+                             alert("실패");
+                              console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+                          }
+                      });//ajax  
+                           
+           } else if(event.target && event.target.matches('#like_n')){
+              
+              console.log(board_idx[a].value);
+              
+              
+              var like= { "idx": idx[a].value, "board_idx": board_idx[a].value }
+              
+              $j.ajax({
+                    url : "/roomie/likeMinsert.ya" 
+                    ,data : like
+                    ,success: function(){              
+
+                       console.log(idx[a].value + "board_idx" + board_idx[a].value);
+                       //console.log(but[a].getAttribute('id'));
+                       
+                       $j('#' + but[a].getAttribute('id')).load(location.href + ' #' + but[a].getAttribute('id'));
+                   
+                       $j('#' + count[a].getAttribute('id')).load(location.href + ' #' + count[a].getAttribute('id'));
+                       
+                       webSocket.send('5#' + board_id[a].value);
+            
+                    },error : function(request,error,data){
+                       alert("실패");
+                        console.log("data:"+data+"\n"+"code:" + request.status+"\n" + "message:"+request.responseText+"\n"+"error:"+error);
+                    }
+                });//ajax  
+              
+           }
+         });
+        
+     }
+     
+     
+     
+   
+  });//document.ready
+  
+  </script> 
+
 	
 
 	

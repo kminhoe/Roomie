@@ -213,7 +213,7 @@
          
          <!-- 게시글 시작 -->
          
-         <div class="uploadB"></div>
+         <div class="create_box"></div>
          
          <c:forEach var="boardList" items="${boardList}" varStatus="status">
          
@@ -881,6 +881,7 @@
        var file = $("#qwer").val();
       var BO_ID = $("#mem_id").val();
       var BO_USER = $("#mem_user").val();
+     
       
        console.log("file이름들: "+ file);
        
@@ -909,30 +910,73 @@
        } */
        
        
+       //업로드 게시물 확인 수정
        $.ajax({
-          url: '/roomie/boardInsert.ya',
-          
-        //formData 사용 시 processData, contentType 필수 작성
-         processData: false,
-         contentType: false,
-         data: formData,
-         type: 'POST',
-         dataType:'text',
-         success: function(status){
-            
-            alert("성공");
-            
-            location.reload();
-            
+           url: '/roomie/boardInsert.ya',
            
+         //formData 사용 시 processData, contentType 필수 작성
+          processData: false,
+          contentType: false,
+          data: formData,
+          type: 'POST',
+          dataType:'json',
+          success: function(data){
+         	 
+         	
+         	var create = data.create;
+         	var creElement = document.getElementById("create_box");
+         	var mediaList = create.BO_MEDIA;
+         	var arrayMedia = mediaList.split(",");
+             
+             console.log("성공" + create.MEM_ID);
+             
+             $(".modal_overlay").css("display", "none");
+             $('.create_box').addClass('border');
+             $('.create_box').css("display", "block");
+             
+             /* location.reload(); */
+             var html = "";
+             
+             html += '<div class="create_name"><div class="create_profile_box">';
+             if(!create.MEM_MEDIA){
+             	html += '<img class="create_profile_img" style="width: 40px; height: 40px;" src="resources/image/icon_p.jpg">';
+             }else{
+             	html += '<img class="create_profile_img" style="width: 40px; height: 40px;" src="resources/files/profile/'+create.MEM_MEDIA+'">';
+             }
+             html += '</div><span class="create_name_txt"> '+create.MEM_NAME+'</span>';
+             html += '<img class="more_details" style="right: -340px !important;" src="resources/image/icon_28.png" alt="더보기"></div>';
+             html += '<input type="hidden" id="bo_mem" value="'+create.BO_MEM+'">';
+             html += '<input type="hidden" id="bo_id" value="'+create.BO_USER+'">';
+             html += '<input type="hidden" id="bo_idx" value="'+create.BO_IDX+'">';
+             html += '<div class="createSlider">';
+             for (var i = 0; i < arrayMedia.length; i++) {
+             	  var media = arrayMedia[i];
+             	 
+             	  html += '<div><img class="create_img" style="height: 478px;" src="resources/files/board/'+media+'" /></div>';
+             }
+             html += '</div>'
+             $('.create_box').append(html);
+             $('#modal_overlay').load(location.href + '#modal_overlay')
+             
             
-         }
-          
-       });
-       
-       
-       
-    });
+     		    // 이미지 슬라이더 설정
+     		    $('.createSlider').slick({
+     		        infinite: true,
+     		        slidesToShow: 1,
+     		        slidesToScroll: 1
+     		    });
+ 			document.querySelector(['body']).style.removeProperty(['overflow-y']);
+     	},
+          error: function(xhr, status, error) { // 요청이 실패했을 때의 콜백 함수
+                 console.error(error);
+          }
+           
+        });
+        
+        
+        
+        
+     });
     
   </script>
 

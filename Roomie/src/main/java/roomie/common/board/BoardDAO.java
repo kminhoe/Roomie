@@ -60,5 +60,11 @@ public List<Map<String, Object>> selectComment() throws Exception {
 }
 
 
+//게시물 업로드 후  확인 추가한 코드
+	public Map<String, Object> createdContent(int cidx) throws Exception{
+		
+		return sqlSessionTemplate.selectOne("board.createdcontent", cidx);
+	}
+
 
 } 

@@ -15,12 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import roomie.common.board.BoardService;
+
 
 @Controller
 public class SearchController {
 	
 	@Resource
 	private SearchService searchService;
+	
+	@Resource
+	private BoardService boardService;
 	
 	@RequestMapping(value = "searchForm.ya")
 	public ModelAndView searchForm(@RequestParam HashMap<String, Object> param, HttpSession session) throws Exception{
@@ -84,6 +89,19 @@ public class SearchController {
 	    mv.addObject("BOARD2", BOARD);
 	    
 	    System.out.println("BOARD : " + BOARD);
+	    
+	 
+	  //좋아요 확인
+	  		Map<String, Object> map = new HashMap<>();
+	  		
+	  		map.put("LIKEB_MEM", a);
+
+
+	  		List<Map<String, Object>> like = boardService.likeCheck(map);
+	  		
+	  		System.out.println(like);
+	  		
+	  		mv.addObject("LIKEB", like);
 		
 		return mv;
 	}

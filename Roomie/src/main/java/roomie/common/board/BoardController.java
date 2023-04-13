@@ -156,15 +156,16 @@ public class BoardController {
 	
 	@PostMapping(value="/boardInsert.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<String> insertboard(HttpSession session, MultipartHttpServletRequest request, @RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
+	public Map<String, Object> insertboard(HttpSession session, MultipartHttpServletRequest request, @RequestParam Map<String, Object> map, RedirectAttributes rttr) throws Exception {
 		Map<String, Object> hm = new HashMap<>();
+		ModelAndView mv = new ModelAndView("board/boardList");
 		System.out.println("받았니? : " + request);
 		System.out.println("받았니? : " + map);
 		
 		
 		map.put("BO_MEM", Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX"))));
 		
-		boardService.registerBoard(map);
+		int rs = boardService.registerBoard(map);
 		
 		if(map.get("BO_IDX") != null) {
 			System.out.println("이건 먼데?" + map.get("BO_IDX"));
@@ -190,7 +191,18 @@ public class BoardController {
 			System.out.println(map.get("BO_IDX"));
 		}
 		
-		return new ResponseEntity<String>("redirect:/roomie/boardList.ya", HttpStatus.OK);
+		System.out.println("인서트한 내용: "+map.get("BO_IDX"));
+		
+		Map<String, Object> create = new HashMap<String, Object>();
+		Integer idx = Integer.parseInt(String.valueOf(map.get("BO_IDX")));
+				
+		create.put("create", boardService.createContent(idx));
+		
+		System.out.println("인서트한 idx 값 :" + create);
+		
+		mv.addObject("create", create);
+		
+		return create;
 		
 	}
 	

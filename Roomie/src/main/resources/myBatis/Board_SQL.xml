@@ -15,7 +15,7 @@
    <![CDATA[
       INSERT INTO BOARD(BO_IDX, BO_MEM, BO_MEDIA, BO_DATE, BO_HASH, BO_PLACE, BO_CONT, BO_ID, BO_USER)
       VALUES(
-      BOARD_SEQ.nextval,
+      #{BO_IDX},
       #{BO_MEM},
       #{BO_MEDIA},
       SYSDATE,
@@ -120,6 +120,10 @@ AND A.MEM_MBTI = #{MEM_MBTI}
 </select>
 
 
-
+<select id="createdcontent" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		select * from (select * from board b inner join member m on b.bo_mem = m.mem_idx) where BO_IDX = #{BO_IDX}
+	]]>
+</select>
 	
 </mapper>
