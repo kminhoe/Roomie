@@ -82,12 +82,6 @@ WHERE BLOCKM_IDX IS NULL
 	]]>
 </select>
 
-<select id="createdcontent" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		select * from (select * from board b inner join member m on b.bo_mem = m.mem_idx) where BO_IDX = #{BO_IDX}
-	]]>
-</select>
-
 <select id="notFriend" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		SELECT *

@@ -137,7 +137,7 @@
 								<label class="_ab3q">비밀번호</label>
 							</aside>
 							<div class="_ab3t">
-								<input class="_aaie _aaic _ag7n" style="width: 75%;"type="password" id="delpass" name="delpass"
+								<input type="password" id="delpass" name="delpass"
 									autocomplete="off">
 							</div>
 						</div>
