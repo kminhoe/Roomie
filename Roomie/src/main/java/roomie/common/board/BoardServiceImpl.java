@@ -53,6 +53,28 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDAO.createdContent(cidx);
 	}
+
+	@Override
+	public List<Map<String, Object>> notFriend(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.notFriend(map);
+	}
+
+	@Override
+	public void insertComment(Map<String, Object> map) throws Exception {
+		
+		boardDAO.insertComment(map);
+		
+	}
+
+	@Override
+	public List<Map<String, Object>> selectComment() throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.selectComment();
+	}
+
+
+	
 	
 	
 	

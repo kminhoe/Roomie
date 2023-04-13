@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <%@ include file="uploadModal.jsp" %> --%>
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="utf-8">
 <head>
@@ -500,6 +499,14 @@ img.track {
    vertical-align: baseline;
 }
 
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
 </style>
 </head>
 <body>
@@ -674,7 +681,7 @@ img.track {
 			
 			<div id="post${vs.index}" align="center" class="gallery-item" tabindex="0">
 				<img 
-					src="${post.BO_MEDIA}"
+					src="resources/files/board/${post.BO_MEDIA}"
 					class="gallery-image" alt="">
 				
 				
@@ -685,10 +692,12 @@ img.track {
 							class="fas fa-heart" aria-hidden="true"></i><img
 							src="resources/image/icon_01.png"
 							style="height: 30px; width: 30px;"> 56</li>
+						
+						
 						<li class="gallery-item-comments"><span
 							class="visually-hidden">Comments:</span><i class="fas fa-comment"
 							aria-hidden="true"></i><img src="resources/image/icon_03.png"
-							style="height: 30px; width: 30px;"> 2</li>
+							style="height: 30px; width: 30px;">${counter.COUNTER}</li>
 					</ul>
 				
 				</div>
@@ -706,7 +715,7 @@ img.track {
 			<div class="col-md-8">
 			<div class="border feed_box" style="width: auto; margin:0px;">
         
-        <img class="feed_img" src="${post.BO_MEDIA }">
+        <img class="feed_img" src="resources/files/board/${post.BO_MEDIA}">
   		
        
         
@@ -747,18 +756,20 @@ img.track {
         </div>
         <!-- 댓글 목록 -->
         <div style="padding-left:10px;">
-        <input type="hidden" name="COM_WRITER" id="comment_writer" value="${session}">
-        <input type="text" value="${post.BO_IDX}" name="BO_IDX" id="comment_artno">
-        <input type="text" name="COM_CONT" id="comment_content"> <button id="comment_submit">전송</button>
+        <input type="hidden" name="COM_WRITER" id="comment_writer${vs.index}" value="${session}">
+        <input type="hidden" value="${post.BO_IDX}" name="BO_IDX" id="comment_artno${vs.index}">
+        <input type="hidden" id="COM_WRITER" name="COM_WRITER" value="${session}">
+	    <input type="hidden" id="COM_REF" name="COM_REF" value="0">
+	    <input type="hidden" id="COM_STEP" name="COM_STEP" value="0">
+	    <input type="hidden" id="COM_LEVEL" name="COM_LEVEL" value="0">
+	    <input type="hidden" id="COM_IDX" name="COM_IDX" value="0">
+        <input type="text" name="COM_CONT" id="comment_content${vs.index}"> <button id="comment_submit${vs.index}">전송</button>
         <br>
         <hr>
         <br>
-        	${commentList}
-        	<c:forEach var="coms" items="${commentList}">
-          <span class="feed_txt"> <b> ${coms.COM_WRITER } </b> ${coms.COM_CONT}</span>
-          <button id="comment_reply">reply</button>
-          <br>
-          </c:forEach>
+        	<div class="contents" id="commentList${vs.index}">
+        	
+        	</div>
          </div>
         </div>
 	</div>
@@ -771,50 +782,229 @@ img.track {
 	 var BO_IDX = document.getElementById("comment_artno");
 	 var COM_WRITER = document.getElementById("comment_writer");
 	 var COM_CONT = document.getElementById("comment_content");
-
 	 
 	   for(i = 0; i <= index; i++){
 		   	const modal5 = document.getElementById("modal_post"+index);
 	    	const buttonAddFeed5 = document.getElementById("post"+index);
-	    		buttonAddFeed5.addEventListener("click", function(){
+	    		buttonAddFeed5.addEventListener("click", function(i){
 	    		modal5.style.top = window.pageYOffset = 'px';
 	    		modal5.style.display = "flex";
 	    		document.body.style.overflow = "hidden";
-	    		console.log(BO_IDX);
+	    		console.log(document.getElementById("comment_artno${vs.index}"));
+	    		
+	    	function showCommentList(){
+	    		
+	    		const url = "${pageContext.request.contextPath}/selectComment.ya?idx=" + ${post.BO_IDX};
+				const paramData = {
+						"comment" : "${post.BO_IDX}"
+				}
+				
+				$.ajax({
+					type : 'POST',
+					url : url,
+					data : paramData,
+					dataType: 'json',
+					
+					success: function(res){
+						console.log(res);
+						var htmls = "";
+						var nbsp = "";
+						var session = "${user.MEM_ID}";
+						
+						if(res.length < 1){
+							htmls += "No replies...";
+						}
+						else {
+							$(res).each(function(){
+								
+								var day = new Date(this.COM_DATE);
+								nbsp = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+								
+								
+								if (this.COM_LEVEL != '0') {
+									for (i=1; i < this.COM_LEVEL; i++) {nbsp += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}} else {nbsp = "";}
+									htmls += '<div id="COM_IDX' + this.COM_IDX +'">';
+				                 	htmls += nbsp + this.COM_WRITER + ' <a style="font-size: 10px;">(' + day.getFullYear() + '.' + (day.getMonth() + 1) + '.' + day.getDate() + ')</a>&nbsp;&nbsp;';
+				                 	htmls += '<a href=#none id="show" onclick="';
+				                 	htmls += "if (COM_IDX_" + this.COM_IDX + ".style.display=='none') {COM_IDX_" + this.COM_IDX + ".style.display='';show.innerText='댓글 작성'} else {COM_IDX_" + this.COM_IDX + ".style.display='none';show.innerText='댓글 작성'}";
+				                 	htmls += '">' + nbsp + 'Reply</a>';
+				                 	/* 댓글 삭제 시작 */
+				                 	if (this.COM_WRITER == session) {
+				                 		if(this.COM_CONT == '---삭제된 댓글---'){
+				                 			htmls += '';
+				                 		} else {
+				                 			htmls += '<button  id="delete_comment" value= "'+ this.COM_IDX +'" name="DEL_COM_IDX" >삭제</button>';
+				                 			console.log(this.COM_IDX);
+				                 		}
+				                 	}
+
+				                 	htmls += '<br>';
+				                 	/* 댓글 삭제 종료 */
+				                 	htmls += '<div style="padding-left:10px;"">'
+				                 	htmls += nbsp + this.COM_CONT;
+				                 	htmls += '</div>'
+				                 	/* 대댓글 접기 펼치기 시작 */
+				                 	if (session != "null") {
+					                 	htmls += '<div>';
+					                 	htmls += '<div id="COM_IDX_' + this.COM_IDX + '" style="display: none">';
+					             		
+					                 	
+					                 	htmls += '<input type="hidden" id="COM_WRITER' + this.COM_IDX + '" name="COM_WRITER2" value="' + session + '">';
+					                 	htmls += '<input type="hidden" id="COM_ARTNO' + this.COM_IDX + '" name="COM_ARTNO2" value="' + this.COM_ARTNO + '">';
+					                 	htmls += '<input type="hidden" id="COM_IDX' + this.COM_IDX + '" name="COM_IDX2" value="' + this.COM_IDX + '">';
+					                 	htmls += '<input type="hidden" id="COM_REF' + this.COM_IDX + '" name="COM_REF2" value="' + this.COM_REF + '">';
+					                 	htmls += '<input type="hidden" id="COM_STEP' + this.COM_IDX + '" name="COM_STEP2" value="' + this.COM_STEP + '">';
+					                 	htmls += '<input type="hidden" id="COM_LEVEL' + this.COM_IDX + '" name="COM_LEVEL2" value="' + parseInt(this.COM_LEVEL + 1) + '"><br>';
+										
+										htmls += '<div style="padding-left:10px;"">'
+					                 	htmls += '<input style="width:200px;" type="text" class="massage-bt" placeholder="댓글 달기" id="COM_CONT' + this.COM_IDX + '" name="COM_CONT">';
+					                 	htmls += '<button type="button" class="send_bt" id="btnReplySave" value="' + this.COM_IDX + ';"><a>작성하기</a></button><br>';
+					                 	htmls += '</div>'
+					                 	htmls += '</form>';
+				                 	}
+				                 	
+				                 	/* 대댓글 입력 폼 end */
+				         			htmls += '</div>';
+				                 	htmls += '</div>';
+				                 	/* 대댓글 접기 종료 */
+				                 	htmls += '<hr>';
+				                 	/* alert(htmls); */
+			 				});	//each end
+						}
+						$("#commentList${vs.index}").html(htmls);
+						
+					},
+					error : function(jqXHR, status, err){
+    					alert(jqXHR.responseText);
+					}
+				})
+	    	}
+	    	
+	    	$(document).on('click', "#comment_submit${vs.index}", function(e){
+	    		e.stopPropagation();
+	    		var COM_ARTNO = $("#comment_artno${vs.index}").val();
+	    		var COM_WRITER = $("#COM_WRITER").val();
+	    		var COM_CONT = $("#comment_content${vs.index}").val();
+	    		var COM_STEP = $("#COM_STEP").val();
+	    		var COM_REF = $("#COM_REF").val();
+	    		var COM_LEVEL = $("#COM_LEVEL").val();
+	    		
+	    		const url = "${pageContext.request.contextPath}/insertComment.ya"
+	    		
+	    		var param = JSON.stringify ({
+	    			"COM_ARTNO" : COM_ARTNO,
+	    			"COM_WRITER" : COM_WRITER,
+	    			"COM_CONT" : COM_CONT,
+	    			"COM_STEP" : COM_STEP,
+	    			"COM_REF" : COM_REF,
+	    			"COM_LEVEL" : COM_LEVEL
+	    		});
+	    		
+	    		console.log(param);
+	    		
+	    		$.ajax({
+	    			url : url,
+	    			type : 'POST',
+	    			contentType : 'application/json; charset=utf8',
+	    			data : param,
+	    			dataType : 'text',
+	    			success : function(res){
+	    				showCommentList();
+	    				COM_CONT = $("#COM_CONT").val('');
+	    			},
+	    			error : function(jqXHR, status, err){
+    					alert(jqXHR.responseText);
+					}
+	    		})
+	    	});
+	    	
+	    	$(document).on('click','#btnReplySave', function(){
+	    		var idx2 = $("#btnReplySave2").val();
+	    		var COM_WRITER2 = $("#COM_WRITER" + idx2).val();
+	    	 	var COM_ARTNO2 = $("#COM_ARTNO" + idx2).val();
+	    		var COM_REF2 = $("#COM_REF" + idx2).val();
+	    		var COM_STEP2 = $("#COM_STEP" + idx2).val();
+	    		var COM_LEVEL2 = $("#COM_LEVEL" + idx2).val();
+	    		var COM_CONT2 = $("#COM_CONT" + idx2).val();
+
+	    		var paramData = JSON.stringify ({
+	    			  "COM_WRITER" : COM_WRITER2
+	    			, "COM_ARTNO" : COM_ARTNO2
+	    			, "COM_IDX" : idx2
+	    			, "COM_REF" : COM_REF2
+	    			, "COM_STEP" : COM_STEP2
+	    			, "COM_LEVEL" : COM_LEVEL2
+	    			, "COM_CONT" : COM_CONT2
+	    		});
+	    		
+	    		console.log(paramData);
+	    		
+	    		console.log("COM_CONT : " + COM_CONT2);
+	    		
+	    		$.ajax({
+	    			  url : "${pageContext.request.contextPath}/insertReReply.ya"
+	    			, type : 'POST'
+	    			, contentType : 'application/json; charset=utf-8'
+	    			, data : paramData
+	    			, dataType : 'text'
+	    			, success: function(result){
+	    				showReplyList();
+	    		
+	    			}
+	    			, error: function(jqXHR, status, err){
+    					alert(jqXHR.responseText);
+	    			}
+	    		});	
+	    	})
+	    	
+	    	$(document).on('click', '#delete_comment', function(){
+	    		
+	    		COM_IDX = $('#delete_comment').val();
+	    		
+	    		$.ajax({
+	    			url : "${pageContext.request.contextPath}/deleteComment.ya"
+	    			,data : {"COM_IDX" : COM_IDX} 
+	    			,type : 'POST'
+	    			,dataType : "json"
+	    			,success : function(res){
+	    				alert("삭제되었습니다.");
+	    				showCommentList();
+	    			}
+	    			,error : function(jqXHR, status, err){
+    					alert(jqXHR.responseText);
+	    			}
+	    		});
+	    	})
+	    	
+	    	$(document).ready(function(){
+	    		showCommentList();
+	    	});
+	    	
 	    });
 	    	const buttonCloseModal5 = document.getElementById("close_modal5"+index);
-	        buttonCloseModal5.addEventListener("click", function() {
+	        buttonCloseModal5.addEventListener("click", function(i) {
 	   	        modal5.style.display = "none";
+	   	        location.reload();
 	   	        document.body.style.overflowY = "visible";
 	    	 });
-	   }
+	        
+	        if(BO_IDX <= 1){
+    			break;
+    		}
+	        
+	        
 
+	   }
+	   
+	   
+	   
+	   
+
+	   
 
 
 		
-		$(document).on('click', '#comment_submit', function(e){
-			e.preventDefault();
-	   
-	   
-	   var param = {"BO_IDX" : BO_IDX.value, 
-	         "COM_WRITER" : COM_WRITER.value, 
-	         "COM_CONT" : COM_CONT.value
-	         }
-	   console.log(param);
-	$.ajax({
-		url: "/roomie/insertComment.ya",
-		data: param,
-		type: "POST",
-		success: function(res){
-			alert("comment 완료");
-			location.reload();
-		},
-		error: function(jqXHR, status, err){
-			alert(jqXHR.responseText);
-			location.reload();
-		}
-	})
-})
+		
 
 
 </script>
@@ -845,9 +1035,8 @@ Full-page view:
 // 		window.open(imgUrl, '_blank');
 // 	});
 // });
-
+	
     </script>
-
 	<div id="modal_edit_profile" class="modal_overlay">
 		<div class="modal_window"
 			style="width: 80vw; height: calc(var(- -vh, 1vh)* 84); overflow: hidden; overflow-y: auto;">
@@ -1380,6 +1569,7 @@ function setImageFromFile(input, expression) {
 	  // your code here
 	  const client_id = '51f7b5ab05bf459e88b90c02e8f14f4a';
 	  const client_secret = '499305d4bc4c4fe2840bd99f41f71ab8';
+	  const token ='BQCOGoDHgzmNPQW_QfT4dr35qT27uj_bBQqlp_pTyqe8HecvOS1XQYAZui4aBcY8_I1Taddp3847SvgS226gyTAuYUexeFoNNT5CVWvh1q33UZSTmMeBuaTOoVeqr3mn2OhbtE8PNMompFq-Bwo8EgjytYXNmHo1WkLGV_NHDCKKUn34ydsWshqvexZsWlaraCMLX1VYHPbrw_RscAVeBptWAFsn4gtpSHZKb48bhLWP0lDzDe38Ux3fza-TuHiWyRub5fL3lOCXD7MmDK_cSVdYoJBuHpJ7unBFb2b00tQZ3w7QeWSGL13rm3f5xUF4CocaiSYXwfN7rRanC8Xm7tTKmS0rbqn82o1RFunAGvF0we8';
 		  
 	  $('#search_spotify').on('submit', function(event) {
 	  	event.preventDefault();
@@ -1396,7 +1586,7 @@ function setImageFromFile(input, expression) {
 		    dataType: 'json',
 		    crossDomain: true,
 		    headers: {
-		        "Authorization": `Bearer BQDlcpha3zXRIRNJUwF2R3cQ1NkFama2PR2oDwbanq4XK3VT7ojXcjLI78BRC2wZURXSzAooqxgUI3Iijl0BO_Tv4n4dpSmURBGK_Xz-Ck8ryXpQ09NmT50tTbvnjKl5HSx9EYos7byKoRUBqXuMeHLJMXs_U-28YiH4rAB2LMJn1gF1wNKR0Xja3zeLxfl2FSwK`
+		        "Authorization": 'Basic ' + (new Buffer.fromn(client_id + ':' + client_secret).toString('base64'));
 		      },
 
 		    success: function(data)

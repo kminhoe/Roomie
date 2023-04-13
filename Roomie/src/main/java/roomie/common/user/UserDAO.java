@@ -67,4 +67,7 @@ public class UserDAO {
 		return sqlSessionTemplate.selectList("user.userLike", map);
 	}
 
+	public List<Map<String,Object>> memberList(Map<String,Object>map) throws Exception{
+		return sqlSessionTemplate.selectList("user.memberList", map);
+	}
 }

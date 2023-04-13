@@ -3,7 +3,6 @@ package roomie.common.user;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +42,7 @@ public class UserController {
 		ModelAndView mv = new ModelAndView("/profile/profile");
 		HttpSession session = req.getSession();
 		mv.addObject("session", session.getAttribute("MEM_ID"));
+		map.put("MEM_IDX", session.getAttribute("MEM_IDX"));
 		map.put("BO_MEM", map.get("mem_idx"));
 		System.out.println("session: " + session.getAttribute("MEM_ID"));
 		
@@ -75,59 +75,13 @@ public class UserController {
 		List<Map<String,Object>> boardList = userService.userBoardList(board);
 		mv.addObject("boardList", boardList);
 		
-		for(Map<String,Object> commentMapper : boardList ) {
-			System.out.println("commentMapper: " + commentMapper.get("BO_IDX"));
-			
-			Map<String,Object> comMap = new HashMap<String,Object>();
-			comMap.put("BO_IDX", commentMapper.get("BO_IDX"));
-			System.out.println("ComMap: " + comMap);
-			List<Map<String,Object>> commentList = replyService.commentList(comMap);
-			mv.addObject("commentList", commentList);
-		}
-		
-//		//LIKE
-//		//좋아요 확인
-//				Map<String, Object> likeMap = new HashMap<>();
-//				
-//				map.put("LIKEB_MEM", session.getAttribute("MEM_ID"));
-//
-//				List<Map<String, Object>> like = userService.likeCheck(likeMap);
-//				
-//				System.out.println(like);
-//				
-//				mv.addObject("LIKEB", like);
-//				
-//				//like board 배열에 담기
-//				List<Integer> list1 = new ArrayList<Integer>();
-//						
-//				for(int i=0; i < like.size(); i++) {
-//					
-//					list1.add(i, Integer.parseInt(String.valueOf(like.get(i).get("LIKEB_BOARD"))));
-//					
-//				}
-//				
-//				System.out.println(list1);
-//				
-//				int idx = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
-//				
-//		
-//		
-		
-		
+
+	
 		
 		
 		return mv;
 	}
 	
-	@RequestMapping("userModify.ya")
-	public ModelAndView userModify(@RequestParam Map<String,Object>map, HttpServletRequest req, MultipartHttpServletRequest image) throws Exception {
-		//HttpSession session = req.getSession();
-		Integer mem_idx = Integer.parseInt((String)map.get("MEM_IDX"));
-		System.out.println(map.get("MEM_IDX"));
-		ModelAndView mv = new ModelAndView("redirect:/userProfile.ya?MEM_IDX=" + mem_idx);
-		userService.userModify(map);
-		return mv;
-	}
 	
 	@RequestMapping(value="userModifyAjax.ya", method=RequestMethod.POST)
 	public ModelAndView userModifyAjaxPOST(@RequestParam Map<String,Object>map, HttpServletRequest req) throws Exception {
@@ -258,7 +212,7 @@ public class UserController {
 		
 		
 		base_path2 = "/Users/gjy/git/Roomie/yeong-jun/Roomie/src/main/webapp/resources/upload/";
-		base_path = session.getServletContext().getRealPath("/");
+		base_path = session.getServletContext().getRealPath("/resources/files/profile");
 
 		
 		System.out.println(base_path);

@@ -119,6 +119,7 @@
             <img class="menu_img"
                style="width: 25px; height: 25px; object-fit: contain"
                src="resources/image/icon_07.png"> &nbsp;&nbsp; -->
+<<<<<<< HEAD
 				<!-- 탑색 탭 버튼 -->
 				<img class="menu_img"
 					style="width: 25px; height: 25px; object-fit: contain"
@@ -173,7 +174,57 @@
 					<c:when test="${empty MEMBER.MEM_MEDIA}">
 						<img class="menu_img"
 							style="width: 25px; height: 25px; object-fit: contain"
+=======
+            <!-- 탑색 탭 버튼 -->
+            <img class="menu_img"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_22.png"
+               onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
+            <!-- 채팅 버튼 -->
+            <div class="menu_img">
+            	<div style="position: relative;">
+		            <div>
+			            <img class="menu_img"
+			               style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+			               src="resources/image/icon_04.png"
+			               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+		            </div>
+		            <div id="msgNotif" style="position: absolute; top: -10px; right: 15px;">
+		            	<img style="width: 10px; height: 10px;" src="">
+		            </div>
+	            </div>
+			</div>
+            <!-- 알림 버튼 -->
+            <div class="menu_img">
+            	<div style="position: relative;">
+            		<div>
+            			<img class="menu_img" id="notifBtn"
+							style="width: 25px; height: 25px; object-fit: contain; cursor: pointer;"
+							src="resources/image/icon_01.png"> &nbsp;&nbsp;
+            		</div>
+            		<div id="notifAlarm" style="position: absolute; top: -10px; right: 15px;">
+		            	<img style="width: 10px; height: 10px;" src="">
+		            </div>
+            	</div>
+            </div>
+            <!-- 스토리 버튼 -->
+            <img class="menu_img" id="add_stories"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_17.png" onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'"> &nbsp;&nbsp;
+            <div class="modal_overlay" id="modal_add_stories" style="position: fixed;">
+           		<div class="modal_window_stories" id="modal_window_stories" style="width: 800px; height: 600px;">
+
+           		</div>
+           </div>
+            <!-- 게시글 업로드 버튼 -->
+            <img class="menu_img" id="add_feed"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_08.png"> &nbsp;&nbsp;
+            <!-- 프로필 이동 버튼 -->
+						<img class="menu_img" style="width: 25px; height: 25px; object-fit: contain"
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
 							src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
+<<<<<<< HEAD
 					</c:when>
 					<c:otherwise>
 						<img class="menu_img"
@@ -187,11 +238,91 @@
 		</div>
 	</nav>
 	<!-- 상단 내비게이션 바 끝 -->
+=======
 
+			﻿<%@ include file="../option/upload_modal.jsp" %>
+         </div>
+      </div>
+   </nav>
+   <!-- 상단 내비게이션 바 끝 -->
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
+
+<<<<<<< HEAD
 	<!-- 메인 바디 영역 시작 -->
 	<div class="main_body">
 		<!-- 왼쪽 바디 영역 시작 -->
 		<div class="left_body">
+=======
+   <!-- 메인 바디 영역 시작 -->
+   <div class="main_body">
+      <!-- 왼쪽 바디 영역 시작 -->
+      <div class="left_body">
+      
+                <!-- 스토리 시작 -->
+         <div class="story">
+            <!-- 왼쪽 버튼 -->
+            <div class="story_prev"
+               style="top: 50px; cursor: pointer; position: relative; z-index: 1; width: 20px; visibility: hidden;">
+               <img src="resources/image/icon_29.png" onclick="prev_action();">
+            </div>
+            <ul class="story_list">
+               <li class="sub_story">
+                  <div class="text">
+                     <a onclick="href='#'"><img
+                        src="resources/image/icon_42.png" alt="프로필"></a> <span
+                        style="font-size: 12px; margin-left: 3px;"></span>
+                  </div>
+               </li>
+               <li>
+                  <div class="sub_story">
+                     <div class="text">
+                        <img src="resources/image/icon_42.png" alt="프로필"> <span
+                           style="font-size: 12px; margin-left: 3px;"></span>
+                     </div>
+                  </div>
+               </li>
+            </ul>
+            
+            <!-- 오른쪽 버튼 -->
+            <div class="story_next"
+               style="top: -68px; left: 436px; cursor: pointer; position: relative; z-index: 1; width: 20px; visibility: hidden;">
+               <img src="resources/image/icon_30.png" onclick="next_action();">
+            </div>
+         </div>
+         <!-- 스토리 끝 -->
+         
+         <!-- 게시글 시작 -->
+         
+         <div class="uploadB"></div>
+         
+         <c:forEach var="boardList" items="${boardList}" varStatus="status">
+         
+         
+         <div class="border feed_box">
+            <div class="feed_name">
+               <div class="profile_box">
+               
+               <c:choose>
+					<c:when test="${empty boardList.MEM_MEDIA}">
+						<img class="profile_img" src="resources/image/icon_p.jpg" > 
+					</c:when>
+					<c:otherwise>
+						<img class="profile_img" src="/roomie/${boardList.MEM_MEDIA }">
+					</c:otherwise>
+				</c:choose>
+               
+                 
+               </div>
+               <span class="feed_name_txt"> ${boardList.MEM_NAME} </span>
+               <!-- 더보기 버튼 -->
+               <img class="more_details" style="right: -340px !important;" src="resources/image/icon_28.png"
+                  alt="더보기">
+            </div>
+            
+            <input type="hidden" id="bo_mem" value="${boardList.BO_MEM}">
+            <input type="hidden" id="bo_name" value="${boardList.BO_USER}">
+            <input type="hidden" id="bo_idx" value="${boardList.BO_IDX}">
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
 
 			<!-- 스토리 시작 -->
 			<div class="story">
@@ -283,11 +414,119 @@
 
 									<c:if test="${liked == true}">
 
+<<<<<<< HEAD
+=======
+               </p>
+            </div></div>
+            <div class="feed_content">
+               <!-- 이름, 게시글 내용 -->
+               <p class="feed_txt">
+                  <b> ${boardList.MEM_NAME} </b> ${boardList.BO_CONT}
+               </p>
+            </div>
+            <!-- 댓글 목록 -->
+            <div class="feed_reply" id="feed_reply${status.index}">
+            
+             <%-- 해당 게시물에 해당하는 댓글만 출력 --%>
+             <c:forEach items="${comList}" var="comment" varStatus="sta">
+             <c:if test="${sta.index == 0 || sta.index == 1}">
+                <c:if test="${comment.COM_ARTNO eq boardList.BO_IDX}">
+                    <!-- 작성자 닉네임 -->
 
+                    <span class="feed_txt"> <b> ${comment.MEM_NAME} </b> ${comment.COM_CONT} </span>
+   
+                  
+                </c:if>
+                </c:if>
+            </c:forEach>
+            <span class="feed_click" style="color: #808080; font-size: 13px; margin: 3px 3px 3px 3px;"> <b> +더보기 </b> </span>  
+            
+
+            </div>
+            <!-- 댓글 달기 -->
+            <div class="inputContainer">
+               <div class="type_comment">
+                  <input class="inputBox" type="text" placeholder="댓글 달기...">
+               </div>
+               <span>
+                  <button class="buttonBox" >게시</button>
+               </span>
+            </div>
+         </div>
+         
+         </c:forEach>
+         <!-- 게시글 끝 -->
+        
+        <!-- 친구 -->
+         <!-- 왼쪽 바디 영역 끝 -->
+         <!-- 오른쪽 바디 영역 시작 -->
+         <div class="right_body">
+            <!-- 계정 전환 시작 -->
+            <div class="feed_name" id="feed_name1" style="justify-content: space-between">
+               <div style="display: flex; align-items: center;">
+                  <div class="big_profile_box">
+                     <!-- 계정 프로필 이미지 -->
+                     <c:choose>
+					<c:when test="${empty MEMBER.MEM_MEDIA}">
+						<img class="profile_img" src="resources/image/icon_p.jpg" > 
+					</c:when>
+					<c:otherwise>
+						<img class="profile_img" src="/roomie/${MEMBER.MEM_MEDIA }">
+					</c:otherwise>
+				</c:choose>
+                  </div>
+                  <div class="name_content">
+                     <!-- 사용자 이름 -->
+                     <span class="feed_name_txt"> ${MEMBER.MEM_NAME } </span>
+                     <!-- 이름 -->
+                     <span class="name_content_txt"> ${MEMBER.MEM_USER } </span>
+                  </div>
+               </div>
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
+
+<<<<<<< HEAD
 										<img class="material-icons-outlined" id="like_y"
 											style="width: 20px; height: 20px; object-fit: contain"
 											src="resources/image/heart_yes (2).png">
+=======
+               <!-- 계정 전환 -->
+               <a href="/roomie/memlogout.ya" class="link_txt" style="font-size: 8px"> 로그아웃 </a>
+            </div>
+            <!-- 계정 전환 끝 -->
+            <!-- 회원님을 위한 추천 -->
+            <div class="recommend_box">
+               <span style="color: gray"> 회원님을 위한 추천</span> <span
+                  style="font-size: 12px"> 모두 보기 </span>
+            </div>
+            <!-- 회원 목록 시작 -->
+            <div>
 
+               <!-- 첫번째 회원 시작 -->
+               <c:forEach var="member" items="${notFriend}">
+               <div class="feed_name" onclick="location.href='/roomie/userProfile.ya?mem_idx=${member.MEM_IDX}'" style="justify-content: space-between">
+          
+                  <div class="profile_box">
+                  <c:if test="${empty member.MEM_MEDIA}">
+                  	<img class="profile_img" src="resources/image/icon_p.jpg">
+                  </c:if>
+                     <img class="profile_img" id="feed_name2" src="resources/image/profile/${member.MEM_MEDIA}">
+                  </div>
+                  <div class="name_content">
+                     <span class="feed_name_txt"> ${member.MEM_NAME} </span> <span
+                        class="name_content_txt"> 회원님을 위한 추천 </span>
+                  </div>
+                  <a class="link_txt"> 팔로우 </a>
+               
+               </div>
+               
+               </c:forEach>
+               <!-- 첫번째 회원 끝 -->
+              
+            </div>
+            <!-- 회원 추천 목록 끝 -->
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
+
+<<<<<<< HEAD
 									</c:if>
 
 									<c:if test="${liked == false}">
@@ -517,6 +756,49 @@
 				</c:choose>
 			</div>
 		</footer>
+=======
+            <!-- ROOMIE -->
+            <div class="comment_box">
+               <span> 소개 · 도움말 · 홍보 센터 · API · 채용 정보 </span> <span>
+                  개인정보처리방침 · 약관 · 위치 · 인기 계정 · 해시태그 · 언어 </span> <br> <span> ⓒ
+                  2023 ROOMIE </span>
+            </div>
+         </div>
+         <!-- 오른쪽 바디 영역 끝 -->
+      </div>
+      <!-- 메인 바디 영역 끝 -->
+      <!-- 푸터 시작 -->
+      <footer>
+         <div>
+            <!-- 홈 버튼 -->
+            <img style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_09.png"> &nbsp;&nbsp;
+            <!-- 탐색 탭 버튼 -->
+            <img 
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_22.png"
+               onclick="window.location.href='searchForm.ya'"> &nbsp;&nbsp;
+            <!-- 채팅 버튼 -->
+            <img style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_04.png"
+               onclick="window.location.href='chatForm.ya'"> &nbsp;&nbsp;
+            <!-- 알림 버튼 -->
+            <img style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_01.png"> &nbsp;&nbsp;
+            <!-- 스토리 버튼 -->
+            <img id="add_stories"
+               style="width: 25px; height: 25px; object-fit: contain"
+               src="resources/image/icon_17.png" onclick="location.href='http://localhost:8090/roomie/storiesUpload.ya'"> &nbsp;&nbsp;
+            <!-- 게시글 버튼 -->
+            <img style="width: 25px; height: 25px; object-fit: contain"
+               onclick="document.getElementById('add_feed').click();"
+               src="resources/image/icon_08.png"> &nbsp;&nbsp;
+               <!-- 프로필 이동 버튼 -->
+			<img style="width: 25px; height: 25px; object-fit: contain"
+				src="resources/image/icon_06.png" alt=""> &nbsp;&nbsp;
+         </div>
+      </footer>
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
 
 		<!-- 모달 start -->
 
@@ -769,7 +1051,11 @@
      $(document).ready(function(){
         
        // 스토리 리스트 불러오기
+<<<<<<< HEAD
         readStories();
+=======
+       readStories();
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
         
         var arr = new Array;
         var arr2 = new Array;
@@ -1186,6 +1472,7 @@
 	      		} else {
 	      			htmls += "";
 	      		}
+	      		
 	    		htmls += '">';
 	    		htmls += '<div class="text">';
 	    		htmls += '<a onclick="href=' + "'/roomie/stories.ya?STORY_MEM=" + status[i].STORY_MEM + "'" + '">';
@@ -1198,8 +1485,8 @@
 	          length = status.length;
 	          
 	          // visibility:hidden
-	          if (status.length <= 5) {
-	        	  $('.story_next').css("visibility", "hidden");
+	          if (status.length > 6) {
+	        	  $('.story_next').css("visibility", "visible");
 	          }
 	          
 	          
@@ -1212,10 +1499,15 @@
 		});
 	}
   </script>
+<<<<<<< HEAD
 
 
 		<script>
 
+=======
+  
+  <script>
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
      // 왼쪽 버튼
      function prev_action() {
         page--; // 페이지 번호 -1
@@ -1542,5 +1834,58 @@ $(document).on('click','.alarm_list1',function(e){
 	    });
 	});
 </script>
+<<<<<<< HEAD
+=======
+
+<script type="text/javascript">
+
+$("#feed_name1").on('click', function(){
+	location.href='/roomie/userProfile.ya?mem_idx=${MEMBER.MEM_IDX}';
+});
+
+
+</script>
+
+<script>
+
+let button_text = document.querySelectorAll('.buttonBox');
+let input = document.querySelectorAll('.inputBox');
+let bo_idx = document.querySelectorAll('#bo_idx');
+let reply = document.querySelectorAll('.feed_reply');
+
+
+for(let b=0; b < button_text.length; b++){
+
+	button_text[b].addEventListener('click',function(){
+	
+	
+	console.log(input[b].value);
+	console.log(bo_idx[b].value);
+
+	var data = {text :input[b].value, bo_idx : bo_idx[b].value }
+	
+ $.ajax({
+	  url : "/roomie/insertComment.ya"
+	, data : data
+	
+	, success: function(result){
+	
+		console.log("성공");
+
+		$('#' + reply[b].getAttribute('id')).load(location.href + ' #' + reply[b].getAttribute('id'));
+		
+	}
+	, error: function(error){
+		
+	}
+	
+}); //ajax 
+
+}); //click
+
+} //for
+</script>
+     
+>>>>>>> branch 'main' of https://github.com/kminhoe/Roomie.git
 </body>
 </html>

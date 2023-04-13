@@ -218,6 +218,21 @@ public class AdminController {
 		}
 	
 		
+		
+		//어드민 멤버 검색
+		@RequestMapping(value="/adminMemberS.ya")
+		public ModelAndView adminMemberS(@RequestParam Map<String, Object> map)throws Exception{
+			
+			ModelAndView mv = new ModelAndView("redirect:/adminMember.ya");
+			
+            System.out.println(map);
+			
+
+			return mv; 
+		}
+		
+		
+		
 	//게시판 관리@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	@RequestMapping(value="/adminBoard.ya")
 	public ModelAndView adminBoard(HttpSession session, @RequestParam Map<String, Object> map)throws Exception{

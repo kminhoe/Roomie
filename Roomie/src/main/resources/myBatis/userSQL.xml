@@ -63,22 +63,11 @@
 		delete from friend where fri_mem = #{FRI_MEM} and FOLLOWING = #{FOLLOWING}
 	</delete>
 	
-	<select id="commentList" parameterType="hashmap" resultType="hashmap">
-		SELECT *
-				FROM COMT
-				WHERE COM_ARTNO = #{BO_IDX}
-				
+	<select id="memberList" parameterType="hashmap" resultType="hashmap">
+		select * from member where mem_idx != ${MEM_IDX}
 	</select>
 	
-	<insert id="insertComment" parameterType="hashmap">
-		insert into comt (com_idx, com_artno, com_writer, com_date, com_cont) values (comt_seq.nextval, #{BO_IDX}, #{COM_WRITER}, sysdate, #{COM_CONT})
-	</insert>
 	
-	<select id="likeCheck" parameterType="hashmap" resultType="hashmap">
-	<![CDATA[
-		SELECT * FROM BO_LIKE WHERE LIKEB_MEM = #{LIKEB_MEM}
-	]]>
-	</select>
 	
 	
 </mapper>

@@ -15,17 +15,20 @@
    <![CDATA[
       INSERT INTO BOARD(BO_IDX, BO_MEM, BO_MEDIA, BO_DATE, BO_HASH, BO_PLACE, BO_CONT, BO_ID, BO_USER)
       VALUES(
-      #{BO_IDX},
+      BOARD_SEQ.nextval,
       #{BO_MEM},
       #{BO_MEDIA},
       SYSDATE,
       #{BO_HASH},
       #{BO_PLACE},
       #{BO_CONT},
-      #{BO_ID},
-      #{BO_USER}
+      #{BO_MEM},
+      #{BO_MEM}
       )
    ]]>
+
+
+
 
    </insert>
 
@@ -82,6 +85,43 @@ WHERE BLOCKM_IDX IS NULL
 <select id="createdcontent" parameterType="hashmap" resultType="hashmap">
 	<![CDATA[
 		select * from (select * from board b inner join member m on b.bo_mem = m.mem_idx) where BO_IDX = #{BO_IDX}
+	]]>
+</select>
+
+<select id="notFriend" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT *
+FROM (
+  SELECT *
+  FROM MEMBER
+  WHERE NOT EXISTS (
+    SELECT *
+    FROM FRIEND
+    WHERE MEM_ID = FOLLOWING
+    AND FRI_MEM = #{MEM_ID}
+  )
+) A
+WHERE A.MEM_ID <> #{MEM_ID}
+AND A.MEM_MBTI = #{MEM_MBTI}
+	]]>
+</select>
+
+
+   <insert id="insertComment" parameterType="hashmap">
+	<![CDATA[
+		INSERT INTO COMT(COM_IDX, COM_ARTNO, COM_WRITER, COM_CONT, COM_DATE)
+		VALUES(
+		COMT_SEQ.NEXTVAL,
+		#{COM_ARTNO},
+		#{COM_WRITER},
+		#{COM_CONT},
+		SYSDATE)
+	]]>
+</insert>	
+
+<select id="selectComment" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT * FROM COMT INNER JOIN MEMBER ON MEM_IDX = COM_WRITER ORDER BY COM_IDX DESC
 	]]>
 </select>
 

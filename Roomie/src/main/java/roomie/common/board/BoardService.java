@@ -18,4 +18,12 @@ public interface BoardService {
 	
 	public Map<String, Object> createContent(int cidx) throws Exception;
 	
+	public List<Map<String, Object>> notFriend(Map<String, Object> map) throws Exception;
+	
+	public void insertComment(Map<String, Object> map) throws Exception;
+	
+	public List<Map<String, Object>> selectComment() throws Exception;
+	
+
+	
 } 

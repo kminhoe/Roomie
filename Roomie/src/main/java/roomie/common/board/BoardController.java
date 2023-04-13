@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lombok.extern.log4j.Log4j;
 import roomie.common.chat.ChatService;
 import roomie.common.like.LikeService;
+import roomie.common.user.UserService;
 
 @Controller
 @Log4j
@@ -47,6 +48,9 @@ public class BoardController {
 	
 	@Resource
 	private ChatService chatService;
+	
+	@Resource
+	private UserService userService;
 	
 	@PostMapping(value="/register.ya", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
@@ -213,10 +217,6 @@ public class BoardController {
 		//좋아요 확인
 		Map<String, Object> map = new HashMap<>();
 		
-
-
-		map.put("LIKEB_MEM", session.getAttribute("MEM_IDX"));
-
 		map.put("LIKEB_MEM", idx1);
 
 
@@ -264,6 +264,7 @@ public class BoardController {
 			 
 			  
 		 mv.addObject("boardList", board);
+		 
 			 
 		 
 		
@@ -279,7 +280,29 @@ public class BoardController {
 		//좋아요 카운트
 		
 
+		//멤버 리스트
 		
+		List<Map<String,Object>> memberList = userService.memberList(mem);
+		mv.addObject("memberList", memberList);
+		
+		
+		// 친구가 아닌 멤버 리스트 출력
+		Map<String, Object> mem_1 = new HashMap<>();
+		
+		mem_1.put("MEM_ID", member.get("MEM_ID"));
+		mem_1.put("MEM_MBTI", member.get("MEM_MBTI"));
+		
+		List<Map<String,Object>> notF = boardService.notFriend(mem_1);
+		
+		mv.addObject("notFriend", notF);
+		
+		
+		
+		  //댓글 리스트 
+		List<Map<String,Object>> comt = boardService.selectComment();
+		  mv.addObject("comList", comt);
+		  
+
 		
 		
 		return mv; 
@@ -355,3 +378,32 @@ public class BoardController {
 
 
 
+	//게시글 목록에서 댓글달기
+	@RequestMapping(value = "insertComment.ya")
+	public ModelAndView insertComment(@RequestParam Map<String, Object> param, HttpSession session) throws Exception{
+		
+		ModelAndView mv = new ModelAndView("redirect:/boardList.ya");
+		
+		Map<String, Object> map	 = new HashMap<String, Object>();
+
+		int idx = Integer.parseInt(String.valueOf(session.getAttribute("MEM_IDX")));
+				
+		
+		System.out.println(param);
+		
+		
+		map.put("COM_ARTNO", param.get("bo_idx"));
+		map.put("COM_WRITER", idx);
+		map.put("COM_CONT", param.get("text"));
+		
+		boardService.insertComment(map);
+		
+		return mv;
+		
+	}
+	
+	
+	
+	
+	
+}
